@@ -1,0 +1,33 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
+
+parameters:
+    paths:
+        - app/
+        - routes/
+        - config/
+        - database/factories/
+        - database/seeders/
+
+    level: 5
+
+    # Directories to ignore during analysis
+    excludePaths:
+        - tests/
+        - vendor/
+        - storage/
+        - bootstrap/cache/
+
+    # Ignore specific error patterns for Laravel
+    ignoreErrors:
+        # Laravel facade resolution
+        - identifier: class.notFound
+          path: app/
+        # Laravel magic methods
+        - identifier: method.notFound
+          path: app/
+          message: '/Call to an undefined method (Illuminate|Laravel)/'
+
+    # Do not fail if ignored errors are not found
+    reportUnmatchedIgnoredErrors: false
