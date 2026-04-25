@@ -6,15 +6,14 @@ parameters:
     paths:
         - app/
         - routes/
-        - config/
         - database/factories/
         - database/seeders/
+        - tests/
 
-    level: 5
+    level: 8
 
     # Directories to ignore during analysis
     excludePaths:
-        - tests/
         - vendor/
         - storage/
         - bootstrap/cache/
