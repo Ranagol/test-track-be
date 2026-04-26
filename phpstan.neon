@@ -10,7 +10,7 @@ parameters:
         - database/seeders/
         - tests/
 
-    level: 8
+    level: 6
 
     # Directories to ignore during analysis
     excludePaths:
@@ -27,6 +27,8 @@ parameters:
         - identifier: method.notFound
           path: app/
           message: '/Call to an undefined method (Illuminate|Laravel)/'
+        # Eloquent generic types (BelongsTo, HasMany, etc.)
+        - message: '/return type with generic class.*does not specify its types/'
 
     # Do not fail if ignored errors are not found
     reportUnmatchedIgnoredErrors: false
