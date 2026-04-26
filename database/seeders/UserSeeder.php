@@ -13,16 +13,39 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(1)->create()->each(function (User $user) {
+        // Admin user
+        User::factory(1)->create([
+            'name' => config('app.ADMIN_EMAIL'),
+            'email' => config('app.ADMIN_PASSWORD'),
+        ])->each(function (User $user) {
             $user->assignRole('admin');
         });
 
-        User::factory(5)->create()->each(function (User $user) {
+        // Default tester user
+        User::factory(1)->create([
+            'name' => config('app.DEFAULT_TESTER_EMAIL'),
+            'email' => config('app.DEFAULT_TESTER_PASSWORD'),
+        ])->each(function (User $user) {
             $user->assignRole('tester');
             Test::factory(3)->create(['user_id' => $user->id]);
         });
 
-        User::factory(5)->create()->each(function (User $user) {
+        // Default test-taker user
+        User::factory(1)->create([
+            'name' => config('app.DEFAULT_TEST_TAKER_EMAIL'),
+            'email' => config('app.DEFAULT_TEST_TAKER_PASSWORD'),
+        ])->each(function (User $user) {
+            $user->assignRole('test-taker');
+        });
+
+        // Other tester users
+        User::factory(4)->create()->each(function (User $user) {
+            $user->assignRole('tester');
+            Test::factory(3)->create(['user_id' => $user->id]);
+        });
+
+        // Other test-taker users
+        User::factory(4)->create()->each(function (User $user) {
             $user->assignRole('test-taker');
         });
     }

@@ -16,8 +16,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RolesAndPermissionsSeeder::class,
+
+            // UserSeeder will create tests too for the users it creates
             UserSeeder::class,
-            // TestSeeder::class,
         ]);
     }
 }

@@ -14,6 +14,9 @@ class TestController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * TestResource is for single resources. TestResource::collection(), returns an
+     * AnonymousResourceCollection — which is the collection wrapper that handles pagination,
+     * metadata, and multiple items.
      */
     public function index(): AnonymousResourceCollection
     {

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\TestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+// returns the currently authenticated user
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');

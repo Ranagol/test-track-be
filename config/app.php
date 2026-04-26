@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'TestTrack'),
 
     /*
     |--------------------------------------------------------------------------
@@ -122,5 +122,12 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+
+    'ADMIN_EMAIL' => env('ADMIN_EMAIL', 'admin@yahoo.com'),
+    'ADMIN_PASSWORD' => env('ADMIN_PASSWORD', 'admin123'),
+    'DEFAULT_TESTER_EMAIL' => env('DEFAULT_TESTER_EMAIL', 'tester@yahoo.com'),
+    'DEFAULT_TESTER_PASSWORD' => env('DEFAULT_TESTER_PASSWORD', 'tester123'),
+    'DEFAULT_TEST_TAKER_EMAIL' => env('DEFAULT_TEST_TAKER_EMAIL', 'test-taker@yahoo.com'),
+    'DEFAULT_TEST_TAKER_PASSWORD' => env('DEFAULT_TEST_TAKER_PASSWORD', 'test-taker123'),
 
 ];
