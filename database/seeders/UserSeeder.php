@@ -13,39 +13,34 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Admin user
-        User::factory(1)->create([
-            'name' => config('app.ADMIN_EMAIL'),
-            'email' => config('app.ADMIN_PASSWORD'),
-        ])->each(function (User $user) {
-            $user->assignRole('admin');
-        });
+        // Admin
+        $admin = User::factory()->create([
+            'email' => config('app.ADMIN_EMAIL'),
+            'password' => config('app.ADMIN_PASSWORD'),
+        ]);
+        $admin->assignRole('admin');
 
-        // Default tester user
-        User::factory(1)->create([
-            'name' => config('app.DEFAULT_TESTER_EMAIL'),
-            'email' => config('app.DEFAULT_TESTER_PASSWORD'),
-        ])->each(function (User $user) {
+        // Default tester
+        $defaultTester = User::factory()->create([
+            'email' => config('app.DEFAULT_TESTER_EMAIL'),
+            'password' => config('app.DEFAULT_TESTER_PASSWORD'),
+        ]);
+        $defaultTester->assignRole('tester');
+
+        // Default test-taker
+        $defaultTestTaker = User::factory()->create([
+            'email' => config('app.DEFAULT_TEST_TAKER_EMAIL'),
+            'password' => config('app.DEFAULT_TEST_TAKER_PASSWORD'),
+        ]);
+        $defaultTestTaker->assignRole('test-taker');
+
+        // Other testers
+        User::factory(2)->create()->each(function (User $user) {
             $user->assignRole('tester');
-            Test::factory(3)->create(['user_id' => $user->id]);
-        });
-
-        // Default test-taker user
-        User::factory(1)->create([
-            'name' => config('app.DEFAULT_TEST_TAKER_EMAIL'),
-            'email' => config('app.DEFAULT_TEST_TAKER_PASSWORD'),
-        ])->each(function (User $user) {
-            $user->assignRole('test-taker');
-        });
-
-        // Other tester users
-        User::factory(4)->create()->each(function (User $user) {
-            $user->assignRole('tester');
-            Test::factory(3)->create(['user_id' => $user->id]);
         });
 
         // Other test-taker users
-        User::factory(4)->create()->each(function (User $user) {
+        User::factory(2)->create()->each(function (User $user) {
             $user->assignRole('test-taker');
         });
     }

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Test;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class TestSeeder extends Seeder
@@ -12,6 +13,10 @@ class TestSeeder extends Seeder
      */
     public function run(): void
     {
-        Test::factory(10)->create();
+        $testers = User::role('tester')->get();
+
+        foreach ($testers as $tester) {
+            Test::factory(3)->for($tester)->create();
+        }
     }
 }

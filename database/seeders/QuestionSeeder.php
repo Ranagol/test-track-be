@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Question;
+use App\Models\Test;
 use Illuminate\Database\Seeder;
 
 class QuestionSeeder extends Seeder
@@ -12,6 +13,10 @@ class QuestionSeeder extends Seeder
      */
     public function run(): void
     {
-        Question::factory(3)->create();
+        $tests = Test::all();
+
+        foreach ($tests as $test) {
+            Question::factory(3)->for($test)->create();
+        }
     }
 }
