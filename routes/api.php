@@ -10,14 +10,13 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('tests', TestController::class);
-
 /**
  * EncryptCookies intercepts and decrypts the cookie
  * StartSession loads the session data from the database using the decrypted cookie ID
  * auth:sanctum now has session data to verify against
  */
 Route::middleware([EncryptCookies::class, StartSession::class, 'auth:sanctum'])->group(function () {
+
     Route::get('/xxx', function (Request $request) {
         $t = 8;
 
@@ -28,4 +27,6 @@ Route::middleware([EncryptCookies::class, StartSession::class, 'auth:sanctum'])-
             ]
         );
     });
+
+    Route::apiResource('tests', TestController::class);
 });

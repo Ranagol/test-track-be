@@ -7,8 +7,8 @@ use App\Http\Requests\StoreTestRequest;
 use App\Http\Requests\UpdateTestRequest;
 use App\Http\Resources\TestResource;
 use App\Models\Test;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Response;
 
 class TestController extends Controller
 {
@@ -54,10 +54,10 @@ class TestController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Test $test): Response
+    public function destroy(Test $test): JsonResponse
     {
         $test->delete();
 
-        return response()->noContent();
+        return response()->json(['message' => 'Delete successful'], 200);
     }
 }
