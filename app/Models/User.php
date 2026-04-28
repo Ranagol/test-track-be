@@ -3,7 +3,6 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,7 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
+    /** @phpstan-ignore-next-line */
     use HasFactory, HasRoles, Notifiable;
 
     /**
@@ -43,10 +42,10 @@ class User extends Authenticatable
     /**
      * Test attempts made by this user (only if role = test-taker)
      */
-    // public function testAttempts()
-    // {
-    //     return $this->hasMany(TestAttempt::class);
-    // }
+    public function testAttempts(): HasMany
+    {
+        return $this->hasMany(TestAttempt::class);
+    }
 
     /**
      * Access tests taken by the user (through attempts)

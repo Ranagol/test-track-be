@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTestAttemptRequest;
 use App\Http\Requests\UpdateTestAttemptRequest;
 use App\Http\Resources\TestAttemptResource;
 use App\Models\TestAttempt;

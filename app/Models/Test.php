@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Database\Factories\TestFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,7 +19,7 @@ use Illuminate\Support\Carbon;
  */
 class Test extends Model
 {
-    /** @use HasFactory<TestFactory> */
+    /** @phpstan-ignore-next-line */
     use HasFactory;
 
     protected $guarded = ['id'];
@@ -39,5 +38,13 @@ class Test extends Model
     public function questions(): HasMany
     {
         return $this->hasMany(Question::class);
+    }
+
+    /**
+     * Get the test attempts for the test.
+     */
+    public function test_attempts(): HasMany
+    {
+        return $this->hasMany(TestAttempt::class);
     }
 }

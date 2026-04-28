@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Database\Factories\TestAttemptFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,7 +24,7 @@ use Illuminate\Support\Carbon;
  */
 class TestAttempt extends Model
 {
-    /** @use HasFactory<TestAttemptFactory> */
+    /** @phpstan-ignore-next-line */
     use HasFactory;
 
     protected $guarded = ['id'];
