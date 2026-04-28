@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\TestAttempt;
+use App\Models\Test;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class TestAttemptSeeder extends Seeder
@@ -12,6 +13,26 @@ class TestAttemptSeeder extends Seeder
      */
     public function run(): void
     {
-        TestAttempt::factory(3)->create();
+        $tests = Test::all();
+        $testTakers = User::role('test-taker')->get();
+
+        // Every testTaker tried to make an attempt for every test twice
+        foreach ($testTakers as $testTaker) {
+            foreach ($tests as $test) {
+
+                // First testAttempt
+                $testTaker->testAttempts()->create([
+                    'user_id' => $testTaker->id,
+                    'test_id' => $test->id,
+                ]);
+
+                // Second testAttempt, with a little better score
+                $testTaker->testAttempts()->create([
+                    'user_id' => $testTaker->id,
+                    'test_id' => $test->id,
+                    'score' => 90, // Just a placeholder score
+                ]);
+            }
+        }
     }
 }

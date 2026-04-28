@@ -19,20 +19,15 @@ class TestAttemptFactory extends Factory
      */
     public function definition(): array
     {
-        $startedAt = $this->faker->dateTimeBetween('-30 days', 'now');
-        /** @var \DateTime|null $finishedAt */
-        $finishedAt = $this->faker->optional(0.7)->dateTimeBetween($startedAt, 'now');
-        $completedAt = $finishedAt !== null ? $this->faker->optional(0.8)->dateTimeBetween($finishedAt, 'now') : null;
-
         return [
             'user_id' => User::factory(),
             'test_id' => Test::factory(),
-            'score' => $this->faker->optional(0.7)->numberBetween(0, 100),
-            'max_score' => $this->faker->optional(0.7)->numberBetween(60, 100),
-            'comment' => $this->faker->optional(0.3)->sentence(),
-            'started_at' => $startedAt,
-            'finished_at' => $finishedAt,
-            'completed_at' => $completedAt,
+            // This score is just a temporary placeholder. The score will depend on the answers...
+            'score' => 70,
+            'max_score' => 100,
+            'comment' => $this->faker->sentence(),
+            'started_at' => now()->subHour(),
+            'completed_at' => now(),
         ];
     }
 }

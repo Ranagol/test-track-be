@@ -46,31 +46,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(TestAttempt::class);
     }
-
-    /**
-     * Access tests taken by the user (through attempts)
-     * Not required, but very useful
-     */
-    // public function takenTests()
-    // {
-    //     return $this->belongsToMany(Test::class, 'test_attempts')
-    //         ->withPivot(['score', 'max_score', 'started_at', 'completed_at'])
-    //         ->withTimestamps();
-    // }
-
-    /*
-    |--------------------------------------------------------------------------
-    | HELPERS (OPTIONAL BUT VERY USEFUL)
-    |--------------------------------------------------------------------------
-    */
-
-    public function isTester(): bool
-    {
-        return $this->hasRole('tester');
-    }
-
-    public function isTestTaker(): bool
-    {
-        return $this->hasRole('test-taker');
-    }
 }

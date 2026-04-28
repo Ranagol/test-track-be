@@ -19,7 +19,6 @@ return new class extends Migration
             $table->integer('max_score')->nullable();
             $table->text('comment')->nullable();
             $table->timestamp('started_at')->nullable();
-            $table->timestamp('finished_at')->nullable();
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();
 

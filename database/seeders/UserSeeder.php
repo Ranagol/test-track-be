@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Test;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -15,6 +14,7 @@ class UserSeeder extends Seeder
     {
         // Admin
         $admin = User::factory()->create([
+            'name' => config('app.ADMIN_EMAIL'),
             'email' => config('app.ADMIN_EMAIL'),
             'password' => config('app.ADMIN_PASSWORD'),
         ]);
@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
 
         // Default tester
         $defaultTester = User::factory()->create([
+            'name' => config('app.DEFAULT_TESTER_EMAIL'),
             'email' => config('app.DEFAULT_TESTER_EMAIL'),
             'password' => config('app.DEFAULT_TESTER_PASSWORD'),
         ]);
@@ -29,6 +30,7 @@ class UserSeeder extends Seeder
 
         // Default test-taker
         $defaultTestTaker = User::factory()->create([
+            'name' => config('app.DEFAULT_TEST_TAKER_EMAIL'),
             'email' => config('app.DEFAULT_TEST_TAKER_EMAIL'),
             'password' => config('app.DEFAULT_TEST_TAKER_PASSWORD'),
         ]);
