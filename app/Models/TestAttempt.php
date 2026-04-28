@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Models;
+
+use Database\Factories\TestAttemptFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
+
+/**
+ * @property int $id
+ * @property int $user_id
+ * @property int $test_id
+ * @property int|null $score
+ * @property int|null $max_score
+ * @property string|null $comment
+ * @property Carbon|null $started_at
+ * @property Carbon|null $finished_at
+ * @property Carbon|null $completed_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ *
+ * @uses TestAttemptFactory
+ */
+class TestAttempt extends Model
+{
+    /** @use HasFactory<TestAttemptFactory> */
+    use HasFactory;
+
+    protected $guarded = ['id'];
+
+    protected $casts = [
+        'started_at' => 'datetime',
+        'finished_at' => 'datetime',
+        'completed_at' => 'datetime',
+    ];
+
+    /**
+     * Get the user that took this test attempt.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the test that was attempted.
+     */
+    public function test(): BelongsTo
+    {
+        return $this->belongsTo(Test::class);
+    }
+}

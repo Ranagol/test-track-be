@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AnswerOptionController;
 use App\Http\Controllers\Api\QuestionController;
+use App\Http\Controllers\Api\TestAttemptController;
 use App\Http\Controllers\Api\TestController;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Http\Request;
@@ -33,4 +34,5 @@ Route::middleware([EncryptCookies::class, StartSession::class, 'auth:sanctum'])-
     Route::apiResource('tests', TestController::class);
     Route::apiResource('questions', QuestionController::class);
     Route::apiResource('answer-options', AnswerOptionController::class);
+    Route::apiResource('test-attempts', TestAttemptController::class);
 });
