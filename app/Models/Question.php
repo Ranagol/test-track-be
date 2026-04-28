@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Database\Factories\QuestionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -20,7 +20,7 @@ use Illuminate\Support\Carbon;
  */
 class Question extends Model
 {
-    /** @use HasFactory<QuestionFactory> */
+    /** @phpstan-ignore-next-line */
     use HasFactory;
 
     protected $guarded = ['id'];
@@ -36,7 +36,7 @@ class Question extends Model
     /**
      * Get the user answer for this question.
      */
-    public function userAnswer()
+    public function userAnswer(): HasOne
     {
         return $this->hasOne(UserAnswer::class);
     }

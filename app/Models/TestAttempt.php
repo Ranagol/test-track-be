@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -53,7 +54,7 @@ class TestAttempt extends Model
     /**
      * Get the user answers for this test attempt.
      */
-    public function userAnswers()
+    public function userAnswers(): HasMany
     {
         return $this->hasMany(UserAnswer::class);
     }

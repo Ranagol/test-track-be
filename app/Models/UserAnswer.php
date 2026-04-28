@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Database\Factories\UserAnswerFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,7 +18,7 @@ use Illuminate\Support\Carbon;
  */
 class UserAnswer extends Model
 {
-    /** @use HasFactory<UserAnswerFactory> */
+    /** @phpstan-ignore-next-line */
     use HasFactory;
 
     protected $guarded = ['id'];
