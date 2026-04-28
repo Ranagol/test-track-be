@@ -29,7 +29,6 @@ class TestAttemptResource extends JsonResource
             'max_score' => $model->max_score,
             'comment' => $model->comment,
             'started_at' => $model->started_at,
-            'finished_at' => $model->finished_at,
             'completed_at' => $model->completed_at,
             'created_at' => $model->created_at,
             'updated_at' => $model->updated_at,
