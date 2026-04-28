@@ -15,7 +15,6 @@ use Illuminate\Support\Carbon;
  * @property int|null $max_score
  * @property string|null $comment
  * @property Carbon|null $started_at
- * @property Carbon|null $finished_at
  * @property Carbon|null $completed_at
  * @property Carbon $created_at
  * @property Carbon $updated_at

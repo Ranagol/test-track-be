@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Test;
+use App\Models\TestAttempt;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -21,13 +22,12 @@ class TestAttemptSeeder extends Seeder
             foreach ($tests as $test) {
 
                 // First testAttempt
-                $testTaker->testAttempts()->create([
+                TestAttempt::factory()->create([
                     'user_id' => $testTaker->id,
                     'test_id' => $test->id,
                 ]);
 
-                // Second testAttempt, with a little better score
-                $testTaker->testAttempts()->create([
+                TestAttempt::factory()->create([
                     'user_id' => $testTaker->id,
                     'test_id' => $test->id,
                     'score' => 90, // Just a placeholder score
