@@ -18,9 +18,6 @@ return new class extends Migration
             $table->boolean('is_correct')->default(false);
             $table->integer('answer_order')->nullable();
             $table->timestamps();
-
-            // Index for fast lookups of correct answers
-            $table->index(['question_id', 'is_correct']);
         });
     }
 
