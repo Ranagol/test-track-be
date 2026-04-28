@@ -30,4 +30,12 @@ class AnswerOption extends Model
     {
         return $this->belongsTo(Question::class);
     }
+
+    /**
+     * Get the user answer for this answer option.
+     */
+    public function userAnswer()
+    {
+        return $this->hasOne(UserAnswer::class);
+    }
 }

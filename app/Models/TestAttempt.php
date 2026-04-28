@@ -49,4 +49,12 @@ class TestAttempt extends Model
     {
         return $this->belongsTo(Test::class);
     }
+
+    /**
+     * Get the user answers for this test attempt.
+     */
+    public function userAnswers()
+    {
+        return $this->hasMany(UserAnswer::class);
+    }
 }

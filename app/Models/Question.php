@@ -32,4 +32,12 @@ class Question extends Model
     {
         return $this->belongsTo(Test::class);
     }
+
+    /**
+     * Get the user answer for this question.
+     */
+    public function userAnswer()
+    {
+        return $this->hasOne(UserAnswer::class);
+    }
 }
