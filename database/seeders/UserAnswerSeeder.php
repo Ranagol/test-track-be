@@ -13,14 +13,11 @@ class UserAnswerSeeder extends Seeder
      */
     public function run(): void
     {
-        // We will create user answers for the first test attempt of each test taker.
-        $testAttempts = TestAttempt::all();
+        $testAttempts = TestAttempt::with('test.questions')->get();
 
         foreach ($testAttempts as $testAttempt) {
-            $test = $testAttempt->test;
-            $questions = $test->questions;
 
-            foreach ($questions as $question) {
+            foreach ($testAttempt->test->questions as $question) {
                 UserAnswer::factory()->create([
                     'test_attempt_id' => $testAttempt->id,
                     'question_id' => $question->id,
