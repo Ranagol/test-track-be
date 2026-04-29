@@ -29,6 +29,9 @@ parameters:
           message: '/Call to an undefined method (Illuminate|Laravel)/'
         # Eloquent generic types (BelongsTo, HasMany, etc.)
         - message: '/return type with generic class.*does not specify its types/'
+        # Eloquent dynamic properties (accessed via __get)
+        - identifier: property.notFound
+          message: '/Access to an undefined property (Illuminate|App).*::\$\w+/'
 
     # Do not fail if ignored errors are not found
     reportUnmatchedIgnoredErrors: false
