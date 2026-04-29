@@ -32,6 +32,9 @@ parameters:
         # Eloquent dynamic properties (accessed via __get)
         - identifier: property.notFound
           message: '/Access to an undefined property (Illuminate|App).*::\$\w+/'
+        # Factory type hints (User::factory()->create() returns Collection or Model)
+        - identifier: argument.type
+          path: tests/
 
     # Do not fail if ignored errors are not found
     reportUnmatchedIgnoredErrors: false

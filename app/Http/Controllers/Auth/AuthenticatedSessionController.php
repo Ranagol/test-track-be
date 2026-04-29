@@ -19,8 +19,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        $t = 8;
-
         return response()->json(['message' => 'User logged in successfully']);
     }
 

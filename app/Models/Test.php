@@ -25,7 +25,7 @@ class Test extends Model
     protected $guarded = ['id'];
 
     /**
-     * Get the user that owns the test.
+     * Get the user (tester) that owns the test.
      */
     public function user(): BelongsTo
     {
@@ -43,7 +43,7 @@ class Test extends Model
     /**
      * Get the test attempts for the test.
      */
-    public function test_attempts(): HasMany
+    public function attempts(): HasMany
     {
         return $this->hasMany(TestAttempt::class);
     }
