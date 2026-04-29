@@ -7,8 +7,8 @@ use App\Http\Requests\StoreUserAnswerRequest;
 use App\Http\Requests\UpdateUserAnswerRequest;
 use App\Http\Resources\UserAnswerResource;
 use App\Models\UserAnswer;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Response;
 
 class UserAnswerController extends Controller
 {
@@ -58,10 +58,10 @@ class UserAnswerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UserAnswer $userAnswer): Response
+    public function destroy(UserAnswer $userAnswer): JsonResponse
     {
         $userAnswer->delete();
 
-        return response()->noContent();
+        return response()->json(['message' => 'UserAnswer deleted successfully']);
     }
 }

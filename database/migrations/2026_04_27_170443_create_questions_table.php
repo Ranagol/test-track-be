@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('test_id')->constrained()->cascadeOnDelete();
-            $table->text('text');
+            $table->foreignId('test_id')
+                ->constrained()
+                ->cascadeOnDelete()
+                ->comment('This is the test that the question belongs to.');
+            $table->text('text')->comment('The text of the question.');
             $table->string('image_path')->nullable();
             $table->boolean('allows_multiple_correct')->default(false);
             $table->integer('question_order')->nullable();

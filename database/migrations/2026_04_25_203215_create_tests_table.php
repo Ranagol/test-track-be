@@ -16,7 +16,9 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('test_code')->unique();
+            $table->string('test_code')
+                ->unique()
+                ->comment('This code will be used by test takers to access the test.');
             $table->timestamps();
         });
     }

@@ -13,10 +13,16 @@ return new class extends Migration
     {
         Schema::create('answer_options', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('question_id')->constrained()->cascadeOnDelete();
-            $table->string('text');
-            $table->boolean('is_correct')->default(false);
-            $table->integer('answer_order')->nullable();
+            $table->foreignId('question_id')
+                ->constrained()
+                ->cascadeOnDelete()
+                ->comment('This is the question that the answer option belongs to.');
+            $table->string('text')->comment('The text of the answer option.');
+            $table->boolean('is_correct')
+                ->default(false)
+                ->comment('Indicates whether this answer option is correct.');
+            $table->integer('answer_order')->nullable()
+                ->comment('The order of the answer option for display purposes.');
             $table->timestamps();
         });
     }
