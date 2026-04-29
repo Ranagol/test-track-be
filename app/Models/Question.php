@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
@@ -31,6 +32,14 @@ class Question extends Model
     public function test(): BelongsTo
     {
         return $this->belongsTo(Test::class);
+    }
+
+    /**
+     * Get the answer options for this question.
+     */
+    public function answerOptions(): HasMany
+    {
+        return $this->hasMany(AnswerOption::class);
     }
 
     /**

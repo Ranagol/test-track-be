@@ -21,17 +21,18 @@ class TestAttemptSeeder extends Seeder
         foreach ($testTakers as $testTaker) {
             foreach ($tests as $test) {
 
-                // First testAttempt
+                // First testAttempt for the given test and testTaker
                 TestAttempt::factory()->create([
                     'user_id' => $testTaker->id,
                     'test_id' => $test->id,
                 ]);
 
-                TestAttempt::factory()->create([
-                    'user_id' => $testTaker->id,
-                    'test_id' => $test->id,
-                    'score' => 90, // Just a placeholder score
-                ]);
+                // Second testAttempt for the given test and testTaker
+                // TestAttempt::factory()->create([
+                //     'user_id' => $testTaker->id,
+                //     'test_id' => $test->id,
+                //     'score' => 90, // Just a placeholder score
+                // ]);
             }
         }
     }

@@ -28,6 +28,11 @@ class UserSeeder extends Seeder
         ]);
         $defaultTester->assignRole('tester');
 
+        // Other testers
+        User::factory(2)->create()->each(function (User $user) {
+            $user->assignRole('tester');
+        });
+
         // Default test-taker
         $defaultTestTaker = User::factory()->create([
             'name' => config('app.DEFAULT_TEST_TAKER_EMAIL'),
@@ -35,11 +40,6 @@ class UserSeeder extends Seeder
             'password' => config('app.DEFAULT_TEST_TAKER_PASSWORD'),
         ]);
         $defaultTestTaker->assignRole('test-taker');
-
-        // Other testers
-        User::factory(2)->create()->each(function (User $user) {
-            $user->assignRole('tester');
-        });
 
         // Other test-taker users
         User::factory(2)->create()->each(function (User $user) {
