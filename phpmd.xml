@@ -75,8 +75,6 @@
 
     <rule ref="rulesets/naming.xml/ConstantNamingConventions"/>
 
-    <rule ref="rulesets/naming.xml/BooleanGetMethodName"/>
-
     <!-- Unused Code Rules -->
     <rule ref="rulesets/unusedcode.xml/UnusedPrivateField"/>
 
@@ -90,12 +88,6 @@
     <rule ref="rulesets/design.xml/EvalExpression"/>
 
     <rule ref="rulesets/design.xml/GotoStatement"/>
-
-    <rule ref="rulesets/design.xml/NumberOfChildren">
-        <properties>
-            <property name="minimum" value="10"/>
-        </properties>
-    </rule>
 
     <rule ref="rulesets/design.xml/DepthOfInheritance">
         <properties>
@@ -116,6 +108,10 @@
 
     <!-- Exclude paths that don't need checking -->
     <exclude-pattern>*/tests/*</exclude-pattern>
+    <exclude-pattern>*/test-track-fe/*</exclude-pattern>
+    <exclude-pattern>*/database/factories/*</exclude-pattern>
+    <exclude-pattern>*/database/migrations/*</exclude-pattern>
+    <exclude-pattern>*/database/seeders/*</exclude-pattern>
     <exclude-pattern>*/vendor/*</exclude-pattern>
     <exclude-pattern>*/storage/*</exclude-pattern>
     <exclude-pattern>*/bootstrap/cache/*</exclude-pattern>

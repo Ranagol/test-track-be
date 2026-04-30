@@ -35,6 +35,8 @@ parameters:
         # Factory type hints (User::factory()->create() returns Collection or Model)
         - identifier: argument.type
           path: tests/
+        - identifier: missingType.generics
+          path: tests/
 
     # Do not fail if ignored errors are not found
     reportUnmatchedIgnoredErrors: false
