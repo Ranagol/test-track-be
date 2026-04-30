@@ -27,6 +27,19 @@ services:
             - mailpit
             - selenium
             - meilisearch
+    frontend:
+        image: 'node:22-alpine'
+        working_dir: /var/www/frontend
+        ports:
+            - '${FRONTEND_PORT:-5174}:5174'
+        volumes:
+            - './test-track-fe:/var/www/frontend'
+        command: >
+            sh -c "if [ ! -d node_modules ] || [ -z \"$(ls -A node_modules 2>/dev/null)\" ]; then npm install; fi && npm run dev -- --host 0.0.0.0 --port 5174"
+        networks:
+            - sail
+        depends_on:
+            - laravel.test
     mysql:
         image: 'mysql:8.0'
         ports:
@@ -108,3 +121,4 @@ volumes:
         driver: local
     sail-meilisearch:
         driver: local
+
