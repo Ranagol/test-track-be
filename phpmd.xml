@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ruleset name="Laravel REST API Rules"
+
+<ruleset name="Phpmd Laravel REST API Rules"
          xmlns="http://pmd.sf.net/ruleset/1.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
@@ -8,6 +9,13 @@
         PHPMD rules configuration for Laravel REST API backends.
         Focuses on code quality, maintainability, and Laravel best practices.
     </description>
+
+    <!-- Checks duplicate code, poor abstractions, confusing logic -->
+    <!-- StaticAccess excluded: Laravel Facades and Eloquent rely on static access by design -->
+    <rule ref="rulesets/cleancode.xml">
+        <exclude name="StaticAccess"/>
+    </rule>
+
 
     <!-- Code Size Rules -->
     <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
@@ -20,20 +28,20 @@
 
     <rule ref="rulesets/codesize.xml/NPathComplexity">
         <properties>
-            <property name="minimum" value="200"/>
+            <property name="minimum" value="100"/>
         </properties>
     </rule>
 
     <rule ref="rulesets/codesize.xml/ExcessiveMethodLength">
         <properties>
-            <property name="minimum" value="100"/>
+            <property name="minimum" value="60"/>
             <property name="ignoreWhitespace" value="true"/>
         </properties>
     </rule>
 
     <rule ref="rulesets/codesize.xml/ExcessiveClassLength">
         <properties>
-            <property name="minimum" value="500"/>
+            <property name="minimum" value="300"/>
             <property name="ignoreWhitespace" value="true"/>
         </properties>
     </rule>
@@ -46,7 +54,7 @@
 
     <rule ref="rulesets/codesize.xml/ExcessivePublicCount">
         <properties>
-            <property name="minimum" value="15"/>
+            <property name="minimum" value="10"/>
         </properties>
     </rule>
 
@@ -77,16 +85,12 @@
 
     <!-- Unused Code Rules -->
     <rule ref="rulesets/unusedcode.xml/UnusedPrivateField"/>
-
     <rule ref="rulesets/unusedcode.xml/UnusedLocalVariable"/>
-
     <rule ref="rulesets/unusedcode.xml/UnusedPrivateMethod"/>
 
     <!-- Design Rules -->
     <rule ref="rulesets/design.xml/ExitExpression"/>
-
     <rule ref="rulesets/design.xml/EvalExpression"/>
-
     <rule ref="rulesets/design.xml/GotoStatement"/>
 
     <rule ref="rulesets/design.xml/DepthOfInheritance">
