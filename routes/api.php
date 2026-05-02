@@ -14,6 +14,19 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// This route is for testing purposes only, it should be removed in production
+Route::get('/xxx', function (Request $request) {
+
+    $t = 8;
+
+    return response()->json(
+        [
+            'message' => 'API is working',
+            'user' => $request->user(),
+        ]
+    );
+});
+
 /**
  * EncryptCookies intercepts and decrypts the cookie
  * StartSession loads the session data from the database using the decrypted cookie ID
@@ -21,16 +34,16 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
  */
 Route::middleware([EncryptCookies::class, StartSession::class, 'auth:sanctum'])->group(function () {
 
-    Route::get('/xxx', function (Request $request) {
-        $t = 8;
+    // Route::get('/xxx', function (Request $request) {
+    //     $t = 8;
 
-        return response()->json(
-            [
-                'message' => 'API is working',
-                'user' => $request->user(),
-            ]
-        );
-    });
+    //     return response()->json(
+    //         [
+    //             'message' => 'API is working',
+    //             'user' => $request->user(),
+    //         ]
+    //     );
+    // });
 
     Route::apiResource('tests', TestController::class);
     Route::apiResource('questions', QuestionController::class);

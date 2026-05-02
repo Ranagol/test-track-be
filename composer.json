@@ -43,12 +43,14 @@
     },
     "scripts": {
         "larastan": "vendor/bin/sail php vendor/bin/phpstan analyse --memory-limit=2G",
-        "phpmd": "vendor/bin/sail php vendor/bin/phpmd app xml phpmd.xml",
+        "phpmd": "XDEBUG_MODE=off vendor/bin/sail php vendor/bin/phpmd app ansi phpmd.xml",
         "pint": "vendor/bin/sail pint",
+        "phpunit": "vendor/bin/sail php vendor/bin/phpunit",
         "full-check": [
             "@larastan",
             "@phpmd",
-            "@pint"
+            "@pint",
+            "@phpunit"
         ],
         "setup": [
             "composer install",

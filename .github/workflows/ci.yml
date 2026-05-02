@@ -1,0 +1,120 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  # ───────────────────────────────────────────────────────────────────────────
+  # Laravel backend: style, static analysis, mess detection, tests
+  # ───────────────────────────────────────────────────────────────────────────
+  backend:
+    name: Laravel backend
+    runs-on: ubuntu-24.04
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: test_track
+          POSTGRES_USER: test_track_user
+          POSTGRES_PASSWORD: secret
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      APP_ENV: testing
+      APP_KEY: base64:0000000000000000000000000000000000000000000=
+      DB_CONNECTION: pgsql
+      DB_HOST: 127.0.0.1
+      DB_PORT: 5432
+      DB_DATABASE: test_track
+      DB_USERNAME: test_track_user
+      DB_PASSWORD: secret
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP 8.5
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.5"
+          extensions: mbstring, pdo, pdo_pgsql, pgsql, bcmath, ctype, fileinfo, json, openssl, tokenizer, xml
+          coverage: none
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Generate app key
+        run: php artisan key:generate --ansi
+
+      - name: Run migrations
+        run: php artisan migrate --force --ansi
+
+      - name: Pint — code style
+        run: ./vendor/bin/pint --test
+
+      - name: Larastan — static analysis
+        run: ./vendor/bin/phpstan analyse --memory-limit=2G --no-progress
+
+      - name: PHPMD — mess detector
+        run: XDEBUG_MODE=off ./vendor/bin/phpmd app ansi phpmd.xml
+
+      - name: PHPUnit — test suite
+        run: php artisan test --compact
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # Vue frontend: TypeScript type check
+  # ───────────────────────────────────────────────────────────────────────────
+  frontend:
+    name: Vue frontend
+    runs-on: ubuntu-24.04
+
+    defaults:
+      run:
+        working-directory: test-track-fe
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: test-track-fe/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript type check
+        run: npm run type-check
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # Deploy — only after both jobs pass, only on pushes to main
+  # ───────────────────────────────────────────────────────────────────────────
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-24.04
+    needs: [backend, frontend]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Deploy
+        run: echo "Successfully deployed"
