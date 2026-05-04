@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -33,10 +33,10 @@ class AnswerOption extends Model
     }
 
     /**
-     * Get the user answer for this answer option.
+     * Get the user answers for this answer option.
      */
-    public function userAnswer(): HasOne
+    public function userAnswers(): HasMany
     {
-        return $this->hasOne(UserAnswer::class);
+        return $this->hasMany(UserAnswer::class);
     }
 }

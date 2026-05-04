@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -43,10 +42,10 @@ class Question extends Model
     }
 
     /**
-     * Get the user answer for this question.
+     * Get the user answers for this question.
      */
-    public function userAnswer(): HasOne
+    public function userAnswers(): HasMany
     {
-        return $this->hasOne(UserAnswer::class);
+        return $this->hasMany(UserAnswer::class);
     }
 }

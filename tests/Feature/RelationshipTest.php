@@ -107,48 +107,68 @@ class RelationshipTest extends TestCase
         $this->assertEquals($test->id, $testFromRelationship->id);
     }
 
-    // // 6 UserAnswer - TestAttempt
-    // public function test_user_answer_test_attempt_relationship(): void
-    // {
-    //     // Compare user answers
-    //     $testAttempt = TestAttempt::factory()->for($this->testTaker)->create();
-    //     $userAnswers = UserAnswer::factory(2)->for($testAttempt)->create();
-    //     $userAnswersFromRelationship = $testAttempt->userAnswers()->get();
-    //     $this->compareCollections($userAnswers, $userAnswersFromRelationship);
+    // 6 UserAnswer - TestAttempt
+    public function test_user_answer_test_attempt_relationship(): void
+    {
+        // Create required related models
+        $question = Question::factory()->create();
+        $answerOption = AnswerOption::factory()->for($question)->create();
+        $testAttempt = TestAttempt::factory()->for($this->testTaker)->create();
 
-    //     // Compare test attempts
-    //     $userAnswer = $userAnswers->first();
-    //     $testAttemptFromRelationship = $userAnswer->testAttempt()->get();
-    //     $this->assertEquals($testAttempt->id, $testAttemptFromRelationship->id);
-    // }
+        // Create user answers with valid foreign keys
+        $userAnswers = UserAnswer::factory(2)
+            ->for($testAttempt)
+            ->for($question)
+            ->for($answerOption)
+            ->create();
 
-    // // 7 UserAnswer - Question
-    // public function test_user_answer_question_relationship(): void
-    // {
-    //     // Compare user answers
-    //     $question = Question::factory()->create();
-    //     $userAnswers = UserAnswer::factory(2)->for($question)->create();
-    //     $userAnswersFromRelationship = $question->userAnswers()->get();
-    //     $this->compareCollections($userAnswers, $userAnswersFromRelationship);
+        $userAnswersFromRelationship = $testAttempt->userAnswers()->get();
+        $this->compareCollections($userAnswers, $userAnswersFromRelationship);
 
-    //     // Compare questions
-    //     $userAnswer = $userAnswers->first();
-    //     $questionFromRelationship = $userAnswer->question()->get();
-    //     $this->assertEquals($question->id, $questionFromRelationship->id);
-    // }
+        // Compare test attempts
+        $userAnswer = $userAnswers->first();
+        $testAttemptFromRelationship = $userAnswer->testAttempt()->get();
+        $this->assertEquals($testAttempt->id, $testAttemptFromRelationship->first()->id);
+    }
 
-    // // 8 UserAnswer - AnswerOption
-    // public function test_user_answer_answer_option_relationship(): void
-    // {
-    //     // Compare user answers
-    //     $answerOption = AnswerOption::factory()->create();
-    //     $userAnswers = UserAnswer::factory(2)->for($answerOption)->create();
-    //     $userAnswersFromRelationship = $answerOption->userAnswers()->get();
-    //     $this->compareCollections($userAnswers, $userAnswersFromRelationship);
+    // 7 UserAnswer - Question
+    public function test_user_answer_question_relationship(): void
+    {
+        // Compare user answers
+        // Create required related models
+        $question = Question::factory()->create();
+        $answerOption = AnswerOption::factory()->for($question)->create();
+        $testAttempt = TestAttempt::factory()->for($this->testTaker)->create();
 
-    //     // Compare answer options
-    //     $userAnswer = $userAnswers->first();
-    //     $answerOptionFromRelationship = $userAnswer->answerOption()->get();
-    //     $this->assertEquals($answerOption->id, $answerOptionFromRelationship->id);
-    // }
+        // Create user answers with valid foreign keys
+        $userAnswers = UserAnswer::factory(2)
+            ->for($question)
+            ->for($answerOption)
+            ->for($testAttempt)
+            ->create();
+
+        $userAnswersFromRelationship = $question->userAnswers()->get();
+        $this->compareCollections($userAnswers, $userAnswersFromRelationship);
+
+        // Compare questions
+        $userAnswer = $userAnswers->first();
+        $questionFromRelationship = $userAnswer->question()->first();
+        $this->assertEquals($question->id, $questionFromRelationship->first()->id);
+    }
+
+    // 8 UserAnswer - AnswerOption
+    public function test_user_answer_answer_option_relationship(): void
+    {
+        // Compare user answers
+        $question = Question::factory()->create();
+        $answerOption = AnswerOption::factory()->for($question)->create();
+        $userAnswers = UserAnswer::factory(2)->for($answerOption)->create();
+        $userAnswersFromRelationship = $answerOption->userAnswers()->get();
+        $this->compareCollections($userAnswers, $userAnswersFromRelationship);
+
+        // Compare answer options
+        $userAnswer = $userAnswers->first();
+        $answerOptionFromRelationship = $userAnswer->answerOption()->get();
+        $this->assertEquals($answerOption->id, $answerOptionFromRelationship->first()->id);
+    }
 }
