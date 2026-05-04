@@ -3,7 +3,7 @@ description: "Setup PHP + Composer dependencies with caching"
 
 inputs:
   php-version:
-    description: "PHP version to set up (e.g., 8.5)"
+    description: "PHP version to set up: 8.5"
     default: "8.5"
     required: true
 
@@ -20,6 +20,8 @@ runs:
     - name: Cache Composer
       uses: actions/cache@v4
       with:
+        # vendor: if dependencies did not change, reuse the vendor dir
+        # ~/.composer/cache: Composer's cache dir, to speed up installation, when install is needed
         path: |
           vendor
           ~/.composer/cache

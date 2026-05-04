@@ -6,6 +6,7 @@ on:
   pull_request:
     branches: ["main"]
 
+# Don’t run multiple CI workflows for the same branch/ref at the same time. If a new one starts, cancel the old one.
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -21,8 +22,6 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: ./.github/actions/php-setup
-        with:
-          php-version: "8.5"
 
       - run: ./vendor/bin/pint --test
 
@@ -35,8 +34,6 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: ./.github/actions/php-setup
-        with:
-          php-version: "8.5"
 
       - run: ./vendor/bin/phpstan analyse --memory-limit=2G --no-progress
 
@@ -49,8 +46,6 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: ./.github/actions/php-setup
-        with:
-          php-version: "8.5"
 
       - run: XDEBUG_MODE=off ./vendor/bin/phpmd app ansi phpmd.xml
 
@@ -61,24 +56,25 @@ jobs:
     runs-on: ubuntu-24.04
 
     services:
-      postgres:
-        image: postgres:17
+      mysql:
+        image: mysql:8.0
         env:
-          POSTGRES_DB: test_track
-          POSTGRES_USER: test_track_user
-          POSTGRES_PASSWORD: secret
+          MYSQL_DATABASE: test_track
+          MYSQL_USER: test_track_user
+          MYSQL_PASSWORD: secret
+          MYSQL_ROOT_PASSWORD: root
         ports:
-          - 5432:5432
+          - 3306:3306
         options: >-
-          --health-cmd="pg_isready"
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=5
+          --health-retries=10
 
     env:
       APP_ENV: testing
       APP_KEY: base64:0000000000000000000000000000000000000000000=
-      DB_CONNECTION: pgsql
+      DB_CONNECTION: mysql
       DB_HOST: 127.0.0.1
       DB_PORT: 5432
       DB_DATABASE: test_track
@@ -89,8 +85,6 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: ./.github/actions/php-setup
-        with:
-          php-version: "8.5"
 
       - run: php artisan key:generate --ansi
       - run: php artisan migrate --force --ansi
@@ -102,17 +96,10 @@ jobs:
   frontend:
     runs-on: ubuntu-24.04
 
-    defaults:
-      run:
-        working-directory: test-track-fe
-
     steps:
       - uses: actions/checkout@v4
 
       - uses: ./.github/actions/node-setup
-        with:
-          node-version: "22"
-          working-directory: "test-track-fe"
 
       - run: npm run type-check
 

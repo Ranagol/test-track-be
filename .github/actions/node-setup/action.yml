@@ -3,11 +3,13 @@ description: "Setup Node.js with npm caching"
 
 inputs:
   node-version:
-    description: "Node.js version to set up (e.g., 18)"
-    required: true
+    description: "Node.js version"
+    required: false
+    default: "22"
+
   working-directory:
-    description: "Working directory for npm commands"
-    required: true
+    description: "Frontend working directory"
+    required: false
     default: "./test-track-fe"
 
 runs:
