@@ -1,5 +1,16 @@
 <template>
     <div>
+
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+            <el-menu-item index="1">Processing Center</el-menu-item>
+            <el-menu-item index="2">Processing Center2</el-menu-item>
+            <el-menu-item index="3" disabled>Info</el-menu-item>
+            <el-menu-item index="4">Orders</el-menu-item>
+        </el-menu>
+
+
+
+
         <h1>Test Track Frontend</h1>
         <p v-if="loading">Loading...</p>
         <p v-else-if="isAuthenticated">Welcome, {{ user?.name }}!</p>
@@ -14,10 +25,25 @@
     setup
     lang="ts"
 >
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useAuth } from '@/composables/useAuth';
 
 const { user, isAuthenticated, loading, initAuth, signIn, signOut } = useAuth();
+
+
+
+
+const activeIndex = ref('1')
+const activeIndex2 = ref('1')
+const handleSelect = (key: string, keyPath: string[]) => {
+    console.log(key, keyPath)
+}
+
+
+
+
+
+
 
 onMounted(async () => {
     await initAuth();
