@@ -1,0 +1,31 @@
+name: "PHP Setup (Laravel)"
+description: "Setup PHP + Composer dependencies with caching"
+
+inputs:
+  php-version:
+    description: "PHP version to set up (e.g., 8.5)"
+    default: "8.5"
+    required: true
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ inputs.php-version }}
+        extensions: mbstring, pdo, pdo_pgsql, pgsql, bcmath, ctype, fileinfo, json, openssl, tokenizer, xml
+
+    - name: Cache Composer
+      uses: actions/cache@v4
+      with:
+        path: |
+          vendor
+          ~/.composer/cache
+        key: composer-ci-v1-${{ hashFiles('composer.lock') }}
+        restore-keys: composer-ci-v1-
+
+    - name: Install dependencies
+      shell: bash
+      run: composer install --no-interaction --prefer-dist --optimize-autoloader
