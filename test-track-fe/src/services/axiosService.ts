@@ -23,7 +23,7 @@ const appAxios = axios.create({
  */
 appAxios.interceptors.response.use(
     response => {
-        // If the request was successful, just return the response
+        // If the request was successful, just return/give the response to Vue components
         return response;
     },
 

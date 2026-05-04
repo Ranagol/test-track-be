@@ -1,3 +1,4 @@
+# Backend
 *.log
 .DS_Store
 .env
@@ -24,3 +25,15 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Frontend
+test-track-fe/node_modules
+test-track-fe/dist
+test-track-fe/.vite
+test-track-fe/.vscode
+test-track-fe/.env
+test-track-fe/.DS_Store
+test-track-fe/npm-debug.log*
+test-track-fe/yarn-debug.log*
+test-track-fe/yarn-error.log*
+test-track-fe/pnpm-debug.log*
