@@ -15,6 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->api(prepend: [
+
+            // This middleware will ensure that the API routes are stateful, which means that they
+            // will be able to access the session and cookies. This is necessary for authentication
+            // and other features that require state.
             EnsureFrontendRequestsAreStateful::class,
         ]);
 

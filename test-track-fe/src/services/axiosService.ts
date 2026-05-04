@@ -1,3 +1,8 @@
+/**
+ * We format here the axios object, according to app needs.
+ */
+
+
 // import router from '@/router';//TODO ANDOR router must be set up here later
 import axios, { AxiosError } from 'axios';
 
@@ -11,7 +16,6 @@ const appAxios = axios.create({
         'X-Requested-With': 'XMLHttpRequest',
         'Accept': 'application/json',
     },
-    withCredentials: true,
     timeout: 10000,
     xsrfCookieName: 'XSRF-TOKEN',
     xsrfHeaderName: 'X-XSRF-TOKEN',

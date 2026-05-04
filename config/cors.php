@@ -15,10 +15,12 @@ return [
     |
     */
 
+    // Ensures CSRF endpoint and auth routes are CORS-enabled.
     'paths' => ['*'],
 
     'allowed_methods' => ['*'],
 
+    // Must match your Vue dev server exactly.
     'allowed_origins' => [env('FRONTEND_URL', 'http://localhost:5174')],
 
     'allowed_origins_patterns' => [],
@@ -29,6 +31,7 @@ return [
 
     'max_age' => 0,
 
+    // REQUIRED so cookies (session + CSRF) are sent.
     'supports_credentials' => true,
 
 ];
