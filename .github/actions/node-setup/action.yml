@@ -1,36 +1,17 @@
 name: "Node Setup"
 description: "Setup Node.js with npm caching"
 
-inputs:
-  node-version:
-    description: "Node.js version"
-    required: false
-    default: "22"
-
-  working-directory:
-    description: "Frontend working directory"
-    required: false
-    default: "test-track-fe"
-
 runs:
   using: "composite"
-
   steps:
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
+    - uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node-version }}
         cache: npm
-        cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
-
-    - name: Cache npm global store
-      uses: actions/cache@v4
-      with:
-        path: ~/.npm
-        key: npm-ci-v1-${{ hashFiles(format('{0}/package-lock.json', inputs.working-directory)) }}
-        restore-keys: npm-ci-v1-
+        cache-dependency-path: package-lock.json
 
     - name: Install dependencies
       shell: bash
-      working-directory: ${{ inputs.working-directory }}
-      run: npm ci
+      run: |
+        cd test-track-fe
+        npm ci

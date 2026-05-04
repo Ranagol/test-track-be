@@ -101,7 +101,7 @@ jobs:
 
       - uses: ./.github/actions/node-setup
 
-      - run: npm run type-check
+      - run: cd test-track-fe && npm run type-check
 
   # ─────────────────────────────
   # DEPLOY
