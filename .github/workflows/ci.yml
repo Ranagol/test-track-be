@@ -76,7 +76,7 @@ jobs:
       APP_KEY: base64:0000000000000000000000000000000000000000000=
       DB_CONNECTION: mysql
       DB_HOST: 127.0.0.1
-      DB_PORT: 5432
+      DB_PORT: 3306
       DB_DATABASE: test_track
       DB_USERNAME: test_track_user
       DB_PASSWORD: secret

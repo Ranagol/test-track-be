@@ -10,7 +10,7 @@ inputs:
   working-directory:
     description: "Frontend working directory"
     required: false
-    default: "./test-track-fe"
+    default: "test-track-fe"
 
 runs:
   using: "composite"
