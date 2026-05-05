@@ -1,8 +1,6 @@
 <template>
     <div>
-        <h1 class="text-3xl font-bold underline">
-            Hello world!
-        </h1>
+
 
         <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
             <el-menu-item index="1">Processing Center</el-menu-item>
@@ -11,7 +9,9 @@
             <el-menu-item index="4">Orders</el-menu-item>
         </el-menu>
 
-
+        <h1 class="text-3xl font-bold underline">
+            Hello world!
+        </h1>
 
 
         <h1>Test Track Frontend</h1>
