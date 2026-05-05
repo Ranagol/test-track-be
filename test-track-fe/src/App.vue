@@ -1,10 +1,13 @@
 <template>
     <div>
+        <h1 class="text-3xl font-bold underline">
+            Hello world!
+        </h1>
 
         <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
             <el-menu-item index="1">Processing Center</el-menu-item>
             <el-menu-item index="2">Processing Center2</el-menu-item>
-            <el-menu-item index="3" disabled>Info</el-menu-item>
+            <el-menu-item index="3">Info</el-menu-item>
             <el-menu-item index="4">Orders</el-menu-item>
         </el-menu>
 
@@ -34,7 +37,6 @@ const { user, isAuthenticated, loading, initAuth, signIn, signOut } = useAuth();
 
 
 const activeIndex = ref('1')
-const activeIndex2 = ref('1')
 const handleSelect = (key: string, keyPath: string[]) => {
     console.log(key, keyPath)
 }
