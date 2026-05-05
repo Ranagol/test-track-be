@@ -20,6 +20,13 @@
         <p v-else>Please log in.</p>
         <button @click="quickLogin" v-if="!isAuthenticated">Quick Login</button>
         <button @click="signOut" v-if="isAuthenticated">Sign Out</button>
+
+        <br>
+        <RouterLink to="/users">Users</RouterLink>
+        <RouterLink to="/tests">Tests</RouterLink>
+
+        <RouterView></RouterView>
+
     </div>
 </template>
 
