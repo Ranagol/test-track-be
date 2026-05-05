@@ -27,6 +27,8 @@
 
         <RouterView></RouterView>
 
+        <h3>{{ testStore.message }}</h3>
+
     </div>
 </template>
 
@@ -37,10 +39,11 @@
 >
 import { onMounted, ref } from 'vue';
 import { useAuth } from '@/composables/useAuth';
+import { useTestStore } from './stores/tests';
 
 const { user, isAuthenticated, loading, initAuth, signIn, signOut } = useAuth();
 
-
+const testStore = useTestStore();
 
 
 const activeIndex = ref('1')
