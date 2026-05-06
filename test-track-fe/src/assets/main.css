@@ -20,8 +20,10 @@
     --color-surface: #111827;
     --color-surface-soft: #1f2937;
 
+    /* Text */
     --color-text: #3f434b;
     --color-muted: #9ca3af;
+
 
     /* Borders */
     --color-border: #374151;
@@ -88,8 +90,4 @@ body {
   margin: 0 auto;
 }
 
-/* Reset common elements */
-h1, h2, h3, h4, h5, h6, p, ul, ol, dl {
-  margin: 0;
-  padding: 0;
-}
+
