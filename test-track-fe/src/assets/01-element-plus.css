@@ -215,4 +215,30 @@
 
     --el-dropdown-menu-box-shadow: var(--shadow);
 
+
+    /* Navbar/Navitation menu colors */
+
+    :root {
+        /* Menu background */
+        --el-menu-bg-color: var(--color-surface);
+
+        /* Text colors */
+        --el-menu-text-color: var(--color-text);
+        --el-menu-hover-text-color: var(--color-primary);
+
+        /* Active item */
+        --el-menu-active-color: var(--color-primary);
+
+        /* Border (optional but often used) */
+        --el-menu-border-color: var(--color-border);
+    }
+
+    /*
+    This combo on the navbar looked good:
+    background-color="#545c64"
+        text-color="#fff"
+        active-text-color="#ffd04b";
+
+    */
+
 }
