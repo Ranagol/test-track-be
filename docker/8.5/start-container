@@ -1,25 +1,34 @@
 #!/usr/bin/env bash
 
+# 1. Validate the supervisor user
 if [ "$SUPERVISOR_PHP_USER" != "root" ] && [ "$SUPERVISOR_PHP_USER" != "sail" ]; then
     echo "You should set SUPERVISOR_PHP_USER to either 'sail' or 'root'."
     exit 1
 fi
 
+# 2. Set the sail user's UID (matches your host machine)
 if [ ! -z "$WWWUSER" ]; then
-    usermod -u $WWWUSER sail
+    usermod -u "$WWWUSER" sail
 fi
 
+# 3. Set up composer home with appropriate permissions for the sail user
 if [ ! -d /.composer ]; then
     mkdir /.composer
 fi
-
 chmod -R ugo+rw /.composer
 
+# Ensure storage directory is writable by sail user for view compilation
+if [ -d /var/www/html/storage ]; then
+    chmod -R 775 /var/www/html/storage
+    chown -R "$WWWUSER:$WWWUSER" /var/www/html/storage
+fi
+
+# 5. Finally, start the application (supervisord or a custom command)
 if [ $# -gt 0 ]; then
     if [ "$SUPERVISOR_PHP_USER" = "root" ]; then
         exec "$@"
     else
-        exec gosu $WWWUSER "$@"
+        exec gosu "$WWWUSER" "$@"
     fi
 else
     exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf

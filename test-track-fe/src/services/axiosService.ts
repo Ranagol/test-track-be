@@ -34,14 +34,46 @@ appAxios.interceptors.response.use(
     // If the request failed, handle the error
     (error: AxiosError) => {
 
-        if (error.response?.status === 401 || error.response?.status === 419) {
-            // session expired — redirect to login
-            // user.value = null; // if using useAuth composable
-            router.push({ name: 'login' });
+        /**
+         * This is a network error.
+         */
+        if (!error.response) {
+            console.warn('Network error or server unreachable')
+            alert('Network error');
+
+            return Promise.reject({
+                type: 'NETWORK_ERROR',
+                original: error,
+            })
         }
-        console.error('An error occurred - interceptor -:', error);
-        router.push({ name: 'error' });//TODO ANDOR make this error page later
-        return Promise.reject(error);
+
+        const status = error.response?.status
+
+        // 2. Auth errors
+        if (status === 401 || status === 419) {
+            const currentRoute = router.currentRoute.value
+
+            // For the case when the user is already on the login page, and tries to fill the login form
+            // Don't redirect if already on login page (allow invalid credentials to be shown in form)
+            if (currentRoute.name !== 'login') {
+                router.push({ name: 'login' })
+                console.error('Authentication error, redirecting to login page.')
+            }
+
+            return Promise.reject({
+                type: 'AUTH_ERROR',
+                original: error,
+            })
+        }
+
+        // 3. Everything else (500, 422, etc.)
+        console.error(`API error with status ${status}`)
+
+        return Promise.reject({
+            type: 'API_ERROR',
+            status,
+            original: error,
+        })
     }
 );
 
