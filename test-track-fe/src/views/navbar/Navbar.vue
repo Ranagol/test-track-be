@@ -4,18 +4,18 @@
         class="el-menu-demo"
         mode="horizontal"
         router
-        
     >
         <el-menu-item index="/">Home</el-menu-item>
         <el-menu-item index="/tests">Tests</el-menu-item>
         <el-menu-item index="/users">Users</el-menu-item>
         <el-menu-item index="/login">Login</el-menu-item>
         <el-menu-item index="/register">Register</el-menu-item>
+        <Logout />
     </el-menu>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import Logout from '@/views/navbar/Logout.vue';
 
 
 </script>
@@ -25,5 +25,9 @@ import { ref } from 'vue';
 /* Set the height of the horizontal navigation menu */
 .el-menu--horizontal {
   --el-menu-horizontal-height: 1.9rem;
+}
+
+.el-menu--horizontal > .el-menu-item:nth-child(5) {
+  margin-right: auto;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <Navbar></Navbar>
+    <Navbar/>
     <RouterView></RouterView>
 </template>
 
@@ -7,7 +7,7 @@
     setup
     lang="ts"
 >
-import Navbar from '@/components/Navbar.vue';
+import Navbar from '@/views/navbar/Navbar.vue';
 import { onMounted } from 'vue';
 import { useAuthStore } from './stores/useAuthStore';
 import { getCsrfCookie } from '@/services/authService';

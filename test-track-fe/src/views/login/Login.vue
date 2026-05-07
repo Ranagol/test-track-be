@@ -2,11 +2,10 @@
     <div class="grid place-items-center">
 
         <h1 class="text-2xl mt-24">Login</h1>
-        <h1 v-if="authStore.user">Welcome, {{ authStore.user.name }}</h1>
-        <h1 v-else>Please log in</h1>
 
         <el-form
             ref="formRef"
+            :model="formModel"
             :rules="rules"
             class="w-full max-w-sm mt-3"
             label-position="top"
@@ -19,7 +18,7 @@
             >
 
                 <el-input
-                    v-model="email"
+                    v-model="formModel.email"
                     placeholder="Enter your email"
                 />
 
@@ -32,7 +31,7 @@
             >
 
                 <el-input
-                    v-model="password"
+                    v-model="formModel.password"
                     placeholder="Enter your password"
                     type="password"
                 />
@@ -65,15 +64,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useRouter } from 'vue-router';
 
 const router = useRouter()
 const authStore = useAuthStore()
 const formRef = ref()
-const email = ref('');
-const password = ref('');
+const formModel = reactive({
+    email: '',
+    password: ''
+});
 const rules = {
     email: [
         { required: true, message: 'Email is required', trigger: 'blur' },
@@ -94,12 +95,13 @@ const handleLogin = async () => {
     generalError.value = ''
 
     const valid = await formRef.value.validate()
+
     if (!valid) return
 
     try {
         await authStore.signIn({
-            email: email.value,
-            password: password.value
+            email: formModel.email,
+            password: formModel.password
         })
 
         router.push('/')
