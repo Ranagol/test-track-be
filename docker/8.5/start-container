@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
-# 1. Validate the supervisor user
+# 1. Check if the user is root or sail, otherwise exit with an error
 if [ "$SUPERVISOR_PHP_USER" != "root" ] && [ "$SUPERVISOR_PHP_USER" != "sail" ]; then
     echo "You should set SUPERVISOR_PHP_USER to either 'sail' or 'root'."
     exit 1
 fi
 
-# 2. Set the sail user's UID (matches your host machine)
+# 2. If the environment variable WWWUSER exists, change the UID of the sail user to match it.
 if [ ! -z "$WWWUSER" ]; then
     usermod -u "$WWWUSER" sail
 fi
 
-# 3. Set up composer home with appropriate permissions for the sail user
+# 3. This block prepares/creates a shared Composer directory and makes it writable.
 if [ ! -d /.composer ]; then
     mkdir /.composer
 fi
@@ -31,5 +31,6 @@ if [ $# -gt 0 ]; then
         exec gosu "$WWWUSER" "$@"
     fi
 else
+    # Run supervisord as the specified user
     exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
 fi
