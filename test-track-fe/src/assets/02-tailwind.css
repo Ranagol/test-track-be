@@ -1,0 +1,79 @@
+
+@theme {
+
+    /* =====================================================
+       COLORS
+       Generates:
+       bg-primary
+       text-primary
+       border-primary
+       etc.
+       ===================================================== */
+
+    --color-primary: var(--color-primary);
+    --color-secondary: var(--color-secondary);
+
+    --color-success: var(--color-success);
+    --color-warning: var(--color-warning);
+    --color-danger: var(--color-danger);
+    --color-info: var(--color-info);
+
+    --color-bg: var(--color-bg);
+
+    --color-surface: var(--color-surface);
+    --color-surface-soft: var(--color-surface-soft);
+    --color-surface-mute: var(--color-surface-mute);
+
+    --color-text: var(--color-text);
+    --color-text-soft: var(--color-text-soft);
+    --color-muted: var(--color-muted);
+
+    --color-border: var(--color-border);
+    --color-border-light: var(--color-border-light);
+
+    /* =====================================================
+       INPUT COLORS
+       ===================================================== */
+
+    --color-input-bg: var(--color-input-bg);
+    --color-input-border: var(--color-input-border);
+    --color-input-focus: var(--color-input-focus);
+
+    /* =====================================================
+       DISABLED COLORS
+       ===================================================== */
+
+    --color-disabled-bg: var(--color-disabled-bg);
+    --color-disabled-border: var(--color-disabled-border);
+    --color-text-disabled: var(--color-text-disabled);
+
+    /* =====================================================
+       OVERLAY
+       ===================================================== */
+
+    --color-overlay: var(--color-overlay);
+
+    /* =====================================================
+       RADIUS
+       Generates:
+       rounded-sm
+       rounded
+       rounded-lg
+       ===================================================== */
+
+    --radius-sm: var(--radius-sm);
+    --radius: var(--radius);
+    --radius-lg: var(--radius-lg);
+
+    /* =====================================================
+       SHADOWS
+       Generates:
+       shadow-sm
+       shadow
+       shadow-lg
+       ===================================================== */
+
+    --shadow-sm: var(--shadow-sm);
+    --shadow: var(--shadow);
+    --shadow-lg: var(--shadow-lg);
+}

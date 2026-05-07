@@ -32,17 +32,17 @@ appAxios.interceptors.response.use(
     },
 
     // If the request failed, handle the error
-    // (error: AxiosError) => {
+    (error: AxiosError) => {
 
-    //     if (error.response?.status === 401 || error.response?.status === 419) {
-    //         // session expired — redirect to login
-    //         // user.value = null; // if using useAuth composable
-    //         router.push({ name: 'login' });
-    //     }
-    //     console.error('An error occurred - interceptor -:', error);
-    //     router.push({ name: 'error' });//TODO ANDOR make this error page later
-    //     return Promise.reject(error);
-    // }
+        if (error.response?.status === 401 || error.response?.status === 419) {
+            // session expired — redirect to login
+            // user.value = null; // if using useAuth composable
+            router.push({ name: 'login' });
+        }
+        console.error('An error occurred - interceptor -:', error);
+        router.push({ name: 'error' });//TODO ANDOR make this error page later
+        return Promise.reject(error);
+    }
 );
 
 export default appAxios;

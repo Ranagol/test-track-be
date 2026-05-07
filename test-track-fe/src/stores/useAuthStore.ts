@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import axios from 'axios'
 import type { LoginPayload } from '@/types/types';
 import type { User } from '@/types/types';
 import { fetchCurrentUser, login, logout } from '@/services/authService';
@@ -30,7 +29,7 @@ export const useAuthStore = defineStore('auth', {
          * Promise<void> means: This function runs asynchronously, but when it finishes, it does NOT
          * return any data.
          */
-        async initAuth(): Promise<void> {
+        async getCurrentUser(): Promise<void> {
 
             // If const initialized is true, return.
             if (this.initialized) {

@@ -1,0 +1,15 @@
+/* =========================================================
+   3. GLOBAL PAGE STYLING
+   ========================================================= */
+
+body {
+    background: var(--color-bg);
+    color: var(--color-text);
+
+    padding: 0 2rem;
+
+    font-family:
+        Inter,
+        system-ui,
+        sans-serif;
+}

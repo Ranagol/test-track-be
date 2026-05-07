@@ -1,0 +1,218 @@
+
+/* =========================================================
+   2. ELEMENT PLUS VARIABLE MAPPING
+   ========================================================= */
+
+:root {
+
+    /* =====================================================
+       PRIMARY BRAND
+       IMPORTANT:
+       Element Plus uses MANY generated shades internally.
+       If these are missing, hover/focus states look broken.
+       ===================================================== */
+
+    --el-color-primary: var(--color-primary);
+
+    --el-color-primary-light-3: #6366f1;
+    --el-color-primary-light-5: #818cf8;
+    --el-color-primary-light-7: #a5b4fc;
+    --el-color-primary-light-8: #c7d2fe;
+    --el-color-primary-light-9: #e0e7ff;
+
+    --el-color-primary-dark-2: var(--color-primary-hover);
+
+
+    /* =====================================================
+       STATUS COLORS
+       ===================================================== */
+
+    --el-color-success: var(--color-success);
+    --el-color-warning: var(--color-warning);
+    --el-color-danger: var(--color-danger);
+    --el-color-info: var(--color-info);
+
+
+    /* =====================================================
+       TEXT COLORS
+       IMPORTANT:
+       These affect ALL typography inside Element Plus.
+       ===================================================== */
+
+    --el-text-color-primary: var(--color-text);
+
+    --el-text-color-regular: var(--color-text);
+
+    --el-text-color-secondary: var(--color-text-soft);
+
+    --el-text-color-placeholder: var(--color-muted);
+
+    --el-text-color-disabled: var(--color-text-disabled);
+
+
+    /* =====================================================
+       BACKGROUNDS
+       ===================================================== */
+
+    /*
+      Main app background
+    */
+    --el-bg-color: var(--color-bg);
+
+    /*
+      Page-level background
+    */
+    --el-bg-color-page: var(--color-bg);
+
+    /*
+      Dialogs, dropdowns, popovers
+    */
+    --el-bg-color-overlay: var(--color-surface);
+
+
+    /* =====================================================
+       SURFACE / FILLS
+       IMPORTANT:
+       Used heavily by inputs, tables, cards, menus.
+       ===================================================== */
+
+    --el-fill-color: var(--color-surface-soft);
+
+    --el-fill-color-light: var(--color-surface-soft);
+
+    --el-fill-color-lighter: var(--color-surface-mute);
+
+    --el-fill-color-extra-light: var(--color-surface-mute);
+
+    /*
+      Blank/card surfaces
+    */
+    --el-fill-color-blank: var(--color-surface);
+
+
+    /* =====================================================
+       BORDERS
+       IMPORTANT:
+       Controls ALL component borders.
+       ===================================================== */
+
+    --el-border-color: var(--color-border);
+
+    --el-border-color-light: var(--color-border-light);
+
+    --el-border-color-lighter: var(--color-border-light);
+
+    --el-border-color-extra-light: var(--color-border-light);
+
+    --el-border-color-dark: var(--color-border);
+
+
+    /* =====================================================
+       INPUTS
+       IMPORTANT:
+       Highly visible in forms.
+       ===================================================== */
+
+    --el-input-bg-color: var(--color-input-bg);
+
+    --el-input-border-color: var(--color-input-border);
+
+    --el-input-hover-border-color: var(--color-primary);
+
+    --el-input-focus-border-color: var(--color-input-focus);
+
+    --el-input-text-color: var(--color-text);
+
+    --el-input-placeholder-color: var(--color-muted);
+
+
+    /* =====================================================
+       DISABLED STATES
+       ===================================================== */
+
+    --el-disabled-bg-color: var(--color-disabled-bg);
+
+    --el-disabled-border-color: var(--color-disabled-border);
+
+    --el-disabled-text-color: var(--color-text-disabled);
+
+
+    /* =====================================================
+       MASK / OVERLAY
+       Used by dialogs, drawers, loading layers.
+       ===================================================== */
+
+    --el-mask-color: var(--color-overlay);
+
+
+    /* =====================================================
+       BORDER RADIUS
+       ===================================================== */
+
+    --el-border-radius-base: var(--radius);
+
+    --el-border-radius-small: var(--radius-sm);
+
+    --el-border-radius-round: var(--radius-round);
+
+
+    /* =====================================================
+       SHADOWS
+       IMPORTANT:
+       Used by popovers, dialogs, dropdowns.
+       ===================================================== */
+
+    --el-box-shadow-light: var(--shadow-sm);
+
+    --el-box-shadow: var(--shadow);
+
+    --el-box-shadow-dark: var(--shadow-lg);
+
+
+    /* =====================================================
+       TABLES
+       IMPORTANT:
+       Tables use many independent variables.
+       ===================================================== */
+
+    --el-table-bg-color: var(--color-surface);
+
+    --el-table-tr-bg-color: var(--color-surface);
+
+    --el-table-header-bg-color: var(--color-surface-soft);
+
+    --el-table-row-hover-bg-color: var(--color-surface-mute);
+
+    --el-table-border-color: var(--color-border);
+
+
+    /* =====================================================
+       BUTTONS
+       ===================================================== */
+
+    --el-button-hover-bg-color: var(--color-primary-hover);
+
+
+    /* =====================================================
+       DIALOGS
+       ===================================================== */
+
+    --el-dialog-bg-color: var(--color-surface);
+
+
+    /* =====================================================
+       DRAWERS
+       ===================================================== */
+
+    --el-drawer-bg-color: var(--color-surface);
+
+
+    /* =====================================================
+       POPUP ELEMENTS
+       ===================================================== */
+
+    --el-popover-bg-color: var(--color-surface);
+
+    --el-dropdown-menu-box-shadow: var(--shadow);
+
+}

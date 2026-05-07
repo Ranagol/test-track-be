@@ -1,8 +1,12 @@
 <template>
+    <!-- //TODO ANDOR how to make these colors dynamic, connect with main.css variables -->
     <el-menu
         class="el-menu-demo"
         mode="horizontal"
         router
+        background-color="#545c64"
+        text-color="#fff"
+        active-text-color="#ffd04b"
     >
         <el-menu-item index="/">Home</el-menu-item>
         <el-menu-item index="/tests">Tests</el-menu-item>
@@ -16,11 +20,12 @@
 import { ref } from 'vue';
 
 
-
-
-
 </script>
 
 <style scoped>
 
+/* Set the height of the horizontal navigation menu */
+.el-menu--horizontal {
+  --el-menu-horizontal-height: 1.9rem;
+}
 </style>
