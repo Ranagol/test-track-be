@@ -27,6 +27,7 @@ import Logout from '@/views/navbar/Logout.vue';
   --el-menu-horizontal-height: 1.9rem;
 }
 
+/* In the navbar, the first 5 elements should be on left. All others on right. */
 .el-menu--horizontal > .el-menu-item:nth-child(5) {
   margin-right: auto;
 }

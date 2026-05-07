@@ -13,6 +13,7 @@
         >
             <!-- EMAIL -->
             <el-form-item
+                prop="email"
                 :error="backendErrors.email?.[0]"
                 label="Email"
             >
@@ -26,6 +27,7 @@
 
             <!-- PASSWORD -->
             <el-form-item
+                prop="password"
                 :error="backendErrors.password?.[0]"
                 label="Password"
             >
@@ -67,25 +69,23 @@
 import { ref, reactive } from 'vue';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useRouter } from 'vue-router';
+import { emailRules } from '@/validationRules/validationRules';
+import { passwordRules } from '@/validationRules/validationRules';
 
 const router = useRouter()
 const authStore = useAuthStore()
 const formRef = ref()
+
 const formModel = reactive({
     email: '',
     password: ''
 });
+
 const rules = {
-    email: [
-        { required: true, message: 'Email is required', trigger: 'blur' },
-        { type: 'email', message: 'Invalid email format', trigger: 'blur' },
-        { min: 3, max: 50, message: 'Length should be 3 to 50 characters', trigger: 'blur' }
-    ],
-    password: [
-        { required: true, message: 'Password is required', trigger: 'blur' },
-        { min: 3, max: 50, message: 'Length should be 3 to 50 characters', trigger: 'blur' }
-    ]
+    email: emailRules,
+    password: passwordRules
 };
+
 // Stores error messages from backend
 const backendErrors = ref<Record<string, string[]>>({});
 const generalError = ref<string>('');
@@ -94,9 +94,11 @@ const handleLogin = async () => {
     backendErrors.value = {}
     generalError.value = ''
 
-    const valid = await formRef.value.validate()
+    // Validates the form. Return true if valid, false if not. If not valid, it also shows the validation errors on the form.
+    const isValid = await formRef.value.validate()
 
-    if (!valid) return
+    // If the form is not valid, we don't proceed with the login attempt, we just return early
+    if (!isValid) return
 
     try {
         await authStore.signIn({
