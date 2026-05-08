@@ -1,8 +1,6 @@
 import appAxios from './axiosService';
-import type { LoginPayload } from '@/types/types';
+import type { LoginPayload, RegisterPayload } from '@/types/types';
 import type { User } from '@/types/types';
-
-
 
 /**
  * Laravel sends back two cookies: XSRF-TOKEN (readable by JS) and laravel_session (HTTP-only,
@@ -22,6 +20,11 @@ export async function login(payload: LoginPayload): Promise<void> {
 
 export async function logout(): Promise<void> {
     await appAxios.post('/logout');
+}
+
+export async function register(payload: RegisterPayload): Promise<void> {
+    await getCsrfCookie();
+    await appAxios.post('/register', payload);
 }
 
 export async function fetchCurrentUser(): Promise<User> {

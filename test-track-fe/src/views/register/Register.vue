@@ -1,37 +1,158 @@
 <template>
     <div class="grid place-items-center">
+
         <h1 class="text-2xl mt-24">Register</h1>
-        <el-form class="w-full max-w-sm mt-3" label-width="8rem" label-position="top">
-            <el-form-item label="Name">
-                <el-input v-model="name" placeholder="Enter your name"></el-input>
+
+        <el-form
+            ref="formRef"
+            :model="data"
+            :rules="rules"
+            class="w-full max-w-sm mt-3"
+            label-position="top"
+            label-width="8rem"
+        >
+            <!-- NAME -->
+            <el-form-item
+                prop="name"
+                :error="backendErrors.name?.[0]"
+                label="Name"
+            >
+
+                <el-input
+                    v-model="data.name"
+                    placeholder="Enter your name"
+                />
+
             </el-form-item>
-            <el-form-item label="Email">
-                <el-input v-model="email" type="email" placeholder="Enter your email"></el-input>
+
+            <!-- EMAIL -->
+            <el-form-item
+                prop="email"
+                :error="backendErrors.email?.[0]"
+                label="Email"
+            >
+
+                <el-input
+                    v-model="data.email"
+                    placeholder="Enter your email"
+                />
+
             </el-form-item>
-            <el-form-item label="Password">
-                <el-input v-model="password" type="password" placeholder="Enter your password"></el-input>
+
+            <!-- PASSWORD -->
+            <el-form-item
+                prop="password"
+                :error="backendErrors.password?.[0]"
+                label="Password"
+            >
+
+                <el-input
+                    v-model="data.password"
+                    placeholder="Enter your password"
+                    type="password"
+                />
+
             </el-form-item>
-            <el-form-item label="Confirm password">
-                <el-input v-model="confirm_password" type="password" placeholder="Confirm your password"></el-input>
+
+            <!-- CONFIRM PASSWORD -->
+            <el-form-item
+                prop="password_confirmation"
+                :error="backendErrors.password_confirmation?.[0]"
+                label="Confirm Password"
+            >
+
+                <el-input
+                    v-model="data.password_confirmation"
+                    placeholder="Confirm your password"
+                    type="password"
+                />
+
             </el-form-item>
+
+            <!-- REGISTER BUTTON -->
             <el-form-item>
-                <el-button class="ml-auto" type="primary" @click="handleRegister">Register</el-button>
+
+                <el-button
+                    @click="handleRegister"
+                    :disabled="authStore.loading"
+                    class="ml-auto"
+                    type="primary"
+                >Register</el-button>
+
             </el-form-item>
         </el-form>
+
+        <!-- GENERAL ERROR MESSAGE -->
+        <el-alert
+            v-if="generalError"
+            :title="generalError"
+            type="error"
+            class="w-full max-w-sm mt-4"
+            :closable="true"
+            @close="generalError = ''"
+        />
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
+import { useAuthStore } from '@/stores/useAuthStore';
+import { useRouter } from 'vue-router';
+import { emailRules } from '@/validationRules/validationRules';
+import { passwordRules } from '@/validationRules/validationRules';
+import { useBackendErrorHandling } from '@/composables/useBackendErrorHandling';
 
-const name = ref('');
-const email = ref('');
-const password = ref('');
-const confirm_password = ref('');
+const router = useRouter()
+const authStore = useAuthStore()
+const formRef = ref()
+const {
+    backendErrors,
+    generalError,
+    handleBackendErrors
+} = useBackendErrorHandling()
 
-const handleRegister = () => {
-    console.log('Register clicked', name.value, email.value, password.value, confirm_password.value);
+const data = reactive({
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: ''
+});
+
+const rules = {
+    name: [{ required: true, message: 'Name is required', trigger: 'blur' }],
+    email: emailRules,
+    password: passwordRules,
+
 };
+
+const handleRegister = async () => {
+    backendErrors.value = {}
+    generalError.value = ''
+
+    /**
+     * Validates the form. Return true if valid, false if not. If not valid, it also shows the
+     * validation errors on the form.
+     * You can turn off FE validation for testing, by commenting out the next two lines.
+     */
+    const isValid = await formRef.value.validate()
+    if (!isValid) return
+
+    try {
+        await authStore.register({
+            name: data.name,
+            email: data.email,
+            password: data.password,
+            password_confirmation: data.password_confirmation
+        })
+
+        router.push('/')
+    } catch (error) {
+        handleBackendErrors(error)
+    }
+}
+
+
+
 </script>
 
 

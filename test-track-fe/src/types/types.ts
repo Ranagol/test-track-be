@@ -16,6 +16,13 @@ export interface LoginPayload {
     remember?: boolean;
 }
 
+export interface RegisterPayload {
+    name: string;
+    email: string;
+    password: string;
+    password_confirmation: string;
+}
+
 /**
  * BackendError object will have string keys (field names) and array of string values
  * (error messages for that field).

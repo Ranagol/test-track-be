@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
-import type { LoginPayload } from '@/types/types';
+import type { LoginPayload, RegisterPayload } from '@/types/types';
 import type { User } from '@/types/types';
-import { fetchCurrentUser, login, logout } from '@/services/authService';
+import { fetchCurrentUser, login, logout, register } from '@/services/authService';
+import { pa } from 'element-plus/es/locale/index.mjs';
 
 export const useAuthStore = defineStore('auth', {
 
@@ -69,6 +70,19 @@ export const useAuthStore = defineStore('auth', {
             try {
                 await logout();
                 this.user = null;
+            } finally {
+                this.loading = false;
+            }
+        },
+
+        async register(payload: RegisterPayload): Promise<void> {
+            this.loading = true;
+            try {
+                await register(payload);
+                this.user = await fetchCurrentUser();
+            } catch (error) {
+                this.user = null
+                throw error
             } finally {
                 this.loading = false;
             }
