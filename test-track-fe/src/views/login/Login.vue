@@ -102,8 +102,6 @@ const handleLogin = async () => {
      * You can turn off FE validation for testing, by commenting out the next two lines.
      */
     const isValid = await formRef.value.validate()
-
-    // If the form is not valid, we don't proceed with the login attempt, we just return early
     if (!isValid) return
 
     try {

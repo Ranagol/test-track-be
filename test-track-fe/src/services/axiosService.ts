@@ -37,7 +37,6 @@ appAxios.interceptors.response.use(
          */
         if (!error.response) {
             console.warn('Network error or server unreachable')
-            alert('Network error');
             return Promise.reject(error)
         }
 

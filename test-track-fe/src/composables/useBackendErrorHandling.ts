@@ -2,6 +2,9 @@ import { ref } from 'vue'
 import axios from 'axios'
 import type { BackendError } from '@/types/types';
 
+/**
+ * Composable for handling login and register backend validation errors feedback in a Vue component.
+ */
 export function useBackendErrorHandling() {
 
     /**
@@ -11,6 +14,8 @@ export function useBackendErrorHandling() {
      * <string, string[]> This will be abject with string keys and array of string values
      */
     const backendErrors = ref<BackendError>({});
+
+    // All errors from backend that are not validation errors
     const generalError = ref<string>('');
 
     const handleBackendErrors = (error: unknown): void => {
@@ -34,7 +39,12 @@ export function useBackendErrorHandling() {
 
         // 422 Validation Errors (or login failure message)
         if (status === 422) {
-            // Laravel validation errors (field-based)
+
+            /**
+             * Laravel validation errors (field-based)
+             * If the backend sent validation errors and they are not empty, show them in the form
+             * and stop here.
+             */
             if (data?.errors && Object.keys(data.errors).length > 0) {
                 backendErrors.value = data.errors as BackendError
                 return
