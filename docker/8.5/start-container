@@ -24,8 +24,9 @@ if [ -d /var/www/html/storage ]; then
 fi
 
 # Fix permissions for the entire project root so dev tools (Pint, PHPUnit, etc.) can write cache files
-chmod -R 775 /var/www/html
-chown -R "$WWWUSER:$WWWUSER" /var/www/html
+# Exclude .git directory to avoid permission errors on git objects
+find /var/www/html -not -path '*/.git/*' -print0 | xargs -0 chmod 775 2>/dev/null || true
+find /var/www/html -not -path '*/.git/*' -print0 | xargs -0 chown "$WWWUSER:$WWWUSER" 2>/dev/null || true
 
 # 5. Finally, start the application (supervisord or a custom command)
 if [ $# -gt 0 ]; then
