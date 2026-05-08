@@ -14,8 +14,9 @@
         <!-- LOGOUT -->
         <el-menu-item
             index=""
-        ><el-button
             v-if="authStore.user"
+        ><el-button
+
             @click="logout"
             text
         >Logout</el-button></el-menu-item>
@@ -40,12 +41,9 @@ const router = useRouter();
 const authStore = useAuthStore();
 const logout = async () => {
     await authStore.signOut();
-    goToLoginPage();
-};
-
-const goToLoginPage = () => {
     router.push('/login');
 };
+
 </script>
 
 <style scoped>

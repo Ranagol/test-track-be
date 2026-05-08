@@ -26,21 +26,21 @@ export const createPasswordConfirmationRules = (formData: { password: string }) 
 
     /**
      * This is a custom validatior, that compares password and password_confirmation
+     * validator: this tells E+ to use custom validation logic, instead of built-in rules
+     * (_rule: unknown, value: string) => { -- this is the validation function, it is called
+     * automatically when validation runs.
+     * _rule: unknown -- we do not use this here at all
      */
     {
-        validator: (
-            _rule: unknown,
-            value: string,
-            callback: (error?: Error) => void
-        ) => {
-                if (!value) {
-                    callback(new Error('Password confirmation is required'));
-                } else if (value !== formData.password) {
-                    callback(new Error('Passwords do not match'));
-                } else {
-                    callback();
-                }
+        validator: (_rule: unknown, password_confirmation: string) => {
+
+            // If password confirmation does not match...
+            if (password_confirmation !== formData.password) {
+                return Promise.reject(new Error('Passwords do not match'))
+            }
+
+            return Promise.resolve()
         },
-        trigger: 'blur'
+        trigger: 'blur',
     }
 ];

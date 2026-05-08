@@ -124,6 +124,7 @@ const rules = {
     name: nameRules,
     email: emailRules,
     password: passwordRules,
+    // We send the whole data object, becaues this must be reactive. Sending only the password will make this non-reactive, and the validation won't work.
     password_confirmation: createPasswordConfirmationRules(data)
 };
 
