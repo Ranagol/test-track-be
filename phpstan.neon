@@ -37,6 +37,14 @@ parameters:
           path: tests/
         - identifier: missingType.generics
           path: tests/
+        # ValidationRule import used in PHPDoc type hints
+        - identifier: useless.use
+          message: '/^Imported class.*ValidationRule.*is not used/'
+          path: app/Http/Requests/
+        # FormRequest rules() method array return type
+        - identifier: missingType.iterableValue
+          message: '/return type has no value type specified in iterable type array/'
+          path: app/Http/Requests/
 
     # Do not fail if ignored errors are not found
     reportUnmatchedIgnoredErrors: false

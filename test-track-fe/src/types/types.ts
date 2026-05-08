@@ -15,3 +15,11 @@ export interface LoginPayload {
     password: string;
     remember?: boolean;
 }
+
+/**
+ * BackendError object will have string keys (field names) and array of string values
+ * (error messages for that field).
+ */
+export type BackendError = {
+    [field: string]: string[]
+}

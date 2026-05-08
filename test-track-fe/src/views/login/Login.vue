@@ -5,7 +5,7 @@
 
         <el-form
             ref="formRef"
-            :model="formModel"
+            :model="data"
             :rules="rules"
             class="w-full max-w-sm mt-3"
             label-position="top"
@@ -19,7 +19,7 @@
             >
 
                 <el-input
-                    v-model="formModel.email"
+                    v-model="data.email"
                     placeholder="Enter your email"
                 />
 
@@ -33,7 +33,7 @@
             >
 
                 <el-input
-                    v-model="formModel.password"
+                    v-model="data.password"
                     placeholder="Enter your password"
                     type="password"
                 />
@@ -71,12 +71,18 @@ import { useAuthStore } from '@/stores/useAuthStore';
 import { useRouter } from 'vue-router';
 import { emailRules } from '@/validationRules/validationRules';
 import { passwordRules } from '@/validationRules/validationRules';
+import { useBackendErrorHandling } from '@/composables/useBackendErrorHandling';
 
 const router = useRouter()
 const authStore = useAuthStore()
 const formRef = ref()
+const {
+    backendErrors,
+    generalError,
+    handleBackendErrors
+} = useBackendErrorHandling()
 
-const formModel = reactive({
+const data = reactive({
     email: '',
     password: ''
 });
@@ -86,15 +92,15 @@ const rules = {
     password: passwordRules
 };
 
-// Stores error messages from backend
-const backendErrors = ref<Record<string, string[]>>({});
-const generalError = ref<string>('');
-
 const handleLogin = async () => {
     backendErrors.value = {}
     generalError.value = ''
 
-    // Validates the form. Return true if valid, false if not. If not valid, it also shows the validation errors on the form.
+    /**
+     * Validates the form. Return true if valid, false if not. If not valid, it also shows the
+     * validation errors on the form.
+     * You can turn off FE validation for testing, by commenting out the next two lines.
+     */
     const isValid = await formRef.value.validate()
 
     // If the form is not valid, we don't proceed with the login attempt, we just return early
@@ -102,42 +108,17 @@ const handleLogin = async () => {
 
     try {
         await authStore.signIn({
-            email: formModel.email,
-            password: formModel.password
+            email: data.email,
+            password: data.password
         })
 
         router.push('/')
-    } catch (error: any) {
+    } catch (error) {
         handleBackendErrors(error)
     }
 }
 
-const handleBackendErrors = (error: any) => {
-
-    const status = error.response.status
-    const data = error.response.data
-
-    // Handle 401 Unauthorized (invalid credentials)
-    if (status === 401) {
-        backendErrors.value = {
-            password: ['Invalid credentials'],
-            email: ['Invalid credentials']
-        }
-        return
-    }
-
-    // Handle 422 Unprocessable Entity (validation errors from backend)
-    if (status === 422) {
-        backendErrors.value = data?.errors || {}
-        return
-    }
-
-    // Handle other unexpected errors
-    console.error('Unexpected error', error)
-    generalError.value = 'An unexpected error occurred. Please try again later.'
-}
 </script>
-
 
 <style scoped>
 

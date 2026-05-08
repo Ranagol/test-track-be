@@ -27,53 +27,37 @@ const appAxios = axios.create({
  */
 appAxios.interceptors.response.use(
     response => {
-        // If the request was successful, just return/give the response to Vue components
         return response;
     },
 
-    // If the request failed, handle the error
     (error: AxiosError) => {
 
         /**
-         * This is a network error.
+         * Network error - no response from server
          */
         if (!error.response) {
             console.warn('Network error or server unreachable')
             alert('Network error');
-
-            return Promise.reject({
-                type: 'NETWORK_ERROR',
-                original: error,
-            })
+            return Promise.reject(error)
         }
 
         const status = error.response?.status
 
-        // 2. Auth errors
+        // Auth errors - redirect to login if not already there
         if (status === 401 || status === 419) {
             const currentRoute = router.currentRoute.value
 
-            // For the case when the user is already on the login page, and tries to fill the login form
-            // Don't redirect if already on login page (allow invalid credentials to be shown in form)
             if (currentRoute.name !== 'login') {
                 router.push({ name: 'login' })
                 console.error('Authentication error, redirecting to login page.')
             }
 
-            return Promise.reject({
-                type: 'AUTH_ERROR',
-                original: error,
-            })
+            return Promise.reject(error)
         }
 
-        // 3. Everything else (500, 422, etc.)
+        // Everything else (500, 422, etc.)
         console.error(`API error with status ${status}`)
-
-        return Promise.reject({
-            type: 'API_ERROR',
-            status,
-            original: error,
-        })
+        return Promise.reject(error)
     }
 );
 
