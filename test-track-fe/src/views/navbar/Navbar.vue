@@ -10,7 +10,17 @@
         <el-menu-item index="/users">Users</el-menu-item>
         <el-menu-item index="/login">Login</el-menu-item>
         <el-menu-item index="/register">Register</el-menu-item>
-        <el-menu-item index="/logout">Logout</el-menu-item>
+
+        <!-- LOGOUT -->
+        <el-menu-item
+            index=""
+        ><el-button
+            v-if="authStore.user"
+            @click="logout"
+            text
+        >Logout</el-button></el-menu-item>
+
+        <!-- HI, USER -->
         <el-menu-item
             index=""
             v-if="authStore.user"
@@ -23,10 +33,19 @@
 <script setup lang="ts">
 // import Logout from '@/views/navbar/Logout.vue';
 import { useAuthStore } from '@/stores/useAuthStore';
-import { el } from 'element-plus/es/locale/index.mjs';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const authStore = useAuthStore();
+const logout = async () => {
+    await authStore.signOut();
+    goToLoginPage();
+};
 
+const goToLoginPage = () => {
+    router.push('/login');
+};
 </script>
 
 <style scoped>

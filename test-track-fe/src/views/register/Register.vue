@@ -98,8 +98,10 @@
 import { ref, reactive } from 'vue';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useRouter } from 'vue-router';
+import { nameRules } from '@/validationRules/validationRules';
 import { emailRules } from '@/validationRules/validationRules';
 import { passwordRules } from '@/validationRules/validationRules';
+import { createPasswordConfirmationRules } from '@/validationRules/validationRules';
 import { useBackendErrorHandling } from '@/composables/useBackendErrorHandling';
 
 const router = useRouter()
@@ -119,10 +121,10 @@ const data = reactive({
 });
 
 const rules = {
-    name: [{ required: true, message: 'Name is required', trigger: 'blur' }],
+    name: nameRules,
     email: emailRules,
     password: passwordRules,
-
+    password_confirmation: createPasswordConfirmationRules(data)
 };
 
 const handleRegister = async () => {
