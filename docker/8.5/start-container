@@ -23,6 +23,10 @@ if [ -d /var/www/html/storage ]; then
     chown -R "$WWWUSER:$WWWUSER" /var/www/html/storage
 fi
 
+# Fix permissions for the entire project root so dev tools (Pint, PHPUnit, etc.) can write cache files
+chmod -R 775 /var/www/html
+chown -R "$WWWUSER:$WWWUSER" /var/www/html
+
 # 5. Finally, start the application (supervisord or a custom command)
 if [ $# -gt 0 ]; then
     if [ "$SUPERVISOR_PHP_USER" = "root" ]; then
