@@ -1,41 +1,22 @@
 #!/usr/bin/env bash
 
-# 1. Check if the user is root or sail, otherwise exit with an error
+# Validate the configured PHP process user
 if [ "$SUPERVISOR_PHP_USER" != "root" ] && [ "$SUPERVISOR_PHP_USER" != "sail" ]; then
     echo "You should set SUPERVISOR_PHP_USER to either 'sail' or 'root'."
     exit 1
 fi
 
-# 2. If the environment variable WWWUSER exists, change the UID of the sail user to match it.
-if [ ! -z "$WWWUSER" ]; then
-    usermod -u "$WWWUSER" sail
-fi
+# Ensure Laravel writable directories are owned by the sail user.
+# These directories live on the mounted volume and may have root ownership on a fresh clone.
+chown -R sail:$WWWGROUP /var/www/html/storage /var/www/html/bootstrap/cache
 
-# 3. This block prepares/creates a shared Composer directory and makes it writable.
-if [ ! -d /.composer ]; then
-    mkdir /.composer
-fi
-chmod -R ugo+rw /.composer
-
-# Ensure storage directory is writable by sail user for view compilation
-if [ -d /var/www/html/storage ]; then
-    chmod -R 775 /var/www/html/storage
-    chown -R "$WWWUSER:$WWWUSER" /var/www/html/storage
-fi
-
-# Fix permissions for the entire project root so dev tools (Pint, PHPUnit, etc.) can write cache files
-# Exclude .git directory to avoid permission errors on git objects
-find /var/www/html -not -path '*/.git/*' -print0 | xargs -0 chmod 775 2>/dev/null || true
-find /var/www/html -not -path '*/.git/*' -print0 | xargs -0 chown "$WWWUSER:$WWWUSER" 2>/dev/null || true
-
-# 5. Finally, start the application (supervisord or a custom command)
+# Start the application
 if [ $# -gt 0 ]; then
     if [ "$SUPERVISOR_PHP_USER" = "root" ]; then
         exec "$@"
     else
-        exec gosu "$WWWUSER" "$@"
+        exec gosu sail "$@"
     fi
 else
-    # Run supervisord as the specified user
     exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
 fi
