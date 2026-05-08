@@ -10,13 +10,22 @@
         <el-menu-item index="/users">Users</el-menu-item>
         <el-menu-item index="/login">Login</el-menu-item>
         <el-menu-item index="/register">Register</el-menu-item>
-        <Logout />
+        <el-menu-item index="/logout">Logout</el-menu-item>
+        <el-menu-item
+            index=""
+            v-if="authStore.user"
+        >Hi, {{ authStore.user.name }}</el-menu-item>
+
+        <!-- <Logout /> -->
     </el-menu>
 </template>
 
 <script setup lang="ts">
-import Logout from '@/views/navbar/Logout.vue';
+// import Logout from '@/views/navbar/Logout.vue';
+import { useAuthStore } from '@/stores/useAuthStore';
+import { el } from 'element-plus/es/locale/index.mjs';
 
+const authStore = useAuthStore();
 
 </script>
 
@@ -25,10 +34,10 @@ import Logout from '@/views/navbar/Logout.vue';
 /* Set the height of the horizontal navigation menu */
 .el-menu--horizontal {
   --el-menu-horizontal-height: 1.9rem;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: visible;
 }
 
 /* In the navbar, the first 5 elements should be on left. All others on right. */
-.el-menu--horizontal > .el-menu-item:nth-child(5) {
-  margin-right: auto;
-}
 </style>
