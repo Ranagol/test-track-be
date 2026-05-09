@@ -14,11 +14,13 @@ return [
     'title' => config('app.name').' API Documentation',
 
     // A short description of your API. Will be included in the docs webpage, Postman collection and OpenAPI spec.
-    'description' => '',
+    'description' => 'TestTrack API for managing tests, questions, and user submissions.',
 
     // Text to place in the "Introduction" section, right after the `description`. Markdown and HTML are supported.
     'intro_text' => <<<'INTRO'
             This documentation aims to provide all the information you need to work with our API.
+
+            <aside>Authentication is handled automatically via Sanctum session cookies. Simply log in first, and your session will be included in subsequent requests.</aside>
 
             <aside>As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
             You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).</aside>
@@ -113,10 +115,11 @@ return [
         'default' => true,
 
         // Where is the auth value meant to be sent in a request?
-        'in' => AuthIn::BEARER->value,
+        // Note: This is for documentation purposes. Actual auth is via session cookies.
+        'in' => AuthIn::QUERY->value,
 
         // The name of the auth parameter (e.g. token, key, apiKey) or header (e.g. Authorization, Api-Key).
-        'name' => 'Authorization',
+        'name' => 'session',
 
         // The value of the parameter to be used by Scribe to authenticate response calls.
         // This will NOT be included in the generated documentation. If empty, Scribe will use a random value.
@@ -124,10 +127,10 @@ return [
 
         // Placeholder your users will see for the auth parameter in the example requests.
         // Set this to null if you want Scribe to use a random value as placeholder instead.
-        'placeholder' => '{YOUR_AUTH_TOKEN}',
+        'placeholder' => null,
 
         // Any extra authentication-related info for your users. Markdown and HTML are supported.
-        'extra_info' => 'Authenticate via Sanctum session cookie (automatic) or Bearer token.',
+        'extra_info' => 'This API uses <strong>Sanctum session-based authentication</strong>, not Bearer tokens. <br/><br/>To authenticate:<br/>1. Send a POST request to <code>/api/login</code> with your credentials<br/>2. The session cookie will be automatically included in subsequent requests<br/>3. Use the "Try It Out" feature below to test authenticated endpoints.',
     ],
 
     // Example requests for each endpoint will be shown in each of these languages.

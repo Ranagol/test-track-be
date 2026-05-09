@@ -1,0 +1,1193 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localhost"
+        }
+    ],
+    "info": {
+        "name": "TestTrack API Documentation",
+        "_postman_id": "9ddb992b-1d9d-4e9a-b01f-f8d1c376e8ee",
+        "description": "TestTrack API for managing tests, questions, and user submissions.",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Endpoints",
+            "description": "",
+            "item": [
+                {
+                    "name": "GET api\/user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/user",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/user"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "http:\/\/localhost:5174"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/xxx",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/xxx",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/xxx"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "http:\/\/localhost:5174"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"message\":\"API is working\",\"user\":null}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Display a listing of the resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/tests",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/tests"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "TestResource is for single resources. TestResource::collection(), returns an\nAnonymousResourceCollection \u2014 which is the collection wrapper that handles pagination,\nmetadata, and multiple items."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "http:\/\/localhost:5174"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                },
+                                {
+                                    "key": "set-cookie",
+                                    "value": "testtrack-session=eyJpdiI6IjI1eE1JK3h6bjVsamV3V3c3MHdySEE9PSIsInZhbHVlIjoiZGVybDdweEF4ZFRUTmdVYXYrNlJ5ZDNPMGEwRWRWdHl2eWxlUjhRUUhIaU5GUENsaURHVkRVWWFXQWlzZk45Nno1OGVVN3Jod0JBamdNb2NsMzZYeXVKVlA4VzV2eWNSdUMrR0VGeW11UmVESmVYU1VubXFBOGNlbUVEdkNTZ1QiLCJtYWMiOiI5YjE5MmM0M2EzNmM3MmVmYjVmZTI4NGIwNTRiNzZiMzQ0OTM1Yzc0MmUxNDg3ODY0YjFhNTY0NjBjYjE1Nzg5IiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a newly created resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/tests",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/tests"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"title\":\"b\",\"description\":\"Eius et animi quos velit et.\",\"test_code\":\"architecto\",\"user_id\":\"architecto\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display the specified resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/tests\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/tests\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the test."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "http:\/\/localhost:5174"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                },
+                                {
+                                    "key": "set-cookie",
+                                    "value": "testtrack-session=eyJpdiI6IjlaVU9RNWtvaVFpSUZJNCt0SU1HUWc9PSIsInZhbHVlIjoidExsZ0srVERRWllhRjdIVnVvZEdmdE9BS21hOVltVUdmN3dtaS9NaGR5Z0VYRmVHWU9TQ2tCN2JySHZZQ1d1MHNUWmVBQ1FqbTlyaEhHWnhGdGp5MnlXVzBWNEdONDhYQ1Y3bEwxcDNQS2w0TkIwdFRYMnZZaXUzWUZlczhEUWIiLCJtYWMiOiJmZmJiM2ZiMWYyZDhiOTM1Y2Y2MmI1MWVkYWQ2ZWIxYzg5OTVmOGJmM2RjMzRhOTcyMzczYmNhYTE5ODE1OTk4IiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update the specified resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/tests\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/tests\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the test."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"title\":\"b\",\"description\":\"Eius et animi quos velit et.\",\"test_code\":\"architecto\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Remove the specified resource from storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/tests\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/tests\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the test."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display a listing of the resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/questions",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/questions"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "http:\/\/localhost:5174"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                },
+                                {
+                                    "key": "set-cookie",
+                                    "value": "testtrack-session=eyJpdiI6Ild6eFEvME5ZUmNMUlhWSEdWSzY4SlE9PSIsInZhbHVlIjoiTjBjQjRIckE2VGRlK3c2RFZaK3ZSSXVreVRLT1Z4NVZ5Rm9HYURqdi9tRWJ2aHJCZ1RPSUtUWTRCcTZNMENJZlpXckxybWJ4TnNQeno1WjFZZy9uVmlYSnFtYmk1WDg1T2Z4N3NwazRCZjNWZVM2UDlMNzR2Q1g4M1BncVdrMVEiLCJtYWMiOiIwMzdkMjk4NThhMGRiYzBlM2JiNmQ5NDc5YTA2MjU2NDE4MjY0ZTczNzQ3ZTZlMmY4MGQ2MTdmZjY0ODc4YzM0IiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a newly created resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/questions",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/questions"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"test_id\":\"architecto\",\"text\":\"architecto\",\"image_path\":\"n\",\"allows_multiple_correct\":true,\"question_order\":84}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display the specified resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/questions\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/questions\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the question."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "http:\/\/localhost:5174"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                },
+                                {
+                                    "key": "set-cookie",
+                                    "value": "testtrack-session=eyJpdiI6InlUTzlWb0VtWW4vSm0ydFlRaktYYVE9PSIsInZhbHVlIjoiK2h1UW1VWTMrVjR0K1FEQnhIS2VaRUtVT1lqZXJ5Z1NXTDl3b2ZtazY4WEU2K29oTHlLcFFDWlU2dXJRcEVQbCtPZXNLYVlYZk9ZQzBabGZBdW5xb3luZHZtalNTVzBqc2xXUktLMmxPZ081Lzg2djh3emYyZ0JsRnAvWGtzbXUiLCJtYWMiOiI5YjA1NmUxOTQyYTE3MWYxZmZkZjRiZmNmNDJjNzFjOTE4MzM3NTk1Y2JmNzc3YjQ0NTVlNjEwZDdmMjA0YWE4IiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update the specified resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/questions\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/questions\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the question."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"text\":\"architecto\",\"image_path\":\"n\",\"allows_multiple_correct\":false,\"question_order\":84}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Remove the specified resource from storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/questions\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/questions\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the question."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display a listing of the resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/answer-options",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/answer-options"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "http:\/\/localhost:5174"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                },
+                                {
+                                    "key": "set-cookie",
+                                    "value": "testtrack-session=eyJpdiI6IkNVbUprZE44Rk1XeGlDLzZrTkVsL2c9PSIsInZhbHVlIjoiY1JLWmtqZHlXVU9la3ZialpOVTVITm1TZFhzMVNpQlIyeEJqZlA4WjZ1RFZFUjUrYzI0U3FvTlVuKzEyQnhiWHUwZ2daODFrUmRBQ0M0ZmdKNlhndFRpclRaZmdNTlNRaWNpamFrQmVKdVJ2bzJKT2FGRjB5UGU3SU96eFg3YXIiLCJtYWMiOiJmOThkNjMzMjhmNDhmNDg0YmQ0MDkxMWI5NWQyNjE2YzViZjBhZWU4YzQwYmFiMjY5ZWFlZDA3ZWNkODUwMjE0IiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a newly created resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/answer-options",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/answer-options"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"question_id\":\"architecto\",\"text\":\"n\",\"is_correct\":false,\"answer_order\":84}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display the specified resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/answer-options\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/answer-options\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the answer option."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "http:\/\/localhost:5174"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                },
+                                {
+                                    "key": "set-cookie",
+                                    "value": "testtrack-session=eyJpdiI6ImhNVVpmbzJ6SWwwdjRBODNaUW4yNkE9PSIsInZhbHVlIjoiNzJXOXVvcGhuS3lSSnN5MG8yMzhuSVBKbXZhWGQzbU1kb2ljQUExWFlnUVJCL1RacUNSSE5WTzBtL0xPK1ZrbHBOM3JFZGxHOVpTcFEwbGlML3ZGclhKaEpLbjloV255UmFPY2luVFhwWWlFeThoRldOVVplMzlBWUpxZmREQ3YiLCJtYWMiOiI4YzQzZjA3YjE4NzkyMTU4MWIxNzMyMjk3YzdjNGZjMGM3ZjQ5Yjk1N2QzZTVjZTNhNmUwNTU4NmQxYjI5NGJiIiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update the specified resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/answer-options\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/answer-options\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the answer option."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"text\":\"b\",\"is_correct\":false,\"answer_order\":39}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Remove the specified resource from storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/answer-options\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/answer-options\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the answer option."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display a listing of the resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/test-attempts",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/test-attempts"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "http:\/\/localhost:5174"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                },
+                                {
+                                    "key": "set-cookie",
+                                    "value": "testtrack-session=eyJpdiI6Im43ZkRtckFKQTUyVFVUSE1FV0g1Z3c9PSIsInZhbHVlIjoiQ2ljUDlTdVFkK1dIYzRRRzVua01DcFY5cnExWkF3M3I4ejhiRHREY1BheWlFc3k4Nnp3SlFFaGpRd2RQVmRRdHdXZGo1ejQ1MTBEM1ZMS0VwNko3cVBMUGtXU1BGbDFzZU43WDI0ME9jbWJ5UVZKaUp6QlFtQVF5eHFLWFZYWEgiLCJtYWMiOiJjZDdkMWUyYWI0MTBiNzg4NjIxNThjZWJmMjgzOWRlZjg5ZmEyM2Q1ZmQzM2Y0ODU1NWIwZGYxMmNkM2FlMGM1IiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a newly created resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/test-attempts",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/test-attempts"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"user_id\":\"architecto\",\"test_id\":\"architecto\",\"score\":39,\"max_score\":84,\"comment\":\"architecto\",\"started_at\":\"2026-05-09 11:16:44\",\"finished_at\":\"2026-05-09 11:16:44\",\"completed_at\":\"2026-05-09 11:16:44\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display the specified resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/test-attempts\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/test-attempts\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the test attempt."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "http:\/\/localhost:5174"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                },
+                                {
+                                    "key": "set-cookie",
+                                    "value": "testtrack-session=eyJpdiI6InB0NFlIWHRtVDJXVlVrdGd3Q1hhRUE9PSIsInZhbHVlIjoiVmRZV053TUxqL1V1bTJLMEVBNEFBUkNpamwvMElpUFJ2VXFxaU5pN1JpNmFVc3JKSEpyQ2ZJNTNZbk1iaHRYeHJDcjNYcVBrU1pCZkIydnB6VGQ0aWVGd1pWdnVrYTE1YTcrWUczb04yVDZZSk9QZTNqLzJKUUJxMlQyMkRuUUEiLCJtYWMiOiIzM2Y4Mjk3ODQxMTgyNDA3OTNlYWZkYWM3NzY3NzM0YWMzZGM2OWNhZjdkMDIzYWRjN2UwNmQ3YmQ5YTlmNDYwIiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update the specified resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/test-attempts\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/test-attempts\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the test attempt."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"score\":27,\"max_score\":39,\"comment\":\"architecto\",\"started_at\":\"2026-05-09 11:16:44\",\"finished_at\":\"2026-05-09 11:16:44\",\"completed_at\":\"2026-05-09 11:16:44\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Remove the specified resource from storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/test-attempts\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/test-attempts\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the test attempt."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display a listing of the resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/user-answers",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/user-answers"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "http:\/\/localhost:5174"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                },
+                                {
+                                    "key": "set-cookie",
+                                    "value": "testtrack-session=eyJpdiI6IjlXSE1WWDFzRmU5QWYvdlloeEFrYnc9PSIsInZhbHVlIjoiQ01sRmhIRXZhSjMyemRSMGJHTUd5Y05TWTBFbHBCUkw0cGVrUU1hcGRRZUxhODRUQW1FWFRwVzV0T2p5Q0RoY3ZVZlFtSlFTUWtNaUZDaGVGQXMrY25OL0MzelhKWGhkWlljcHZUOURteXNPS3F4VFQvZUZ0VlFPcmpRY0RaN04iLCJtYWMiOiI1YzdhNGZlYmNiNzk3OTBmZTgzY2QzNDM0NTEyMjRhOGNkNTRhOGVhMzA2ODNhMmRmZTc1N2RjMTgwMGJmZjUwIiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a newly created resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/user-answers",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/user-answers"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"test_attempt_id\":16,\"question_id\":16,\"answer_option_id\":16,\"comment\":\"architecto\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display the specified resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/user-answers\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/user-answers\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the user answer."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "http:\/\/localhost:5174"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                },
+                                {
+                                    "key": "set-cookie",
+                                    "value": "testtrack-session=eyJpdiI6ImxxSEZMbytReFcxMVVBYlpFb3FZemc9PSIsInZhbHVlIjoiTGVtbUNEWXNCT05KYmhSbEppY0JGV3A1bHR1bEVyUFZBWjJYQUFETlpZQWFOOEVHV1dIV2lFOGJOdXpjR2ZYbDVvUU5iVnB0ak9rUXBaMzVkVVRWcE1jSlhEQm1BSTExVHBhbUlyd2ZKUkJucVNZUEFNQXN6TnpEWndxa0JDR0kiLCJtYWMiOiJmZTA4MzJlZjY0NTAyNGM2NzUxZTA0YTRiNGYxZDk4YWFmMThiNGFiMzhjNTg0YjU2YzQ5MDI2OWJhYzRlMzhmIiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update the specified resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/user-answers\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/user-answers\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the user answer."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"test_attempt_id\":16,\"question_id\":16,\"answer_option_id\":16,\"comment\":\"architecto\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Remove the specified resource from storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/user-answers\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/user-answers\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the user answer."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "apikey",
+        "apikey": [
+            {
+                "key": "in",
+                "value": "query",
+                "type": "string"
+            },
+            {
+                "key": "key",
+                "value": "session",
+                "type": "string"
+            }
+        ]
+    }
+}

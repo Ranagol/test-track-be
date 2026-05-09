@@ -18,8 +18,6 @@ class RegisteredUserController extends Controller
      * Handle an incoming registration request.
      *
      * @throws ValidationException
-     *
-     * @unauthenticated
      */
     public function store(Request $request): JsonResponse
     {
