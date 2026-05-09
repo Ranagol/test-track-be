@@ -12,6 +12,8 @@ class AuthenticatedSessionController extends Controller
 {
     /**
      * Handle an incoming authentication request.
+     *
+     * @unauthenticated
      */
     public function store(LoginRequest $request): JsonResponse
     {
