@@ -37,3 +37,6 @@ test-track-fe/npm-debug.log*
 test-track-fe/yarn-debug.log*
 test-track-fe/yarn-error.log*
 test-track-fe/pnpm-debug.log*
+.agents/
+.claude/
+.github/skills/
