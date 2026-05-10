@@ -6,8 +6,8 @@
         router
     >
         <el-menu-item index="/">Home</el-menu-item>
-        <el-menu-item index="/tests">Tests</el-menu-item>
-        <el-menu-item index="/users">Users</el-menu-item>
+        <el-menu-item index="/tests">My created tests</el-menu-item>
+        <el-menu-item index="/test-takers">My test takers</el-menu-item>
         <el-menu-item index="/login">Login</el-menu-item>
         <el-menu-item index="/register">Register</el-menu-item>
 

@@ -1,21 +1,81 @@
 <template>
-    <div>
-        <h1>Tests</h1>
+    <div class="grid">
+        <div class="h-16 flex">
+            <h1 class="text-2xl mt-3">My tests</h1>
+        </div>
 
-        <el-table
-            :data="testsStore.tests"
-            v-loading="testsStore.loading"
-        >
-            <el-table-column
-                prop="title"
-                label="Title"
-            ></el-table-column>
-            <el-table-column
-                prop="description"
-                label="Description"
-            ></el-table-column>
-        </el-table>
+        <div class="flex">
 
+            <el-input
+                style="width: 30%"
+                placeholder="Search tests"
+            />
+            <el-button
+                class="ml-3"
+                type="primary"
+            >
+                Search
+            </el-button>
+
+            <el-button
+                class="ml-3"
+                type="primary"
+            >
+                Create new
+            </el-button>
+        </div>
+
+        <!-- TABLE -->
+        <div class="mt-3">
+            <el-table
+                :data="testsStore.tests"
+                v-loading="testsStore.loading"
+                style="width: 80%"
+                :cell-style="{ verticalAlign: 'top' }"
+            >
+                <el-table-column
+                    prop="title"
+                    label="Title"
+                ></el-table-column>
+
+                <el-table-column
+                    prop="test_code"
+                    label="Test code"
+                    width="150%"
+
+
+                ></el-table-column>
+
+                <el-table-column
+                    prop="description"
+                    label="Description"
+                    min-width="250%"
+                ></el-table-column>
+
+                <el-table-column
+                    prop="created_at"
+                    label="Created"
+                ></el-table-column>
+
+                <el-table-column
+                    prop=""
+                    label="Actions"
+                    min-width="120px"
+                >
+                    <template #default="scope">
+                        <el-button
+                            size="small"
+                            type="primary"
+                        >Edit</el-button>
+
+                        <el-button
+                            size="small"
+                            type="danger"
+                        >Delete</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </div>
 
     </div>
 </template>

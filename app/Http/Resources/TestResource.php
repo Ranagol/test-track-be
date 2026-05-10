@@ -27,8 +27,8 @@ class TestResource extends JsonResource
             'title' => $model->title,
             'description' => $model->description,
             'test_code' => $model->test_code,
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at,
+            'created_at' => $model->created_at->format('d.m.Y'),
+            'updated_at' => $model->updated_at->format('d.m.Y'),
         ];
     }
 }
