@@ -1,17 +1,22 @@
 <template>
     <div>
         <h1>Tests</h1>
-        <div
-            v-for="test in testsStore.tests.data"
-            :key="test.id"
-        >
-            {{ test.title }} - {{ test.description }}
-        </div>
 
-        <div
-            v-if="testsStore.loading"
-        >Loading...</div>
-        
+        <el-table
+            :data="testsStore.tests"
+            v-loading="testsStore.loading"
+        >
+            <el-table-column
+                prop="title"
+                label="Title"
+            ></el-table-column>
+            <el-table-column
+                prop="description"
+                label="Description"
+            ></el-table-column>
+        </el-table>
+
+
     </div>
 </template>
 

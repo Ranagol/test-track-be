@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia';
-import type { Test, BackendError } from '@/types/types';
+import type { Test, BackendError, PaginationMeta, PaginationLinks } from '@/types/types';
 import testService from '@/services/testService';
 
 export const useTestsStore = defineStore('tests', {
 
     state: () => ({
         tests: [] as Test[],
+        pagination: null as null | PaginationMeta,
+        paginationLinks: null as null | PaginationLinks,
         test: null as null | Test,
         loading: false as boolean,
     }),
@@ -15,8 +17,10 @@ export const useTestsStore = defineStore('tests', {
         async getAll(): Promise<void> {
             this.loading = true;
             try {
-                const tests = await testService.getAll();
-                this.tests = tests;
+                const response = await testService.getAll();
+                this.tests = response.data;
+                this.pagination = response.meta;
+                this.paginationLinks = response.links;
             } finally {
                 this.loading = false;
             }

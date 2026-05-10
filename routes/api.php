@@ -22,12 +22,15 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store'])
 Route::post('/register', [RegisteredUserController::class, 'store'])
     ->middleware('guest')
     ->name('register');
+
 // Logout
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+
+    // Return the currently authenticated user.
     return $request->user();
 });
 

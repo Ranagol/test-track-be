@@ -1,10 +1,10 @@
 import appAxios from './axiosService'
-import type { Test } from '@/types/types'
+import type { Test, PaginatedResponse } from '@/types/types'
 
 const testService = {
 
-    async getAll(): Promise<Test[]> {
-        const response = await appAxios.get<Test[]>('/api/tests')
+    async getAll(): Promise<PaginatedResponse<Test>> {
+        const response = await appAxios.get<PaginatedResponse<Test>>('/api/tests')
         return response.data
     },
 

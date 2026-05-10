@@ -8,6 +8,7 @@ import type { User } from '@/types/types';
  * The browser stores them automatically in its cookie jar - no additional code is needed
  * On every subsequent request Axios reads XSRF-TOKEN from the cookie jar and sends it as the
  * X-XSRF-TOKEN header automatically — because withXSRFToken: true is set in the axios instance.
+ * /sanctum/csrf-cookie - this route is the only route, that does not need the /api prefix
  */
 export async function getCsrfCookie(): Promise<void> {
     await appAxios.get('/sanctum/csrf-cookie');
