@@ -15,19 +15,19 @@ export async function getCsrfCookie(): Promise<void> {
 
 export async function login(payload: LoginPayload): Promise<void> {
     await getCsrfCookie();
-    await appAxios.post('/login', payload);
+    await appAxios.post('/api/login', payload);
 }
 
 export async function logout(): Promise<void> {
-    await appAxios.post('/logout');
+    await appAxios.post('/api/logout');
 }
 
 export async function register(payload: RegisterPayload): Promise<void> {
     await getCsrfCookie();
-    await appAxios.post('/register', payload);
+    await appAxios.post('/api/register', payload);
 }
 
 export async function fetchCurrentUser(): Promise<User> {
-    const response = await appAxios.get<User>('api/user');
+    const response = await appAxios.get<User>('/api/user');
     return response.data;
 }

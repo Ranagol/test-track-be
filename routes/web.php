@@ -7,7 +7,8 @@ Route::get('/', function () {
     // xdebug_info();
     // exit;
 
-    return ['Laravel' => app()->version()];
+    return [
+        'Message' => 'Hooray, the Laravel app is working!',
+        'Laravel' => app()->version(),
+    ];
 });
-
-require __DIR__.'/auth.php';

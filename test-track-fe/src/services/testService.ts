@@ -4,28 +4,28 @@ import type { Test } from '@/types/types'
 const testService = {
 
     async getAll(): Promise<Test[]> {
-        const response = await appAxios.get<Test[]>('api/tests')
+        const response = await appAxios.get<Test[]>('/api/tests')
         return response.data
     },
 
     async get(id: number): Promise<Test> {
-        const response = await appAxios.get<Test>(`api/tests/${id}`)
+        const response = await appAxios.get<Test>(`/api/tests/${id}`)
         return response.data
     },
 
     // Partial<Test> means that all fields of Test are optional,
     async create(data: Partial<Test>): Promise<Test> {
-        const response = await appAxios.post<Test>('api/tests', data)
+        const response = await appAxios.post<Test>('/api/tests', data)
         return response.data
     },
 
     async update(id: number, data: Partial<Test>): Promise<Test> {
-        const response = await appAxios.put<Test>(`api/tests/${id}`, data)
+        const response = await appAxios.put<Test>(`/api/tests/${id}`, data)
         return response.data
     },
 
     async delete(id: number): Promise<void> {
-        await appAxios.delete(`api/tests/${id}`)
+        await appAxios.delete(`/api/tests/${id}`)
     }
 }
 

@@ -17,7 +17,8 @@ return [
 
     /**
      * Sets, for which URLs should Laravel apply CORS. This means: Laravel will attach the necessary CORS
-     * headers to the responses of these URLs
+     * headers to the responses of these URLs. Url that are not in this list, will not have CORS headers
+     * attached!!!
      */
     'paths' => [
         'api/*',
