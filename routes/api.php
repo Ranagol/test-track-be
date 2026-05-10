@@ -5,9 +5,7 @@ use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\TestAttemptController;
 use App\Http\Controllers\Api\TestController;
 use App\Http\Controllers\Api\UserAnswerController;
-use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Http\Request;
-use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
@@ -32,7 +30,7 @@ Route::get('/xxx', function (Request $request) {
  * StartSession loads the session data from the database using the decrypted cookie ID
  * auth:sanctum now has session data to verify against
  */
-Route::middleware([EncryptCookies::class, StartSession::class, 'auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
 
     // Route::get('/xxx', function (Request $request) {
     //     $t = 8;

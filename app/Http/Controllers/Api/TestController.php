@@ -9,6 +9,7 @@ use App\Http\Resources\TestResource;
 use App\Models\Test;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Auth;
 
 class TestController extends Controller
 {
@@ -20,7 +21,10 @@ class TestController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return TestResource::collection(Test::paginate());
+        $user = Auth::user();
+        $tests = Test::where('user_id', $user->id)->paginate(10);
+
+        return TestResource::collection($tests);
     }
 
     /**

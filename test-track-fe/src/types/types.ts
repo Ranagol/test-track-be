@@ -30,3 +30,16 @@ export interface RegisterPayload {
 export type BackendError = {
     [field: string]: string[]
 }
+
+export interface Test {
+    id: number;
+    user_id: number;
+    title: string;
+    description?: string;
+    test_code: string;
+    created_at: string;
+    updated_at: string;
+}
+
+
+
