@@ -16,6 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->api(prepend: [
+            /**
+             * This the the CORS middleware. Essential for CORS. This middleware actually places the
+             * CORS headers into every Laravel response.
+             */
             HandleCors::class,
 
             // This middleware will ensure that the API routes are stateful, which means that they

@@ -15,8 +15,14 @@ return [
     |
     */
 
-    // Ensures CSRF endpoint and auth routes are CORS-enabled.
-    'paths' => ['*'],
+    /**
+     * Sets, for which URLs should Laravel apply CORS. This means: Laravel will attach the necessary CORS
+     * headers to the responses of these URLs
+     */
+    'paths' => [
+        'api/*',
+        'sanctum/csrf-cookie',
+    ],
 
     'allowed_methods' => ['*'],
 
