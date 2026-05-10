@@ -25,11 +25,6 @@ Route::get('/xxx', function (Request $request) {
     );
 });
 
-/**
- * EncryptCookies intercepts and decrypts the cookie
- * StartSession loads the session data from the database using the decrypted cookie ID
- * auth:sanctum now has session data to verify against
- */
 Route::middleware(['auth:sanctum'])->group(function () {
 
     // Route::get('/xxx', function (Request $request) {

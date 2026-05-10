@@ -11,9 +11,7 @@
         <div
             v-if="testsStore.loading"
         >Loading...</div>
-        <div
-            v-if="generalError"
-        >{{ generalError }}</div>
+        
     </div>
 </template>
 

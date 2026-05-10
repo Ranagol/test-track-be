@@ -17,14 +17,18 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->api(prepend: [
             /**
+             * This is for CORS.
              * This the the CORS middleware. Essential for CORS. This middleware actually places the
              * CORS headers into every Laravel response.
              */
             HandleCors::class,
 
-            // This middleware will ensure that the API routes are stateful, which means that they
-            // will be able to access the session and cookies. This is necessary for authentication
-            // and other features that require state.
+            /**
+             * This is for SANCTUM.
+             * Stateful means: Laravel 'remembers' the user by looking up the session cookie and
+             * matching it to a session in the database.
+             * This line is only needed for Sanctumm cookies session auth, not needed for token auth.
+             */
             EnsureFrontendRequestsAreStateful::class,
         ]);
 
