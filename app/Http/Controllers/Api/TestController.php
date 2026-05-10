@@ -22,7 +22,21 @@ class TestController extends Controller
     public function index(): AnonymousResourceCollection
     {
         $user = Auth::user();
-        $tests = Test::where('user_id', $user->id)->paginate(10);
+        $query = Test::where('user_id', $user->id);
+
+        // Search by title
+        if (request()->has('search') && request('search') !== '') {
+            $query->where('title', 'like', '%'.request('search').'%');
+        }
+
+        // Sort
+        $sortBy = request('sort_by', 'created_at');
+        $sortOrder = request('sort_order', 'desc');
+        $sortOrder = in_array($sortOrder, ['asc', 'desc']) ? $sortOrder : 'desc';
+        $query->orderBy($sortBy, $sortOrder);
+
+        // Paginate
+        $tests = $query->paginate(2);
 
         return TestResource::collection($tests);
     }

@@ -64,5 +64,13 @@ export interface PaginatedResponse<T> {
     meta: PaginationMeta;
 }
 
+export interface TestQueryParams {
+    search?: string;
+    sort_by?: string;
+    sort_order?: 'asc' | 'desc';
+    page?: number;
+    per_page?: number;
+}
+
 
 

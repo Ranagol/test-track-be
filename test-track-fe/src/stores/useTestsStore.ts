@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import type { Test, BackendError, PaginationMeta, PaginationLinks } from '@/types/types';
 import testService from '@/services/testService';
+import type { TestQueryParams } from '@/types/types';
 
 export const useTestsStore = defineStore('tests', {
 
@@ -14,10 +15,10 @@ export const useTestsStore = defineStore('tests', {
 
     actions: {
 
-        async getAll(): Promise<void> {
+        async getAll(params?: TestQueryParams): Promise<void> {
             this.loading = true;
             try {
-                const response = await testService.getAll();
+                const response = await testService.getAll(params);
                 this.tests = response.data;
                 this.pagination = response.meta;
                 this.paginationLinks = response.links;
