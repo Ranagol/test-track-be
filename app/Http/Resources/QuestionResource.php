@@ -30,6 +30,7 @@ class QuestionResource extends JsonResource
             'question_order' => $model->question_order,
             'created_at' => $model->created_at,
             'updated_at' => $model->updated_at,
+            'answer_options' => AnswerOptionResource::collection($this->whenLoaded('answerOptions')),
         ];
     }
 }

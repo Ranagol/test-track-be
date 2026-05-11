@@ -48,7 +48,15 @@
                     prop="title"
                     label="Title"
                     sortable="custom"
-                ></el-table-column>
+                    v-slot="{ row }"
+                >
+                    <router-link
+                        :to="`/tests/${row.id}`"
+                        class="text-primary hover:underline"
+                    >
+                        {{ row.title }}
+                    </router-link>
+                </el-table-column>
 
                 <el-table-column
                     prop="test_code"

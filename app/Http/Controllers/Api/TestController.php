@@ -60,6 +60,9 @@ class TestController extends Controller
      */
     public function show(Test $test): TestResource
     {
+        // Eager load questions and their answer options for this test
+        $test->load('questions.answerOptions');
+
         return new TestResource($test);
     }
 

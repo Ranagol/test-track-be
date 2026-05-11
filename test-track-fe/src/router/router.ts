@@ -6,6 +6,7 @@ import Register from '@/views/register/Register.vue';
 import Home from '@/views/home/Home.vue';
 import NotFound from '@/views/errors/NotFound.vue';
 import { useAuthStore } from '@/stores/useAuthStore';
+import TestEdit from '@/views/tests/TestEdit.vue';
 
 const routes = [
     {
@@ -46,6 +47,14 @@ const routes = [
         path: '/tests',
         name: 'tests',
         component: Tests,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/tests/:id',
+        name: 'test-edit',
+        component: TestEdit,
         meta: {
             requiresAuth: true
         }
