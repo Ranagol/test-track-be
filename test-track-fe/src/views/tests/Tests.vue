@@ -1,7 +1,9 @@
 <template>
     <div class="grid">
         <div class="h-16 flex">
-            <h1 class="text-2xl mt-3">My tests</h1>
+            <Heading1
+                text="My tests"
+            />
         </div>
 
         <div class="flex">
@@ -113,11 +115,8 @@
             class="mt-3"
         />
 
-        <el-alert
-            v-if="generalError"
-            type="error"
-            :title="generalError"
-            show-icon
+        <DisplayBackendError
+            :generalError="generalError"
         />
 
     </div>
@@ -128,6 +127,8 @@ import { onMounted } from 'vue';
 import { useTestsStore } from '@/stores/useTestsStore';
 import { useApiErrors } from '@/composables/useApiErrors';
 import type { TableSortData } from '@/types/types';
+import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
+import Heading1 from '@/resusableComponents/Heading1.vue';
 
 const testsStore = useTestsStore();
 

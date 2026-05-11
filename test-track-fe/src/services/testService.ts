@@ -11,8 +11,8 @@ const testService = {
     },
 
     async get(id: number): Promise<Test> {
-        const response = await appAxios.get<Test>(`/api/tests/${id}`)
-        return response.data
+        const response = await appAxios.get<{ data: Test }>(`/api/tests/${id}`)
+        return response.data.data
     },
 
     // Partial<Test> means that all fields of Test are optional,
