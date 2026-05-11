@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import type { LoginPayload, RegisterPayload } from '@/types/types';
 import type { User } from '@/types/types';
 import { fetchCurrentUser, login, logout, register } from '@/services/authService';
-import { pa } from 'element-plus/es/locale/index.mjs';
 
 export const useAuthStore = defineStore('auth', {
 
@@ -43,7 +42,6 @@ export const useAuthStore = defineStore('auth', {
                 this.user = await fetchCurrentUser();
             } catch (error) {
                 // If the request fails, we assume the user is not authenticated. So we set user to null.
-                // Error is handled globally in axios interceptor, so we don't need to do anything here.
                 this.user = null;
                 throw error;
             } finally {

@@ -1,9 +1,6 @@
 /**
  * We format here the axios object, according to app needs.
  */
-
-
-import router from '@/router/router';
 import axios, { AxiosError } from 'axios';
 
 //These two lines must be added to axios, otherwise the XSRF-TOKEN will not be sent to the server
@@ -37,25 +34,8 @@ appAxios.interceptors.response.use(
          */
         if (!error.response) {
             console.error('Network error or server unreachable')
-            return Promise.reject(error)
         }
 
-        const status = error.response?.status
-
-        // Auth errors - redirect to login if not already there
-        if (status === 401 || status === 419) {
-            const currentRoute = router.currentRoute.value
-
-            if (currentRoute.name !== 'login') {
-                router.push({ name: 'login' })
-                console.error('Authentication error, redirecting to login page.')
-            }
-
-            return Promise.reject(error)
-        }
-
-        // Everything else (500, 422, etc.)
-        console.error(`API error with status ${status}`)
         return Promise.reject(error)
     }
 );

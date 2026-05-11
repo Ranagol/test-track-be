@@ -35,10 +35,22 @@ export function useBackendErrorHandling() {
             return
         }
 
-        const status = error.response?.status
-        const data = error.response?.data
+        if (!error.response) {
+            console.error('Network/server error:', error)
+            generalError.value = 'Unable to connect to the server.'
+            return
+        }
+
+        // If there is an error.response, it will have status and data properties
+        const status = error.response.status
+        const data = error.response.data
 
         console.log('Backend error:', { status, data })
+
+        if (status === 401 || status === 419) {
+            generalError.value = 'Your session has expired. Please log in again.'
+            return
+        }
 
         // 422 Validation Errors (or login failure message)
         if (status === 422) {
