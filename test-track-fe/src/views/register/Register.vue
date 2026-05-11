@@ -14,7 +14,7 @@
             <!-- NAME -->
             <el-form-item
                 prop="name"
-                :error="backendErrors.name?.[0]"
+                :error="validationErrors.name?.[0]"
                 label="Name"
             >
 
@@ -28,7 +28,7 @@
             <!-- EMAIL -->
             <el-form-item
                 prop="email"
-                :error="backendErrors.email?.[0]"
+                :error="validationErrors.email?.[0]"
                 label="Email"
             >
 
@@ -42,7 +42,7 @@
             <!-- PASSWORD -->
             <el-form-item
                 prop="password"
-                :error="backendErrors.password?.[0]"
+                :error="validationErrors.password?.[0]"
                 label="Password"
             >
 
@@ -57,7 +57,7 @@
             <!-- CONFIRM PASSWORD -->
             <el-form-item
                 prop="password_confirmation"
-                :error="backendErrors.password_confirmation?.[0]"
+                :error="validationErrors.password_confirmation?.[0]"
                 label="Confirm Password"
             >
 
@@ -102,16 +102,16 @@ import { nameRules } from '@/validationRules/validationRules';
 import { emailRules } from '@/validationRules/validationRules';
 import { passwordRules } from '@/validationRules/validationRules';
 import { createPasswordConfirmationRules } from '@/validationRules/validationRules';
-import { useBackendErrorHandling } from '@/composables/useBackendErrorHandling';
+import { useApiErrors } from '@/composables/useApiErrors';
 
 const router = useRouter()
 const authStore = useAuthStore()
 const formRef = ref()
 const {
-    backendErrors,
+    validationErrors,
     generalError,
     handleBackendErrors
-} = useBackendErrorHandling()
+} = useApiErrors()
 
 const data = reactive({
     name: '',
@@ -129,7 +129,7 @@ const rules = {
 };
 
 const handleRegister = async () => {
-    backendErrors.value = {}
+    validationErrors.value = {}
     generalError.value = ''
 
     /**

@@ -1,58 +1,52 @@
 import { ref } from 'vue'
-import axios from 'axios'
 import type { BackendError } from '@/types/types';
+import axios from 'axios';
 
 /**
  * Composable for handling login and register backend validation errors feedback in a Vue component.
  */
-export function useBackendErrorHandling() {
+export function useApiErrors() {
 
-    /**
-     * Stores error messages from backend.
-     * This is a ref({}), meaning this will be a reactive object. We start here with an empty {}, and
-     * later we expect here a object.
-     * <string, string[]> This will be abject with string keys and array of string values
-     */
-    const backendErrors = ref<BackendError>({});
-
-    /**
-     * All errors from backend that are not validation errors. Example: not internet, server down,
-     * unexpected error...
-     */
-    const generalError = ref<string>('');
+    const validationErrors = ref<BackendError>({})
+    const generalError = ref('')
 
     const handleBackendErrors = (error: unknown): void => {
 
-        // Reset previous errors
-        backendErrors.value = {}
-        generalError.value = ''
         const fallbackMessage = 'An unexpected error occurred. Please try again later.'
 
-        // If this is not an axios error
+        // Reset previous errors
+        validationErrors.value = {}
+        generalError.value = ''
+
+        /**
+         * At this moment, we do not know, if this error came from Axios, with known structure, or
+         * it is some unexpected error (e.g. a JavaScript error in the code), with unknown structure,
+         * that makes TS very unhappy.
+         */
         if (!axios.isAxiosError(error)) {
             console.error('Unexpected non-Axios error:', error)
-            generalError.value = fallbackMessage;
+            generalError.value = fallbackMessage
             return
         }
 
+        // NO INTERNET OR NO SERVER RESPONSE (from now on, we know this is an Axios error)
         if (!error.response) {
             console.error('Network/server error:', error)
             generalError.value = 'Unable to connect to the server.'
             return
         }
 
-        // If there is an error.response, it will have status and data properties
         const status = error.response.status
         const data = error.response.data
 
-        console.log('Backend error:', { status, data })
 
+        // STATUS 401 or 419: Unauthorized or CSRF token mismatch (session expired)
         if (status === 401 || status === 419) {
             generalError.value = 'Your session has expired. Please log in again.'
             return
         }
 
-        // 422 Validation Errors (or login failure message)
+        // STATUS 422: validation errors
         if (status === 422) {
 
             /**
@@ -61,7 +55,7 @@ export function useBackendErrorHandling() {
              * and stop here.
              */
             if (data?.errors && Object.keys(data.errors).length > 0) {
-                backendErrors.value = data.errors as BackendError
+                validationErrors.value = data.errors as BackendError
                 return
             }
 
@@ -81,7 +75,7 @@ export function useBackendErrorHandling() {
     }
 
     return {
-        backendErrors,
+        validationErrors,
         generalError,
         handleBackendErrors
     }

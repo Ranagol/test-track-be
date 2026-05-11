@@ -112,45 +112,21 @@
             show-icon
         />
 
-        <el-alert
-            v-if="Object.keys(backendErrors).length > 0"
-            type="error"
-            show-icon
-            class="mb-3"
-        >
-            <template #title>Errors</template>
-
-            <div
-                v-for="(messages, field) in backendErrors"
-                :key="field"
-                class="mb-2"
-            >
-                <strong>{{ field }}:</strong>
-                <ul class="list-disc ml-5">
-                    <li
-                        v-for="(message, idx) in messages"
-                        :key="idx"
-                    >{{ message }}</li>
-                </ul>
-            </div>
-        </el-alert>
-
     </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useTestsStore } from '@/stores/useTestsStore';
-import { useBackendErrorHandling } from '@/composables/useBackendErrorHandling';
+import { useApiErrors } from '@/composables/useApiErrors';
 import type { TableSortData } from '@/types/types';
 
 const testsStore = useTestsStore();
 
 const {
-    backendErrors,
     generalError,
     handleBackendErrors
-} = useBackendErrorHandling();
+} = useApiErrors();
 
 function handleSearch() {
     fetchTests();
