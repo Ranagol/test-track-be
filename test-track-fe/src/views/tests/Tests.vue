@@ -6,7 +6,10 @@
             />
         </div>
 
-        <div class="flex">
+        <div
+
+            class="flex"
+        >
 
             <!-- SEARCH INPUT -->
             <el-input
@@ -38,7 +41,10 @@
         </div>
 
         <!-- TABLE -->
-        <div class="mt-3">
+        <div
+            v-loading="testsStore.loading"
+            class="mt-3"
+        >
             <el-table
                 :data="testsStore.tests"
                 v-loading="testsStore.loading"
