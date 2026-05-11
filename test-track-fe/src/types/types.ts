@@ -72,5 +72,12 @@ export interface TestQueryParams {
     per_page?: number;
 }
 
+export interface TableSortData {
+    // This is the sortBy field name, e.g. 'title', 'created_at', etc.
+    prop: string | null;
+    order: 'ascending' | 'descending' | null;
+    column?: any;
+}
+
 
 

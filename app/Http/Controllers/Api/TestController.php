@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateTestRequest;
 use App\Http\Resources\TestResource;
 use App\Models\Test;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,25 +19,28 @@ class TestController extends Controller
      * TestResource is for single resources. TestResource::collection(), returns an
      * AnonymousResourceCollection — which is the collection wrapper that handles pagination,
      * metadata, and multiple items.
+     * This is an example of the GET request:
+     * /api/tests?page=1&per_page=2&search=&sort_by=title&sort_order=asc
      */
-    public function index(): AnonymousResourceCollection
+    public function index(Request $request): AnonymousResourceCollection
     {
         $user = Auth::user();
         $query = Test::where('user_id', $user->id);
 
         // Search by title
-        if (request()->has('search') && request('search') !== '') {
-            $query->where('title', 'like', '%'.request('search').'%');
+        if ($request->has('search') && $request->search !== '') {
+            $query->where('title', 'like', '%'.$request->search.'%');
         }
 
         // Sort
-        $sortBy = request('sort_by', 'created_at');
-        $sortOrder = request('sort_order', 'desc');
+        $sortBy = $request->sort_by ?? 'title';
+        $sortOrder = $request->sort_order ?? 'desc';
         $sortOrder = in_array($sortOrder, ['asc', 'desc']) ? $sortOrder : 'desc';
         $query->orderBy($sortBy, $sortOrder);
 
         // Paginate
-        $tests = $query->paginate(2);
+        $perPage = $request->per_page ?? 2;
+        $tests = $query->paginate($perPage);
 
         return TestResource::collection($tests);
     }

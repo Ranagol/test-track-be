@@ -8,10 +8,13 @@
 
             <!-- SEARCH INPUT -->
             <el-input
-                v-model="state.searchQuery"
+                v-model="testsStore.searchTerm"
                 style="width: 30%"
                 placeholder="Search tests"
+                clearable
                 @keyup.enter="handleSearch"
+                @clear="handleSearch"
+                @input="handleSearch"
             />
 
             <!-- SEARCH BUTTON -->
@@ -91,28 +94,25 @@
             </el-table>
         </div>
 
-        <div>
-    Totalxx: {{ testsStore.pagination?.total }}
-</div>
-
         <!-- PAGINATION -->
         <el-pagination
-            v-model:current-page="state.currentPage"
-            v-model:page-size="state.selectedItemsPerPage"
+            v-model:current-page="testsStore.currentPage"
+            v-model:page-size="testsStore.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="testsStore.pagination?.total || 0"
-            @current-change="handleCurrentPageChange"
-            @size-change="handleSizeChange"
+            @current-change="testsStore.getAll"
+            @size-change="testsStore.getAll"
+            class="mt-3"
         />
-
 
     </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue';
+import { onMounted } from 'vue';
 import { useTestsStore } from '@/stores/useTestsStore';
 import { useBackendErrorHandling } from '@/composables/useBackendErrorHandling';
+import type { TableSortData } from '@/types/types';
 
 const testsStore = useTestsStore();
 
@@ -122,62 +122,27 @@ const {
     handleBackendErrors
 } = useBackendErrorHandling();
 
-const state = reactive({
-
-    // Searching stuff
-    searchQuery: '',
-
-    // Sorting stuff
-    sortBy: 'title',
-    sortOrder: 'asc' as 'asc' | 'desc',
-
-    // Pagination stuff
-    currentPage: 1,
-    selectedItemsPerPage: 2,
-
-});
-
 function handleSearch() {
-    fetchTests();
+    testsStore.getAll();
 }
 
-function handleSort(sortData: any) {
+function handleSort(sortData: TableSortData) {
     if (!sortData.prop) return;
 
-    state.sortBy = sortData.prop;
-    state.sortOrder = sortData.order === 'ascending' ? 'asc' : 'desc';
-    fetchTests();
-}
+    testsStore.sortBy = sortData.prop;
 
-
-
-function handleCurrentPageChange(page: number) {
-    state.currentPage = page;
-    fetchTests();
-}
-
-function handleSizeChange(size: number) {
-    state.selectedItemsPerPage = size;
-    state.currentPage = 1;
-    fetchTests();
-}
-
-function fetchTests() {
-    testsStore.getAll({
-        // Searching parameters
-        search: state.searchQuery,
-        // Sorting parameters
-        sort_by: state.sortBy,
-        sort_order: state.sortOrder,
-        // Pagination parameters
-        page: state.currentPage,
-        per_page: state.selectedItemsPerPage,
-    });
+    /**
+     * sortData.order can be 'ascending', 'descending'. We need to convert it to 'asc' or 'desc'
+     * for the Laravel backend.
+     */
+    testsStore.sortOrder = sortData.order === 'ascending' ? 'asc' : 'desc';
+    testsStore.getAll();
 }
 
 onMounted(() => {
-    fetchTests();
+    testsStore.getAll();
 });
+
 </script>
 
 <style scoped>
