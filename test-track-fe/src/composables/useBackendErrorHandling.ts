@@ -15,7 +15,10 @@ export function useBackendErrorHandling() {
      */
     const backendErrors = ref<BackendError>({});
 
-    // All errors from backend that are not validation errors
+    /**
+     * All errors from backend that are not validation errors. Example: not internet, server down,
+     * unexpected error...
+     */
     const generalError = ref<string>('');
 
     const handleBackendErrors = (error: unknown): void => {
@@ -71,3 +74,5 @@ export function useBackendErrorHandling() {
         handleBackendErrors
     }
 }
+
+

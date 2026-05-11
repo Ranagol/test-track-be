@@ -100,10 +100,40 @@
             v-model:page-size="testsStore.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="testsStore.pagination?.total || 0"
-            @current-change="testsStore.getAll"
-            @size-change="testsStore.getAll"
+            @current-change="fetchTests"
+            @size-change="fetchTests"
             class="mt-3"
         />
+
+        <el-alert
+            v-if="generalError"
+            type="error"
+            :title="generalError"
+            show-icon
+        />
+
+        <el-alert
+            v-if="Object.keys(backendErrors).length > 0"
+            type="error"
+            show-icon
+            class="mb-3"
+        >
+            <template #title>Errors</template>
+
+            <div
+                v-for="(messages, field) in backendErrors"
+                :key="field"
+                class="mb-2"
+            >
+                <strong>{{ field }}:</strong>
+                <ul class="list-disc ml-5">
+                    <li
+                        v-for="(message, idx) in messages"
+                        :key="idx"
+                    >{{ message }}</li>
+                </ul>
+            </div>
+        </el-alert>
 
     </div>
 </template>
@@ -123,7 +153,7 @@ const {
 } = useBackendErrorHandling();
 
 function handleSearch() {
-    testsStore.getAll();
+    fetchTests();
 }
 
 function handleSort(sortData: TableSortData) {
@@ -136,11 +166,19 @@ function handleSort(sortData: TableSortData) {
      * for the Laravel backend.
      */
     testsStore.sortOrder = sortData.order === 'ascending' ? 'asc' : 'desc';
-    testsStore.getAll();
+    fetchTests();
+}
+
+async function fetchTests() {
+    try {
+        await testsStore.getAll();
+    } catch (error) {
+        handleBackendErrors(error);
+    }
 }
 
 onMounted(() => {
-    testsStore.getAll();
+    fetchTests();
 });
 
 </script>
