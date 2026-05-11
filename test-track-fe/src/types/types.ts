@@ -35,8 +35,31 @@ export interface Test {
     id: number;
     user_id: number;
     title: string;
+    questions?: QuestionType[];
     description?: string;
     test_code: string;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface QuestionType {
+    id: number;
+    test_id: number;
+    text: string;
+    image_path?: string;
+    allows_multiple_correct: boolean;
+    answer_options?: AnswerOption[];
+    question_order?: number;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface AnswerOption {
+    id: number;
+    question_id: number;
+    text: string;
+    is_correct: boolean;
+    answer_order?: number;
     created_at: string;
     updated_at: string;
 }

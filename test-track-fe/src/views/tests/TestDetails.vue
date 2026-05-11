@@ -1,19 +1,17 @@
 <template>
     <Heading1
-        :text="data.test.title ?? 'Test details'"
+        :text="'Test: ' + (data.test.title ?? 'Test details')"
     />
 
-
-
-
-
+    <QuestionList
+        :questions="data.test.questions || []"
+    />
 
     <DisplayBackendError
         :generalError="generalError"
     />
 
-
-    {{ testsStore.test }}
+    <!-- <small>{{ testsStore.test }}</small> -->
 </template>
 
 <script setup lang="ts">
@@ -23,6 +21,7 @@ import { useApiErrors } from '@/composables/useApiErrors';
 import { useRoute } from 'vue-router';
 import type { Test } from '@/types/types';
 import Heading1 from '@/resusableComponents/Heading1.vue';
+import QuestionList from '@/views/questions/QuestionList.vue';
 
 const testsStore = useTestsStore();
 const route = useRoute();
