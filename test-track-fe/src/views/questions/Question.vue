@@ -4,14 +4,14 @@
     </div>
 
     <el-radio-group
-        v-model="selectedAnswerId"
+        v-model="userAnswerId"
         class="mt-3"
         style="display: flex; flex-direction: column; align-items: flex-start;"
     >
         <el-radio
             v-for="answerOption in question.answer_options"
             :key="answerOption.id"
-            :label="answerOption.id"
+            :value="answerOption.id"
         >
             <span>
                 <AnswerOption :answerOption="answerOption" />
@@ -31,10 +31,17 @@ import { ref } from 'vue';
 
 const props = defineProps<{
     question: QuestionType;
+
+    /**
+     * index is used to number the questions displayed to the test taker.
+     */
     index: number;
 }>();
 
-const selectedAnswerId = ref<number | null>(null);
+/**
+ * The test taker selected this answer option, during testing.
+ */
+const userAnswerId = ref<number | null>(null);
 
 </script>
 

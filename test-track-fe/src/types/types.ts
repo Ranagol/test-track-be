@@ -31,15 +31,19 @@ export type BackendError = {
     [field: string]: string[]
 }
 
+/**
+ * For every model, the optional relationships are listed after the updated_at.
+ */
 export interface Test {
     id: number;
     user_id: number;
     title: string;
-    questions?: QuestionType[];
     description?: string;
     test_code: string;
     created_at: string;
     updated_at: string;
+
+    questions?: QuestionType[];
 }
 
 export interface QuestionType {
@@ -48,10 +52,11 @@ export interface QuestionType {
     text: string;
     image_path?: string;
     allows_multiple_correct: boolean;
-    answer_options?: AnswerOption[];
     question_order?: number;
     created_at: string;
     updated_at: string;
+
+    answer_options?: AnswerOption[];
 }
 
 export interface AnswerOption {
@@ -60,6 +65,31 @@ export interface AnswerOption {
     text: string;
     is_correct: boolean;
     answer_order?: number;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface TestAttempt {
+    id: number;
+    user_id: number;
+    test_id: number;
+    score?: number;
+    max_score?: number;
+    comment?: string;
+    started_at?: string;
+    completed_at?: string;
+    created_at: string;
+    updated_at: string;
+
+    user_answers?: UserAnswer[];
+}
+
+export interface UserAnswer {
+    id: number;
+    test_attempt_id: number;
+    question_id: number;
+    answer_option_id: number;
+    comment?: string;
     created_at: string;
     updated_at: string;
 }
@@ -87,6 +117,11 @@ export interface PaginatedResponse<T> {
     meta: PaginationMeta;
 }
 
+/**
+ * These are the query parameters that can be sent to the backend when fetching tests, for the
+ * Tests.vue.
+ * They are needed for the search, sort, paginate features.
+ */
 export interface TestQueryParams {
     search?: string;
     sort_by?: string;
