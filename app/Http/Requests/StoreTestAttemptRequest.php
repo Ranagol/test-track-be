@@ -19,15 +19,23 @@ class StoreTestAttemptRequest extends FormRequest
      */
     public function rules(): array
     {
+        // return [
+        //     'user_id' => ['required', 'exists:users,id'],
+        //     'test_id' => ['required', 'exists:tests,id'],
+        //     'score' => ['nullable', 'integer', 'min:0'],
+        //     'max_score' => ['nullable', 'integer', 'min:0'],
+        //     'comment' => ['nullable', 'string'],
+        //     'started_at' => ['nullable', 'date_format:Y-m-d H:i:s'],
+        //     'finished_at' => ['nullable', 'date_format:Y-m-d H:i:s'],
+        //     'completed_at' => ['nullable', 'date_format:Y-m-d H:i:s'],
+        // ];
+
         return [
-            'user_id' => ['required', 'exists:users,id'],
-            'test_id' => ['required', 'exists:tests,id'],
-            'score' => ['nullable', 'integer', 'min:0'],
-            'max_score' => ['nullable', 'integer', 'min:0'],
-            'comment' => ['nullable', 'string'],
-            'started_at' => ['nullable', 'date_format:Y-m-d H:i:s'],
-            'finished_at' => ['nullable', 'date_format:Y-m-d H:i:s'],
-            'completed_at' => ['nullable', 'date_format:Y-m-d H:i:s'],
+            'test_attempt.user_id' => 'required|integer|exists:users,id',
+            'test_attempt.test_id' => 'required|integer|exists:tests,id',
+            'user_answers' => 'required|array',
+            'user_answers.*.question_id' => 'required|integer|exists:questions,id',
+            'user_answers.*.answer_option_id' => 'required|integer|exists:answer_options,id',
         ];
     }
 }

@@ -31,4 +31,4 @@ const testService = {
     }
 }
 
-export default testService
+export default testService;

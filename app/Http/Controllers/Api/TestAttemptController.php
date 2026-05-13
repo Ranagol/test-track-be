@@ -7,6 +7,7 @@ use App\Http\Requests\StoreTestAttemptRequest;
 use App\Http\Requests\UpdateTestAttemptRequest;
 use App\Http\Resources\TestAttemptResource;
 use App\Models\TestAttempt;
+use App\Models\UserAnswer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -25,7 +26,18 @@ class TestAttemptController extends Controller
      */
     public function store(StoreTestAttemptRequest $request): TestAttemptResource
     {
-        $testAttempt = TestAttempt::create($request->validated());
+        $validated = $request->validated();
+
+        $testAttempt = TestAttempt::create($validated['test_attempt']);
+
+        foreach ($validated['user_answers'] as $userAnswer) {
+            UserAnswer::create([
+                ...$userAnswer,
+                'test_attempt_id' => $testAttempt->id,
+            ]);
+        }
+
+        $testAttempt->load('userAnswers');
 
         return new TestAttemptResource($testAttempt);
     }

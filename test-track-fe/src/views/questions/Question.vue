@@ -4,7 +4,7 @@
     </div>
 
     <el-radio-group
-        v-model="userAnswerId"
+        v-model="selectedAnswerOption"
         class="mt-3"
         style="display: flex; flex-direction: column; align-items: flex-start;"
     >
@@ -27,7 +27,10 @@
 <script setup lang="ts">
 import type { QuestionType } from '@/types/types';
 import AnswerOption from '@/views/answerOptions/AnswerOption.vue';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
+
+const testAttemptStore = useTestAttemptStore();
 
 const props = defineProps<{
     question: QuestionType;
@@ -41,7 +44,20 @@ const props = defineProps<{
 /**
  * The test taker selected this answer option, during testing.
  */
-const userAnswerId = ref<number | null>(null);
+const selectedAnswerOption = ref<number | null>(null);
+
+watch(
+    selectedAnswerOption,
+    (newValue) => {
+        if (newValue !== null) {
+            testAttemptStore.updateUserAnswers(props.question.id, newValue);
+        }
+    }
+);
+
+
+
+
 
 </script>
 
