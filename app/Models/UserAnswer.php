@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,6 +13,7 @@ use Illuminate\Support\Carbon;
  * @property int $test_attempt_id
  * @property int $question_id
  * @property int $answer_option_id
+ * @property bool|null $is_correct
  * @property string|null $comment
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -45,5 +47,10 @@ class UserAnswer extends Model
     public function answerOption(): BelongsTo
     {
         return $this->belongsTo(AnswerOption::class);
+    }
+
+    public function scopeCorrect(Builder $query): Builder
+    {
+        return $query->where('is_correct', true);
     }
 }

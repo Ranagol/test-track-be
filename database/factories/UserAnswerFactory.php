@@ -24,6 +24,7 @@ class UserAnswerFactory extends Factory
             'test_attempt_id' => TestAttempt::factory(),
             'question_id' => Question::factory(),
             'answer_option_id' => AnswerOption::factory(),
+            'is_correct' => null,
             'comment' => $this->faker->optional()->sentence(),
         ];
     }

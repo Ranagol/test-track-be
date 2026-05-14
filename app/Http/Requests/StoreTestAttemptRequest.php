@@ -22,8 +22,6 @@ class StoreTestAttemptRequest extends FormRequest
         // return [
         //     'user_id' => ['required', 'exists:users,id'],
         //     'test_id' => ['required', 'exists:tests,id'],
-        //     'score' => ['nullable', 'integer', 'min:0'],
-        //     'max_score' => ['nullable', 'integer', 'min:0'],
         //     'comment' => ['nullable', 'string'],
         //     'started_at' => ['nullable', 'date_format:Y-m-d H:i:s'],
         //     'finished_at' => ['nullable', 'date_format:Y-m-d H:i:s'],

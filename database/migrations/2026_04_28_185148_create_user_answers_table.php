@@ -22,6 +22,9 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete()
                 ->comment('This is the answer selected by the test taker.');
+            $table->boolean('is_correct')
+                ->nullable()
+                ->comment('Shows if the users answer is correct. Initially it is null, only after evaluation will this be set to true or false.');
             $table->text('comment')->nullable();
             $table->timestamps();
 

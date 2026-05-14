@@ -31,7 +31,6 @@ class TestAttemptSeeder extends Seeder
                 // TestAttempt::factory()->create([
                 //     'user_id' => $testTaker->id,
                 //     'test_id' => $test->id,
-                //     'score' => 90, // Just a placeholder score
                 // ]);
             }
         }

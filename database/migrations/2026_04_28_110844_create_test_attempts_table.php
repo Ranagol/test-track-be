@@ -15,8 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('test_id')->constrained()->cascadeOnDelete();
-            $table->integer('score')->nullable();
-            $table->integer('max_score')->nullable();
+            // $table->integer('score')->nullable();
+            // $table->integer('max_score')->nullable();
+            $table->float('score_percentage')
+                ->nullable()
+                ->comment('The percentage score of the test attempt, calculated as (score / max_score) * 100');
             $table->text('comment')->nullable();
             $table->timestamp('started_at')->nullable();
             $table->timestamp('completed_at')->nullable();

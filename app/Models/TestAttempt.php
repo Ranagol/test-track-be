@@ -12,8 +12,7 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property int $user_id
  * @property int $test_id
- * @property int|null $score
- * @property int|null $max_score
+ * @property float|null $score_percentage
  * @property string|null $comment
  * @property Carbon|null $started_at
  * @property Carbon|null $completed_at

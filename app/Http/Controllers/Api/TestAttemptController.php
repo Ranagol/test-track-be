@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateTestAttemptRequest;
 use App\Http\Resources\TestAttemptResource;
 use App\Models\TestAttempt;
 use App\Models\UserAnswer;
+use App\Services\TestAttemptEvaluator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -68,5 +69,12 @@ class TestAttemptController extends Controller
         $testAttempt->delete();
 
         return response()->json(['message' => 'Delete successful'], 200);
+    }
+
+    public function evaluate(TestAttempt $testAttempt, TestAttemptEvaluator $evaluator): TestAttempt
+    {
+        $evaluator->evaluate($testAttempt);
+
+        return $testAttempt;
     }
 }

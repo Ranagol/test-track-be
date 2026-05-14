@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -47,5 +48,13 @@ class Question extends Model
     public function userAnswers(): HasMany
     {
         return $this->hasMany(UserAnswer::class);
+    }
+
+    /**
+     * Get the correct answer options for this question.
+     */
+    public function correctAnswerId(): HasOne
+    {
+        return $this->hasOne(AnswerOption::class)->where('is_correct', true)->select('id');
     }
 }

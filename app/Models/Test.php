@@ -40,6 +40,11 @@ class Test extends Model
         return $this->hasMany(Question::class);
     }
 
+    public function numberOfQuestions(): int
+    {
+        return $this->questions()->count();
+    }
+
     /**
      * Get the test attempts for the test.
      */

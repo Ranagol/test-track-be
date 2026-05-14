@@ -22,9 +22,7 @@ class TestAttemptFactory extends Factory
         return [
             'user_id' => User::factory(),
             'test_id' => Test::factory(),
-            // This score is just a temporary placeholder. The score will depend on the answers...
-            'score' => 70,
-            'max_score' => 100,
+            'score_percentage' => $this->faker->randomFloat(2, 0, 100),
             'comment' => $this->faker->sentence(),
             'started_at' => now()->subHour(),
             'completed_at' => now(),
