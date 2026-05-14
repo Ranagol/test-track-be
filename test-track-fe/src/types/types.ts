@@ -63,7 +63,7 @@ export interface AnswerOption {
     id: number;
     question_id: number;
     text: string;
-    is_correct: boolean;
+    is_correct?: boolean;
     answer_order?: number;
     created_at: string;
     updated_at: string;
@@ -73,14 +73,12 @@ export interface TestAttempt {
     id: number;
     user_id: number;
     test_id: number;
-    score?: number;
-    max_score?: number;
+    score_percentage?: number;
     comment?: string;
     started_at?: string;
     completed_at?: string;
     created_at: string;
     updated_at: string;
-
     user_answers?: UserAnswer[];
 }
 
@@ -89,6 +87,7 @@ export interface UserAnswer {
     test_attempt_id: number;
     question_id: number;
     answer_option_id: number;
+    is_correct?: boolean;
     comment?: string;
     created_at: string;
     updated_at: string;

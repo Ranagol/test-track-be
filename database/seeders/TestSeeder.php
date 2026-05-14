@@ -13,7 +13,10 @@ class TestSeeder extends Seeder
      */
     public function run(): void
     {
-        $testers = User::role('tester')->get();
+        /**
+         * Create generic dummy tests for all the testers, who are not tester@gmail.com
+         */
+        $testers = User::role('tester')->whereNot('email', 'tester@gmail.com')->get();
 
         foreach ($testers as $tester) {
             Test::factory(3)->for($tester)->create();

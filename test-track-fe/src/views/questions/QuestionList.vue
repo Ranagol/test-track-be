@@ -1,9 +1,5 @@
 <template>
     <div>
-        <Heading1
-            text="Question list"
-        />
-
         <!-- QUESTION LIST -->
         <div>
             <Question

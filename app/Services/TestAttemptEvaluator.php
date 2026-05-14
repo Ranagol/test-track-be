@@ -21,12 +21,18 @@ class TestAttemptEvaluator
 
             $userAnswerId = $userAnswer->answer_option_id;
 
-            if ($correctAnswerId === $userAnswerId) {
+            /**
+             * $isCorrect will became a bool. If it is true, we raise the number of correct answers,
+             * and we set the is_correct to true.
+             * If it is false, we set the is_correct to false.
+             */
+            $isCorrect = $correctAnswerId === $userAnswerId;
+
+            if ($isCorrect) {
                 $numberOfCorrectAnswers++;
-                $userAnswer->update(['is_correct' => true]);
-            } else {
-                $userAnswer->update(['is_correct' => false]);
             }
+
+            $userAnswer->update(['is_correct' => $isCorrect]);
         }
 
         $successPercentage = $numberOfCorrectAnswers / $numberOfQuestions * 100;
