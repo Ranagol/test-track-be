@@ -94,12 +94,12 @@ router.beforeEach(async (to) => {
         }
     }
 
-    // 🚫 Block auth pages for logged-in users
+    // Block auth pages for logged-in users
     if (to.meta.guestOnly && authStore.isAuthenticated) {//what is to?
         return { name: 'home' };
     }
 
-    // 🔐 Block protected pages for guests
+    // Block protected pages for guests
     if (to.meta.requiresAuth && !authStore.isAuthenticated) {
         return { name: 'login' };
     }
