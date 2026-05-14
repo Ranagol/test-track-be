@@ -1,11 +1,19 @@
 <template>
-    <Heading1 :text="'Test: ' + (data.test.title ?? 'Test details')" />
+    <Heading1
+        :text="(data.test.title ?? 'Test details')"
+    />
 
-    <QuestionList :questions="data.test.questions || []" />
+    <QuestionList
+        :questions="data.test.questions || []"
+        :mode="mode"
+    />
 
-    <DisplayBackendError :generalError="generalError" />
+    <DisplayBackendError
+        :generalError="generalError"
+    />
 
     <div class="flex flex-col items-end">
+
         <!-- SUBMIT -->
         <el-button class="mt-6" type="primary" @click="createTestAttempt()">
             Submit Test
@@ -18,7 +26,14 @@
     setup
     lang="ts"
 >
-import { onMounted, reactive } from 'vue';
+/**
+ * This component is used to display the details of a test for test takers.
+ * It will have 3 modes of working:
+ * 1. Creating test by the tester           /tests/create → tester (create mode)
+ * 2. Editing test by the tester            /tests/:id    → tester (edit mode)
+ * 3. Taking the test by the test taker     /tests/take-test/:testCode → test taker (take mode)
+ */
+import { onMounted, reactive, computed } from 'vue';
 import { useTestsStore } from '@/stores/useTestsStore';
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
 import { useAuthStore } from '@/stores/useAuthStore';
@@ -42,15 +57,22 @@ const {
     handleBackendErrors
 } = useApiErrors();
 
-// Get the testId from the url, will be needed to get the full test details data
-const testId = Number(route.params.id);
+
 
 let data = reactive({
     test: {} as Test
 });
 
+const mode = computed(() => {
+    if (route.name === 'test-create') return 'create';
+    if (route.name === 'test-edit') return 'edit';
+    if (route.name === 'test-take') return 'take';
+});
+
 const createTestAttempt = async () => {
     try {
+        // Get the testId from the url
+        const testId = Number(route.params.id);
 
         const testAttempData = {
             test_id: testId,
@@ -89,8 +111,26 @@ const logout = async () => {
 };
 
 onMounted(async () => {
+
     try {
-        data.test = await testsStore.get(testId);
+
+        // TAKE MODE
+        if (mode.value === 'take') {
+
+            //TODO ANDOR later check this line below, how it works, if works.
+            const testCode = route.params.testCode as string;
+            data.test = await testsStore.getByCode(testCode);
+
+        // EDIT MODE
+        } else if (mode.value === 'edit') {
+
+            // Get the testId from the url
+            const testId = Number(route.params.id);
+            data.test = await testsStore.get(testId);
+        }
+
+        // CREATE MODE - for this mode does not need data fetch from backend
+
     } catch (error) {
         handleBackendErrors(error);
     }

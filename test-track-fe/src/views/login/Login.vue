@@ -72,14 +72,17 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
 import { useAuthStore } from '@/stores/useAuthStore';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { emailRules } from '@/validationRules/validationRules';
 import { passwordRules } from '@/validationRules/validationRules';
 import { useApiErrors } from '@/composables/useApiErrors';
 
 const router = useRouter()
+const route = useRoute();
+
 const authStore = useAuthStore()
 const formRef = ref()
+
 const {
     validationErrors,
     generalError,
@@ -114,10 +117,38 @@ const handleLogin = async () => {
             password: data.password
         })
 
-        router.push('/')
+        const url = createUrl();
+
+        router.push(url);
     } catch (error) {
         handleBackendErrors(error)
     }
+}
+/**
+ * This is essential for cases when a test taker tries to access through received link his test,
+ * that he must take. The link looks like this:
+ * Example: /tests/take-test/TEST-4039-ms
+ * If he clicks on the link, first he will be redirected to the login page. But, thanks to our setup
+ * in routes.ts now the login page link will look like this:
+ * /login?redirect=/tests/take-test/TEST-4039-ms        <- notice the redirect query parameter
+ *
+ * Now the app needs to decide, it this is a regular login, when the user must be redirected to the
+ * '/' page, or this is the case when a test take wants to visit his test, so after successfull
+ * login.
+ */
+const createUrl = () => {
+
+    // Extract the redirect query parameter from the url
+    const redirectUrl = route.query.redirect;
+
+    // Check if redirect url is a string (important for TS). Is so, redirect user to testing url
+    if (typeof redirectUrl === 'string') {
+
+        return redirectUrl;
+    }
+
+    // This is regular login, when user should be redirected to the home page
+    return '/';
 }
 
 </script>

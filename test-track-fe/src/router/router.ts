@@ -60,6 +60,14 @@ const routes = [
         }
     },
     {
+        path: '/tests/take-test/:testCode',
+        name: 'test-take',
+        component: TestDetails,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
         /**
          * Match anything that doesn't match the above routes and redirect to NotFound
          * This must be the last route in the array.
@@ -95,14 +103,34 @@ router.beforeEach(async (to) => {
     }
 
     // Block auth pages for logged-in users
-    if (to.meta.guestOnly && authStore.isAuthenticated) {//what is to?
+    if (to.meta.guestOnly && authStore.isAuthenticated) {
         return { name: 'home' };
     }
 
-    // Block protected pages for guests
+    /**
+     * Block protected pages for guests AND remember where they originally wanted to go.
+     * This is essential for cases when a test taker tries to access through received link his test,
+     * that he must take. The link looks like this:
+     * Example: /tests/take-test/TEST-4039-ms
+     * If he clicks on the link, first he will be redirected to the login page. But, thanks to this
+     * setup, the login page link will look like this:
+     * /login?redirect=/tests/take-test/TEST-4039-ms
+     * Meaning: the app remembered where the test taker wanted to go.
+     */
     if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-        return { name: 'login' };
+
+        return {
+            name: 'login',
+            query: {
+                redirect: to.fullPath
+            }
+        };
     }
+
+    // Otherwise allow navigation
+    return true;
+
+
 });
 
 export default router;

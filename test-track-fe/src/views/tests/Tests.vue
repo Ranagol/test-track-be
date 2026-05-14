@@ -52,6 +52,7 @@
                 :cell-style="{ verticalAlign: 'top' }"
                 @sort-change="handleSort"
             >
+                <!-- TITLE -->
                 <el-table-column
                     prop="title"
                     label="Title"
@@ -66,6 +67,7 @@
                     </router-link>
                 </el-table-column>
 
+                <!-- TEST CODE -->
                 <el-table-column
                     prop="test_code"
                     label="Test code"
@@ -73,6 +75,22 @@
                     sortable="custom"
                 ></el-table-column>
 
+                <!-- LINK FOR TEST TAKERS -->
+                <el-table-column
+                    prop=""
+                    label="Link for test takers"
+                    v-slot="{ row }"
+                    min-width="250%"
+                >
+                    <router-link
+                        :to="`/tests/take-test/${row.test_code}`"
+                        class="text-primary hover:underline"
+                    >
+                        {{ `${origin}/tests/take-test/${row.test_code}` }}
+                    </router-link>
+                </el-table-column>
+
+                <!-- DESCRIPTION -->
                 <el-table-column
                     prop="description"
                     label="Description"
@@ -80,12 +98,14 @@
                     sortable="custom"
                 ></el-table-column>
 
+                <!-- CREATED -->
                 <el-table-column
                     prop="created_at"
                     label="Created"
                     sortable="custom"
                 ></el-table-column>
 
+                <!-- ACTIONS -->
                 <el-table-column
                     prop=""
                     label="Actions"
@@ -135,8 +155,10 @@ import { useApiErrors } from '@/composables/useApiErrors';
 import type { TableSortData } from '@/types/types';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import Heading1 from '@/resusableComponents/Heading1.vue';
+import type router from '@/router/router';
 
 const testsStore = useTestsStore();
+const origin = window.location.origin;
 
 const {
     generalError,

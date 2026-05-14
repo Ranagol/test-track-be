@@ -57,6 +57,17 @@ export const useTestsStore = defineStore('tests', {
             }
         },
 
+        async getByCode(testCode: string): Promise<Test> {
+            this.loading = true;
+            try {
+                const test = await testService.getByCode(testCode);
+                this.test = test;
+                return test;
+            } finally {
+                this.loading = false;
+            }
+        },
+
         async create(data: Test): Promise<Test> {
             this.loading = true;
             try {

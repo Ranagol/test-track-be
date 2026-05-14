@@ -48,7 +48,9 @@ Route::get('/xxx', function (Request $request) {
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
+    Route::get('/tests/test-code/{testCode}', [TestController::class, 'getTestByCode']);
     Route::apiResource('tests', TestController::class);
+
     Route::apiResource('questions', QuestionController::class);
     Route::apiResource('answer-options', AnswerOptionController::class);
     Route::apiResource('test-attempts', TestAttemptController::class);

@@ -24,6 +24,8 @@ import Heading1 from '@/resusableComponents/Heading1.vue';
 
 const props = defineProps<{
     questions: QuestionType[];
+    // TODO ANDOR why do we need undefined here?
+    mode: 'create' | 'edit' | 'take' | undefined;
 }>();
 
 

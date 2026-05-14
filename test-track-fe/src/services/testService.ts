@@ -10,20 +10,26 @@ const testService = {
         return response.data
     },
 
+    // Laravel Resource tends to wrap everything with a {data: ...} object,
     async get(id: number): Promise<Test> {
         const response = await appAxios.get<{ data: Test }>(`/api/tests/${id}`)
         return response.data.data
     },
 
+    async getByCode(testCode: string): Promise<Test> {
+        const response = await appAxios.get<{ data: Test }>(`/api/tests/test-code/${testCode}`)
+        return response.data.data
+    },
+
     // Partial<Test> means that all fields of Test are optional,
     async create(data: Partial<Test>): Promise<Test> {
-        const response = await appAxios.post<Test>('/api/tests', data)
-        return response.data
+        const response = await appAxios.post<{ data: Test }>('/api/tests', data)
+        return response.data.data
     },
 
     async update(id: number, data: Partial<Test>): Promise<Test> {
-        const response = await appAxios.put<Test>(`/api/tests/${id}`, data)
-        return response.data
+        const response = await appAxios.put<{ data: Test }>(`/api/tests/${id}`, data)
+        return response.data.data
     },
 
     async delete(id: number): Promise<void> {

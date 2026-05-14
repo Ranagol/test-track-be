@@ -47,6 +47,8 @@ class TestController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * //TODO ANDOR when a new test is created from data sent from FE, we will have to create manually
+     * a unique test code.
      */
     public function store(StoreTestRequest $request): TestResource
     {
@@ -62,6 +64,16 @@ class TestController extends Controller
     {
         // Eager load questions and their answer options for this test
         $test->load('questions.answerOptions');
+
+        return new TestResource($test);
+    }
+
+    // TODO ANDOR why would this string $testCode work for extracting test code? How?
+    public function getTestByCode(string $testCode): TestResource
+    {
+        $test = Test::where('test_code', $testCode)
+            ->with('questions.answerOptions')
+            ->firstOrFail();
 
         return new TestResource($test);
     }
