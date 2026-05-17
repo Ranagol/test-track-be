@@ -112,16 +112,18 @@ router.beforeEach(async (to) => {
      * This is essential for cases when a test taker tries to access through received link his test,
      * that he must take. The link looks like this:
      * Example: /tests/take-test/TEST-4039-ms
-     * If he clicks on the link, first he will be redirected to the login page. But, thanks to this
+     * If he clicks on the link, first he will be redirected to the /login page. But, thanks to this
      * setup, the login page link will look like this:
      * /login?redirect=/tests/take-test/TEST-4039-ms
-     * Meaning: the app remembered where the test taker wanted to go.
+     * Meaning: after succesfull login, the user will be redirected to the original page he wanted to
+     * go. The app remembered where the test taker wanted to go
      */
     if (to.meta.requiresAuth && !authStore.isAuthenticated) {
 
         return {
             name: 'login',
             query: {
+                //fullPath is for example: /tests/take-test/TEST-4039-ms
                 redirect: to.fullPath
             }
         };

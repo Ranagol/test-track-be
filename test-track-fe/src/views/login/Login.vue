@@ -57,6 +57,19 @@
             </el-form-item>
         </el-form>
 
+        <!-- DON'T HAVE AN ACCOUNT? -->
+        <div>
+            <p class="text-sm text-gray-500">
+                Don't have an account?
+                <router-link
+                    :to="{ name: 'register', query: { redirect: route.query.redirect } }"
+                    class="text-blue-500 hover:underline"
+                >
+                    Register here
+                </router-link>
+            </p>
+        </div>
+
         <!-- GENERAL ERROR MESSAGE -->
         <el-alert
             v-if="generalError"

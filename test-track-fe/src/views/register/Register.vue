@@ -82,6 +82,17 @@
             </el-form-item>
         </el-form>
 
+        <!-- ALREADY HAVE AN ACCOUNT? -->
+        <p class="text-sm text-gray-500 mt-4">
+            Already have an account?
+            <router-link
+                :to="{ name: 'login', query: { redirect: route.query.redirect } }"
+                class="text-blue-500 hover:underline"
+            >
+                Login here
+            </router-link>
+        </p>
+
         <!-- GENERAL ERROR MESSAGE -->
         <el-alert
             v-if="generalError"
@@ -97,7 +108,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
 import { useAuthStore } from '@/stores/useAuthStore';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { nameRules } from '@/validationRules/validationRules';
 import { emailRules } from '@/validationRules/validationRules';
 import { passwordRules } from '@/validationRules/validationRules';
@@ -105,6 +116,7 @@ import { createPasswordConfirmationRules } from '@/validationRules/validationRul
 import { useApiErrors } from '@/composables/useApiErrors';
 
 const router = useRouter()
+const route = useRoute()
 const authStore = useAuthStore()
 const formRef = ref()
 const {
@@ -148,10 +160,26 @@ const handleRegister = async () => {
             password_confirmation: data.password_confirmation
         })
 
-        router.push('/')
+        const url = createUrl()
+        router.push(url)
     } catch (error) {
         handleBackendErrors(error)
     }
+}
+
+/**
+ * Redirect user to their originally requested page after successful registration,
+ * or to home page if they registered without a specific redirect target.
+ * This handles the case where a test taker clicks a test link but must register first.
+ */
+const createUrl = () => {
+    const redirectUrl = route.query.redirect
+
+    if (typeof redirectUrl === 'string') {
+        return redirectUrl
+    }
+
+    return '/'
 }
 
 
