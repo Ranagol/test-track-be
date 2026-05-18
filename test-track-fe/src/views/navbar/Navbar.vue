@@ -8,10 +8,14 @@
         <el-menu-item index="/">Home</el-menu-item>
         <el-menu-item index="/tests">My created tests</el-menu-item>
         <el-menu-item index="/analytics">Analytics</el-menu-item>
+
+        <!-- LOGIN -->
         <el-menu-item
             index="/login"
             v-if="!authStore.user"
         >Login</el-menu-item>
+
+        <!-- REGISTER -->
         <el-menu-item
             index="/register"
             v-if="!authStore.user"
@@ -21,11 +25,12 @@
         <el-menu-item
             index=""
             v-if="authStore.user"
-        ><el-button
-
-            @click="logout"
-            text
-        >Logout</el-button></el-menu-item>
+        >
+            <el-button
+                @click="logout"
+                text
+            >Logout</el-button>
+        </el-menu-item>
 
         <!-- HI, USER -->
         <el-menu-item
@@ -33,7 +38,6 @@
             v-if="authStore.user"
         >Hi, {{ authStore.user.name }}</el-menu-item>
 
-        <!-- <Logout /> -->
     </el-menu>
 </template>
 

@@ -1,6 +1,9 @@
 {
     "preset": "laravel",
     "rules": {
-        "single_blank_line_at_eof": false
+        "single_blank_line_at_eof": false,
+        "concat_space": {
+            "spacing": "one"
+        }
     }
 }

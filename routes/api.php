@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AnalyticsController;
 use App\Http\Controllers\Api\AnswerOptionController;
 use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\TestAttemptController;
@@ -34,7 +35,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// This route is for testing purposes only, it should be removed in production
+// TODO ANDOR This route is for testing purposes only, it should be removed in production
 Route::get('/xxx', function (Request $request) {
     $t = 8;
 
@@ -55,4 +56,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('answer-options', AnswerOptionController::class);
     Route::apiResource('test-attempts', TestAttemptController::class);
     Route::apiResource('user-answers', UserAnswerController::class);
+    Route::apiResource('analytics', AnalyticsController::class);
 });

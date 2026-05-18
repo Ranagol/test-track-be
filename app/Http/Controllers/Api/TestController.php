@@ -42,6 +42,7 @@ class TestController extends Controller
         $perPage = $request->per_page ?? 2;
         $tests = $query->paginate($perPage);
 
+        // TODO ANDOR later check this, and only return those columns that you actually need on FE. Use nested eager loading.
         return TestResource::collection($tests);
     }
 

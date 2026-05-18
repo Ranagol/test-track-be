@@ -47,6 +47,9 @@ class Test extends Model
 
     /**
      * Get the test attempts for the test.
+     * //TODO ANDOR this relationship should be named testAttempts. But, some Phpunit related extension
+     * constantly renames ot to test_attempts, which is unacceptable. I was not able to find the
+     * problem source. Temporarily I will leave it this way, but this has to be corrected.
      */
     public function attempts(): HasMany
     {

@@ -86,7 +86,7 @@
                         :to="`/tests/take-test/${row.test_code}`"
                         class="text-primary hover:underline"
                     >
-                        {{ `${v}/tests/take-test/${row.test_code}` }}
+                        {{ `${baseUrl}/tests/take-test/${row.test_code}` }}
                     </router-link>
                 </el-table-column>
 
@@ -157,7 +157,13 @@ import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import Heading1 from '@/resusableComponents/Heading1.vue';
 
 const testsStore = useTestsStore();
-const v = window.location.v;
+
+/**
+ * In development, the base url is http://localhost/, but in production will be something like
+ * https://test-track/andorcode.com. We need this component to be able to work in both situations.
+ * Hence we use window.location.origin.
+ */
+const baseUrl = window.location.origin;
 
 const {
     generalError,

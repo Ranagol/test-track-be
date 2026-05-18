@@ -42,12 +42,12 @@
 
         <!-- TABLE -->
         <div
-            v-loading="testsStore.loading"
+            v-loading="analyticsStore.loading"
             class="mt-3"
         >
             <el-table
-                :data="testsStore.tests"
-                v-loading="testsStore.loading"
+                :data="analyticsStore.analytics"
+                v-loading="analyticsStore.loading"
                 style="width: 80%"
                 :cell-style="{ verticalAlign: 'top' }"
                 @sort-change="handleSort"
@@ -88,14 +88,18 @@
 
         <!-- PAGINATION -->
         <!-- <el-pagination
-            v-model:current-page="testsStore.currentPage"
-            v-model:page-size="testsStore.pageSize"
+            v-model:current-page="analyticsStore.currentPage"
+            v-model:page-size="analyticsStore.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="testsStore.pagination?.total || 0"
-            @current-change="fetchTests"
-            @size-change="fetchTests"
+            :total="analyticsStore.pagination?.total || 0"
+            @current-change="fetchAnalytics"
+            @size-change="fetchAnalytics"
             class="mt-3"
         /> -->
+
+        <pre>
+        {{ analyticsStore.analytics }}
+        </pre>
 
         <DisplayBackendError
             :generalError="generalError"
@@ -106,13 +110,13 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { useTestsStore } from '@/stores/useTestsStore';
+import { useAnalyticsStore } from '@/stores/useAnalyticsStore';
 import { useApiErrors } from '@/composables/useApiErrors';
 import type { TableSortData } from '@/types/types';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import Heading1 from '@/resusableComponents/Heading1.vue';
 
-const testsStore = useTestsStore();
+const analyticsStore = useAnalyticsStore();
 
 const {
     generalError,
@@ -120,32 +124,32 @@ const {
 } = useApiErrors();
 
 function handleSearch() {
-    fetchTests();
+    fetchAnalytics();
 }
 
 function handleSort(sortData: TableSortData) {
     if (!sortData.prop) return;
 
-    testsStore.sortBy = sortData.prop;
+    analyticsStore.sortBy = sortData.prop;
 
     /**
      * sortData.order can be 'ascending', 'descending'. We need to convert it to 'asc' or 'desc'
      * for the Laravel backend.
      */
-    testsStore.sortOrder = sortData.order === 'ascending' ? 'asc' : 'desc';
-    fetchTests();
+    analyticsStore.sortOrder = sortData.order === 'ascending' ? 'asc' : 'desc';
+    fetchAnalytics();
 }
 
-async function fetchTests() {
+async function fetchAnalytics() {
     try {
-        await testsStore.getAll();
+        await analyticsStore.getAll();
     } catch (error) {
         handleBackendErrors(error);
     }
 }
 
 onMounted(() => {
-    fetchTests();
+    fetchAnalytics();
 });
 
 </script>
