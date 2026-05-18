@@ -7,9 +7,15 @@
     >
         <el-menu-item index="/">Home</el-menu-item>
         <el-menu-item index="/tests">My created tests</el-menu-item>
-        <el-menu-item index="/test-takers">My test takers</el-menu-item>
-        <el-menu-item index="/login">Login</el-menu-item>
-        <el-menu-item index="/register">Register</el-menu-item>
+        <el-menu-item index="/analytics">Analytics</el-menu-item>
+        <el-menu-item
+            index="/login"
+            v-if="!authStore.user"
+        >Login</el-menu-item>
+        <el-menu-item
+            index="/register"
+            v-if="!authStore.user"
+        >Register</el-menu-item>
 
         <!-- LOGOUT -->
         <el-menu-item

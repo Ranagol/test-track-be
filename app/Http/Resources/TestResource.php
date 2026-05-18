@@ -27,6 +27,7 @@ class TestResource extends JsonResource
             'title' => $model->title,
             'description' => $model->description,
             'test_code' => $model->test_code,
+            // Only include questions if they were already eager loaded in the controller.
             'questions' => QuestionResource::collection($this->whenLoaded('questions')),
             'created_at' => $model->created_at->format('d.m.Y'),
             'updated_at' => $model->updated_at->format('d.m.Y'),

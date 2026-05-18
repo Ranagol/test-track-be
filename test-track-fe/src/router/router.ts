@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Tests from '@/views/tests/Tests.vue';
-import TestTakers from '@/views/users/TestTakers.vue';
 import Login from '@/views/login/Login.vue';
 import Register from '@/views/register/Register.vue';
 import Home from '@/views/home/Home.vue';
 import NotFound from '@/views/errors/NotFound.vue';
 import { useAuthStore } from '@/stores/useAuthStore';
 import TestDetails from '@/views/tests/TestDetails.vue';
+import AnalyticList from '@/views/analytics/AnalyticList.vue';
 
 const routes = [
     {
@@ -35,9 +35,9 @@ const routes = [
         component: Home
     },
     {
-        path: '/test-takers',
-        name: 'test-takers',
-        component: TestTakers,
+        path: '/analytics',
+        name: 'analytics',
+        component: AnalyticList,
         meta: {
             // This page is only for logged-in users (protected page)
             requiresAuth: true

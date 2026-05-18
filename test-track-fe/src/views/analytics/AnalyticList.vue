@@ -3,7 +3,7 @@
 
         <div class="h-16 flex">
             <Heading1
-                text="My tests"
+                text="My test takers"
             />
         </div>
 
@@ -12,7 +12,7 @@
         >
 
             <!-- SEARCH INPUT -->
-            <el-input
+            <!-- <el-input
                 v-model="testsStore.searchTerm"
                 style="width: 30%"
                 placeholder="Search tests"
@@ -20,24 +20,24 @@
                 @keyup.enter="handleSearch"
                 @clear="handleSearch"
                 @input="handleSearch"
-            />
+            /> -->
 
             <!-- SEARCH BUTTON -->
-            <el-button
+            <!-- <el-button
                 class="ml-3"
                 type="primary"
                 @click="handleSearch"
             >
                 Search
-            </el-button>
+            </el-button> -->
 
             <!-- CREATE NEW BUTTON -->
-            <el-button
+            <!-- <el-button
                 class="ml-3"
                 type="primary"
             >
                 Create new
-            </el-button>
+            </el-button> -->
         </div>
 
         <!-- TABLE -->
@@ -57,15 +57,7 @@
                     prop="title"
                     label="Title"
                     sortable="custom"
-                    v-slot="{ row }"
-                >
-                    <router-link
-                        :to="`/tests/${row.id}`"
-                        class="text-primary hover:underline"
-                    >
-                        {{ row.title }}
-                    </router-link>
-                </el-table-column>
+                ></el-table-column>
 
                 <!-- TEST CODE -->
                 <el-table-column
@@ -74,21 +66,6 @@
                     width="150%"
                     sortable="custom"
                 ></el-table-column>
-
-                <!-- LINK FOR TEST TAKERS -->
-                <el-table-column
-                    prop=""
-                    label="Link for test takers"
-                    v-slot="{ row }"
-                    min-width="250%"
-                >
-                    <router-link
-                        :to="`/tests/take-test/${row.test_code}`"
-                        class="text-primary hover:underline"
-                    >
-                        {{ `${v}/tests/take-test/${row.test_code}` }}
-                    </router-link>
-                </el-table-column>
 
                 <!-- DESCRIPTION -->
                 <el-table-column
@@ -105,33 +82,12 @@
                     sortable="custom"
                 ></el-table-column>
 
-                <!-- ACTIONS -->
-                <el-table-column
-                    prop=""
-                    label="Actions"
-                    min-width="120px"
-                >
-                    <template #default="scope">
 
-                        <!-- EDIT BUTTON -->
-                        <el-button
-                            size="small"
-                            type="primary"
-                        >Edit</el-button>
-
-                        <!-- DELETE BUTTON -->
-                        <el-button
-                            size="small"
-                            type="danger"
-                        >Delete</el-button>
-
-                    </template>
-                </el-table-column>
             </el-table>
         </div>
 
         <!-- PAGINATION -->
-        <el-pagination
+        <!-- <el-pagination
             v-model:current-page="testsStore.currentPage"
             v-model:page-size="testsStore.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
@@ -139,7 +95,7 @@
             @current-change="fetchTests"
             @size-change="fetchTests"
             class="mt-3"
-        />
+        /> -->
 
         <DisplayBackendError
             :generalError="generalError"
@@ -157,7 +113,6 @@ import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import Heading1 from '@/resusableComponents/Heading1.vue';
 
 const testsStore = useTestsStore();
-const v = window.location.v;
 
 const {
     generalError,
