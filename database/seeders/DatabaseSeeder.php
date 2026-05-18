@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             TestAttemptSeeder::class,
             UserAnswerSeeder::class,
             RealTestSeeder::class,
+            RealTestAttemptSeeder::class,
         ]);
     }
 }

@@ -23,6 +23,7 @@ use Illuminate\Support\Carbon;
  */
 class TestAttempt extends Model
 {
+    // TODO ANDOR fix this. Make a new rule for Larastan. Avoid using this line below. Make a rule.
     /** @phpstan-ignore-next-line */
     use HasFactory;
 

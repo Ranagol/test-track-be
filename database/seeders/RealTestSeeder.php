@@ -20,6 +20,8 @@ class RealTestSeeder extends Seeder
          * Create a specific test for the tester with email tester@gmail.com
          * This test will be used for testing the evaluation logic. So we must have here
          * concrete and meaningful questions and answer options.
+         *
+         * Small trick: in these tests, always the first answer option will be the correct one.
          */
         $tester = User::role('tester')->where('email', 'tester@gmail.com')->first();
 

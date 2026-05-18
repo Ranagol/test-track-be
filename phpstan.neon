@@ -27,6 +27,13 @@ parameters:
         - identifier: method.notFound
           path: app/
           message: '/Call to an undefined method (Illuminate|Laravel)/'
+        # Relationship methods on dynamically created models in seeders
+        - identifier: method.notFound
+          path: database/seeders/
+        # Argument type mismatches from relationship create() in seeders
+        - identifier: argument.type
+          path: database/seeders/
+          message: '/expects.*Model.*given/'
         # Eloquent generic types (BelongsTo, HasMany, Builder, etc.)
         - message: '/with generic class.*does not specify its types/'
         # Eloquent dynamic properties (accessed via __get)
