@@ -29,7 +29,7 @@ class TestController extends Controller
 
         // Search by title
         if ($request->has('search') && $request->search !== '') {
-            $query->where('title', 'like', '%'.$request->search.'%');
+            $query->where('title', 'like', '%' . $request->search . '%');
         }
 
         // Sort
