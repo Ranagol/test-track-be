@@ -160,6 +160,20 @@ const handleRegister = async () => {
             password_confirmation: data.password_confirmation
         })
 
+        /**
+         * We must the url create dynamically. It can't be just '/', by default. The '/' is
+         * one possible option. The other option is when the user has a test link that he has to
+         * visit. The the process is:
+         * User has a test link (but has no account):
+         * Example: /tests/take-test/TEST-4039-ms.
+         * User clicks on the test link, and automatically is redirected (with his test link too in
+         * the url, as an additional parameter) to the login page. But, he can't log in, because he
+         * does not have an account. Exactly for this, there is the 'Don't have an account?' link.
+         * The user click on this link, and he is now redirected to the /register page (this component),
+         * again, together with his desired target url as a route parameter.
+         * Now the user registers. If the registering is successfull, he will be then redirected to
+         * his desired target url, the test, that he must solve.
+         */
         const url = createUrl()
         router.push(url)
     } catch (error) {

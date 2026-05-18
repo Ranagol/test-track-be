@@ -15,7 +15,11 @@
     <div class="flex flex-col items-end">
 
         <!-- SUBMIT -->
-        <el-button class="mt-6" type="primary" @click="createTestAttempt()">
+        <el-button
+            @click="createTestAttempt()"
+            class="mt-6"
+            type="primary"
+        >
             Submit Test
         </el-button>
     </div>
@@ -71,11 +75,9 @@ const mode = computed(() => {
 
 const createTestAttempt = async () => {
     try {
-        // Get the testId from the url
-        const testId = Number(route.params.id);
 
         const testAttempData = {
-            test_id: testId,
+            test_id: data.test.id,
             user_id: authStore.userId,
         }
 
@@ -87,20 +89,23 @@ const createTestAttempt = async () => {
         testAttemptStore.resetTestAttempt();
 
         //Display feedback to the user about succesfully submitting the test
-        ElMessageBox.alert('You have successfully submitted the test.', 'Confirmation', {
+        ElMessageBox.alert(
+            'You have successfully submitted the test. You will now signed out. Have a nice day! ',
+            'Confirmation', {
             confirmButtonText: 'OK',
             callback: (action: Action) => {
                 if (action === 'confirm') {
-                    logout();
+                    // TODO ANDOR I temporarily disable this, uncomment later
+                    // logout();
                 }
             },
         })
 
 
         //TODO ANDOR Make sure that the user can not submit this test again.
-        //TODO ANDOR Probably revoking the the invitation for this test? Redirecting to login? Permission?
 
     } catch (error) {
+        // TODO ANDOR why this was not triggered when the test_id was missing from the request?
         handleBackendErrors(error);
     }
 }
