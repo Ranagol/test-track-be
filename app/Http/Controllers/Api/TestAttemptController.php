@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTestAttemptRequest;
 use App\Http\Requests\UpdateTestAttemptRequest;
 use App\Http\Resources\TestAttemptResource;
+use App\Interfaces\TestAttemptEvaluatorInterface;
 use App\Models\TestAttempt;
 use App\Models\UserAnswer;
-use App\Services\TestAttemptEvaluator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -25,10 +25,15 @@ class TestAttemptController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTestAttemptRequest $request): TestAttemptResource
-    {
+    public function store(
+        StoreTestAttemptRequest $request,
+        TestAttemptEvaluatorInterface $evaluator
+    ): TestAttemptResource {
+
+        // Validate
         $validated = $request->validated();
 
+        // Create the test attempt
         $testAttempt = TestAttempt::create($validated['test_attempt']);
 
         foreach ($validated['user_answers'] as $userAnswer) {
@@ -38,6 +43,10 @@ class TestAttemptController extends Controller
             ]);
         }
 
+        // Evaluate the test attempt
+        $evaluator->evaluate($testAttempt);
+
+        // Prepare the test attempt to be returned for the FE with belonging user answers
         $testAttempt->load('userAnswers');
 
         return new TestAttemptResource($testAttempt);
@@ -69,12 +78,5 @@ class TestAttemptController extends Controller
         $testAttempt->delete();
 
         return response()->json(['message' => 'Delete successful'], 200);
-    }
-
-    public function evaluate(TestAttempt $testAttempt, TestAttemptEvaluator $evaluator): TestAttempt
-    {
-        $evaluator->evaluate($testAttempt);
-
-        return $testAttempt;
     }
 }

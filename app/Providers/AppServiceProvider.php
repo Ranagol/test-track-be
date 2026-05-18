@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Interfaces\TestAttemptEvaluatorInterface;
+use App\Services\TestAttemptEvaluator;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\ServiceProvider;
 
@@ -12,7 +14,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(
+            TestAttemptEvaluatorInterface::class,
+            TestAttemptEvaluator::class
+        );
     }
 
     /**

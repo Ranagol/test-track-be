@@ -4,20 +4,27 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Interfaces\TestAttemptEvaluatorInterface;
 use App\Models\TestAttempt;
 
-class TestAttemptEvaluator
+class TestAttemptEvaluator implements TestAttemptEvaluatorInterface
 {
+    /**
+     * Every time a user solves a test, a new TestAttempt is created for him in the db. This TestAttempt
+     * must be evaluated, must be checked if the users answers were correct, how many of them were
+     * correct... This function does exactly that.
+     */
     public function evaluate(TestAttempt $testAttempt): void
     {
-        $test = $testAttempt->test->load('questions.correctAnswerId,numberOfQuestions');
+        $test = $testAttempt->test->load('questions.correctAnswerId');
         $numberOfQuestions = $test->numberOfQuestions();
         $numberOfCorrectAnswers = 0;
 
         foreach ($testAttempt->userAnswers as $userAnswer) {
 
             $question = $test->questions->firstWhere('id', $userAnswer->question_id);
-            $correctAnswerId = $question->correctAnswerId;
+
+            $correctAnswerId = $question->correctAnswerId?->id;
 
             $userAnswerId = $userAnswer->answer_option_id;
 
