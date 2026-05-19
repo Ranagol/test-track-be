@@ -48,7 +48,15 @@
                 <el-table-column
                     prop="user.name"
                     label="Test taker"
-                ></el-table-column>
+                    v-slot="{ row }"
+                >
+                    <router-link
+                        :to="`/analytics/${row.user.id}`"
+                        class="text-primary hover:underline"
+                    >
+                        {{ row.user.name === 'test-taker@gmail.com' ? 'My default test taker' : row.user.name }}
+                    </router-link>
+                </el-table-column>
 
                 <!-- TEST NAME -->
                 <el-table-column
@@ -90,10 +98,6 @@
             @size-change="fetchTestAttempts"
             class="mt-3"
         />
-
-        <pre>
-        {{ testAttemptStore.testAttempts }}
-        </pre>
 
         <DisplayBackendError
             :generalError="generalError"

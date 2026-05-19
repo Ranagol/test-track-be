@@ -25,7 +25,7 @@ class UpdateTestRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'test_code' => ['required', 'string', 'unique:tests,test_code,'.$this->route('test')],
+            'test_code' => ['required', 'string', 'unique:tests,test_code,' . $this->route('test')],
         ];
     }
 }

@@ -29,6 +29,7 @@ class TestAttemptController extends Controller
          */
         $query = TestAttempt::query()
             ->forTester($testerId)
+            // TODO ANDOR this line below does not work, because it confronts with the TestAttemptResource. How to fix this?
             ->with(['user:id,name', 'test:id,title,description']);
 
         /**
