@@ -3,20 +3,21 @@
         <Heading1
             text="Analytics"
         />
+
+        <!-- USER DATA -->
         <div>
             <h5>Test taker details</h5>
             <p>Name: {{ testTaker?.name }}</p>
             <p>Email: {{ testTaker?.email }}</p>
         </div>
 
+        <!-- TESTS -->
+        <Test
+            v-for="test in testsStore.tests"
+            :key="test.id"
+            :test="test"
+        />
     </div>
-
-    <small>
-        <pre>
-            {{ testsStore.tests }}
-        </pre>
-    </small>
-
 </template>
 
 <script setup lang="ts">
@@ -26,6 +27,7 @@ import { useTestsStore } from '@/stores/useTestsStore';
 import Heading1 from '@/resusableComponents/Heading1.vue';
 import userService from '@/services/userService';
 import type { User } from '@/types/types';
+import Test from '@/views/analytics/Test.vue';
 
 const route = useRoute();
 const router = useRouter();
