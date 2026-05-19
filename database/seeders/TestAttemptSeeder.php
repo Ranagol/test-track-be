@@ -20,10 +20,12 @@ class TestAttemptSeeder extends Seeder
          * We do not want for this user to have test attempts, because for him we will make manually
          * meaningful and human-readable tests.
          */
-        $exceptionTestTakerEmail = config('DEFAULT_TEST_TAKER_EMAIL');
+        $exceptionTestTakerEmail = config('app.DEFAULT_TEST_TAKER_EMAIL');
         $testTakers = User::role('test-taker')
             ->where('email', '!=', $exceptionTestTakerEmail)
             ->get();
+
+        $t = 8;
 
         // Every testTaker tried to make an attempt for every test twice
         foreach ($testTakers as $testTaker) {
