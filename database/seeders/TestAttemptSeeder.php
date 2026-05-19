@@ -15,7 +15,15 @@ class TestAttemptSeeder extends Seeder
     public function run(): void
     {
         $tests = Test::all();
-        $testTakers = User::role('test-taker')->get();
+
+        /**
+         * We do not want for this user to have test attempts, because for him we will make manually
+         * meaningful and human-readable tests.
+         */
+        $exceptionTestTakerEmail = config('DEFAULT_TEST_TAKER_EMAIL');
+        $testTakers = User::role('test-taker')
+            ->where('email', '!=', $exceptionTestTakerEmail)
+            ->get();
 
         // Every testTaker tried to make an attempt for every test twice
         foreach ($testTakers as $testTaker) {
@@ -26,12 +34,6 @@ class TestAttemptSeeder extends Seeder
                     'user_id' => $testTaker->id,
                     'test_id' => $test->id,
                 ]);
-
-                // Second testAttempt for the given test and testTaker
-                // TestAttempt::factory()->create([
-                //     'user_id' => $testTaker->id,
-                //     'test_id' => $test->id,
-                // ]);
             }
         }
     }

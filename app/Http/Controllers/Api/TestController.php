@@ -49,6 +49,31 @@ class TestController extends Controller
     }
 
     /**
+     * This function is called at FE url /analytics/:testTakerId
+     * It sends all belonging tests, questions, answers, attempts for the give test taker, so its
+     * test performances could be analyzed.
+     */
+    public function indexAnalytics(Request $request): AnonymousResourceCollection
+    {
+        $testTakerId = $request->testTakerId;
+
+        $tests = Test::whereHas('attempts', function ($q) use ($testTakerId) {
+            $q->where('user_id', $testTakerId);
+        })
+            ->with(
+                [
+                    // 'questions.answerOptions',
+                    'attempts' => function ($q) use ($testTakerId) {
+                        $q->where('user_id', $testTakerId);
+                    },
+                ]
+            )
+            ->get();
+
+        return TestResource::collection($tests);
+    }
+
+    /**
      * Store a newly created resource in storage.
      * //TODO ANDOR when a new test is created from data sent from FE, we will have to create manually
      * a unique test code.

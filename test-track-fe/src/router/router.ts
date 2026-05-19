@@ -7,6 +7,7 @@ import NotFound from '@/views/errors/NotFound.vue';
 import { useAuthStore } from '@/stores/useAuthStore';
 import TestDetails from '@/views/tests/TestDetails.vue';
 import TestAttempts from '@/views/testAttempts/TestAttempts.vue';
+import Analytics from '@/views/analytics/Analytics.vue';
 
 const routes = [
     {
@@ -36,10 +37,18 @@ const routes = [
     },
     {
         path: '/analytics',
-        name: 'analytics',
+        name: 'analyticsList',
         component: TestAttempts,
         meta: {
             // This page is only for logged-in users (protected page)
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/analytics/:userId',
+        name: 'analyticsDetails',
+        component: Analytics,
+        meta: {
             requiresAuth: true
         }
     },

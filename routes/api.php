@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\TestAttemptController;
 use App\Http\Controllers\Api\TestController;
 use App\Http\Controllers\Api\UserAnswerController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Http\Request;
@@ -50,10 +51,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // Test routes
     Route::get('/tests/test-code/{testCode}', [TestController::class, 'getTestByCode']);
+    Route::get('/analytics', [TestController::class, 'indexAnalytics']);
     Route::apiResource('tests', TestController::class);
 
     Route::apiResource('test-attempts', TestAttemptController::class);
     Route::apiResource('questions', QuestionController::class);
     Route::apiResource('answer-options', AnswerOptionController::class);
     Route::apiResource('user-answers', UserAnswerController::class);
+
+    Route::get('/test-taker', [UserController::class, 'getTestTaker']);
 });

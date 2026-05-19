@@ -46,6 +46,15 @@ export const useTestsStore = defineStore('tests', {
             }
         },
 
+        async getAnalytics(testTakerId: number): Promise<void> {
+            this.loading = true;
+            try {
+                this.tests = await testService.getAnalytics(testTakerId);
+            } finally {
+                this.loading = false;
+            }
+        },
+
         async get(id: number): Promise<Test> {
             this.loading = true;
             try {

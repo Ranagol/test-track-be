@@ -27,17 +27,14 @@ class TestAttemptController extends Controller
          * BASE QUERY
          * forTester() is a scope in the TestAttempt model
          */
-        $query = TestAttempt::query()
-            ->forTester($testerId)
-            // TODO ANDOR this line below does not work, because it confronts with the TestAttemptResource. How to fix this?
-            ->with(['user:id,name', 'test:id,title,description']);
+        $query = TestAttempt::query()->forTester($testerId)->with('user', 'test');
 
         /**
          * SEARCH
          *
          * filled() helper check if there is a search term, and if it is not '' empty string
          * If search term exist, we wrap it with the % wildcard for the LIKE query. If not, we set
-         * it to nulL.
+         * it to null.
          */
         $searchTerm = $request->filled('searchTerm') ? "%{$request->searchTerm}%" : null;
 

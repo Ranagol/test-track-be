@@ -11,6 +11,11 @@ const testService = {
     },
 
     // Laravel Resource tends to wrap everything with a {data: ...} object,
+    async getAnalytics(testTakerId: number): Promise<Test[]> {
+        const response = await appAxios.get<{ data: Test[] }>(`/api/analytics?testTakerId=${testTakerId}`)
+        return response.data.data
+    },
+
     async get(id: number): Promise<Test> {
         const response = await appAxios.get<{ data: Test }>(`/api/tests/${id}`)
         return response.data.data
