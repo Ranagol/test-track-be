@@ -52,10 +52,19 @@ class TestAttemptController extends Controller
         }
 
         // SORT
+        $sortBy = $request->sort_by ?? 'created_at';
+        $sortOrder = $request->sort_order ?? 'desc';
+        $sortOrder = in_array($sortOrder, ['asc', 'desc']) ? $sortOrder : 'desc';
+
+        // Only allow sorting by TestAttempt columns
+        $allowedSorts = ['created_at', 'score_percentage', 'updated_at', 'id'];
+        $sortBy = in_array($sortBy, $allowedSorts) ? $sortBy : 'created_at';
+
+        $query->orderBy($sortBy, $sortOrder);
 
         // PAGINATE
-        // $perPage = $request->per_page ?? 2;
-        $testsAttempts = $query->paginate(10);
+        $perPage = $request->per_page ?? 2;
+        $testsAttempts = $query->paginate($perPage);
 
         return TestAttemptResource::collection($testsAttempts);
     }

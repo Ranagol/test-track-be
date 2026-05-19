@@ -48,14 +48,12 @@
                 <el-table-column
                     prop="user.name"
                     label="Test taker"
-                    sortable="custom"
                 ></el-table-column>
 
                 <!-- TEST NAME -->
                 <el-table-column
                     prop="test.title"
                     label="Test name"
-                    sortable="custom"
                 ></el-table-column>
 
                 <!-- TEST DESCRIPTION -->
@@ -83,15 +81,15 @@
         </div>
 
         <!-- PAGINATION -->
-        <!-- <el-pagination
+        <el-pagination
             v-model:current-page="testAttemptStore.currentPage"
             v-model:page-size="testAttemptStore.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="testAttemptStore.pagination?.total || 0"
-            @current-change="fetchAnalytics"
-            @size-change="fetchAnalytics"
+            @current-change="fetchTestAttempts"
+            @size-change="fetchTestAttempts"
             class="mt-3"
-        /> -->
+        />
 
         <pre>
         {{ testAttemptStore.testAttempts }}
@@ -120,23 +118,25 @@ const {
 } = useApiErrors();
 
 function handleSearch() {
-    fetchAnalytics();
+    fetchTestAttempts();
 }
 
 function handleSort(sortData: TableSortData) {
     if (!sortData.prop) return;
 
+    // el-table here tells us which column to use for sorting
     testAttemptStore.sortBy = sortData.prop;
 
     /**
+     * el-table here tells us the order of sorting
      * sortData.order can be 'ascending', 'descending'. We need to convert it to 'asc' or 'desc'
      * for the Laravel backend.
      */
     testAttemptStore.sortOrder = sortData.order === 'ascending' ? 'asc' : 'desc';
-    fetchAnalytics();
+    fetchTestAttempts();
 }
 
-async function fetchAnalytics() {
+async function fetchTestAttempts() {
     try {
         await testAttemptStore.getAll();
     } catch (error) {
@@ -145,7 +145,7 @@ async function fetchAnalytics() {
 }
 
 onMounted(() => {
-    fetchAnalytics();
+    fetchTestAttempts();
 });
 
 </script>

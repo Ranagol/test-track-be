@@ -18,8 +18,8 @@ export const useTestAttemptStore = defineStore('testAttempt', {
         loading: false as boolean,
 
         searchTerm: '' as string,
-        sortBy: 'title' as string,
-        sortOrder: 'asc' as 'asc' | 'desc',
+        sortBy: 'created_at' as string,
+        sortOrder: 'desc' as 'asc' | 'desc',
 
         // Pagination data from the backend
         pagination: null as null | PaginationMeta,
@@ -27,7 +27,7 @@ export const useTestAttemptStore = defineStore('testAttempt', {
 
         // Pagination data from el-pagination
         currentPage: 1 as number,
-        pageSize: 2 as number,
+        pageSize: 10 as number,
 
         /**
          * At the beginning of the test, this array is empty. No user answers. This is case 1.
