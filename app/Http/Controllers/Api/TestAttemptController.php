@@ -10,16 +10,58 @@ use App\Interfaces\TestAttemptEvaluatorInterface;
 use App\Models\TestAttempt;
 use App\Models\UserAnswer;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Auth;
 
 class TestAttemptController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): AnonymousResourceCollection
+    public function index(Request $request): AnonymousResourceCollection
     {
-        return TestAttemptResource::collection(TestAttempt::paginate());
+        $testerId = Auth::user()->id;
+
+        $query = TestAttempt::query()
+
+            // Give me TestAttempts where the test belongs to the currently authenticated tester
+            ->whereHas('test', function ($q) use ($testerId) {
+                $q->where('user_id', $testerId);
+            })
+            ->with([
+                'user:id,name',
+                'test:id,title,description',
+            ]);
+
+        // Search by title or test taker name
+        // if ($request->has('search') && $request->search !== '') {
+        //     $query->whereHas('test', function ($q) use ($request) {
+        //         $q->where('title', 'like', '%' . $request->search . '%');
+        //     })->orWhereHas('user', function ($q) use ($request) {
+        //         $q->where('name', 'like', '%' . $request->search . '%');
+        //     });
+        // }
+
+        // Sort
+        // $sortBy = $request->sort_by ?? 'created_at';
+        // $sortOrder = $request->sort_order ?? 'desc';
+        // $sortOrder = in_array($sortOrder, ['asc', 'desc']) ? $sortOrder : 'desc';
+
+        // // If sorting by test columns, join the tests table
+        // if (in_array($sortBy, ['title', 'description'])) {
+        //     $query->join('tests', 'test_attempts.test_id', '=', 'tests.id')
+        //         ->select('test_attempts.*')
+        //         ->orderBy('tests.' . $sortBy, $sortOrder);
+        // } else {
+        //     $query->orderBy($sortBy, $sortOrder);
+        // }
+
+        // Paginate
+        // $perPage = $request->per_page ?? 2;
+        $testsAttempts = $query->paginate(10);
+
+        return TestAttemptResource::collection($testsAttempts);
     }
 
     /**

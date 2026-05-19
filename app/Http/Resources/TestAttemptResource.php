@@ -25,13 +25,17 @@ class TestAttemptResource extends JsonResource
             'id' => $model->id,
             'user_id' => $model->user_id,
             'test_id' => $model->test_id,
-            'score' => $model->score,
-            'max_score' => $model->max_score,
+            'score_percentage' => round($model->score_percentage, 2),
             'comment' => $model->comment,
             'started_at' => $model->started_at,
             'completed_at' => $model->completed_at,
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at,
+            'created_at' => $model->created_at ? $model->created_at->format('d.m.Y') : null,
+            'updated_at' => $model->updated_at ? $model->updated_at->format('d.m.Y') : null,
+
+            // Only include test if it was already eager loaded in the controller.
+            'test' => new TestResource($this->whenLoaded('test')),
+            'user' => new UserResource($this->whenLoaded('user')),
+
         ];
     }
 }

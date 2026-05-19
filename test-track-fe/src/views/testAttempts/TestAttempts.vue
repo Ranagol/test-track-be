@@ -3,7 +3,7 @@
 
         <div class="h-16 flex">
             <Heading1
-                text="My test takers"
+                text="My analytics"
             />
         </div>
 
@@ -42,43 +42,46 @@
 
         <!-- TABLE -->
         <div
-            v-loading="analyticsStore.loading"
+            v-loading="testAttemptStore.loading"
             class="mt-3"
         >
             <el-table
-                :data="analyticsStore.analytics"
-                v-loading="analyticsStore.loading"
-                style="width: 80%"
+                :data="testAttemptStore.testAttempts"
+                v-loading="testAttemptStore.loading"
                 :cell-style="{ verticalAlign: 'top' }"
                 @sort-change="handleSort"
             >
-                <!-- TITLE -->
+                <!-- TEST TAKER NAME -->
                 <el-table-column
-                    prop="title"
-                    label="Title"
+                    prop="user.name"
+                    label="Test taker"
                     sortable="custom"
                 ></el-table-column>
 
-                <!-- TEST CODE -->
+                <!-- TEST NAME -->
                 <el-table-column
-                    prop="test_code"
-                    label="Test code"
-                    width="150%"
+                    prop="test.title"
+                    label="Test name"
                     sortable="custom"
                 ></el-table-column>
 
-                <!-- DESCRIPTION -->
+                <!-- TEST DESCRIPTION -->
                 <el-table-column
-                    prop="description"
-                    label="Description"
-                    min-width="250%"
-                    sortable="custom"
+                    prop="test.description"
+                    label="Test description"
                 ></el-table-column>
 
-                <!-- CREATED -->
+                <!-- TAKEN AT -->
                 <el-table-column
                     prop="created_at"
-                    label="Created"
+                    label="Test attempt date"
+                    sortable="custom"
+                ></el-table-column>
+
+                <!-- SCORE -->
+                <el-table-column
+                    prop="score_percentage"
+                    label="Score (%)"
                     sortable="custom"
                 ></el-table-column>
 
@@ -88,17 +91,17 @@
 
         <!-- PAGINATION -->
         <!-- <el-pagination
-            v-model:current-page="analyticsStore.currentPage"
-            v-model:page-size="analyticsStore.pageSize"
+            v-model:current-page="testAttemptStore.currentPage"
+            v-model:page-size="testAttemptStore.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="analyticsStore.pagination?.total || 0"
+            :total="testAttemptStore.pagination?.total || 0"
             @current-change="fetchAnalytics"
             @size-change="fetchAnalytics"
             class="mt-3"
         /> -->
 
         <pre>
-        {{ analyticsStore.analytics }}
+        {{ testAttemptStore.testAttempts }}
         </pre>
 
         <DisplayBackendError
@@ -110,13 +113,13 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { useAnalyticsStore } from '@/stores/useAnalyticsStore';
+import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
 import { useApiErrors } from '@/composables/useApiErrors';
 import type { TableSortData } from '@/types/types';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import Heading1 from '@/resusableComponents/Heading1.vue';
 
-const analyticsStore = useAnalyticsStore();
+const testAttemptStore = useTestAttemptStore();
 
 const {
     generalError,
@@ -130,19 +133,19 @@ function handleSearch() {
 function handleSort(sortData: TableSortData) {
     if (!sortData.prop) return;
 
-    analyticsStore.sortBy = sortData.prop;
+    testAttemptStore.sortBy = sortData.prop;
 
     /**
      * sortData.order can be 'ascending', 'descending'. We need to convert it to 'asc' or 'desc'
      * for the Laravel backend.
      */
-    analyticsStore.sortOrder = sortData.order === 'ascending' ? 'asc' : 'desc';
+    testAttemptStore.sortOrder = sortData.order === 'ascending' ? 'asc' : 'desc';
     fetchAnalytics();
 }
 
 async function fetchAnalytics() {
     try {
-        await analyticsStore.getAll();
+        await testAttemptStore.getAll();
     } catch (error) {
         handleBackendErrors(error);
     }

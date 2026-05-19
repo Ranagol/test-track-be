@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\AnalyticsController;
 use App\Http\Controllers\Api\AnswerOptionController;
 use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\TestAttemptController;
@@ -49,12 +48,14 @@ Route::get('/xxx', function (Request $request) {
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
+    // Test routes
     Route::get('/tests/test-code/{testCode}', [TestController::class, 'getTestByCode']);
     Route::apiResource('tests', TestController::class);
 
+    // Test attempt routes
+    Route::apiResource('test-attempts', TestAttemptController::class);
+
     Route::apiResource('questions', QuestionController::class);
     Route::apiResource('answer-options', AnswerOptionController::class);
-    Route::apiResource('test-attempts', TestAttemptController::class);
     Route::apiResource('user-answers', UserAnswerController::class);
-    Route::apiResource('analytics', AnalyticsController::class);
 });

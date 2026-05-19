@@ -14,8 +14,8 @@ use Illuminate\Support\Carbon;
  * @property string $title
  * @property string|null $description
  * @property string $test_code
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  */
 class Test extends Model
 {

@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Auth;
 class TestController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display all belonging test on the /tests page.
+     *
      * TestResource is for single resources. TestResource::collection(), returns an
      * AnonymousResourceCollection — which is the collection wrapper that handles pagination,
      * metadata, and multiple items.
