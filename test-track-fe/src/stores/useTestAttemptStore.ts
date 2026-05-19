@@ -47,7 +47,7 @@ export const useTestAttemptStore = defineStore('testAttempt', {
             try {
                 const response = await testAttemptService.getAll(
                     {
-                        search: this.searchTerm,
+                        searchTerm: this.searchTerm,
                         sort_by: this.sortBy,
                         sort_order: this.sortOrder,
                         page: this.currentPage,

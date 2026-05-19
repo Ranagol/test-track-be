@@ -23,41 +23,37 @@ class TestAttemptController extends Controller
     {
         $testerId = Auth::user()->id;
 
+        /**
+         * BASE QUERY
+         * forTester() is a scope in the TestAttempt model
+         */
         $query = TestAttempt::query()
+            ->forTester($testerId)
+            ->with(['user:id,name', 'test:id,title,description']);
 
-            // Give me TestAttempts where the test belongs to the currently authenticated tester
-            ->whereHas('test', function ($q) use ($testerId) {
-                $q->where('user_id', $testerId);
-            })
-            ->with([
-                'user:id,name',
-                'test:id,title,description',
-            ]);
+        /**
+         * SEARCH
+         *
+         * filled() helper check if there is a search term, and if it is not '' empty string
+         * If search term exist, we wrap it with the % wildcard for the LIKE query. If not, we set
+         * it to nulL.
+         */
+        $searchTerm = $request->filled('searchTerm') ? "%{$request->searchTerm}%" : null;
 
-        // Search by title or test taker name
-        // if ($request->has('search') && $request->search !== '') {
-        //     $query->whereHas('test', function ($q) use ($request) {
-        //         $q->where('title', 'like', '%' . $request->search . '%');
-        //     })->orWhereHas('user', function ($q) use ($request) {
-        //         $q->where('name', 'like', '%' . $request->search . '%');
-        //     });
-        // }
+        if ($searchTerm) {
+            $query->where(function ($q) use ($searchTerm) {
 
-        // Sort
-        // $sortBy = $request->sort_by ?? 'created_at';
-        // $sortOrder = $request->sort_order ?? 'desc';
-        // $sortOrder = in_array($sortOrder, ['asc', 'desc']) ? $sortOrder : 'desc';
+                // We search here for the test title
+                $q->whereHas('test', fn ($t) => $t->where('title', 'like', $searchTerm))
 
-        // // If sorting by test columns, join the tests table
-        // if (in_array($sortBy, ['title', 'description'])) {
-        //     $query->join('tests', 'test_attempts.test_id', '=', 'tests.id')
-        //         ->select('test_attempts.*')
-        //         ->orderBy('tests.' . $sortBy, $sortOrder);
-        // } else {
-        //     $query->orderBy($sortBy, $sortOrder);
-        // }
+                    // Or we search for the test taker name
+                    ->orWhereHas('user', fn ($u) => $u->where('name', 'like', $searchTerm));
+            });
+        }
 
-        // Paginate
+        // SORT
+
+        // PAGINATE
         // $perPage = $request->per_page ?? 2;
         $testsAttempts = $query->paginate(10);
 

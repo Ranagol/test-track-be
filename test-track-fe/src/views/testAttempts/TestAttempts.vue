@@ -12,32 +12,25 @@
         >
 
             <!-- SEARCH INPUT -->
-            <!-- <el-input
-                v-model="testsStore.searchTerm"
+            <el-input
+                v-model="testAttemptStore.searchTerm"
                 style="width: 30%"
                 placeholder="Search tests"
                 clearable
                 @keyup.enter="handleSearch"
                 @clear="handleSearch"
                 @input="handleSearch"
-            /> -->
+            />
 
             <!-- SEARCH BUTTON -->
-            <!-- <el-button
+            <el-button
                 class="ml-3"
                 type="primary"
                 @click="handleSearch"
             >
                 Search
-            </el-button> -->
+            </el-button>
 
-            <!-- CREATE NEW BUTTON -->
-            <!-- <el-button
-                class="ml-3"
-                type="primary"
-            >
-                Create new
-            </el-button> -->
         </div>
 
         <!-- TABLE -->

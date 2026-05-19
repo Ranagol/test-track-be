@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -57,5 +58,13 @@ class TestAttempt extends Model
     public function userAnswers(): HasMany
     {
         return $this->hasMany(UserAnswer::class);
+    }
+
+    /**
+     * Give me all TestAttempts, that belong to a test, that belongs to this specific tester (user)
+     */
+    public function scopeForTester(Builder $query, int $testerId): Builder
+    {
+        return $query->whereHas('test', fn ($q) => $q->where('user_id', $testerId));
     }
 }
