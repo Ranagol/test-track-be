@@ -31,7 +31,8 @@ const data = reactive({
         },
         xaxis: {
             // Categories on the X axis
-            categories: [] as (string | number)[]
+            categories: [] as (string | number)[],
+            tickPlacement: 'between'
         },
         yaxis: {
             labels: {
