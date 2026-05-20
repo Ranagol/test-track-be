@@ -41,7 +41,11 @@ onMounted(async () => {
         if (!testTakerId) {
             throw new Error('No test taker ID provided in route params');
         }
+
+        // Fetch test taker
         testTaker.value = await userService.getTestTaker(Number(testTakerId));
+
+        // Fetch all relevant tests for analytics
         await testsStore.getAnalytics(Number(testTakerId));
     } catch (error) {
         console.error(error);

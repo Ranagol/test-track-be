@@ -1,10 +1,10 @@
 <template>
 
-    <Heading1
-        :text="props.test?.title || 'Test details'"
-    />
+    <Heading1 :text="props.test?.title || 'Test details'" />
 
-    
+    <Chart
+        :testAttempts="props.test.attempts ?? []"
+    />
 
     <small>
         <pre>
@@ -14,15 +14,18 @@
 
 </template>
 
-<script setup lang="ts">
+<script
+    setup
+    lang="ts"
+>
 import type { Test } from '@/types/types';
 import Heading1 from '@/resusableComponents/Heading1.vue';
+import Chart from '@/views/analytics/Chart.vue';
 
 const props = defineProps<{
-    test: Test | null;
+    test: Test;
 }>();
 
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

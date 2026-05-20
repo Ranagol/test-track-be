@@ -44,6 +44,7 @@ export interface Test {
     updated_at: string;
 
     questions?: QuestionType[];
+    attempts?: TestAttempt[];
 }
 
 export interface QuestionType {
@@ -135,6 +136,8 @@ export interface TableSortData {
     order: 'ascending' | 'descending' | null;
     column?: any;
 }
+
+
 
 
 
