@@ -23,6 +23,12 @@ const data = reactive({
         chart: {
             id: 'vuechart-example'
         },
+        plotOptions: {
+            bar: {
+                // Sets bar width
+                columnWidth: '30%'
+            }
+        },
         xaxis: {
             // Categories on the X axis
             categories: [] as (string | number)[]

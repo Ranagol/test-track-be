@@ -35,6 +35,7 @@ class TestAttemptResource extends JsonResource
             // Only include test if it was already eager loaded in the controller.
             'test' => new TestResource($this->whenLoaded('test')),
             'user' => new UserResource($this->whenLoaded('user')),
+            'userAnswers' => UserAnswerResource::collection($this->whenLoaded('userAnswers')),
 
         ];
     }

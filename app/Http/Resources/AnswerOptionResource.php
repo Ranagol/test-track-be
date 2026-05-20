@@ -26,9 +26,6 @@ class AnswerOptionResource extends JsonResource
             'question_id' => $model->question_id,
             'text' => $model->text,
             'is_correct' => $model->is_correct,
-            'answer_order' => $model->answer_order,
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at,
         ];
     }
 }

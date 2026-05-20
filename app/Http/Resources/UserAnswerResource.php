@@ -32,9 +32,6 @@ class UserAnswerResource extends JsonResource
             'test_attempt_id' => $this->test_attempt_id,
             'question_id' => $this->question_id,
             'answer_option_id' => $this->answer_option_id,
-            'comment' => $this->comment,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ];
     }
 }

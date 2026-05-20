@@ -6,6 +6,12 @@
         :testAttempts="props.test.attempts ?? []"
     />
 
+    <Table
+        :test="props.test"
+    />
+
+
+
     <small>
         <pre>
             {{ props.test }}
@@ -21,6 +27,7 @@
 import type { Test } from '@/types/types';
 import Heading1 from '@/resusableComponents/Heading1.vue';
 import Chart from '@/views/analytics/Chart.vue';
+import Table from '@/views/analytics/Table.vue';
 
 const props = defineProps<{
     test: Test;

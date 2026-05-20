@@ -62,9 +62,9 @@ class TestController extends Controller
         })
             ->with(
                 [
-                    // 'questions.answerOptions',
+                    'questions.correctAnswerText',
                     'attempts' => function ($q) use ($testTakerId) {
-                        $q->where('user_id', $testTakerId);
+                        $q->where('user_id', $testTakerId)->with('userAnswers');
                     },
                 ]
             )

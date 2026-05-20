@@ -25,12 +25,11 @@ class QuestionResource extends JsonResource
             'id' => $model->id,
             'test_id' => $model->test_id,
             'text' => $model->text,
-            'image_path' => $model->image_path,
-            'allows_multiple_correct' => $model->allows_multiple_correct,
-            'question_order' => $model->question_order,
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at,
             'answer_options' => AnswerOptionResource::collection($this->whenLoaded('answerOptions')),
+            'correct_answer_text' => $this->whenLoaded('correctAnswerText', function () {
+                return $this->correctAnswerText ? $this->correctAnswerText->text : null;
+            }),
+
         ];
     }
 }
