@@ -64,7 +64,7 @@ class TestController extends Controller
                 [
                     'questions.correctAnswerText',
                     'attempts' => function ($q) use ($testTakerId) {
-                        $q->where('user_id', $testTakerId)->with('userAnswers');
+                        $q->where('user_id', $testTakerId)->with('userAnswers.answerOption');
                     },
                 ]
             )

@@ -32,6 +32,7 @@ class UserAnswerResource extends JsonResource
             'test_attempt_id' => $this->test_attempt_id,
             'question_id' => $this->question_id,
             'answer_option_id' => $this->answer_option_id,
+            'selected_answer_option' => new AnswerOptionResource($this->whenLoaded('answerOption')),
         ];
     }
 }

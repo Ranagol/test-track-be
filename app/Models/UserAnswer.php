@@ -42,13 +42,16 @@ class UserAnswer extends Model
     }
 
     /**
-     * Get the answer option that was selected.
+     * Get the answer option that was selected by the user.
      */
     public function answerOption(): BelongsTo
     {
         return $this->belongsTo(AnswerOption::class);
     }
 
+    /**
+     * Scope a query to only include correct answers.
+     */
     public function scopeCorrect(Builder $query): Builder
     {
         return $query->where('is_correct', true);

@@ -12,11 +12,11 @@
 
 
 
-    <small>
+    <!-- <small>
         <pre>
             {{ props.test }}
         </pre>
-    </small>
+    </small> -->
 
 </template>
 

@@ -80,7 +80,7 @@ export interface TestAttempt {
     completed_at?: string;
     created_at: string;
     updated_at: string;
-    user_answers?: UserAnswer[];
+    userAnswers?: UserAnswer[];
 }
 
 export interface UserAnswer {
