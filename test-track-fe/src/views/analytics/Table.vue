@@ -4,6 +4,7 @@
     <el-table
         :data="data.rows"
         row-key="questionId"
+        :cell-style="cellStyle"
     >
         <!-- Row index column -->
         <el-table-column
@@ -28,6 +29,7 @@
         <el-table-column
             v-for="col in data.attemptColumns"
             :key="col.key"
+            :prop="col.key"
             :label="col.label"
         >
             <template #default="{ row }">
@@ -160,6 +162,31 @@ function transformTestData(test: Test) {
      */
     data.rows = rows;
     data.attemptColumns = attemptColumns;
+}
+
+function cellStyle({ row, column }: any) {
+    const key = column?.property;
+
+    // Only dynamic attempt columns
+    if (!key || key === 'questionText' || key === 'correctAnswer') {
+        return {};
+    }
+
+    const value = row.attempts?.[key];
+
+    if (!value || value === '-') {
+        return {
+            background: '#f5f5f5'
+        };
+    }
+
+    const isCorrect =
+        String(value).trim() === String(row.correctAnswer).trim();
+
+    return {
+        background: isCorrect ? '#d1fae5' : '#fee2e2',
+        color: '#111'
+    };
 }
 
 /**
