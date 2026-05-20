@@ -2,6 +2,7 @@
     <apexchart
         :options="data.options"
         :series="data.series"
+        :key="data.chartKey"
         type="bar"
         width="500"
     ></apexchart>
@@ -18,7 +19,9 @@ const props = defineProps<{
     testAttempts: TestAttempt[];
 }>();
 
+
 const data = reactive({
+    chartKey: 0,
     options: {
         chart: {
             id: 'vuechart-example'
@@ -64,6 +67,7 @@ watch(
     (testAttempts) => {
         data.options.xaxis.categories = testAttempts.map((attempt, index) => `Attempt ${index + 1} (${attempt.created_at ?? 0})`);
         data.series[0]!.data = testAttempts.map(attempt => attempt.score_percentage ?? 0);
+        data.chartKey++; // Force re-render of the chart
     },
     {
         deep: true,
