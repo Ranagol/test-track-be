@@ -1,6 +1,9 @@
 <template>
 
-    <Heading1 :text="props.test?.title || 'Test details'" />
+    <Heading1
+        :text="props.test?.title || 'Test details'"
+        class="mt-12"
+    />
 
     <Chart
         :testAttempts="props.test.attempts ?? []"
@@ -9,14 +12,6 @@
     <Table
         :test="props.test"
     />
-
-
-
-    <!-- <small>
-        <pre>
-            {{ props.test }}
-        </pre>
-    </small> -->
 
 </template>
 

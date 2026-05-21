@@ -67,7 +67,7 @@ watch(
     (testAttempts) => {
         data.options.xaxis.categories = testAttempts.map((attempt, index) => `Attempt ${index + 1} (${attempt.created_at ?? 0})`);
         data.series[0]!.data = testAttempts.map(attempt => attempt.score_percentage ?? 0);
-        data.chartKey++; // Force re-render of the chart
+        data.chartKey++; // Force re-render of the chart, so it is reactive
     },
     {
         deep: true,

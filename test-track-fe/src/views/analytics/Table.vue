@@ -5,6 +5,8 @@
         :data="data.rows"
         row-key="questionId"
         :cell-style="cellStyle"
+        style="max-width: 80%"
+        class="mb-6"
     >
         <!-- Row index column -->
         <el-table-column

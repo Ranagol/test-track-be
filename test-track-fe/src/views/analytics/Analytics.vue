@@ -2,10 +2,11 @@
     <div>
         <Heading1
             text="Analytics"
+            class="mt-6"
         />
 
         <!-- USER DATA -->
-        <div>
+        <div class="mt-6">
             <h5>Test taker details</h5>
             <p>Name: {{ testTaker?.name }}</p>
             <p>Email: {{ testTaker?.email }}</p>
