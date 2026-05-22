@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             QuestionSeeder::class,
             AnswerOptionSeeder::class,
             TestAttemptSeeder::class,
-            UserAnswerSeeder::class,
+            UserAnswerSeeder::class, // here we try to evaluate
             RealTestSeeder::class,
             RealTestAttemptSeeder::class,
         ]);

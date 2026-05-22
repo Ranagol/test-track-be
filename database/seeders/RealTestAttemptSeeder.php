@@ -17,7 +17,7 @@ class RealTestAttemptSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run(TestAttemptEvaluatorInterface $evaluator): void
     {
         $tester = User::role('tester')->where('email', 'tester@gmail.com')->first();
         $testTaker = User::role('test-taker')->where('email', 'test-taker@gmail.com')->first();
@@ -35,7 +35,8 @@ class RealTestAttemptSeeder extends Seeder
              */
             $testAttempt1 = $testTaker->testAttempts()->create([
                 'test_id' => $test->id,
-                'comment' => 'Created by seeder',
+                'comment' => 'Created by RealTestAttemptSeeder',
+                'created_at' => now()->subDays(5),
             ]);
 
             for ($questionIndex = 0; $questionIndex < $test->questions->count(); $questionIndex++) {
@@ -57,7 +58,7 @@ class RealTestAttemptSeeder extends Seeder
                 ]);
             }
             // Evaluate and score testAttempt1
-            app(TestAttemptEvaluatorInterface::class)->evaluate($testAttempt1);
+            $evaluator->evaluate($testAttempt1);
 
             /**
              * Here we create a TestAttempt with 66% of success. First two answers are correct, the
@@ -65,7 +66,7 @@ class RealTestAttemptSeeder extends Seeder
              */
             $testAttempt2 = $testTaker->testAttempts()->create([
                 'test_id' => $test->id,
-                'comment' => 'Created by seeder',
+                'comment' => 'Created by RealTestAttemptSeeder',
             ]);
 
             for ($questionIndex = 0; $questionIndex < $test->questions->count(); $questionIndex++) {
@@ -87,7 +88,7 @@ class RealTestAttemptSeeder extends Seeder
                 ]);
             }
             // Evaluate and score testAttempt2
-            app(TestAttemptEvaluatorInterface::class)->evaluate($testAttempt2);
+            $evaluator->evaluate($testAttempt2);
         }
     }
 

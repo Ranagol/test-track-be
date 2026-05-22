@@ -16,7 +16,7 @@ class QuestionSeeder extends Seeder
         $tests = Test::all();
 
         foreach ($tests as $test) {
-            Question::factory(3)->for($test)->create();
+            Question::factory(5)->for($test)->create();
         }
     }
 }

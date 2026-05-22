@@ -22,8 +22,9 @@ class TestAttemptFactory extends Factory
         return [
             'user_id' => User::factory(),
             'test_id' => Test::factory(),
-            'score_percentage' => $this->faker->randomFloat(2, 0, 100),
-            'comment' => $this->faker->sentence(),
+            // score_percentage and comment are deliberately null, these will be filled by the Evaluator
+            'score_percentage' => null,
+            'comment' => null,
             'started_at' => now()->subHour(),
             'completed_at' => now(),
         ];

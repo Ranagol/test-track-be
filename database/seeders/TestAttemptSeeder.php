@@ -18,20 +18,25 @@ class TestAttemptSeeder extends Seeder
 
         /**
          * We do not want for this user to have test attempts, because for him we will make manually
-         * meaningful and human-readable tests.
+         * meaningful and human-readable tests, later.
          */
         $exceptionTestTakerEmail = config('app.DEFAULT_TEST_TAKER_EMAIL');
         $testTakers = User::role('test-taker')
             ->where('email', '!=', $exceptionTestTakerEmail)
             ->get();
 
-        $t = 8;
-
         // Every testTaker tried to make an attempt for every test twice
         foreach ($testTakers as $testTaker) {
             foreach ($tests as $test) {
 
                 // First testAttempt for the given test and testTaker
+                TestAttempt::factory()->create([
+                    'user_id' => $testTaker->id,
+                    'test_id' => $test->id,
+                    'created_at' => now()->subDays(5),
+                ]);
+
+                // Second testAttempt for the given test and testTaker
                 TestAttempt::factory()->create([
                     'user_id' => $testTaker->id,
                     'test_id' => $test->id,
