@@ -6,7 +6,8 @@ body {
     background: var(--color-bg);
     color: var(--color-text);
 
-    padding: 0 2rem;
+    /* Sets the main left-right distance for all pages */
+    padding: 0 5rem;
 
     font-family:
         Inter,

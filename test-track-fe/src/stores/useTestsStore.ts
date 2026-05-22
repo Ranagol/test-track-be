@@ -111,7 +111,7 @@ export const useTestsStore = defineStore('tests', {
                 // Send delete request to the backend
                 await testService.delete(id);
 
-                // Remove the deleted test from the store, filter = return all, except the deleted test
+                // Remove the deleted test from the store, filter here means: return all, except the deleted test
                 this.tests = this.tests.filter(test => test.id !== id);
 
                 // Remove the individual test from store too, if it is the one being deleted here

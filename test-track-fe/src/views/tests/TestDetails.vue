@@ -1,28 +1,38 @@
 <template>
-    <Heading1
-        :text="(data.test.title ?? 'Test details')"
-    />
 
-    <QuestionList
-        :questions="data.test.questions || []"
-        :mode="mode"
-    />
+    <Container>
+        <Heading1
+            :text="(data.test.title ?? 'Test details')"
+        />
+    </Container>
+
+
+    <Container>
+        <QuestionList
+            :questions="data.test.questions || []"
+            :mode="mode"
+        />
+    </Container>
+
 
     <DisplayBackendError
         :generalError="generalError"
     />
 
-    <div class="flex flex-col items-end">
+    <Container>
+        <div class="flex flex-col items-end">
 
-        <!-- SUBMIT -->
-        <el-button
-            @click="createTestAttempt()"
-            class="mt-6"
-            type="primary"
-        >
-            Submit Test
-        </el-button>
-    </div>
+            <!-- SUBMIT -->
+            <el-button
+                @click="createTestAttempt()"
+                class="mt-6"
+                type="primary"
+            >
+                Submit Test
+            </el-button>
+        </div>
+    </Container>
+
 
 </template>
 
@@ -50,6 +60,7 @@ import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import testAttemptService from '@/services/testAttemptService';
 import { ElMessageBox } from 'element-plus'
 import type { Action } from 'element-plus'
+import Container from '@/views/tests/Container.vue';
 
 const testsStore = useTestsStore();
 const testAttemptStore = useTestAttemptStore();

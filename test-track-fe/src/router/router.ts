@@ -61,6 +61,7 @@ const routes = [
         }
     },
     {
+        // Show test details
         path: '/tests/:id',
         name: 'test-edit',
         component: TestDetails,
@@ -69,6 +70,7 @@ const routes = [
         }
     },
     {
+        // TODO ANDOR is the testCode here an unnecesary complication? Can I just use the id here?
         path: '/tests/take-test/:testCode',
         name: 'test-take',
         component: TestDetails,
