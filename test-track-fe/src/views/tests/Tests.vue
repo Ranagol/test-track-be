@@ -123,6 +123,7 @@
                         <el-button
                             size="small"
                             type="danger"
+                            @click="deleteTest(scope.row.id)"
                         >Delete</el-button>
 
                     </template>
@@ -155,6 +156,7 @@ import { useApiErrors } from '@/composables/useApiErrors';
 import type { TableSortData } from '@/types/types';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import Heading1 from '@/resusableComponents/Heading1.vue';
+import { ElMessage } from 'element-plus';
 
 const testsStore = useTestsStore();
 
@@ -190,6 +192,18 @@ function handleSort(sortData: TableSortData) {
 async function fetchTests() {
     try {
         await testsStore.getAll();
+    } catch (error) {
+        handleBackendErrors(error);
+    }
+}
+
+async function deleteTest(id: number) {
+    try {
+        await testsStore.delete(id);
+        ElMessage({
+            message: `Test with id ${id} was deleted successfully`,
+            type: 'success',
+        });
     } catch (error) {
         handleBackendErrors(error);
     }

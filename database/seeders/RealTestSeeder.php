@@ -34,6 +34,7 @@ class RealTestSeeder extends Seeder
         $mathTest = Test::factory()->for($tester)->create([
             'title' => 'Math test',
             'description' => 'A very difficult math test',
+            'created_at' => now()->addDays(1),
         ]);
 
         $question1 = Question::factory()->for($mathTest)->create([
@@ -81,6 +82,7 @@ class RealTestSeeder extends Seeder
         $literatureTest = Test::factory()->for($tester)->create([
             'title' => 'Literature test',
             'description' => 'A sample literature test',
+            'created_at' => now()->addDays(1),
         ]);
 
         $question1 = Question::factory()->for($literatureTest)->create([

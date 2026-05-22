@@ -11,8 +11,8 @@ export const useTestsStore = defineStore('tests', {
         loading: false as boolean,
 
         searchTerm: '' as string,
-        sortBy: 'title' as string,
-        sortOrder: 'asc' as 'asc' | 'desc',
+        sortBy: 'created_at' as string,
+        sortOrder: 'desc' as 'asc' | 'desc',
 
         // Pagination data from the backend
         pagination: null as null | PaginationMeta,
@@ -20,7 +20,7 @@ export const useTestsStore = defineStore('tests', {
 
         // Pagination data from el-pagination
         currentPage: 1 as number,
-        pageSize: 2 as number,
+        pageSize: 10 as number,
 
     }),
 
@@ -108,11 +108,18 @@ export const useTestsStore = defineStore('tests', {
         async delete(id: number): Promise<void> {
             this.loading = true;
             try {
+                // Send delete request to the backend
                 await testService.delete(id);
-                this.tests = this.tests.filter(t => t.id !== id);
+
+                // Remove the deleted test from the store, filter = return all, except the deleted test
+                this.tests = this.tests.filter(test => test.id !== id);
+
+                // Remove the individual test from store too, if it is the one being deleted here
                 if (this.test && this.test.id === id) {
                     this.test = null;
                 }
+            } catch (error) {
+                throw error;
             } finally {
                 this.loading = false;
             }
