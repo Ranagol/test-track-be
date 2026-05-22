@@ -17,11 +17,13 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolesAndPermissionsSeeder::class,
             UserSeeder::class,
+            // These are just simulated tests, with dummy text
             TestSeeder::class,
             QuestionSeeder::class,
             AnswerOptionSeeder::class,
             TestAttemptSeeder::class,
-            UserAnswerSeeder::class, // here we try to evaluate
+            UserAnswerSeeder::class,
+            // Below we seed meaningful, human-readable tests, answers, questions, attempts.
             RealTestSeeder::class,
             RealTestAttemptSeeder::class,
         ]);
