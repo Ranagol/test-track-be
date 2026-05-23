@@ -96,7 +96,7 @@ class TestController extends Controller
         return new TestResource($test);
     }
 
-    // TODO ANDOR why would this string $testCode work for extracting test code? How?
+    // TODO ANDOR why would this string $testCode work for extracting test code? How? What is sending the FE?
     public function getTestByCode(string $testCode): TestResource
     {
         $test = Test::where('test_code', $testCode)

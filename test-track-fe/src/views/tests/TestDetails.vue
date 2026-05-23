@@ -1,12 +1,30 @@
 <template>
 
+    <!-- HEADING -->
     <Container>
-        <Heading1
-            :text="(data.test.title ?? 'Test details')"
+        <!-- We use here testStore, because here we must collect the latest test data updates -->
+        <el-input
+            v-if="testsStore.test && mode === 'edit'"
+            v-model="testsStore.test.title"
+            placeholder="Enter test title"
+            style="font-size: 2rem;"
+            @change="updateTest(testsStore.test.id)"
         />
     </Container>
 
+    <Container>
+        <!-- We use here testStore, because here we must collect the latest test data updates -->
+        <el-input
+            v-if="testsStore.test && mode === 'edit'"
+            v-model="testsStore.test.description"
+            type="textarea"
+            placeholder="Enter test description"
+            :rows="4"
+            @change="updateTest(testsStore.test.id)"
+        />
+    </Container>
 
+    <!-- QUESTION LIST -->
     <Container>
         <QuestionList
             :questions="data.test.questions || []"
@@ -19,7 +37,10 @@
         :generalError="generalError"
     />
 
-    <Container>
+    <!-- TEST TAKING SUBMIT BUTTON -->
+    <Container
+        v-if="mode === 'take'"
+    >
         <div class="flex flex-col items-end">
 
             <!-- SUBMIT -->
@@ -32,7 +53,6 @@
             </el-button>
         </div>
     </Container>
-
 
 </template>
 
@@ -54,13 +74,13 @@ import { useAuthStore } from '@/stores/useAuthStore';
 import { useApiErrors } from '@/composables/useApiErrors';
 import { useRoute, useRouter } from 'vue-router';
 import type { Test } from '@/types/types';
-import Heading1 from '@/resusableComponents/Heading1.vue';
 import QuestionList from '@/views/questions/QuestionList.vue';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import testAttemptService from '@/services/testAttemptService';
 import { ElMessageBox } from 'element-plus'
 import type { Action } from 'element-plus'
 import Container from '@/views/tests/Container.vue';
+import { ElMessage } from 'element-plus';
 
 const testsStore = useTestsStore();
 const testAttemptStore = useTestAttemptStore();
@@ -72,18 +92,34 @@ const {
     handleBackendErrors
 } = useApiErrors();
 
-
-
 let data = reactive({
     test: {} as Test
 });
 
+/**
+ * Decides based on the route name, in which mode this component will be.
+ */
 const mode = computed(() => {
     if (route.name === 'test-create') return 'create';
     if (route.name === 'test-edit') return 'edit';
     if (route.name === 'test-take') return 'take';
 });
 
+const updateTest = async (testId: number) => {
+    try {
+        await testsStore.update(testId);
+        ElMessage({
+            message: 'Test updated successfully.',
+            type: 'success',
+        })
+    } catch (error) {
+        handleBackendErrors(error);
+    }
+}
+
+/**
+ * Used in test taking mode, for actually taking the test.
+ */
 const createTestAttempt = async () => {
     try {
 
@@ -120,6 +156,8 @@ const createTestAttempt = async () => {
         handleBackendErrors(error);
     }
 }
+
+
 
 const logout = async () => {
     await authStore.signOut();

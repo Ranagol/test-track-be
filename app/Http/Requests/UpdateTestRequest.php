@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateTestRequest extends FormRequest
 {
@@ -18,14 +18,15 @@ class UpdateTestRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array<mixed>|string>
+     * @return array<string, array<int, string>>
      */
     public function rules(): array
     {
         return [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'test_code' => ['required', 'string', 'unique:tests,test_code,' . $this->route('test')],
+            'test_code' => ['required', 'string', Rule::unique('tests', 'test_code')->ignore($this->route('test'))],
+            'created_at' => ['nullable', 'date'],
         ];
     }
 }

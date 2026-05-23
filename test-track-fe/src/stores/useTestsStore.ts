@@ -41,6 +41,8 @@ export const useTestsStore = defineStore('tests', {
                 this.tests = response.data;
                 this.pagination = response.meta;
                 this.paginationLinks = response.links;
+            } catch (error) {
+                throw error;
             } finally {
                 this.loading = false;
             }
@@ -50,6 +52,8 @@ export const useTestsStore = defineStore('tests', {
             this.loading = true;
             try {
                 this.tests = await testService.getAnalytics(testTakerId);
+            } catch (error) {
+                throw error;
             } finally {
                 this.loading = false;
             }
@@ -61,6 +65,8 @@ export const useTestsStore = defineStore('tests', {
                 const test = await testService.get(id);
                 this.test = test;
                 return test;
+            } catch (error) {
+                throw error;
             } finally {
                 this.loading = false;
             }
@@ -72,6 +78,8 @@ export const useTestsStore = defineStore('tests', {
                 const test = await testService.getByCode(testCode);
                 this.test = test;
                 return test;
+            } catch (error) {
+                throw error;
             } finally {
                 this.loading = false;
             }
@@ -83,26 +91,51 @@ export const useTestsStore = defineStore('tests', {
                 const test = await testService.create(data);
                 this.tests.push(test);
                 return test;
+            } catch (error) {
+                throw error;
             } finally {
                 this.loading = false;
             }
         },
 
-        async update(id: number, data: Partial<Test>): Promise<Test> {
+        async update(id: number): Promise<Test> {
             this.loading = true;
             try {
-                const test = await testService.update(id, data);
+
+                if (!this.test) {
+                    throw new Error('No test loaded to update');
+                }
+
+                // We do not need the questions and attempts, we only need the test data
+                const { questions, attempts, ...updateData } = this.test;
+console.dir(updateData);
+                // Update on backend
+                const test = await testService.update(id, updateData);
+
+
+                // Update the test in the store's tests array
                 const index = this.tests.findIndex(t => t.id === id);
                 if (index !== -1) {
                     this.tests[index] = test;
                 }
-                if (this.test && this.test.id === id) {
-                    this.test = test;
-                }
+
                 return test;
+            } catch (error) {
+                throw error;
             } finally {
                 this.loading = false;
             }
+        },
+
+        /**
+         * Updates the text of a question in the current test. This is used in the Question.vue component
+         * to update the question text in the store, when the tester edits the question text.
+         * So, this action does not work with BE, works with FE. Hence, we do not have here
+         * async/await, try/catch, loading, etc.
+         */
+        updateQuestionText(index: number, text: string) {
+            if (!this.test?.questions?.[index]) return
+            this.test.questions[index].text = text
         },
 
         async delete(id: number): Promise<void> {

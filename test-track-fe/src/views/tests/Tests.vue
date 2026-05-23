@@ -60,7 +60,7 @@
                     v-slot="{ row }"
                 >
                     <router-link
-                        :to="`/tests/${row.id}`"
+                        :to="`/tests/${row.id}/edit`"
                         class="text-primary hover:underline"
                     >
                         {{ row.title }}

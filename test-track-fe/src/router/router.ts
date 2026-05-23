@@ -61,8 +61,16 @@ const routes = [
         }
     },
     {
-        // Show test details
-        path: '/tests/:id',
+        // TODO ANDOR This is just a temporary dev solution
+        path: '/tests/test-create',
+        name: 'test-create',
+        component: TestDetails,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/tests/:id/edit',
         name: 'test-edit',
         component: TestDetails,
         meta: {
