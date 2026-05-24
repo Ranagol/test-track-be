@@ -1,58 +1,29 @@
 <template>
 
-    <!-- HEADING -->
-    <Container>
+    <div v-if="testsStore.test">
+
         <!-- We use here testStore (and not data.test), because here we must collect the latest test data updates -->
         <el-input
-            v-if="testsStore.test && mode === 'edit'"
-            v-model="testsStore.test.title"
+            v-model="testsStore.test!.title"
             placeholder="Enter test title"
             style="font-size: 2rem;"
-            @change="updateTest(testsStore.test.id)"
+            @change="updateTest(testsStore.test!.id)"
         />
-    </Container>
 
-    <Container>
         <!-- We use here testStore (and not data.test), because here we must collect the latest test data updates -->
         <el-input
-            v-if="testsStore.test && mode === 'edit'"
-            v-model="testsStore.test.description"
+            v-model="testsStore.test!.description"
             type="textarea"
             placeholder="Enter test description"
             :rows="4"
-            @change="updateTest(testsStore.test.id)"
+            @change="updateTest(testsStore.test!.id)"
         />
-    </Container>
 
-    <!-- QUESTION LIST -->
-    <Container>
-        <QuestionList
-            :questions="data.test.questions || []"
-            :mode="mode"
-        />
-    </Container>
-
+    </div>
 
     <DisplayBackendError
         :generalError="generalError"
     />
-
-    <!-- TEST TAKING SUBMIT BUTTON -->
-    <Container
-        v-if="mode === 'take'"
-    >
-        <div class="flex flex-col items-end">
-
-            <!-- SUBMIT -->
-            <el-button
-                @click="createTestAttempt()"
-                class="mt-6"
-                type="primary"
-            >
-                Submit Test
-            </el-button>
-        </div>
-    </Container>
 
 </template>
 
@@ -67,19 +38,12 @@
  * 2. Editing test by the tester            /tests/:id    → tester (edit mode)
  * 3. Taking the test by the test taker     /tests/take-test/:testCode → test taker (take mode)
  */
-import { onMounted, reactive, computed } from 'vue';
 import { useTestsStore } from '@/stores/useTestsStore';
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useApiErrors } from '@/composables/useApiErrors';
 import { useRoute, useRouter } from 'vue-router';
-import type { Test } from '@/types/types';
-import QuestionList from '@/views/questions/QuestionList.vue';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
-import testAttemptService from '@/services/testAttemptService';
-import { ElMessageBox } from 'element-plus'
-import type { Action } from 'element-plus'
-import Container from '@/views/tests/Container.vue';
 import { ElMessage } from 'element-plus';
 
 const testsStore = useTestsStore();
@@ -92,18 +56,11 @@ const {
     handleBackendErrors
 } = useApiErrors();
 
-let data = reactive({
-    test: {} as Test
-});
+const props = defineProps<{
 
-/**
- * Decides based on the route name, in which mode this component will be.
- */
-const mode = computed(() => {
-    if (route.name === 'test-create') return 'create';
-    if (route.name === 'test-edit') return 'edit';
-    if (route.name === 'test-take') return 'take';
-});
+    mode: 'create' | 'edit' | 'take' | undefined;
+
+}>();
 
 const updateTest = async (testId: number) => {
     try {
@@ -116,81 +73,6 @@ const updateTest = async (testId: number) => {
         handleBackendErrors(error);
     }
 }
-
-/**
- * Used in test taking mode, for actually taking the test.
- */
-const createTestAttempt = async () => {
-    try {
-
-        const testAttempData = {
-            test_id: data.test.id,
-            user_id: authStore.userId,
-        }
-
-        const userAnswers = testAttemptStore.userAnswers;
-
-        await testAttemptService.create(testAttempData, userAnswers);
-
-        // Reset the test attempt data in the store
-        testAttemptStore.resetTestAttempt();
-
-        //Display feedback to the user about succesfully submitting the test
-        ElMessageBox.alert(
-            'You have successfully submitted the test. You will now signed out. Have a nice day! ',
-            'Confirmation', {
-            confirmButtonText: 'OK',
-            callback: (action: Action) => {
-                if (action === 'confirm') {
-                    // TODO ANDOR I temporarily disable this, uncomment later
-                    // logout();
-                }
-            },
-        })
-
-
-        //TODO ANDOR Make sure that the user can not submit this test again.
-
-    } catch (error) {
-        // TODO ANDOR why this was not triggered when the test_id was missing from the request?
-        handleBackendErrors(error);
-    }
-}
-
-
-
-const logout = async () => {
-    await authStore.signOut();
-    router.push('/login');
-};
-
-onMounted(async () => {
-
-    try {
-
-        // TAKE MODE
-        if (mode.value === 'take') {
-
-            //TODO ANDOR later check this line below, how it works, if works.
-            const testCode = route.params.testCode as string;
-            data.test = await testsStore.getByCode(testCode);
-
-        // EDIT MODE
-        } else if (mode.value === 'edit') {
-
-            // Get the testId from the url
-            const testId = Number(route.params.id);
-            data.test = await testsStore.get(testId);
-        }
-
-        // CREATE MODE - for this mode does not need data fetch from backend
-
-    } catch (error) {
-        handleBackendErrors(error);
-    }
-});
-
-
 
 </script>
 

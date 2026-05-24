@@ -5,7 +5,7 @@ import Register from '@/views/register/Register.vue';
 import Home from '@/views/home/Home.vue';
 import NotFound from '@/views/errors/NotFound.vue';
 import { useAuthStore } from '@/stores/useAuthStore';
-import TestDetails from '@/views/tests/TestDetails.vue';
+import Test from '@/views/tests/Test.vue';
 import TestAttempts from '@/views/testAttempts/TestAttempts.vue';
 import Analytics from '@/views/analytics/Analytics.vue';
 
@@ -64,7 +64,7 @@ const routes = [
         // TODO ANDOR This is just a temporary dev solution
         path: '/tests/test-create',
         name: 'test-create',
-        component: TestDetails,
+        component: Test,
         meta: {
             requiresAuth: true
         }
@@ -72,7 +72,7 @@ const routes = [
     {
         path: '/tests/:id/edit',
         name: 'test-edit',
-        component: TestDetails,
+        component: Test,
         meta: {
             requiresAuth: true
         }
@@ -81,7 +81,7 @@ const routes = [
         // TODO ANDOR is the testCode here an unnecesary complication? Can I just use the id here?
         path: '/tests/take-test/:testCode',
         name: 'test-take',
-        component: TestDetails,
+        component: Test,
         meta: {
             requiresAuth: true
         }
