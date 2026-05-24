@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UpdateTestRequest extends FormRequest
 {
@@ -25,8 +24,6 @@ class UpdateTestRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'test_code' => ['required', 'string', Rule::unique('tests', 'test_code')->ignore($this->route('test'))],
-            'created_at' => ['nullable', 'date'],
         ];
     }
 }
