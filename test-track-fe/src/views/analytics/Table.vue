@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Test, TestAttempt, QuestionType, UserAnswer } from '@/types/types';
+import type { Test, TestAttempt, Question, UserAnswer } from '@/types/types';
 import { reactive, watch } from 'vue';
 
 /**
@@ -131,7 +131,7 @@ function transformTestData(test: Test) {
      * - correct answer
      * - dynamic attempt answers
      */
-    const rows = questions.map((q: QuestionType, index: number) => {
+    const rows = questions.map((q: Question, index: number) => {
         const row: { rowNumber: number; questionId: number; questionText: string; correctAnswer: string | null; attempts: Record<string, string> } = {
             rowNumber: index + 1,
             questionId: q.id, // important for row-key

@@ -14,7 +14,8 @@
 </template>
 
 <script setup lang="ts">
-import type { QuestionType } from '@/types/types';
+// We use here QuestionType (and not Question), because there is a Question component
+import type { Question as QuestionType } from '@/types/types';
 import Question from '@/views/questions/Question.vue';
 
 

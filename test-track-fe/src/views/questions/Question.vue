@@ -3,6 +3,8 @@
 
         <!-- QUESTION TEXT -->
         <el-form>
+
+            <!-- :label="`${index + 1}.`" display the order number of the question -->
             <el-form-item
                 :label="`${index + 1}.`"
             >
@@ -46,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import type { QuestionType } from '@/types/types';
+import type { Question } from '@/types/types';
 import AnswerOption from '@/views/answerOptions/AnswerOption.vue';
 import { ref, watch, reactive, computed } from 'vue';
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
@@ -58,7 +60,7 @@ const testAttemptStore = useTestAttemptStore();
 
 const props = defineProps<{
 
-    question: QuestionType;
+    question: Question;
 
     mode: 'create' | 'edit' | 'take' | undefined;
 

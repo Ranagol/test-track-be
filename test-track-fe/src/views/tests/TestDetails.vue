@@ -2,7 +2,7 @@
 
     <!-- HEADING -->
     <Container>
-        <!-- We use here testStore, because here we must collect the latest test data updates -->
+        <!-- We use here testStore (and not data.test), because here we must collect the latest test data updates -->
         <el-input
             v-if="testsStore.test && mode === 'edit'"
             v-model="testsStore.test.title"
@@ -13,7 +13,7 @@
     </Container>
 
     <Container>
-        <!-- We use here testStore, because here we must collect the latest test data updates -->
+        <!-- We use here testStore (and not data.test), because here we must collect the latest test data updates -->
         <el-input
             v-if="testsStore.test && mode === 'edit'"
             v-model="testsStore.test.description"

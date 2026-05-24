@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
-import type { Test, BackendError, PaginationMeta, PaginationLinks } from '@/types/types';
+import type { Test, PaginationMeta, PaginationLinks } from '@/types/types';
 import testService from '@/services/testService';
 import type { TestQueryParams } from '@/types/types';
+import questionService from '@/services/questionService';
 
 export const useTestsStore = defineStore('tests', {
 
@@ -25,6 +26,10 @@ export const useTestsStore = defineStore('tests', {
     }),
 
     actions: {
+
+        /**
+         * TEST CRUD OPERATIONS
+         */
 
         async getAll(): Promise<void> {
             this.loading = true;
@@ -106,20 +111,21 @@ export const useTestsStore = defineStore('tests', {
                     throw new Error('No test loaded to update');
                 }
 
-                // We do not need the questions and attempts, we only need the test data
-                const { questions, attempts, ...updateData } = this.test;
-console.dir(updateData);
-                // Update on backend
-                const test = await testService.update(id, updateData);
+                const updateData = {
+                    title: this.test.title,
+                    description: this.test.description,
+                };
 
+                // Update on backend
+                const testFromBackend = await testService.update(id, updateData);
 
                 // Update the test in the store's tests array
                 const index = this.tests.findIndex(t => t.id === id);
                 if (index !== -1) {
-                    this.tests[index] = test;
+                    this.tests[index] = testFromBackend;
                 }
 
-                return test;
+                return testFromBackend;
             } catch (error) {
                 throw error;
             } finally {
@@ -157,5 +163,30 @@ console.dir(updateData);
                 this.loading = false;
             }
         },
+
+        /**
+         * QUESTION CRUD OPERATIONS
+         */
+
+        async updateQuestion(questionId: number, questionText: string): Promise<void> {
+            this.loading = true;
+            try {
+                // Send update to backend
+                await questionService.update(questionId, { text: questionText });
+
+                // Update local store (we store questions in this.test.questions)
+                if (this.test?.questions) {
+                    const question = this.test.questions.find(q => q.id === questionId);
+                    if (question) {
+                        question.text = questionText;
+                    }
+                }
+
+            } catch (error) {
+                throw error;
+            } finally {
+                this.loading = false;
+            }
+        }
     }
 });

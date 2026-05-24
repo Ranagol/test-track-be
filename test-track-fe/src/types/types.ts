@@ -43,11 +43,11 @@ export interface Test {
     created_at: string;
     updated_at: string;
 
-    questions?: QuestionType[];
+    questions?: Question[];
     attempts?: TestAttempt[];
 }
 
-export interface QuestionType {
+export interface Question {
     id: number;
     test_id: number;
     text: string;
