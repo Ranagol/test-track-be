@@ -41,9 +41,7 @@ const {
 } = useApiErrors();
 
 const props = defineProps<{
-
     question: Question;
-
     mode: 'create' | 'edit' | 'take' | undefined;
 
     /**
@@ -71,7 +69,7 @@ const updateQuestion = async () => {
     try {
         testsStore.updateQuestion(props.question.id);
         ElMessage({
-            message: 'Test updated successfully.',
+            message: 'Question updated successfully.',
             type: 'success',
         })
     } catch (error) {

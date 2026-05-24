@@ -18,7 +18,6 @@
 
     <!-- ANSWER OPTIONS -->
     <AnswerOptionList
-        v-if="props.mode === 'take'"
         :question="props.question"
         :mode="props.mode"
         :index="props.index"

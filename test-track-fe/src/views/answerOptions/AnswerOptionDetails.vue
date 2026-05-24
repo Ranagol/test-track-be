@@ -18,6 +18,10 @@ const props = defineProps<{
     questionId: number;
     mode: 'create' | 'edit' | 'take' | undefined;
 }>();
+
+
+
+
 </script>
 
 <style scoped>
