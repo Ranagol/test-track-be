@@ -39,6 +39,7 @@
                 <AnswerOption
                     :answerOption="answerOption"
                     :mode="props.mode"
+                    :questionId="props.question.id"
                 />
             </span>
 
