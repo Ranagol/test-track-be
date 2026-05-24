@@ -8,9 +8,11 @@
             <el-form-item
                 :label="`${index + 1}.`"
             >
+                <!-- QUESTION TEXT INPUT & DISPLAY -->
                 <el-input
                     v-model="questionText"
                     :disabled="props.mode === 'take'"
+                    @change="updateQuestion"
                 />
 
             </el-form-item>
@@ -72,11 +74,23 @@ const props = defineProps<{
 
 
 const questionText = computed({
+
+    // Display the question text
     get: () => props.question.text,
     set: (newValue) => {
+
+        // Immediatelly update letter by letter the question text in the store
         testsStore.updateQuestionText(props.index, newValue)
     }
 })
+
+const updateQuestion = () => {
+
+    /**
+     * Send the question update to the backend.
+     */
+    testsStore.updateQuestion(props.question.id);
+};
 
 /**
  * The test taker selected this answer option, during testing. So, this is logic for 'take' mode, for

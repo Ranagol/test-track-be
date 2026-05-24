@@ -168,20 +168,25 @@ export const useTestsStore = defineStore('tests', {
          * QUESTION CRUD OPERATIONS
          */
 
-        async updateQuestion(questionId: number, questionText: string): Promise<void> {
+        async updateQuestion(questionId: number): Promise<void> {
             this.loading = true;
-            try {
-                // Send update to backend
-                await questionService.update(questionId, { text: questionText });
 
-                // Update local store (we store questions in this.test.questions)
-                if (this.test?.questions) {
-                    const question = this.test.questions.find(q => q.id === questionId);
-                    if (question) {
-                        question.text = questionText;
-                    }
+            try {
+
+                const questions = this.test?.questions;
+
+                if (!questions) {
+                    throw new Error('No questions loaded');
                 }
 
+                const question = questions.find(question => question.id === questionId);
+
+                if (!question) {
+                    throw new Error(`Question with ID ${questionId} not found`);
+                }
+
+                // Send update to backend
+                await questionService.update(questionId, { text: question.text });
             } catch (error) {
                 throw error;
             } finally {
