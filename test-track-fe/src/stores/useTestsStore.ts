@@ -179,6 +179,7 @@ export const useTestsStore = defineStore('tests', {
                     throw new Error('No questions loaded');
                 }
 
+                // The test.questions..question is already updated with the new text, because we use v-model in the Question.vue component,
                 const question = questions.find(question => question.id === questionId);
 
                 if (!question) {
@@ -187,6 +188,24 @@ export const useTestsStore = defineStore('tests', {
 
                 // Send update to backend
                 await questionService.update(questionId, { text: question.text });
+
+                // Also update in the tests.questions array
+                if (this.test?.id) {
+                    const currentTestId = this.test.id;
+
+                    // find in tests array the current test
+                    const testInArray = this.tests.find(t => t.id === currentTestId);
+                    if (testInArray?.questions) {
+
+                        // find in the test.questions array the current question in array
+                        const questionInArray = testInArray.questions.find(q => q.id === questionId);
+                        if (questionInArray) {
+                            questionInArray.text = question.text;
+                        }
+                    }
+                }
+
+
             } catch (error) {
                 throw error;
             } finally {
