@@ -17,6 +17,10 @@
         </el-form-item>
     </el-form>
 
+    <DisplayBackendError
+        :generalError="generalError"
+    />
+
 </template>
 
 <script setup lang="ts">
@@ -26,8 +30,15 @@
 import type { Question } from '@/types/types';
 import { ref, watch, reactive, computed } from 'vue';
 import { useTestsStore } from '@/stores/useTestsStore';
+import { ElMessage } from 'element-plus';
+import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
+import { useApiErrors } from '@/composables/useApiErrors';
 
 const testsStore = useTestsStore();
+const {
+    generalError,
+    handleBackendErrors
+} = useApiErrors();
 
 const props = defineProps<{
 
@@ -53,12 +64,21 @@ const questionText = computed({
     }
 })
 
-const updateQuestion = () => {
+/**
+ * Send the question update to the backend.
+ */
+const updateQuestion = async () => {
+    try {
+        testsStore.updateQuestion(props.question.id);
+        ElMessage({
+            message: 'Test updated successfully.',
+            type: 'success',
+        })
+    } catch (error) {
+        handleBackendErrors(error);
+    }
 
-    /**
-     * Send the question update to the backend.
-     */
-    testsStore.updateQuestion(props.question.id);
+
 };
 
 </script>
