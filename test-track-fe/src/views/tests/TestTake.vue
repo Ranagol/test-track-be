@@ -28,17 +28,17 @@
  */
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
 import { useAuthStore } from '@/stores/useAuthStore';
-import { useTestsStore } from '@/stores/useTestsStore';
 import { useApiErrors } from '@/composables/useApiErrors';
 import type { Test } from '@/types/types';
 import testAttemptService from '@/services/testAttemptService';
 import { ElMessageBox } from 'element-plus'
 import type { Action } from 'element-plus'
 import { reactive } from 'vue';
+import { useTestEditorStore } from '@/stores/testEditorStore';
 
 const testAttemptStore = useTestAttemptStore();
 const authStore = useAuthStore();
-const testsStore = useTestsStore();
+const testEditorStore = useTestEditorStore();
 const {
     generalError,
     handleBackendErrors
@@ -51,7 +51,7 @@ const createTestAttempt = async () => {
     try {
 
         const testAttempData = {
-            test_id: testsStore.test!.id,
+            test_id: testEditorStore.test!.id,
             user_id: authStore.userId,
         }
 
