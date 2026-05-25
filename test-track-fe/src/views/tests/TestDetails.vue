@@ -2,21 +2,19 @@
 
     <div v-if="testEditorStore.test">
 
-        <!-- We use here testEditorStore (and not data.test), because here we must collect the latest test data updates -->
         <el-input
-            v-model="testEditorStore.test!.title"
+            v-model="testEditorStore.test.title"
             placeholder="Enter test title"
             style="font-size: 2rem;"
-            @change="updateTest(testEditorStore.test!.id)"
+            @change="updateTest()"
         />
 
-        <!-- We use here testEditorStore (and not data.test), because here we must collect the latest test data updates -->
         <el-input
-            v-model="testEditorStore.test!.description"
+            v-model="testEditorStore.test.description"
             type="textarea"
             placeholder="Enter test description"
             :rows="4"
-            @change="updateTest(testEditorStore.test!.id)"
+            @change="updateTest()"
         />
 
     </div>
@@ -38,20 +36,12 @@
  * 2. Editing test by the tester            /tests/:id    → tester (edit mode)
  * 3. Taking the test by the test taker     /tests/take-test/:testCode → test taker (take mode)
  */
-import { useTestsStore } from '@/stores/useTestsStore';
 import { useTestEditorStore } from '@/stores/testEditorStore';
-import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
-import { useAuthStore } from '@/stores/useAuthStore';
 import { useApiErrors } from '@/composables/useApiErrors';
-import { useRoute, useRouter } from 'vue-router';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import { ElMessage } from 'element-plus';
 
 const testEditorStore = useTestEditorStore();
-const testAttemptStore = useTestAttemptStore();
-const authStore = useAuthStore();
-const route = useRoute();
-const router = useRouter();
 const {
     generalError,
     handleBackendErrors
@@ -63,9 +53,12 @@ const props = defineProps<{
 
 }>();
 
-const updateTest = async (testId: number) => {
+const updateTest = async () => {
     try {
-        await testEditorStore.update(testId);
+        const test = testEditorStore.test;
+        if (!test) return;
+
+        await testEditorStore.update(test.id);
         ElMessage({
             message: 'Test updated successfully.',
             type: 'success',

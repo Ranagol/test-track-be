@@ -19,22 +19,15 @@
     setup
     lang="ts"
 >
-/**
- * This component is used to display the details of a test for test takers.
- * It will have 3 modes of working:
- * 1. Creating test by the tester           /tests/create → tester (create mode)
- * 2. Editing test by the tester            /tests/:id    → tester (edit mode)
- * 3. Taking the test by the test taker     /tests/take-test/:testCode → test taker (take mode)
- */
+
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useApiErrors } from '@/composables/useApiErrors';
-import type { Test } from '@/types/types';
 import testAttemptService from '@/services/testAttemptService';
 import { ElMessageBox } from 'element-plus'
 import type { Action } from 'element-plus'
-import { reactive } from 'vue';
 import { useTestEditorStore } from '@/stores/testEditorStore';
+import { useRouter } from 'vue-router';
 
 const testAttemptStore = useTestAttemptStore();
 const authStore = useAuthStore();
@@ -43,22 +36,28 @@ const {
     generalError,
     handleBackendErrors
 } = useApiErrors();
+const router = useRouter();
+
+const logout = async () => {
+    await authStore.signOut();
+    router.push('/login');
+};
 
 /**
  * Used in test taking mode, for actually taking the test.
  */
 const createTestAttempt = async () => {
     try {
+        const test = testEditorStore.test;
+        if (!test) return;
 
         const testAttempData = {
-            test_id: testEditorStore.test!.id,
+            test_id: test.id,
             user_id: authStore.userId,
         }
 
         const userAnswers = testAttemptStore.userAnswers;
 
-        console.log('testAttempData:', testAttempData)
-        console.log('userAnswers:', userAnswers)
         await testAttemptService.create(testAttempData, userAnswers);
 
         // Reset the test attempt data in the store
@@ -85,13 +84,6 @@ const createTestAttempt = async () => {
         handleBackendErrors(error);
     }
 }
-
-
-
-
-
-
-
 
 
 </script>

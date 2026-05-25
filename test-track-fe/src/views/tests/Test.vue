@@ -10,8 +10,17 @@
         <div
             v-if="mode === 'take'"
         >
-            <h1 class="text-3xl font-bold mb-4">{{data.test.title}}</h1>
-            <p class="text-gray-700">{{data.test.description}}</p>
+            <!-- TITLE -->
+            <h1
+                v-if="testEditorStore.test"
+                class="text-3xl font-bold mb-4"
+            >{{testEditorStore.test.title}}</h1>
+
+            <!-- DESCRIPTION -->
+            <p
+                v-if="testEditorStore.test"
+                class="text-gray-700"
+            >{{testEditorStore.test.description}}</p>
         </div>
 
     </Container>
@@ -19,7 +28,8 @@
     <!-- QUESTION LIST -->
     <Container>
         <QuestionList
-            :questions="data.test.questions || []"
+            v-if="testEditorStore.test"
+            :questions="testEditorStore.test.questions || []"
             :mode="mode"
         />
     </Container>
@@ -65,14 +75,13 @@ const testEditorStore = useTestEditorStore();
 const authStore = useAuthStore();
 const route = useRoute();
 const router = useRouter();
+
 const {
     generalError,
     handleBackendErrors
 } = useApiErrors();
 
-let data = reactive({
-    test: {} as Test
-});
+
 
 /**
  * Decides based on the route name, in which mode this component will be.
@@ -83,11 +92,6 @@ const mode = computed(() => {
     if (route.name === 'test-take') return 'take';
 });
 
-const logout = async () => {
-    await authStore.signOut();
-    router.push('/login');
-};
-
 onMounted(async () => {
 
     try {
@@ -97,14 +101,14 @@ onMounted(async () => {
 
             //TODO ANDOR later check this line below, how it works, if works.
             const testCode = route.params.testCode as string;
-            data.test = await testEditorStore.getByCode(testCode);
+            await testEditorStore.getByCode(testCode);
 
         // EDIT MODE
         } else if (mode.value === 'edit') {
 
             // Get the testId from the url
             const testId = Number(route.params.id);
-            data.test = await testEditorStore.get(testId);
+            await testEditorStore.get(testId);
         }
 
         // CREATE MODE - for this mode does not need data fetch from backend
