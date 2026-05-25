@@ -55,7 +55,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('tests', TestController::class);
 
     Route::apiResource('test-attempts', TestAttemptController::class);
+
     Route::apiResource('questions', QuestionController::class);
+    Route::post('/questions/{question}/correct-answer', [QuestionController::class, 'setCorrectAnswer']);
+
     Route::apiResource('answer-options', AnswerOptionController::class);
     Route::apiResource('user-answers', UserAnswerController::class);
 

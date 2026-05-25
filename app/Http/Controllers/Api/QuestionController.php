@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateQuestionRequest;
 use App\Http\Resources\QuestionResource;
 use App\Models\Question;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class QuestionController extends Controller
@@ -56,5 +57,34 @@ class QuestionController extends Controller
         $question->delete();
 
         return response()->json(['message' => 'Delete successful'], 200);
+    }
+
+    public function setCorrectAnswer(Question $question, Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'correct_answer_option_id' => [
+                'required',
+                'exists:answer_options,id',
+            ],
+        ]);
+
+        $correctAnswerId = $validated['correct_answer_option_id'];
+
+        // Check if the provided answer option ID belongs to the question
+        $belongsToQuestion = $question->answerOptions()
+            ->where('id', $correctAnswerId)
+            ->exists();
+        abort_if(! $belongsToQuestion, 422);
+
+        // Set all to false
+        $question->answerOptions()->update(['is_correct' => false]);
+
+        // Set selected one to true
+        $question->answerOptions()->where('id', $correctAnswerId)->update(['is_correct' => true]);
+
+        return response()->json([
+            'message' => 'Correct answer updated.',
+        ]);
+
     }
 }

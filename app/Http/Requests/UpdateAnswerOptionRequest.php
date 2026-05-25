@@ -20,10 +20,8 @@ class UpdateAnswerOptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'question_id' => ['sometimes', 'exists:questions,id'],
             'text' => ['sometimes', 'string', 'max:255'],
-            'is_correct' => ['boolean'],
-            'answer_order' => ['nullable', 'integer', 'min:0'],
+            'is_correct' => ['sometimes', 'boolean'],
         ];
     }
 }

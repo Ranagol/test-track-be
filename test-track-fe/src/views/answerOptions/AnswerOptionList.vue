@@ -38,8 +38,10 @@ import type { Question } from '@/types/types';
 import AnswerOption from '@/views/answerOptions/AnswerOption.vue';
 import { ref, watch, onMounted } from 'vue';
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
+import { useTestsStore } from '@/stores/useTestsStore';
 
 const testAttemptStore = useTestAttemptStore();
+const testsStore = useTestsStore();
 
 const props = defineProps<{
     question: Question;
@@ -65,25 +67,27 @@ const selectedAnswerOption = ref<number | null>(null);
  */
 watch(
     selectedAnswerOption,
-    (newValue) => {
+    (answerOptionId) => {
 
-        // For test taking
-        if (newValue !== null && props.mode === 'take') {
-            testAttemptStore.updateUserAnswers(props.question.id, newValue);
+        // For test taking (UserAnswer) - this is the users answer
+        if (answerOptionId !== null && props.mode === 'take') {
+            testAttemptStore.updateUserAnswers(props.question.id, answerOptionId);
         }
 
-        // For test (answer option) editing
-        if (newValue !== null && props.mode === 'edit') {
+        // For test editing (AnswerOption) - this is correct answer option
+        if (answerOptionId !== null && props.mode === 'edit') {
 
-            // TODO ANDOR Here we should update the correct answer option for the question, in the test store, but we don't have a function for that yet. So we will just log the new value for now.
-
-            // testAttemptStore.updateUserAnswers(props.question.id, newValue);
+            testsStore.updateAnswerOptionIsCorrect(props.question.id, answerOptionId);
         }
     }
 );
 
+/**
+ * Get the ID of the correct answer option for the question. Needed at the very beginning of the
+ * test editing, when we set the correct AnswerOption in the el-radio to be displayed as selected.
+ */
 const getCorrectAnswerOptionId = (): number | null => {
-    
+
     const correctAnswerOption = props.question.answer_options?.find(
         (answerOption) => answerOption.is_correct
     );
