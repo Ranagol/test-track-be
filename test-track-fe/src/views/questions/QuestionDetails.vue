@@ -28,7 +28,7 @@
  */
 import type { Question } from '@/types/types';
 import { computed } from 'vue';
-import { useTestEditorStore } from '@/stores/testEditorStore';
+import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import { ElMessage } from 'element-plus';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import { useApiErrors } from '@/composables/useApiErrors';

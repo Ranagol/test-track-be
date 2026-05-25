@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 
-import { useTestEditorStore } from '@/stores/testEditorStore';
+import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import type { AnswerOption } from '@/types/types';
 import { computed } from 'vue';
 import { ElMessage } from 'element-plus';

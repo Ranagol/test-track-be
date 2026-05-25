@@ -26,7 +26,7 @@ import { useApiErrors } from '@/composables/useApiErrors';
 import testAttemptService from '@/services/testAttemptService';
 import { ElMessageBox } from 'element-plus'
 import type { Action } from 'element-plus'
-import { useTestEditorStore } from '@/stores/testEditorStore';
+import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import { useRouter } from 'vue-router';
 
 const testAttemptStore = useTestAttemptStore();

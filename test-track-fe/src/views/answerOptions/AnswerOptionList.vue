@@ -39,7 +39,7 @@ import type { Question } from '@/types/types';
 import AnswerOption from '@/views/answerOptions/AnswerOption.vue';
 import { ref, watch, onMounted } from 'vue';
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
-import { useTestEditorStore } from '@/stores/testEditorStore';
+import { useTestEditorStore } from '@/stores/useTestEditorStore';
 
 const testAttemptStore = useTestAttemptStore();
 const testEditorStore = useTestEditorStore();

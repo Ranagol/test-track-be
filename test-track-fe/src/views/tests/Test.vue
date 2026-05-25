@@ -3,7 +3,7 @@
     <!-- TEST TITLE AND DESCRIPTION -->
     <Container>
         <TestDetails
-            v-if="mode === 'edit'"
+            v-if="mode === 'take' || mode === 'edit'"
             :mode="mode"
         />
 
@@ -34,14 +34,14 @@
         />
     </Container>
 
+    <!-- TEST TAKE BUTTON -->
     <Container
         v-if="mode === 'take'"
     >
-        <TestTake
-            :mode="mode"
-        />
+        <TestTakeButton/>
     </Container>
 
+    <!-- DISPLAY BACKEND ERROR -->
     <DisplayBackendError
         :generalError="generalError"
     />
@@ -59,22 +59,19 @@
  * 2. Editing test by the tester            /tests/:id    → tester (edit mode)
  * 3. Taking the test by the test taker     /tests/take-test/:testCode → test taker (take mode)
  */
-import { onMounted, reactive, computed } from 'vue';
-import { useTestEditorStore } from '@/stores/testEditorStore';
-import { useAuthStore } from '@/stores/useAuthStore';
+import { onMounted, computed } from 'vue';
+import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import { useApiErrors } from '@/composables/useApiErrors';
-import { useRoute, useRouter } from 'vue-router';
-import type { Test } from '@/types/types';
+import { useRoute } from 'vue-router';
 import QuestionList from '@/views/questions/QuestionList.vue';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import Container from '@/views/tests/Container.vue';
 import TestDetails from '@/views/tests/TestDetails.vue';
-import TestTake from '@/views/tests/TestTake.vue';
+import TestTakeButton from '@/views/tests/TestTakeButton.vue';
+import type { Mode } from '@/types/types';
 
 const testEditorStore = useTestEditorStore();
-const authStore = useAuthStore();
 const route = useRoute();
-const router = useRouter();
 
 const {
     generalError,
@@ -85,11 +82,20 @@ const {
 
 /**
  * Decides based on the route name, in which mode this component will be.
+ * Mode can be:
+ * 1. 'create' → when the tester is creating a new test, route: /tests/create
+ * 2. 'edit' → when the tester is editing an existing test, route: /tests/:id
+ * 3. 'take' → when the test taker is taking the test, route: /tests/take-test/:testCode
+ * 4. If the route name is unknown, an error is thrown.
  */
-const mode = computed(() => {
-    if (route.name === 'test-create') return 'create';
-    if (route.name === 'test-edit') return 'edit';
-    if (route.name === 'test-take') return 'take';
+const mode = computed<Mode>(() => {
+    switch (route.name) {
+        case 'test-create': return 'create';
+        case 'test-edit': return 'edit';
+        case 'test-take': return 'take';
+        default:
+            throw new Error(`Unknown route: ${String(route.name)}`);
+    }
 });
 
 onMounted(async () => {
@@ -109,9 +115,14 @@ onMounted(async () => {
             // Get the testId from the url
             const testId = Number(route.params.id);
             await testEditorStore.get(testId);
+
+        // CREATE MODE
+        } else if (mode.value === 'create') {
+
+            testEditorStore.initializeNewTest();
         }
 
-        // CREATE MODE - for this mode does not need data fetch from backend
+
 
     } catch (error) {
         handleBackendErrors(error);

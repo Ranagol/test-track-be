@@ -61,8 +61,7 @@ const routes = [
         }
     },
     {
-        // TODO ANDOR This is just a temporary dev solution
-        path: '/tests/test-create',
+        path: '/tests/create',
         name: 'test-create',
         component: Test,
         meta: {

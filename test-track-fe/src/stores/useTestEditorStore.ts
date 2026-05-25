@@ -3,6 +3,7 @@ import type { Test } from '@/types/types';
 import testService from '@/services/testService';
 import questionService from '@/services/questionService';
 import answerOptionService from '@/services/answerOptionService';
+import { useAuthStore } from './useAuthStore';
 
 export const useTestEditorStore = defineStore('testEditor', {
 
@@ -73,6 +74,21 @@ export const useTestEditorStore = defineStore('testEditor', {
             } finally {
                 this.loading = false;
             }
+        },
+
+        initializeNewTest(): void {
+            const authStore = useAuthStore();
+
+            if (!authStore.userId) {
+                throw new Error('User not authenticated');
+            }
+
+            this.test = {
+                user_id: authStore.userId,
+                title: 'Give your test a title',
+                description: 'Write a description for your test here.',
+                questions: [],
+            };
         },
 
         /**

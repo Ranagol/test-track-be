@@ -36,7 +36,7 @@
  * 2. Editing test by the tester            /tests/:id    → tester (edit mode)
  * 3. Taking the test by the test taker     /tests/take-test/:testCode → test taker (take mode)
  */
-import { useTestEditorStore } from '@/stores/testEditorStore';
+import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import { useApiErrors } from '@/composables/useApiErrors';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import { ElMessage } from 'element-plus';
@@ -49,7 +49,7 @@ const {
 
 const props = defineProps<{
 
-    mode: 'create' | 'edit' | 'take' | undefined;
+    mode: 'create' | 'edit' | 'take';
 
 }>();
 

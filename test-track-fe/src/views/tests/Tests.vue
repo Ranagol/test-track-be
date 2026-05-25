@@ -35,6 +35,7 @@
             <el-button
                 class="ml-3"
                 type="primary"
+                @click="$router.push('/tests/create')"
             >
                 Create new
             </el-button>

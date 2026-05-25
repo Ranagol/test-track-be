@@ -35,13 +35,13 @@ export type BackendError = {
  * For every model, the optional relationships are listed after the updated_at.
  */
 export interface Test {
-    id: number;
+    id?: number;
     user_id: number;
-    title: string;
+    title?: string;
     description?: string;
-    test_code: string;
-    created_at: string;
-    updated_at: string;
+    test_code?: string;
+    created_at?: string;
+    updated_at?: string;
 
     questions?: Question[];
     attempts?: TestAttempt[];
@@ -138,6 +138,6 @@ export interface TableSortData {
 }
 
 
-
+export type Mode = 'create' | 'edit' | 'take';
 
 
