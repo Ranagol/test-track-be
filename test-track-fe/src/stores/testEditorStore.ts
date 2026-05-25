@@ -80,17 +80,27 @@ export const useTestEditorStore = defineStore('testEditor', {
          */
 
         /**
+         * Sets question text in frontend, here in the store.
          * Updates the text of a question in the current test. This is used in the Question.vue component
          * to update the question text in the store, when the tester edits the question text.
          * So, this action does not work with BE, works with FE. Hence, we do not have here
          * async/await, try/catch, loading, etc.
          */
-        updateQuestionText(index: number, text: string) {
-            if (!this.test?.questions?.[index]) return
-            this.test.questions[index].text = text
+        setQuestionTextInStore(questionId: number, text: string) {
+
+            const question = this.test?.questions?.find(
+                question => question.id === questionId
+            );
+
+            if (!question) return;
+
+            question.text = text;
         },
 
-        async updateQuestion(questionId: number): Promise<void> {
+        /**
+         * Update the question text in the backend,
+         */
+        async updateQuestionInBackend(questionId: number): Promise<void> {
             this.loading = true;
 
             try {

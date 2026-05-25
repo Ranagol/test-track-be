@@ -10,7 +10,6 @@
             <!-- QUESTION TEXT INPUT & DISPLAY -->
             <el-input
                 v-model="questionText"
-                :disabled="props.mode === 'take'"
                 @change="updateQuestion"
             />
 
@@ -28,7 +27,7 @@
  * QuestionDetails is for question editing by the tester.
  */
 import type { Question } from '@/types/types';
-import { ref, watch, reactive, computed } from 'vue';
+import { computed } from 'vue';
 import { useTestEditorStore } from '@/stores/testEditorStore';
 import { ElMessage } from 'element-plus';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
@@ -42,32 +41,31 @@ const {
 
 const props = defineProps<{
     question: Question;
-    mode: 'create' | 'edit' | 'take' | undefined;
+    mode: 'create' | 'edit' | 'take';
 
-    /**
-     * index is used to number the questions displayed to the test taker.
-     */
+    //index is used to number the questions displayed to the test taker.
     index: number;
 }>();
-
 
 const questionText = computed({
 
     // Display the question text
     get: () => props.question.text,
+
+    // Set the new question text in the store
     set: (newValue) => {
 
         // Immediatelly update letter by letter the question text in the store
-        testEditorStore.updateQuestionText(props.index, newValue)
+        testEditorStore.setQuestionTextInStore(props.question.id, newValue)
     }
 })
 
 /**
- * Send the question update to the backend.
+ * Send the question update to the backend, but not for every letter change.
  */
 const updateQuestion = async () => {
     try {
-        await testEditorStore.updateQuestion(props.question.id);
+        await testEditorStore.updateQuestionInBackend(props.question.id);
         ElMessage({
             message: 'Question updated successfully.',
             type: 'success',
@@ -75,8 +73,6 @@ const updateQuestion = async () => {
     } catch (error) {
         handleBackendErrors(error);
     }
-
-
 };
 
 </script>

@@ -13,7 +13,6 @@
             :mode="props.mode"
             :index="props.index"
         />
-
     </div>
 
     <!-- ANSWER OPTIONS -->
@@ -27,9 +26,8 @@
 
 <script setup lang="ts">
 /**
- * Question.vue is used for testing purpose in 'take' mode. Then it simply display the question
- * text and the answer options as radio buttons. And sends the selected answer option to the test
- * attempt store.
+ * QuestionDetails is used for editing the question by the tester.
+ * In 'take' mode, it simply display the question text and the answer options.
  */
 import type { Question } from '@/types/types';
 import QuestionDetails from '@/views/questions/QuestionDetails.vue';
@@ -37,14 +35,10 @@ import AnswerOptionList from '@/views/answerOptions/AnswerOptionList.vue';
 
 
 const props = defineProps<{
-
     question: Question;
+    mode: 'create' | 'edit' | 'take';
 
-    mode: 'create' | 'edit' | 'take' | undefined;
-
-    /**
-     * index is used to number the questions displayed to the test taker.
-     */
+    //index is used to number the questions displayed to the test taker.
     index: number;
 }>();
 
