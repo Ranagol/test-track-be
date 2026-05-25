@@ -4,7 +4,7 @@
     <div v-if="props.mode === 'take'">{{ props.answerOption.text }}</div>
 
     <!-- RENDER THIS FOR TEST CREATION/EDITING -->
-    <div v-else-if="props.mode === 'edit'">
+    <div v-if="props.mode === 'edit'">
         <AnswerOptionDetails
             :answerOption="props.answerOption"
             :questionId="props.questionId"
@@ -24,7 +24,7 @@ import AnswerOptionDetails from '@/views/answerOptions/AnswerOptionDetails.vue';
 const props = defineProps<{
     answerOption: AnswerOption;
     questionId: number;
-    mode: 'create' | 'edit' | 'take' | undefined;
+    mode: 'create' | 'edit' | 'take';
 }>();
 </script>
 

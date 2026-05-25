@@ -5,6 +5,7 @@
         v-model="selectedAnswerOption"
         class="mt-3"
         style="display: flex; flex-direction: column; align-items: flex-start;"
+        @change="handleAnswerSelection"
     >
 
         <!-- RADIO BUTTON -->
@@ -45,12 +46,7 @@ const testEditorStore = useTestEditorStore();
 
 const props = defineProps<{
     question: Question;
-    mode: 'create' | 'edit' | 'take' | undefined;
-
-    /**
-     * index is used to number the questions displayed to the test taker.
-     */
-    index: number;
+    mode: 'create' | 'edit' | 'take';
 }>();
 
 /**
@@ -62,26 +58,28 @@ const props = defineProps<{
 const selectedAnswerOption = ref<number | null>(null);
 
 /**
- * When the user selects an answer option, this watcher will be triggered, and it will update the
- * user answers in the test attempt store.
+ * Answer selection happens in two cases in this component:
+ * 1. When the test taker selects an answer option during test taking (mode = 'take'),
+ * 2. When the tester selects/changes the correct answer option during test editing (mode = 'edit').
  */
-watch(
-    selectedAnswerOption,
-    (answerOptionId) => {
+const handleAnswerSelection = async (answerOptionId: number) => {
 
-        // For test taking (UserAnswer) - this is the users answer
-        if (answerOptionId !== null && props.mode === 'take') {
-            testAttemptStore.updateUserAnswers(props.question.id, answerOptionId);
-        }
-
-        // For test editing (AnswerOption) - this is correct answer option
-        if (answerOptionId !== null && props.mode === 'edit') {
-
-            // TODO ANDOR this solution here has one big problem: in test editing, at the very beginning it immediatelly sends a request to the backend, for the initial value setup. This must be fixed.
-            testEditorStore.updateAnswerOptionIsCorrect(props.question.id, answerOptionId);
-        }
+    // For test taking (UserAnswer) - the user has selected this answer for the given question
+    if (props.mode === 'take') {
+        testAttemptStore.updateUserAnswers(
+            props.question.id,
+            answerOptionId
+        );
     }
-);
+
+    // For test editing (AnswerOption) - this is the correct answer option for the given question
+    if (props.mode === 'edit') {
+        await testEditorStore.updateAnswerOptionIsCorrect(
+            props.question.id,
+            answerOptionId
+        );
+    }
+};
 
 /**
  * Get the ID of the correct answer option for the question. Needed at the very beginning of the
@@ -103,14 +101,11 @@ onMounted(() => {
      * is the correct one.
      */
     if (props.mode === 'edit') {
+
         // Set the selected answer option for the question, from the test attempt store, when the component is mounted.
         selectedAnswerOption.value = getCorrectAnswerOptionId();
     }
 });
-
-
-
-
 
 </script>
 

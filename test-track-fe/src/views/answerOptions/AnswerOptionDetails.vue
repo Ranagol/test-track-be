@@ -4,7 +4,7 @@
         <!-- ANSWER OPTION TEXT -->
         <el-input
             v-model="answerOptionText"
-            @blur="updateAnswerOptionText"
+            @change="updateAnswerOptionText"
         />
 
         <DisplayBackendError
@@ -32,7 +32,7 @@ const {
 const props = defineProps<{
     answerOption: AnswerOption;
     questionId: number;
-    mode: 'create' | 'edit' | 'take' | undefined;
+    mode: 'create' | 'edit' | 'take';
 }>();
 
 const answerOptionText = computed({
@@ -42,13 +42,19 @@ const answerOptionText = computed({
     set: (newValue) => {
 
         // Immediatelly update letter by letter the question text in the store
-        testEditorStore.setAnswerOptionTextInStore(props.questionId, props.answerOption.id, newValue);
+        testEditorStore.setAnswerOptionTextInStore(props.questionId, props.answerOption.id, props.answerOption.text);
     }
 });
 
 const updateAnswerOptionText = async () => {
     try {
-        await testEditorStore.updateAnswerOptionText(props.questionId, props.answerOption.id, answerOptionText.value);
+
+        await testEditorStore.updateAnswerOptionText(
+            props.questionId,
+            props.answerOption.id,
+            answerOptionText.value
+        );
+
         ElMessage({
             message: 'Answer option updated successfully.',
             type: 'success',
