@@ -207,8 +207,6 @@ export const useTestsStore = defineStore('tests', {
                         }
                     }
                 }
-
-
             } catch (error) {
                 throw error;
             } finally {
@@ -216,9 +214,32 @@ export const useTestsStore = defineStore('tests', {
             }
         },
 
+        setAnswerOptionTextInStore(questionId: number, answerOptionId: number, answerOptionText: string): void {
+
+            // Find the question in the current test
+            const question = this.test?.questions?.find(q => q.id === questionId);
+
+            if (!question) {
+                throw new Error('Question not found');
+            }
+
+            if (!question.answer_options) {
+                throw new Error('Answer options array not found');
+            }
+
+            // Find the answer option in the question
+            const answerOption = question.answer_options.find(ao => ao.id === answerOptionId);
+
+            if (!answerOption) {
+                throw new Error('Answer option object not found');
+            }
+
+            // Update the answer option text in the store, so the UI is updated immediately
+            answerOption.text = answerOptionText;
+        },
+
         /**
-         * Handles the update of an answer option. All arguments here are named, and optional, because
-         * this function will be called from different places, with different arguments.
+         * Handles the update of an answer option.
          */
         async updateAnswerOptionText(
                 questionId: number,

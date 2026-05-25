@@ -67,7 +67,7 @@ const questionText = computed({
  */
 const updateQuestion = async () => {
     try {
-        testsStore.updateQuestion(props.question.id);
+        await testsStore.updateQuestion(props.question.id);
         ElMessage({
             message: 'Question updated successfully.',
             type: 'success',

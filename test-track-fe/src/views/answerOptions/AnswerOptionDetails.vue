@@ -3,7 +3,12 @@
 
         <!-- ANSWER OPTION TEXT -->
         <el-input
-            v-model="props.answerOption.text"
+            v-model="answerOptionText"
+            @blur="updateAnswerOptionText"
+        />
+
+        <DisplayBackendError
+            :generalError="generalError"
         />
 
     </div>
@@ -14,8 +19,15 @@
 import type { AnswerOption } from '@/types/types';
 import { computed } from 'vue';
 import { useTestsStore } from '@/stores/useTestsStore';
+import { ElMessage } from 'element-plus';
+import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
+import { useApiErrors } from '@/composables/useApiErrors';
 
 const testsStore = useTestsStore();
+const {
+    generalError,
+    handleBackendErrors
+} = useApiErrors();
 
 const props = defineProps<{
     answerOption: AnswerOption;
@@ -30,9 +42,21 @@ const answerOptionText = computed({
     set: (newValue) => {
 
         // Immediatelly update letter by letter the question text in the store
-        testsStore.updateQuestionText(props.index, newValue)
+        testsStore.setAnswerOptionTextInStore(props.questionId, props.answerOption.id, newValue);
     }
-})
+});
+
+const updateAnswerOptionText = async () => {
+    try {
+        await testsStore.updateAnswerOptionText(props.questionId, props.answerOption.id, answerOptionText.value);
+        ElMessage({
+            message: 'Answer option updated successfully.',
+            type: 'success',
+        })
+    } catch (error) {
+        handleBackendErrors(error);
+    }
+};
 
 
 </script>

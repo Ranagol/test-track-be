@@ -77,6 +77,7 @@ watch(
         // For test editing (AnswerOption) - this is correct answer option
         if (answerOptionId !== null && props.mode === 'edit') {
 
+            // TODO ANDOR this solution here has one big problem: in test editing, at the very beginning it immediatelly sends a request to the backend, for the initial value setup. This must be fixed.
             testsStore.updateAnswerOptionIsCorrect(props.question.id, answerOptionId);
         }
     }
