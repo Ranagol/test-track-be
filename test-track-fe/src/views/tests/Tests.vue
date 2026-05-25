@@ -117,6 +117,7 @@
                         <el-button
                             size="small"
                             type="primary"
+                            @click="$router.push(`/tests/${scope.row.id}/edit`)"
                         >Edit</el-button>
 
                         <!-- DELETE BUTTON -->
