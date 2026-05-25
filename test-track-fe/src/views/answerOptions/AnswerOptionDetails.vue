@@ -16,14 +16,14 @@
 
 <script setup lang="ts">
 
+import { useTestEditorStore } from '@/stores/testEditorStore';
 import type { AnswerOption } from '@/types/types';
 import { computed } from 'vue';
-import { useTestsStore } from '@/stores/useTestsStore';
 import { ElMessage } from 'element-plus';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import { useApiErrors } from '@/composables/useApiErrors';
 
-const testsStore = useTestsStore();
+const testEditorStore = useTestEditorStore();
 const {
     generalError,
     handleBackendErrors
@@ -42,13 +42,13 @@ const answerOptionText = computed({
     set: (newValue) => {
 
         // Immediatelly update letter by letter the question text in the store
-        testsStore.setAnswerOptionTextInStore(props.questionId, props.answerOption.id, newValue);
+        testEditorStore.setAnswerOptionTextInStore(props.questionId, props.answerOption.id, newValue);
     }
 });
 
 const updateAnswerOptionText = async () => {
     try {
-        await testsStore.updateAnswerOptionText(props.questionId, props.answerOption.id, answerOptionText.value);
+        await testEditorStore.updateAnswerOptionText(props.questionId, props.answerOption.id, answerOptionText.value);
         ElMessage({
             message: 'Answer option updated successfully.',
             type: 'success',

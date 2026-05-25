@@ -38,10 +38,10 @@ import type { Question } from '@/types/types';
 import AnswerOption from '@/views/answerOptions/AnswerOption.vue';
 import { ref, watch, onMounted } from 'vue';
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
-import { useTestsStore } from '@/stores/useTestsStore';
+import { useTestEditorStore } from '@/stores/testEditorStore';
 
 const testAttemptStore = useTestAttemptStore();
-const testsStore = useTestsStore();
+const testEditorStore = useTestEditorStore();
 
 const props = defineProps<{
     question: Question;
@@ -78,7 +78,7 @@ watch(
         if (answerOptionId !== null && props.mode === 'edit') {
 
             // TODO ANDOR this solution here has one big problem: in test editing, at the very beginning it immediatelly sends a request to the backend, for the initial value setup. This must be fixed.
-            testsStore.updateAnswerOptionIsCorrect(props.question.id, answerOptionId);
+            testEditorStore.updateAnswerOptionIsCorrect(props.question.id, answerOptionId);
         }
     }
 );

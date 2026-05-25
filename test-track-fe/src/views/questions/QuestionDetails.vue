@@ -29,12 +29,12 @@
  */
 import type { Question } from '@/types/types';
 import { ref, watch, reactive, computed } from 'vue';
-import { useTestsStore } from '@/stores/useTestsStore';
+import { useTestEditorStore } from '@/stores/testEditorStore';
 import { ElMessage } from 'element-plus';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import { useApiErrors } from '@/composables/useApiErrors';
 
-const testsStore = useTestsStore();
+const testEditorStore = useTestEditorStore();
 const {
     generalError,
     handleBackendErrors
@@ -58,7 +58,7 @@ const questionText = computed({
     set: (newValue) => {
 
         // Immediatelly update letter by letter the question text in the store
-        testsStore.updateQuestionText(props.index, newValue)
+        testEditorStore.updateQuestionText(props.index, newValue)
     }
 })
 
@@ -67,7 +67,7 @@ const questionText = computed({
  */
 const updateQuestion = async () => {
     try {
-        await testsStore.updateQuestion(props.question.id);
+        await testEditorStore.updateQuestion(props.question.id);
         ElMessage({
             message: 'Question updated successfully.',
             type: 'success',

@@ -35,7 +35,7 @@
     <DisplayBackendError
         :generalError="generalError"
     />
-    
+
 </template>
 
 <script
@@ -50,7 +50,7 @@
  * 3. Taking the test by the test taker     /tests/take-test/:testCode → test taker (take mode)
  */
 import { onMounted, reactive, computed } from 'vue';
-import { useTestsStore } from '@/stores/useTestsStore';
+import { useTestEditorStore } from '@/stores/testEditorStore';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useApiErrors } from '@/composables/useApiErrors';
 import { useRoute, useRouter } from 'vue-router';
@@ -61,7 +61,7 @@ import Container from '@/views/tests/Container.vue';
 import TestDetails from '@/views/tests/TestDetails.vue';
 import TestTake from '@/views/tests/TestTake.vue';
 
-const testsStore = useTestsStore();
+const testEditorStore = useTestEditorStore();
 const authStore = useAuthStore();
 const route = useRoute();
 const router = useRouter();
@@ -97,14 +97,14 @@ onMounted(async () => {
 
             //TODO ANDOR later check this line below, how it works, if works.
             const testCode = route.params.testCode as string;
-            data.test = await testsStore.getByCode(testCode);
+            data.test = await testEditorStore.getByCode(testCode);
 
         // EDIT MODE
         } else if (mode.value === 'edit') {
 
             // Get the testId from the url
             const testId = Number(route.params.id);
-            data.test = await testsStore.get(testId);
+            data.test = await testEditorStore.get(testId);
         }
 
         // CREATE MODE - for this mode does not need data fetch from backend

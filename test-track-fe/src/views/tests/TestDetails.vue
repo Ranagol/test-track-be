@@ -1,22 +1,22 @@
 <template>
 
-    <div v-if="testsStore.test">
+    <div v-if="testEditorStore.test">
 
-        <!-- We use here testStore (and not data.test), because here we must collect the latest test data updates -->
+        <!-- We use here testEditorStore (and not data.test), because here we must collect the latest test data updates -->
         <el-input
-            v-model="testsStore.test!.title"
+            v-model="testEditorStore.test!.title"
             placeholder="Enter test title"
             style="font-size: 2rem;"
-            @change="updateTest(testsStore.test!.id)"
+            @change="updateTest(testEditorStore.test!.id)"
         />
 
-        <!-- We use here testStore (and not data.test), because here we must collect the latest test data updates -->
+        <!-- We use here testEditorStore (and not data.test), because here we must collect the latest test data updates -->
         <el-input
-            v-model="testsStore.test!.description"
+            v-model="testEditorStore.test!.description"
             type="textarea"
             placeholder="Enter test description"
             :rows="4"
-            @change="updateTest(testsStore.test!.id)"
+            @change="updateTest(testEditorStore.test!.id)"
         />
 
     </div>
@@ -39,6 +39,7 @@
  * 3. Taking the test by the test taker     /tests/take-test/:testCode → test taker (take mode)
  */
 import { useTestsStore } from '@/stores/useTestsStore';
+import { useTestEditorStore } from '@/stores/testEditorStore';
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useApiErrors } from '@/composables/useApiErrors';
@@ -46,7 +47,7 @@ import { useRoute, useRouter } from 'vue-router';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import { ElMessage } from 'element-plus';
 
-const testsStore = useTestsStore();
+const testEditorStore = useTestEditorStore();
 const testAttemptStore = useTestAttemptStore();
 const authStore = useAuthStore();
 const route = useRoute();
@@ -64,7 +65,7 @@ const props = defineProps<{
 
 const updateTest = async (testId: number) => {
     try {
-        await testsStore.update(testId);
+        await testEditorStore.update(testId);
         ElMessage({
             message: 'Test updated successfully.',
             type: 'success',
