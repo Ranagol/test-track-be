@@ -75,12 +75,18 @@ class TestController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * //TODO ANDOR when a new test is created from data sent from FE, we will have to create manually
-     * a unique test code.
      */
     public function store(StoreTestRequest $request): TestResource
     {
-        $test = Test::create($request->validated());
+        $validatedData = $request->validated();
+
+        // Create unique test code
+        $testCode = $this->generateUniqueTestCode();
+
+        // Add the generated test code to the validated data
+        $validatedData['test_code'] = $testCode;
+
+        $test = Test::create($validatedData);
 
         return new TestResource($test);
     }
@@ -124,5 +130,23 @@ class TestController extends Controller
         $test->delete();
 
         return response()->json(['message' => 'Delete successful'], 200);
+    }
+
+    private function generateUniqueTestCode(): string
+    {
+        // Get all existing test codes
+        $existingCodes = Test::pluck('test_code');
+
+        // This is the new test code
+        $code = 'TEST-' . strtoupper(bin2hex(random_bytes(2))) . '-' . strtoupper(bin2hex(random_bytes(1)));
+
+        // Check if the new test code accidentally already exists, untill we have a unique one
+        while ($existingCodes->contains($code)) {
+
+            // If the new code already exists, generate a new new one
+            $code = 'TEST-' . strtoupper(bin2hex(random_bytes(2))) . '-' . strtoupper(bin2hex(random_bytes(1)));
+        }
+
+        return $code;
     }
 }

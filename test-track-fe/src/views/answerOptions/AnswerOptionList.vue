@@ -37,9 +37,10 @@
  */
 import type { Question } from '@/types/types';
 import AnswerOption from '@/views/answerOptions/AnswerOption.vue';
-import { ref, watch, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
+import { ElMessage } from 'element-plus';
 
 const testAttemptStore = useTestAttemptStore();
 const testEditorStore = useTestEditorStore();
@@ -78,6 +79,7 @@ const handleAnswerSelection = async (answerOptionId: number) => {
             props.question.id,
             answerOptionId
         );
+        ElMessage.success('Correct answer option updated successfully.');
     }
 };
 

@@ -1,13 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Tests from '@/views/tests/Tests.vue';
+import Tests from '@/views/tests/list/Tests.vue';
 import Login from '@/views/login/Login.vue';
 import Register from '@/views/register/Register.vue';
 import Home from '@/views/home/Home.vue';
 import NotFound from '@/views/errors/NotFound.vue';
 import { useAuthStore } from '@/stores/useAuthStore';
-import Test from '@/views/tests/Test.vue';
 import TestAttempts from '@/views/testAttempts/TestAttempts.vue';
 import Analytics from '@/views/analytics/Analytics.vue';
+import TestCreatePage from '@/views/tests/pages/TestCreatePage.vue';
+import TestEditPage from '@/views/tests/pages/TestEditPage.vue';
+import TestTakePage from '@/views/tests/pages/TestTakePage.vue';
 
 const routes = [
     {
@@ -63,7 +65,7 @@ const routes = [
     {
         path: '/tests/create',
         name: 'test-create',
-        component: Test,
+        component: TestCreatePage,
         meta: {
             requiresAuth: true
         }
@@ -71,7 +73,7 @@ const routes = [
     {
         path: '/tests/:id/edit',
         name: 'test-edit',
-        component: Test,
+        component: TestEditPage,
         meta: {
             requiresAuth: true
         }
@@ -80,7 +82,7 @@ const routes = [
         // TODO ANDOR is the testCode here an unnecesary complication? Can I just use the id here?
         path: '/tests/take-test/:testCode',
         name: 'test-take',
-        component: Test,
+        component: TestTakePage,
         meta: {
             requiresAuth: true
         }

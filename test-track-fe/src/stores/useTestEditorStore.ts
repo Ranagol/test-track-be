@@ -40,18 +40,6 @@ export const useTestEditorStore = defineStore('testEditor', {
             }
         },
 
-        async create(data: Test): Promise<Test> {
-            this.loading = true;
-            try {
-                const test = await testService.create(data);
-                return test;
-            } catch (error) {
-                throw error;
-            } finally {
-                this.loading = false;
-            }
-        },
-
         async update(id: number): Promise<Test> {
             this.loading = true;
             try {
@@ -89,6 +77,25 @@ export const useTestEditorStore = defineStore('testEditor', {
                 description: 'Write a description for your test here.',
                 questions: [],
             };
+        },
+
+        async create(): Promise<Test> {
+
+            if (!this.test) {
+                throw new Error('No test data to create');
+            }
+
+            this.loading = true;
+
+            try {
+                const createdTest = await testService.create(this.test);
+                this.test = createdTest;
+                return createdTest;
+            } catch (error) {
+                throw error;
+            } finally {
+                this.loading = false;
+            }
         },
 
         /**

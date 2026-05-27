@@ -42,7 +42,9 @@ const answerOptionText = computed({
     set: (newValue) => {
 
         // Immediatelly update letter by letter the question text in the store
-        testEditorStore.setAnswerOptionTextInStore(props.questionId, props.answerOption.id, props.answerOption.text);
+        testEditorStore.setAnswerOptionTextInStore(
+            props.questionId, props.answerOption.id, newValue
+        );
     }
 });
 
