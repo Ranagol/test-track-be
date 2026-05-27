@@ -1,13 +1,12 @@
 <template>
 
-    <!-- TEST TITLE AND DESCRIPTION -->
-    <TestDetails
+    <TestTitleAndDescription
         :mode="props.mode"
     />
 
     <!-- QUESTIONS AND ANSWERS-->
     <QuestionList
-        :mode="props.mode"
+        :mode="props.mode"v
     />
 
 </template>
@@ -17,7 +16,7 @@
     lang="ts"
 >
 
-import TestDetails from '@/views/tests/test/TestDetails.vue';
+import TestTitleAndDescription from '@/views/tests/test/TestTitleAndDescription.vue';
 import QuestionList from '@/views/questions/QuestionList.vue';
 import type { Mode } from '@/types/types';
 

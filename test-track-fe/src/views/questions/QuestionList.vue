@@ -2,7 +2,7 @@
 
     <!-- LOOPS ALL QUESTIONS WITH THEIR ANSWER OPTIONS -->
     <Question
-        v-for="(question, index) in questions"
+        v-for="(question, index) in testEditorStore.test?.questions || []"
         :key="question.id"
         :question="question"
         :index="index"
@@ -22,7 +22,6 @@ const props = defineProps<{
 }>();
 
 const testEditorStore = useTestEditorStore();
-const questions = testEditorStore.test?.questions || [];
 
 </script>
 

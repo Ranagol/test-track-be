@@ -10,8 +10,10 @@
             :generalError="generalError"
         />
 
-        <TestTakeButton
-            @createTestAttempt="createTestAttempt"
+        <FinalButton
+            buttonText="Submit test"
+            buttonType="primary"
+            @click="createTestAttempt"
         />
 
     </Container>
@@ -27,7 +29,7 @@ import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import Container from '@/views/tests/test/Container.vue';
-import TestTakeButton from '@/views/tests/test/TestTakeButton.vue';
+import FinalButton from '@/views/tests/test/FinalButton.vue';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
 import { useAuthStore } from '@/stores/useAuthStore';
@@ -84,7 +86,6 @@ const createTestAttempt = async () => {
                 }
             },
         })
-
 
         //TODO ANDOR Make sure that the user can not submit this test again.
 

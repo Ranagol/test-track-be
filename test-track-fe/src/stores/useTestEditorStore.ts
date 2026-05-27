@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import type { Test } from '@/types/types';
+import type { Question, Test, AnswerOption } from '@/types/types';
 import testService from '@/services/testService';
 import questionService from '@/services/questionService';
 import answerOptionService from '@/services/answerOptionService';
@@ -73,9 +73,19 @@ export const useTestEditorStore = defineStore('testEditor', {
 
             this.test = {
                 user_id: authStore.userId,
-                title: 'Give your test a title',
-                description: 'Write a description for your test here.',
-                questions: [],
+                title: '',
+                description: '',
+                questions: [
+                    {
+                        text: '',
+                        answer_options: [
+                            {
+                                text: '',
+                                is_correct: true,
+                            }
+                        ] as AnswerOption[],
+                    }
+                ] as Question[],
             };
         },
 

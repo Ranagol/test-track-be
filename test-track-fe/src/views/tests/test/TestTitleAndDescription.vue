@@ -51,6 +51,15 @@ const props = defineProps<{
 const testEditorStore = useTestEditorStore();
 const { handleBackendErrors } = useApiErrors();
 
+/**
+ * 'create' - the new test and description is sent to store directly with v-model. When the user
+ * clicks on the 'Create test' button, then a request is sent to the backend. Create sends one
+ * big object request once, to the backend.
+ *
+ * 'edit' - the updated test and description is sent to the store directly with v-model. On every
+ * @change event of the input fields, a request is sent to the backend to update the test. Update
+ * sends separatelly for every input a backend request.
+ */
 const onFieldChange = () => {
     if (props.mode === 'edit') {
         save();
@@ -62,13 +71,6 @@ const save = async () => {
     try {
         const test = testEditorStore.test;
         if (!test) return;
-
-        // CREATE
-        if (props.mode === 'create') {
-            const created = await testEditorStore.create();
-            ElMessage.success('Test created');
-            return created;
-        }
 
         // EDIT
         await testEditorStore.update(test.id!);
