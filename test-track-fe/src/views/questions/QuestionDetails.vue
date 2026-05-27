@@ -60,6 +60,8 @@ const questionText = computed({
     }
 })
 
+
+// TODO ANDOR this function needs to be move to update page?
 /**
  * Send the question update to the backend, but not for every letter change.
  */

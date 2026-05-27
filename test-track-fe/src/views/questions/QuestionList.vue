@@ -1,28 +1,28 @@
 <template>
-    <div>
-        <Question
-            v-for="(question, index) in questions"
-            :key="question.id"
-            :question="question"
-            :index="index"
-            :mode="props.mode"
-        />
-    </div>
+
+    <!-- LOOPS ALL QUESTIONS WITH THEIR ANSWER OPTIONS -->
+    <Question
+        v-for="(question, index) in questions"
+        :key="question.id"
+        :question="question"
+        :index="index"
+        :mode="props.mode"
+    />
+
 </template>
 
 <script setup lang="ts">
-/**
- * Displays all questions.
- */
 
 // We use here QuestionType (and not Question), because there is a Question component
-import type { Question as QuestionType } from '@/types/types';
 import Question from '@/views/questions/Question.vue';
+import { useTestEditorStore } from '@/stores/useTestEditorStore';
 
 const props = defineProps<{
-    questions: QuestionType[];
     mode: 'create' | 'edit' | 'take' ;
 }>();
+
+const testEditorStore = useTestEditorStore();
+const questions = testEditorStore.test?.questions || [];
 
 </script>
 

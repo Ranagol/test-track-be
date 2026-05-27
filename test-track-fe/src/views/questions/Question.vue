@@ -13,6 +13,7 @@
             :mode="props.mode"
             :index="props.index"
         />
+
     </div>
 
     <!-- ANSWER OPTIONS -->
@@ -32,7 +33,6 @@
 import type { Question } from '@/types/types';
 import QuestionDetails from '@/views/questions/QuestionDetails.vue';
 import AnswerOptionList from '@/views/answerOptions/AnswerOptionList.vue';
-
 
 const props = defineProps<{
     question: Question;

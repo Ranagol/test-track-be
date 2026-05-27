@@ -2,32 +2,8 @@
 
     <div v-if="testEditorStore.test">
 
-        <el-input
-            v-model="testEditorStore.test.title"
-            @change="onFieldChange"
-            placeholder="Enter test title"
-        />
-
-        <el-input
-            v-model="testEditorStore.test.description"
-            :rows="4"
-            @change="onFieldChange"
-            placeholder="Enter test description"
-            type="textarea"
-        />
-
-        <el-button
-            v-if="props.mode === 'create'"
-            type="primary"
-            @click="save"
-            class="mt-4"
-        >
-            Save Test
-        </el-button>
-
-        <!-- <div
-            v-if="mode === 'take'"
-        >
+        <!-- TAKE MODE -->
+        <div v-if="mode === 'take'">
             <h1
                 v-if="testEditorStore.test"
                 class="text-3xl font-bold mb-4"
@@ -37,8 +13,25 @@
                 v-if="testEditorStore.test"
                 class="text-gray-700"
             >{{testEditorStore.test.description}}</p>
-        </div> -->
+        </div>
 
+        <!-- EDIT AND CREATE MODE -->
+        <div v-else>
+
+            <el-input
+                v-model="testEditorStore.test.title"
+                @change="onFieldChange"
+                placeholder="Enter test title"
+            />
+
+            <el-input
+                v-model="testEditorStore.test.description"
+                :rows="4"
+                @change="onFieldChange"
+                placeholder="Enter test description"
+                type="textarea"
+            />
+        </div>
     </div>
 
 </template>
@@ -64,6 +57,7 @@ const onFieldChange = () => {
     }
 };
 
+// TODO ANDOR these function must be moved to the parent component
 const save = async () => {
     try {
         const test = testEditorStore.test;

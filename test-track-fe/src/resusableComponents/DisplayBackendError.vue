@@ -1,4 +1,5 @@
 <template>
+
     <el-alert
         v-if="generalError"
         type="error"
@@ -6,6 +7,7 @@
         show-icon
         class="mt-3"
     />
+
 </template>
 
 <script setup lang="ts">

@@ -7,7 +7,14 @@ import axios from 'axios';
  */
 export function useApiErrors() {
 
+    /**
+     * Validation errors will be displayed in the label of the form field.
+     */
     const validationErrors = ref<BackendError>({})
+
+    /**
+     * General errors will be displayed in DisplayBackendError.vue
+     */
     const generalError = ref('')
 
     const handleBackendErrors = (error: unknown): void => {
