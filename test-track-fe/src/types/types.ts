@@ -140,7 +140,9 @@ export interface TableSortData {
     column?: any;
 }
 
-
 export type Mode = 'create' | 'edit' | 'take';
 
-
+export interface TestEditorState {
+    test: Test | null;
+    loading: boolean;
+}
