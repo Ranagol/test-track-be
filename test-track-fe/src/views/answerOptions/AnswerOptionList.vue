@@ -13,6 +13,7 @@
             v-for="answerOption in (question.answer_options || [])"
             :key="answerOption.id"
             :value="answerOption.id"
+            :label="answerOption.id"
         >
             <span>
 
@@ -26,6 +27,11 @@
 
         </el-radio>
     </el-radio-group>
+
+    <AddNewAnswerOption
+        v-if="props.mode === 'create'"
+        :questionId="props.question.id"
+    />
 
 </template>
 
@@ -41,6 +47,7 @@ import { ref, onMounted } from 'vue';
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import { ElMessage } from 'element-plus';
+import AddNewAnswerOption from '@/views/answerOptions/AddNewAnswerOption.vue';
 
 const testAttemptStore = useTestAttemptStore();
 const testEditorStore = useTestEditorStore();

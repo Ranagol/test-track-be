@@ -17,7 +17,7 @@ class StoreTestRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array<mixed>|string>
+     * @return array<mixed>
      */
     public function rules(): array
     {
@@ -25,6 +25,11 @@ class StoreTestRequest extends FormRequest
             'title' => ['sometimes', 'required', 'string', 'max:255'],
             'description' => ['sometimes', 'nullable', 'string'],
             'user_id' => ['required', 'exists:users,id'],
+            'questions' => ['sometimes', 'array'],
+            'questions.*.text' => ['required_with:questions', 'string'],
+            // 'questions.*.answer_options' => ['required_with:questions', 'array'],
+            // 'questions.*.answer_options.*.text' => ['required_with:questions.*.answer_options', 'string'],
+            // 'questions.*.answer_options.*.is_correct' => ['required_with:questions.*.answer_options', 'boolean'],
         ];
     }
 }

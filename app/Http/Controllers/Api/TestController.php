@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTestRequest;
 use App\Http\Requests\UpdateTestRequest;
 use App\Http\Resources\TestResource;
+use App\Models\Question;
 use App\Models\Test;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -78,18 +79,49 @@ class TestController extends Controller
      */
     public function store(StoreTestRequest $request): TestResource
     {
+        // Validate the request data
         $validatedData = $request->validated();
 
+        // Create the test
+        $test = $this->createTest($validatedData);
+
+        // Create questions (and their answer options) for the test
+        $this->createQuestions($validatedData['questions'], $test);
+
+        return new TestResource($test);
+    }
+
+    private function createTest(array $validatedData): Test
+    {
         // Create unique test code
         $testCode = $this->generateUniqueTestCode();
 
         // Add the generated test code to the validated data
         $validatedData['test_code'] = $testCode;
 
-        $test = Test::create($validatedData);
-
-        return new TestResource($test);
+        return Test::create($validatedData);
     }
+
+    private function createQuestions(array $questionsData, Test $test): void
+    {
+        foreach ($questionsData as $questionData) {
+            /* $question = */ $test->questions()->create([
+                'text' => $questionData['text'],
+            ]);
+
+            // $this->createAnswerOptions($question, $questionData['answer_options']);
+        }
+    }
+
+    // private function createAnswerOptions(Question $question, array $answerOptionsData): void
+    // {
+    //     foreach ($answerOptionsData as $optionData) {
+    //         $question->answerOptions()->create([
+    //             'text' => $optionData['text'],
+    //             'is_correct' => $optionData['is_correct'],
+    //         ]);
+    //     }
+    // }
 
     /**
      * Display the specified resource.

@@ -52,6 +52,18 @@ parameters:
         - identifier: missingType.iterableValue
           message: '/return type has no value type specified in iterable type array/'
           path: app/Http/Requests/
-
+        # Controller helper methods for nested validated payloads
+        - identifier: missingType.iterableValue
+          message: '/Method App\\Http\\Controllers\\Api\\TestController::createTest\(\) has parameter \$validatedData with no value type specified in iterable type array\./'
+          path: app/Http/Controllers/Api/TestController.php
+        - identifier: missingType.iterableValue
+          message: '/Method App\\Http\\Controllers\\Api\\TestController::createQuestions\(\) has parameter \$questionsData with no value type specified in iterable type array\./'
+          path: app/Http/Controllers/Api/TestController.php
+        - identifier: missingType.iterableValue
+          message: '/Method App\\Http\\Controllers\\Api\\TestController::createAnswerOptions\(\) has parameter \$answerOptionsData with no value type specified in iterable type array\./'
+          path: app/Http/Controllers/Api/TestController.php
+        - identifier: argument.type
+          message: '/Parameter #1 \$question of method App\\Http\\Controllers\\Api\\TestController::createAnswerOptions\(\) expects App\\Models\\Question, Illuminate\\Database\\Eloquent\\Model given\./'
+          path: app/Http/Controllers/Api/TestController.php
     # Do not fail if ignored errors are not found
     reportUnmatchedIgnoredErrors: false

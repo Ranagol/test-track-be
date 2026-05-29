@@ -6,7 +6,7 @@
 
     <!-- QUESTIONS AND ANSWERS-->
     <QuestionList
-        :mode="props.mode"v
+        :mode="props.mode"
     />
 
 </template>

@@ -75,17 +75,7 @@ export const useTestEditorStore = defineStore('testEditor', {
                 user_id: authStore.userId,
                 title: '',
                 description: '',
-                questions: [
-                    {
-                        text: '',
-                        answer_options: [
-                            {
-                                text: '',
-                                is_correct: true,
-                            }
-                        ] as AnswerOption[],
-                    }
-                ] as Question[],
+                questions: [],
             };
         },
 
@@ -111,6 +101,23 @@ export const useTestEditorStore = defineStore('testEditor', {
         /**
          * QUESTION CRUD OPERATIONS
          */
+
+        addNewQuestion(): void {
+
+            if (!this.test) {
+                throw new Error('No test loaded to add a question to');
+            }
+
+            this.test.questions?.push({
+                text: '',
+                // answer_options: [
+                //     {
+                //         text: '',
+                //         is_correct: false,
+                //     }
+                // ] as AnswerOption[],
+            } as Question);
+        },
 
         /**
          * Sets question text in frontend, here in the store.
@@ -159,6 +166,30 @@ export const useTestEditorStore = defineStore('testEditor', {
             } finally {
                 this.loading = false;
             }
+        },
+
+        /**
+         * ANSWER OPTION CRUD OPERATIONS
+         */
+
+        addNewAnswerOption(questionId: number): void {
+
+            const question = this.test?.questions?.find(
+                question => question.id === questionId
+            );
+
+            if (!question) {
+                throw new Error('Question not found');
+            }
+
+            if (!question.answer_options) {
+                throw new Error('Answer options array not found');
+            }
+
+            question.answer_options.push({
+                text: '',
+                is_correct: false,
+            } as AnswerOption);
         },
 
         setAnswerOptionTextInStore(questionId: number, answerOptionId: number, answerOptionText: string): void {
