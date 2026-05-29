@@ -27,9 +27,9 @@ class StoreTestRequest extends FormRequest
             'user_id' => ['required', 'exists:users,id'],
             'questions' => ['sometimes', 'array'],
             'questions.*.text' => ['required_with:questions', 'string'],
-            // 'questions.*.answer_options' => ['required_with:questions', 'array'],
-            // 'questions.*.answer_options.*.text' => ['required_with:questions.*.answer_options', 'string'],
-            // 'questions.*.answer_options.*.is_correct' => ['required_with:questions.*.answer_options', 'boolean'],
+            'questions.*.answer_options' => ['required_with:questions', 'array'],
+            'questions.*.answer_options.*.text' => ['required_with:questions.*.answer_options', 'string'],
+            'questions.*.answer_options.*.is_correct' => ['required_with:questions.*.answer_options', 'boolean'],
         ];
     }
 }

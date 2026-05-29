@@ -4,6 +4,7 @@
         <!-- ANSWER OPTION TEXT -->
         <el-input
             v-model="answerOptionText"
+            placeholder="Answer option text"
             @change="updateAnswerOptionText"
         />
 
@@ -49,6 +50,10 @@ const answerOptionText = computed({
 });
 
 const updateAnswerOptionText = async () => {
+    if (props.mode !== 'edit') {
+        return;
+    }
+
     try {
 
         await testEditorStore.updateAnswerOptionText(

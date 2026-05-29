@@ -4,7 +4,7 @@
     <div v-if="props.mode === 'take'">{{ props.answerOption.text }}</div>
 
     <!-- RENDER THIS FOR TEST CREATION/EDITING -->
-    <div v-if="props.mode === 'edit'">
+    <div v-if="props.mode === 'edit' || props.mode === 'create'">
         <AnswerOptionDetails
             :answerOption="props.answerOption"
             :questionId="props.questionId"

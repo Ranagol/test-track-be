@@ -88,6 +88,13 @@ const handleAnswerSelection = async (answerOptionId: number) => {
         );
         ElMessage.success('Correct answer option updated successfully.');
     }
+
+    if (props.mode === 'create') {
+        testEditorStore.setAnswerOptionIsCorrectInStore(
+            props.question.id,
+            answerOptionId
+        );
+    }
 };
 
 /**

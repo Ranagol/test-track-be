@@ -60,6 +60,19 @@ export interface Question {
     answer_options?: AnswerOption[];
 }
 
+/**
+ * This is used only during the create process, because at that time there is no id from the BE in
+ * th FE. So we temporarily create an id for the question and answer options, so that we can manage
+ * them in the store and in the components. This id is not sent to the BE, it's only used in the
+ * FE until the test is created and the real ids are received from the BE.
+ */
+export interface DraftQuestion {
+    id?: number;
+    test_id?: number;
+    text: string;
+    answer_options?: DraftAnswerOption[];
+}
+
 export interface AnswerOption {
     id: number;
     question_id: number;
@@ -68,6 +81,19 @@ export interface AnswerOption {
     answer_order?: number;
     created_at: string;
     updated_at: string;
+}
+
+/**
+ * This is used only during the create process, because at that time there is no id from the BE in
+ * th FE. So we temporarily create an id for the question and answer options, so that we can manage
+ * them in the store and in the components. This id is not sent to the BE, it's only used in the
+ * FE until the test is created and the real ids are received from the BE.
+ */
+export interface DraftAnswerOption {
+    id?: number;
+    question_id?: number;
+    text: string;
+    is_correct?: boolean;
 }
 
 export interface TestAttempt {

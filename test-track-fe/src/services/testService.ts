@@ -2,6 +2,19 @@ import appAxios from './axiosService'
 import type { Test, PaginatedResponse } from '@/types/types'
 import type { TestQueryParams } from '@/types/types'
 
+type CreateTestPayload = {
+    user_id: number;
+    title?: string;
+    description?: string;
+    questions?: Array<{
+        text: string;
+        answer_options?: Array<{
+            text: string;
+            is_correct?: boolean;
+        }>;
+    }>;
+}
+
 
 const testService = {
 
@@ -26,8 +39,7 @@ const testService = {
         return response.data.data
     },
 
-    // Partial<Test> means that all fields of Test are optional,
-    async create(data: Partial<Test>): Promise<Test> {
+    async create(data: CreateTestPayload): Promise<Test> {
         const response = await appAxios.post<{ data: Test }>('/api/tests', data)
         return response.data.data
     },

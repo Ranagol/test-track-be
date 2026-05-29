@@ -5,6 +5,21 @@ import questionService from '@/services/questionService';
 import answerOptionService from '@/services/answerOptionService';
 import { useAuthStore } from './useAuthStore';
 
+let nextTemporaryId = -1;
+
+type CreateTestPayload = {
+    user_id: number;
+    title?: string;
+    description?: string;
+    questions?: Array<{
+        text: string;
+        answer_options?: Array<{
+            text: string;
+            is_correct?: boolean;
+        }>;
+    }>;
+};
+
 export const useTestEditorStore = defineStore('testEditor', {
 
     state: () => ({
@@ -71,11 +86,34 @@ export const useTestEditorStore = defineStore('testEditor', {
                 throw new Error('User not authenticated');
             }
 
+            // Reset the temporary id counter.
+            nextTemporaryId = -1;
+
             this.test = {
                 user_id: authStore.userId,
                 title: '',
                 description: '',
                 questions: [],
+            };
+        },
+
+        buildCreatePayload(): CreateTestPayload {
+
+            if (!this.test) {
+                throw new Error('No test data to create');
+            }
+
+            return {
+                user_id: this.test.user_id,
+                title: this.test.title,
+                description: this.test.description,
+                questions: this.test.questions?.map((question) => ({
+                    text: question.text,
+                    answer_options: question.answer_options?.map((answerOption) => ({
+                        text: answerOption.text,
+                        is_correct: answerOption.is_correct,
+                    })),
+                })),
             };
         },
 
@@ -88,7 +126,8 @@ export const useTestEditorStore = defineStore('testEditor', {
             this.loading = true;
 
             try {
-                const createdTest = await testService.create(this.test);
+                const payload = this.buildCreatePayload();
+                const createdTest = await testService.create(payload);
                 this.test = createdTest;
                 return createdTest;
             } catch (error) {
@@ -109,13 +148,21 @@ export const useTestEditorStore = defineStore('testEditor', {
             }
 
             this.test.questions?.push({
+
+                /**
+                 * This is a temporary FE id, will be replaced by real BE id.
+                 * We must have this temporary id during the create process to connect questions,
+                 * answer options and tests.
+                 */
+                id: this.createTemporaryId(),
                 text: '',
-                // answer_options: [
-                //     {
-                //         text: '',
-                //         is_correct: false,
-                //     }
-                // ] as AnswerOption[],
+                answer_options: [
+                    {
+                        id: this.createTemporaryId(), // Temporary ID, will be replaced by real ID from backend
+                        text: '',
+                        is_correct: false,
+                    }
+                ] as AnswerOption[],
             } as Question);
         },
 
@@ -141,6 +188,10 @@ export const useTestEditorStore = defineStore('testEditor', {
          * Update the question text in the backend,
          */
         async updateQuestionInBackend(questionId: number): Promise<void> {
+            if (!this.isPersistedId(questionId)) {
+                return;
+            }
+
             this.loading = true;
 
             try {
@@ -187,9 +238,27 @@ export const useTestEditorStore = defineStore('testEditor', {
             }
 
             question.answer_options.push({
+                id: this.createTemporaryId(), // Temporary ID, will be replaced by real ID from backend
                 text: '',
                 is_correct: false,
             } as AnswerOption);
+        },
+
+        setAnswerOptionIsCorrectInStore(questionId: number, answerOptionId: number): void {
+
+            const question = this.test?.questions?.find(q => q.id === questionId);
+
+            if (!question) {
+                throw new Error('Question not found');
+            }
+
+            if (!question.answer_options) {
+                throw new Error('Answer options array not found');
+            }
+
+            question.answer_options.forEach(answerOption => {
+                answerOption.is_correct = answerOption.id === answerOptionId;
+            });
         },
 
         setAnswerOptionTextInStore(questionId: number, answerOptionId: number, answerOptionText: string): void {
@@ -224,6 +293,10 @@ export const useTestEditorStore = defineStore('testEditor', {
                 answerOptionId: number,
                 answerOptionText: string,
         ): Promise<void> {
+            if (!this.isPersistedId(questionId) || !this.isPersistedId(answerOptionId)) {
+                return;
+            }
+
             this.loading = true;
 
             try {
@@ -264,25 +337,15 @@ export const useTestEditorStore = defineStore('testEditor', {
         },
 
         async updateAnswerOptionIsCorrect(questionId: number, answerOptionId: number): Promise<void> {
+            if (!this.isPersistedId(questionId) || !this.isPersistedId(answerOptionId)) {
+                this.setAnswerOptionIsCorrectInStore(questionId, answerOptionId);
+                return;
+            }
+
             //TODO ANDOR Do I need loading here at all?  .This question goes for all actions here.
             this.loading = true;
             try {
-
-                // Find the question in the current test
-                const question = this.test?.questions?.find(q => q.id === questionId);
-
-                if (!question) {
-                    throw new Error('Question not found');
-                }
-
-                if (!question.answer_options) {
-                    throw new Error('Answer options array not found');
-                }
-
-                // Update the is_correct property of the answer options in the store, so the UI is updated immediately
-                question.answer_options.forEach(ao => {
-                    ao.is_correct = ao.id === answerOptionId;
-                });
+                this.setAnswerOptionIsCorrectInStore(questionId, answerOptionId);
 
                 // Send update to backend
                 await answerOptionService.updateIsCorrect(questionId, answerOptionId);
@@ -292,6 +355,20 @@ export const useTestEditorStore = defineStore('testEditor', {
             } finally {
                 this.loading = false;
             }
+        },
+
+        /**
+         * This will create a unique id number, that we can use as temporary ids for questions and
+         * answer options here on the FE, during the create process (when these objects still do not
+         * have real ids, received at the BE.) All temporary ids will be negative numbers,
+         * all real ids from BE will be positive numbers.
+         */
+        createTemporaryId(): number {
+            return nextTemporaryId--;
+        },
+
+        isPersistedId(id: number): boolean {
+            return id > 0;
         }
     }
 });

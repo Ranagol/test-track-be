@@ -105,23 +105,23 @@ class TestController extends Controller
     private function createQuestions(array $questionsData, Test $test): void
     {
         foreach ($questionsData as $questionData) {
-            /* $question = */ $test->questions()->create([
+            $question = $test->questions()->create([
                 'text' => $questionData['text'],
             ]);
 
-            // $this->createAnswerOptions($question, $questionData['answer_options']);
+            $this->createAnswerOptions($question, $questionData['answer_options']);
         }
     }
 
-    // private function createAnswerOptions(Question $question, array $answerOptionsData): void
-    // {
-    //     foreach ($answerOptionsData as $optionData) {
-    //         $question->answerOptions()->create([
-    //             'text' => $optionData['text'],
-    //             'is_correct' => $optionData['is_correct'],
-    //         ]);
-    //     }
-    // }
+    private function createAnswerOptions(Question $question, array $answerOptionsData): void
+    {
+        foreach ($answerOptionsData as $optionData) {
+            $question->answerOptions()->create([
+                'text' => $optionData['text'],
+                'is_correct' => $optionData['is_correct'],
+            ]);
+        }
+    }
 
     /**
      * Display the specified resource.
