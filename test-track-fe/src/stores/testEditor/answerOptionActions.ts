@@ -6,7 +6,10 @@ import { requireQuestion, requireAnswerOption, createFrontendId } from './helper
 
 export const answerOptionActions = {
 
-    addNewAnswerOption(this: TestEditorState, questionId: number): void {
+    /**
+     * In 'create' mode, adds new answer option to the question in the store.
+     */
+    addNewAnswerOption(this: TestEditorState, questionId: string): void {
         const question = requireQuestion(this.test?.questions, questionId);
 
         if (!question.answer_options) {
@@ -14,12 +17,16 @@ export const answerOptionActions = {
         }
 
         question.answer_options.push({
-            frontendId: createFrontendId(),
+            id: createFrontendId(),
             text: '',
             is_correct: false,
         } as AnswerOption);
     },
 
+    /**
+     * In 'create' and 'edit' mode, sets the is_correct of the answer option to true, and all else
+     * answer options to the same question as false.
+     */
     setAnswerOptionIsCorrectInStore(this: TestEditorState, questionId: number, answerOptionId: number): void {
         const question = requireQuestion(this.test?.questions, questionId);
 
@@ -28,14 +35,21 @@ export const answerOptionActions = {
         }
 
         question.answer_options.forEach(answerOption => {
+
+            /**
+             * Loops through all answer options of the question. Previously the tester selected
+             * one answer option as correct. This answer option will be set to is_correct = true.
+             * All other answer options of the question will be set to is_correct = false.
+             */
             answerOption.is_correct = answerOption.id === answerOptionId;
         });
     },
 
+
     setAnswerOptionTextInStore(
         this: TestEditorState,
-        questionId: number,
-        answerOptionId: number,
+        questionId: number | string,
+        answerOptionId: number | string,
         answerOptionText: string,
     ): void {
         const question = requireQuestion(this.test?.questions, questionId);
@@ -49,6 +63,9 @@ export const answerOptionActions = {
         answerOption.text = answerOptionText;
     },
 
+    /**
+     * For 'edit' mode only. Sends a request to the backend to update the answer option text.
+     */
     async updateAnswerOptionText(
         this: TestEditorState,
         questionId: number,
@@ -78,6 +95,11 @@ export const answerOptionActions = {
         }
     },
 
+    /**
+     * For 'edit' mode only. Sends a request to the backend to update the is_correct of the answer
+     * option. We only send the correct answer option id to the backend, and the backend will set
+     * all the other answer options of the question to is_correct = false.
+     */
     async updateAnswerOptionIsCorrect(
         this: TestEditorState,
         questionId: number,

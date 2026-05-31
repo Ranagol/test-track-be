@@ -23,7 +23,7 @@ import AnswerOptionDetails from '@/views/answerOptions/AnswerOptionDetails.vue';
 
 const props = defineProps<{
     answerOption: AnswerOption;
-    questionId: number;
+    questionId: number | string;
     mode: 'create' | 'edit' | 'take';
 }>();
 </script>

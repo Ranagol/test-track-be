@@ -14,7 +14,7 @@ export function createFrontendId(): string {
  */
 export function requireQuestion(
     questions: Question[] | undefined,
-    questionId: number,
+    questionId: number | string,
 ): Question {
 
     const question = questions?.find(q => q.id === questionId);
@@ -31,7 +31,7 @@ export function requireQuestion(
  */
 export function requireAnswerOption(
     answerOptions: AnswerOption[] | undefined,
-    answerOptionId: number,
+    answerOptionId: number | string,
 ): AnswerOption {
 
     const answerOption = answerOptions?.find(ao => ao.id === answerOptionId);

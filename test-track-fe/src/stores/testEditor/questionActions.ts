@@ -12,15 +12,9 @@ export const questionActions = {
         }
 
         this.test.questions?.push({
-            frontendId: createFrontendId(),
+            id: createFrontendId(),
             text: '',
-            answer_options: [
-                {
-                    frontendId: createFrontendId(),
-                    text: '',
-                    is_correct: false,
-                },
-            ] as AnswerOption[],
+            answer_options: [] as AnswerOption[],
         } as Question);
     },
 

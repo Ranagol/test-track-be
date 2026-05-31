@@ -16,7 +16,7 @@ import { useTestEditorStore } from '@/stores/useTestEditorStore';
 const testEditorStore = useTestEditorStore();
 
 const props = defineProps<{
-    questionId: number;
+    questionId: string;
 }>();
 
 const addNewAnswerOption = () => {

@@ -35,7 +35,6 @@ export type BackendError = {
  * For every model, the optional relationships are listed after the updated_at.
  */
 export interface Test {
-    frontendId?: string;
     id?: number;
     user_id: number;
     title?: string;
@@ -49,8 +48,7 @@ export interface Test {
 }
 
 export interface Question {
-    frontendId?: string;
-    id: number;
+    id: number | string; // string for FE-only questions, that do not have an id from the backend yet
     test_id: number;
     text: string;
     image_path?: string;
@@ -63,9 +61,8 @@ export interface Question {
 }
 
 export interface AnswerOption {
-    frontendId?: string;
-    id: number;
-    question_id: number;
+    id: number | string; // string for FE-only answer options, that do not have an id from the backend yet
+    question_id: number | string; // string for FE-only answer options, that do not have an id from the backend yet
     text: string;
     is_correct?: boolean;
     answer_order?: number;
