@@ -13,6 +13,7 @@
             :mode="props.mode"
             :index="props.index"
             @change="updateQuestion"
+            @delete="deleteQuestion"
         />
 
         <DisplayBackendError
@@ -58,21 +59,27 @@ const props = defineProps<{
     index: number;
 }>();
 
+
 const updateQuestion = async () => {
-    if (props.mode === 'edit') {
+    if (props.mode === 'edit' && typeof props.question.id === 'number') {
         try {
+
             await testEditorStore.updateQuestionInBackend(props.question.id);
-            ElMessage({
-                message: 'Question updated successfully.',
-                type: 'success',
-            })
+
+            ElMessage.success({message: 'Question updated.',})
+
         } catch (error) {
             handleBackendErrors(error);
         }
     }
 };
 
+const deleteQuestion = async (questionId: string) => {
 
+    testEditorStore.deleteQuestion(questionId);
+
+    ElMessage.success({message: 'Question deleted.',})
+};
 
 </script>
 

@@ -7,12 +7,23 @@
         <el-form-item
             :label="`${index + 1}.`"
         >
-            <!-- QUESTION TEXT INPUT & DISPLAY -->
-            <el-input
-                v-model="questionText"
-                placeholder="Enter question text"
-                @change="handleChange"
-            />
+            <div class="question-row">
+
+                <!-- QUESTION TEXT INPUT & DISPLAY -->
+                <el-input
+                    v-model="questionText"
+                    placeholder="Enter question text"
+                    @change="handleChange"
+                />
+
+                <!-- DELETE BUTTON -->
+                <el-button
+                    v-if="props.mode === 'create'"
+                    :icon="Delete"
+                    text
+                    @click="deleteQuestion"
+                />
+            </div>
 
         </el-form-item>
     </el-form>
@@ -26,10 +37,14 @@
 import type { Question } from '@/types/types';
 import { computed } from 'vue';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
+import { Delete } from '@element-plus/icons-vue'
 
 const testEditorStore = useTestEditorStore();
 
 const props = defineProps<{
+
+    mode: 'create' | 'edit';
+
     question: Question;
 
     //index is used to number the questions displayed to the test taker.
@@ -44,15 +59,23 @@ const questionText = computed({
     // Set the new question text in the store
     set: (newValue) => {
 
-        // Immediatelly update letter by letter the question text in the store
+        // Immediatelly update letter by letter the question text in the store. Edit and create mode.
         testEditorStore.setQuestionTextInStore(props.question.id, newValue)
     }
 })
 
-const emit = defineEmits(['change']);
+const emit = defineEmits(['change', 'delete']);
 
 const handleChange = () => {
-    emit('change');
+    if (props.mode === 'edit') {
+        emit('change');
+    }
+}
+
+const deleteQuestion = () => {
+    if (props.mode === 'create') {
+        emit('delete', props.question.id);
+    }
 }
 
 
@@ -61,5 +84,15 @@ const handleChange = () => {
 </script>
 
 <style scoped>
+.question-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.question-row :deep(.el-input) {
+    flex: 1;
+}
 
 </style>

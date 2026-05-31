@@ -25,7 +25,11 @@ export const questionActions = {
      * So, this action does not work with BE, works with FE. Hence, we do not have here
      * async/await, try/catch, loading, etc.
      */
-    setQuestionTextInStore(this: TestEditorState, questionId: number, text: string): void {
+    setQuestionTextInStore(
+        this: TestEditorState,
+        questionId: number | string,
+        text: string
+    ): void {
         const question = requireQuestion(this.test?.questions, questionId);
 
         question.text = text;
@@ -51,4 +55,19 @@ export const questionActions = {
             this.loading = false;
         }
     },
+
+    /**
+     * Used only in 'create' mode, works only on FE. That is the only place, when question can be deleted, because
+     * later the test items must not change, to keep the integrity of the test for longitudinal testing.
+     * And in 'create' mode, we use FE-only ids, that are strings.
+     */
+    deleteQuestion(this: TestEditorState, questionId: string): void {
+        if (!this.test) {
+            throw new Error('No test loaded to delete a question from');
+        }
+
+        this.test.questions = this.test.questions?.filter(q => q.id !== questionId);
+    },
+
+
 };
