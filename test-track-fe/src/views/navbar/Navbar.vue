@@ -6,7 +6,7 @@
         router
     >
         <el-menu-item index="/">Home</el-menu-item>
-        <el-menu-item index="/tests">My created tests</el-menu-item>
+        <el-menu-item index="/tests">My tests</el-menu-item>
         <el-menu-item index="/analytics">Analytics</el-menu-item>
 
         <!-- LOGIN -->

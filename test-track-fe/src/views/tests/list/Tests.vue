@@ -159,6 +159,7 @@ import type { TableSortData } from '@/types/types';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import Heading1 from '@/resusableComponents/Heading1.vue';
 import { ElMessage } from 'element-plus';
+import { ElMessageBox } from 'element-plus';
 
 
 const testsStore = useTestsStore();
@@ -201,12 +202,31 @@ async function fetchTests() {
 }
 
 async function deleteTest(id: number) {
+
+    // Warning before delete
+    try {
+        await ElMessageBox.confirm(
+            `Test with id ${id} will be permanently deleted. Continue?`,
+            'Warning',
+            {
+                confirmButtonText: 'Delete',
+                cancelButtonText: 'Cancel',
+                type: 'warning',
+            }
+        );
+    } catch {
+        return; // user cancelled
+    }
+
+    // The actual delete logic, after the user confirms the deletion
     try {
         await testsStore.delete(id);
+
         ElMessage({
             message: `Test with id ${id} was deleted successfully`,
             type: 'success',
         });
+
     } catch (error) {
         handleBackendErrors(error);
     }
