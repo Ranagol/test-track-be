@@ -44,8 +44,8 @@ const testService = {
         return response.data.data
     },
 
-    async update(id: number, data: Partial<Test>): Promise<Test> {
-        const response = await appAxios.patch<{ data: Test }>(`/api/tests/${id}`, data)
+    async update(test: Partial<Test>): Promise<Test> {
+        const response = await appAxios.put<{ data: Test }>(`/api/tests/${test.id}`, test)
         return response.data.data
     },
 

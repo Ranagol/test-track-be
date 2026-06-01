@@ -6,15 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTestRequest;
 use App\Http\Requests\UpdateTestRequest;
 use App\Http\Resources\TestResource;
-use App\Models\Question;
+use App\Interfaces\TestControllerServiceInterface;
 use App\Models\Test;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
 
+// TODO ANDOR create a service for this controller, and move all fatty not controller logic there.
 class TestController extends Controller
 {
+    private TestControllerServiceInterface $testControllerService;
+
+    public function __construct(TestControllerServiceInterface $testControllerService)
+    {
+        $this->testControllerService = $testControllerService;
+    }
+
     /**
      * Display all belonging test on the /tests page.
      *
@@ -83,44 +91,30 @@ class TestController extends Controller
         $validatedData = $request->validated();
 
         // Create the test
-        $test = $this->createTest($validatedData);
+        $test = $this->testControllerService->createTest($validatedData);
 
         // Create questions (and their answer options) for the test
-        $this->createQuestions($validatedData['questions'], $test);
+        $this->testControllerService->createQuestions($validatedData['questions'], $test);
 
         return new TestResource($test);
     }
 
-    private function createTest(array $validatedData): Test
+    /**
+     * Update the specified resource in storage. We receive here a test2, together with its
+     * questions and answer options. We have to loop through all this and handle.
+     */
+    public function update(UpdateTestRequest $request, Test $test): TestResource
     {
-        // Create unique test code
-        $testCode = $this->generateUniqueTestCode();
+        // Validate the request data
+        $validatedData = $request->validated();
 
-        // Add the generated test code to the validated data
-        $validatedData['test_code'] = $testCode;
+        // Update the test
+        $this->testControllerService->updateTest($validatedData, $test);
 
-        return Test::create($validatedData);
-    }
+        // Rehydrate the test model, with its questions and answer options to reflect the updated data
+        $test->refresh()->load('questions.answerOptions');
 
-    private function createQuestions(array $questionsData, Test $test): void
-    {
-        foreach ($questionsData as $questionData) {
-            $question = $test->questions()->create([
-                'text' => $questionData['text'],
-            ]);
-
-            $this->createAnswerOptions($question, $questionData['answer_options']);
-        }
-    }
-
-    private function createAnswerOptions(Question $question, array $answerOptionsData): void
-    {
-        foreach ($answerOptionsData as $optionData) {
-            $question->answerOptions()->create([
-                'text' => $optionData['text'],
-                'is_correct' => $optionData['is_correct'],
-            ]);
-        }
+        return new TestResource($test);
     }
 
     /**
@@ -145,16 +139,6 @@ class TestController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTestRequest $request, Test $test): TestResource
-    {
-        $test->update($request->validated());
-
-        return new TestResource($test);
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Test $test): JsonResponse
@@ -162,23 +146,5 @@ class TestController extends Controller
         $test->delete();
 
         return response()->json(['message' => 'Delete successful'], 200);
-    }
-
-    private function generateUniqueTestCode(): string
-    {
-        // Get all existing test codes
-        $existingCodes = Test::pluck('test_code');
-
-        // This is the new test code
-        $code = 'TEST-' . strtoupper(bin2hex(random_bytes(2))) . '-' . strtoupper(bin2hex(random_bytes(1)));
-
-        // Check if the new test code accidentally already exists, untill we have a unique one
-        while ($existingCodes->contains($code)) {
-
-            // If the new code already exists, generate a new new one
-            $code = 'TEST-' . strtoupper(bin2hex(random_bytes(2))) . '-' . strtoupper(bin2hex(random_bytes(1)));
-        }
-
-        return $code;
     }
 }

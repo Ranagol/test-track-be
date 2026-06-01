@@ -49,7 +49,7 @@ const testEditorStore = useTestEditorStore();
 
 const updateTest = async () => {
     try {
-        const updated = await testEditorStore.update();
+        await testEditorStore.update();
         ElMessage.success('Test updated');
     } catch (e) {
         handleBackendErrors(e);

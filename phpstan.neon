@@ -48,6 +48,14 @@ parameters:
         - identifier: useless.use
           message: '/^Imported class.*ValidationRule.*is not used/'
           path: app/Http/Requests/
+        # Array type hints without value types in TestControllerServiceInterface
+        - identifier: missingType.iterableValue
+          path: app/Interfaces/TestControllerServiceInterface.php
+          message: '/has parameter .* with no value type specified in iterable type array/'
+        # Array type hints without value types in TestControllerService
+        - identifier: missingType.iterableValue
+          path: app/Services/TestControllerService.php
+          message: '/has parameter .* with no value type specified in iterable type array/'
         # FormRequest rules() method array return type
         - identifier: missingType.iterableValue
           message: '/return type has no value type specified in iterable type array/'

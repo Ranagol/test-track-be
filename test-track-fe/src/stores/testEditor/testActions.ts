@@ -45,7 +45,11 @@ export const testActions = {
         }
     },
 
-    async update(this: TestEditorState, id: number): Promise<Test> {
+    /**
+     * Sends a test update request from FE to BE. Only in 'edit' mode.
+     * Here we send the whole test object, with all the test data, questions and answer options.
+     */
+    async update(this: TestEditorState ): Promise<Test> {
         this.loading = true;
 
         try {
@@ -53,14 +57,10 @@ export const testActions = {
                 throw new Error('No test loaded to update');
             }
 
-            const updateData = {
-                title: this.test.title,
-                description: this.test.description,
-            };
-
-            const testFromBackend = await testService.update(id, updateData);
-
+            const testFromBackend = await testService.update(this.test);
+            this.test = testFromBackend;
             return testFromBackend;
+
         } catch (error) {
             throw error;
         } finally {
@@ -68,6 +68,9 @@ export const testActions = {
         }
     },
 
+    /**
+     * Create a new dummy test in the store, with empty title, description. In 'create' mode, in FE only.
+     */
     initializeNewTest(this: TestEditorState): void {
         const authStore = useAuthStore();
 
@@ -83,6 +86,10 @@ export const testActions = {
         };
     },
 
+    /**
+     * Sends a create request from FE to BE. Only in 'create' mode.
+     * We send one big request, with all the test data, questions and answer options.
+     */
     async create(this: TestEditorState): Promise<Test> {
         if (!this.test) {
             throw new Error('No test data to create');

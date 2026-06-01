@@ -9,7 +9,6 @@
                         id="answer-option-text-input"
                         v-model="answerOptionText"
                         placeholder="Answer option text"
-                        @change="updateAnswerOptionText"
                     />
 
                     <!-- DELETE BUTTON -->
@@ -22,13 +21,6 @@
                 </div>
             </el-form-item>
         </el-form>
-
-
-
-        <DisplayBackendError
-            :generalError="generalError"
-        />
-
     </div>
 </template>
 
@@ -38,20 +30,18 @@ import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import type { AnswerOption } from '@/types/types';
 import { computed } from 'vue';
 import { ElMessage } from 'element-plus';
-import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
-import { useApiErrors } from '@/composables/useApiErrors';
 import { Delete } from '@element-plus/icons-vue'
 
 const testEditorStore = useTestEditorStore();
-const {
-    generalError,
-    handleBackendErrors
-} = useApiErrors();
 
 const props = defineProps<{
+
     answerOption: AnswerOption;
+
     questionId: number | string;
+
     mode: 'create' | 'edit' | 'take';
+
 }>();
 
 /**
@@ -73,42 +63,6 @@ const answerOptionText = computed({
         );
     }
 });
-
-/**
- * Used for 'edit' mode only. With this, we actually send a request to the backend to update the
- * answer option text.
- */
-const updateAnswerOptionText = async () => {
-    if (props.mode !== 'edit') {
-        return;
-    }
-
-    try {
-
-        // Only for edit mode
-        if (props.mode !== 'edit') {
-            return;
-        }
-
-        // In edit mode question and answer option ids are always numbers.
-        if (typeof props.questionId !== 'number' || typeof props.answerOption.id !== 'number') {
-            return;
-        }
-
-        await testEditorStore.updateAnswerOptionText(
-            props.questionId,
-            props.answerOption.id,
-            answerOptionText.value
-        );
-
-        ElMessage({
-            message: 'Answer option updated successfully.',
-            type: 'success',
-        })
-    } catch (error) {
-        handleBackendErrors(error);
-    }
-};
 
 const deleteAnswerOption = async () => {
     if (props.mode !== 'create') {

@@ -7,7 +7,6 @@
         style="display: flex; flex-direction: column; align-items: flex-start;"
         @change="handleAnswerSelection"
     >
-
         <!-- RADIO BUTTON -->
         <el-radio
             v-for="answerOption in (question.answer_options || [])"
@@ -37,7 +36,7 @@
 
 import type { Question } from '@/types/types';
 import AnswerOption from '@/views/answerOptions/AnswerOption.vue';
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import AddNewAnswerOption from '@/views/answerOptions/AddNewAnswerOption.vue';

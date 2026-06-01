@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Interfaces\TestAttemptEvaluatorInterface;
+use App\Interfaces\TestControllerServiceInterface;
 use App\Services\TestAttemptEvaluator;
+use App\Services\TestControllerService;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\ServiceProvider;
 
@@ -17,6 +19,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             TestAttemptEvaluatorInterface::class,
             TestAttemptEvaluator::class
+        );
+
+        $this->app->bind(
+            TestControllerServiceInterface::class,
+            TestControllerService::class
         );
     }
 

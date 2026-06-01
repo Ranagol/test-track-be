@@ -20,16 +20,16 @@
 
             <el-input
                 v-model="testEditorStore.test.title"
-                @change="onFieldChange"
                 placeholder="Enter test title"
+                class="mb-4"
             />
 
             <el-input
                 v-model="testEditorStore.test.description"
                 :rows="4"
-                @change="onFieldChange"
                 placeholder="Enter test description"
                 type="textarea"
+                class="mb-4"
             />
         </div>
     </div>
@@ -41,43 +41,12 @@
     lang="ts"
 >
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
-import { ElMessage } from 'element-plus';
-import { useApiErrors } from '@/composables/useApiErrors';
 
 const props = defineProps<{
     mode: 'create' | 'edit' | 'take';
 }>();
 
 const testEditorStore = useTestEditorStore();
-const { handleBackendErrors } = useApiErrors();
 
-/**
- * 'create' - the new test and description is sent to store directly with v-model. When the user
- * clicks on the 'Create test' button, then a request is sent to the backend. Create sends one
- * big object request once, to the backend.
- *
- * 'edit' - the updated test and description is sent to the store directly with v-model. On every
- * @change event of the input fields, a request is sent to the backend to update the test. Update
- * sends separatelly for every input a backend request.
- */
-const onFieldChange = () => {
-    if (props.mode === 'edit') {
-        save();
-    }
-};
 
-// TODO ANDOR these function must be moved to the parent component
-const save = async () => {
-    try {
-        const test = testEditorStore.test;
-        if (!test) return;
-
-        // EDIT
-        await testEditorStore.update(test.id!);
-        ElMessage.success('Test updated');
-
-    } catch (e) {
-        handleBackendErrors(e);
-    }
-};
 </script>

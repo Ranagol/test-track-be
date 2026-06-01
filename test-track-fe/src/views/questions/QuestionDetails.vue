@@ -14,7 +14,6 @@
                     id="question-text-input"
                     v-model="questionText"
                     placeholder="Enter question text"
-                    @change="handleChange"
                 />
 
                 <!-- DELETE BUTTON -->
@@ -65,22 +64,13 @@ const questionText = computed({
     }
 })
 
-const emit = defineEmits(['change', 'delete']);
-
-const handleChange = () => {
-    if (props.mode === 'edit') {
-        emit('change');
-    }
-}
+const emit = defineEmits(['delete']);
 
 const deleteQuestion = () => {
     if (props.mode === 'create') {
         emit('delete', props.question.id);
     }
 }
-
-
-
 
 </script>
 

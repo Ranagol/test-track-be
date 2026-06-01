@@ -5,11 +5,13 @@
 
     <!-- RENDER THIS FOR TEST CREATION/EDITING -->
     <div v-if="props.mode === 'edit' || props.mode === 'create'">
+
         <AnswerOptionDetails
             :answerOption="props.answerOption"
             :questionId="props.questionId"
             :mode="props.mode"
         />
+
     </div>
 </template>
 
@@ -22,8 +24,11 @@ import type { AnswerOption } from '@/types/types';
 import AnswerOptionDetails from '@/views/answerOptions/AnswerOptionDetails.vue';
 
 const props = defineProps<{
+
     answerOption: AnswerOption;
+
     questionId: number | string;
+
     mode: 'create' | 'edit' | 'take';
 }>();
 </script>
