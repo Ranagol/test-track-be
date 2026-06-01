@@ -94,6 +94,7 @@ const deleteQuestion = () => {
 
 .question-row :deep(.el-input) {
     flex: 1;
+    min-width: 0;
 }
 
 </style>
