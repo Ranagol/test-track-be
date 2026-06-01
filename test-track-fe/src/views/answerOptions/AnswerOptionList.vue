@@ -90,11 +90,6 @@ const handleAnswerSelection = (answerOptionId: number | string) => {
 }
 
 .answer-radio {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    /* key fix: optical vertical correction */
-    transform: translateY(2px);
+    cursor: pointer;
 }
 </style>

@@ -1,35 +1,25 @@
 <template>
-    <div>
-        <el-form>
-            <el-form-item>
-                <div class="question-row">
-
-                    <!-- ANSWER OPTION TEXT -->
-                    <el-input
-                        id="answer-option-text-input"
-                        v-model="answerOptionText"
-                        placeholder="Answer option text"
-                        @change="updateAnswerOptionText"
-                    />
-
-                    <!-- DELETE BUTTON -->
-                    <el-button
-                        v-if="props.mode === 'create'"
-                        :icon="Delete"
-                        text
-                        @click="deleteAnswerOption"
-                    />
-                </div>
-            </el-form-item>
-        </el-form>
-
-
-
-        <DisplayBackendError
-            :generalError="generalError"
+    <div class="question-row">
+        <!-- ANSWER OPTION TEXT -->
+        <el-input
+            id="answer-option-text-input"
+            v-model="answerOptionText"
+            placeholder="Answer option text"
+            @change="updateAnswerOptionText"
         />
 
+        <!-- DELETE BUTTON -->
+        <el-button
+            v-if="props.mode === 'create'"
+            :icon="Delete"
+            text
+            @click="deleteAnswerOption"
+        />
     </div>
+
+    <DisplayBackendError
+        :generalError="generalError"
+    />
 </template>
 
 <script setup lang="ts">
