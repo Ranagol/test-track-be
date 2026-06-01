@@ -3,7 +3,7 @@
         class="flex justify-center mt-2 mb-2"
     >
         <div
-            class="border border-gray-300 rounded w-1/2 p-6"
+            class="border border-gray-300 rounded w-3/4 p-6"
         >
             <slot></slot>
         </div>
