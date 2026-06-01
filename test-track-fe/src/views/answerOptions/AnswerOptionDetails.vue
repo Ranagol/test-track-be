@@ -1,12 +1,29 @@
 <template>
     <div>
+        <el-form>
+            <el-form-item>
+                <div class="question-row">
 
-        <!-- ANSWER OPTION TEXT -->
-        <el-input
-            v-model="answerOptionText"
-            placeholder="Answer option text"
-            @change="updateAnswerOptionText"
-        />
+                    <!-- ANSWER OPTION TEXT -->
+                    <el-input
+                        id="answer-option-text-input"
+                        v-model="answerOptionText"
+                        placeholder="Answer option text"
+                        @change="updateAnswerOptionText"
+                    />
+
+                    <!-- DELETE BUTTON -->
+                    <el-button
+                        v-if="props.mode === 'create'"
+                        :icon="Delete"
+                        text
+                        @click="deleteAnswerOption"
+                    />
+                </div>
+            </el-form-item>
+        </el-form>
+
+
 
         <DisplayBackendError
             :generalError="generalError"
@@ -23,6 +40,7 @@ import { computed } from 'vue';
 import { ElMessage } from 'element-plus';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import { useApiErrors } from '@/composables/useApiErrors';
+import { Delete } from '@element-plus/icons-vue'
 
 const testEditorStore = useTestEditorStore();
 const {
@@ -92,9 +110,37 @@ const updateAnswerOptionText = async () => {
     }
 };
 
+const deleteAnswerOption = async () => {
+    if (props.mode !== 'create') {
+        return;
+    }
+
+    // In create mode question and answer option ids are always strings.
+    if (typeof props.questionId !== 'string' || typeof props.answerOption.id !== 'string') {
+        return;
+    }
+
+    testEditorStore.deleteAnswerOption(
+        props.questionId,
+        props.answerOption.id
+    );
+
+    ElMessage.success({ message: 'Answer option deleted.' })
+};
+
 
 </script>
 
 <style scoped>
+.question-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.question-row :deep(.el-input) {
+    flex: 1;
+}
 
 </style>

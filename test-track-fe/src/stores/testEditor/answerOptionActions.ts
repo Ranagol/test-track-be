@@ -98,4 +98,23 @@ export const answerOptionActions = {
             this.loading = false;
         }
     },
+
+    /**
+     * Only in 'create' mode, and only on FE.
+     */
+    deleteAnswerOption(
+        this: TestEditorState,
+        questionId: string,
+        answerOptionId: string
+    ): void {
+        const question = requireQuestion(this.test?.questions, questionId);
+
+        if (!question.answer_options) {
+            throw new Error('Answer options array not found');
+        }
+
+        question.answer_options = question.answer_options.filter(ao => ao.id !== answerOptionId);
+
+    },
+
 };

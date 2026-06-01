@@ -15,15 +15,12 @@
             :value="answerOption.id"
             :label="answerOption.id"
         >
-            <span>
-
-                <!-- ANSWER OPTION -->
-                <AnswerOption
-                    :answerOption="answerOption"
-                    :mode="props.mode"
-                    :questionId="props.question.id"
-                />
-            </span>
+            <!-- ANSWER OPTION -->
+            <AnswerOption
+                :answerOption="answerOption"
+                :mode="props.mode"
+                :questionId="props.question.id"
+            />
 
         </el-radio>
     </el-radio-group>

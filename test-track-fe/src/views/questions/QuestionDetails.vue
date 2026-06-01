@@ -11,6 +11,7 @@
 
                 <!-- QUESTION TEXT INPUT & DISPLAY -->
                 <el-input
+                    id="question-text-input"
                     v-model="questionText"
                     placeholder="Enter question text"
                     @change="handleChange"
