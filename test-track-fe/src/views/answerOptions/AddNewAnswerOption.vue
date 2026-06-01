@@ -4,7 +4,7 @@
         <el-button
             type="success"
             @click="addNewAnswerOption"
-            size="large"
+            size="small"
         >Add new answer option</el-button>
 
     </div>

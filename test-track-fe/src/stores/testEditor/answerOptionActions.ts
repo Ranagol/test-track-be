@@ -24,10 +24,14 @@ export const answerOptionActions = {
     },
 
     /**
-     * In 'create' and 'edit' mode, sets the is_correct of the answer option to true, and all else
+     * In 'create' mode, sets the is_correct of the answer option to true, and all else
      * answer options to the same question as false.
      */
-    setAnswerOptionIsCorrectInStore(this: TestEditorState, questionId: number, answerOptionId: number): void {
+    setAnswerOptionIsCorrectInStore(
+        this: TestEditorState,
+        questionId: number | string,
+        answerOptionId: number | string
+    ): void {
         const question = requireQuestion(this.test?.questions, questionId);
 
         if (!question.answer_options) {
@@ -88,29 +92,6 @@ export const answerOptionActions = {
             await answerOptionService.updateText(answerOptionId, {
                 text: answerOption.text,
             });
-        } catch (error) {
-            throw error;
-        } finally {
-            this.loading = false;
-        }
-    },
-
-    /**
-     * For 'edit' mode only. Sends a request to the backend to update the is_correct of the answer
-     * option. We only send the correct answer option id to the backend, and the backend will set
-     * all the other answer options of the question to is_correct = false.
-     */
-    async updateAnswerOptionIsCorrect(
-        this: TestEditorState,
-        questionId: number,
-        answerOptionId: number,
-    ): Promise<void> {
-        this.loading = true;
-
-        try {
-            this.setAnswerOptionIsCorrectInStore(questionId, answerOptionId);
-
-            await answerOptionService.updateIsCorrect(questionId, answerOptionId);
         } catch (error) {
             throw error;
         } finally {

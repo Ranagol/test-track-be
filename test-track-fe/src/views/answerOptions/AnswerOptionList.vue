@@ -29,24 +29,20 @@
     </el-radio-group>
 
     <AddNewAnswerOption
-        v-if="props.mode === 'create'"
+        v-if="props.mode === 'create' && typeof props.question.id === 'string'"
         :questionId="props.question.id"
+        class="mt-4"
     />
 
 </template>
 
 <script setup lang="ts">
-/**
- * Question.vue is used for testing purpose in 'take' mode. Then it simply display the question
- * text and the answer options as radio buttons. And sends the selected answer option to the test
- * attempt store.
- */
+
 import type { Question } from '@/types/types';
 import AnswerOption from '@/views/answerOptions/AnswerOption.vue';
 import { ref, onMounted } from 'vue';
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
-import { ElMessage } from 'element-plus';
 import AddNewAnswerOption from '@/views/answerOptions/AddNewAnswerOption.vue';
 
 const testAttemptStore = useTestAttemptStore();
@@ -58,38 +54,31 @@ const props = defineProps<{
 }>();
 
 /**
- * In take mode: the test taker selected this answer option, during testing.
- * In edit mode: this is the correct answer option, selected by the tester, during test creation/editing.
+ * This variable is used for two different cases:
+ * 1. In take mode: the test taker selected this answer option, during testing.
+ * 2. In create mode: this is the correct answer option, selected by the tester, during test creation.
  *
  * It contains the id of the selected answer option, or null if no answer option is selected.
  */
-const selectedAnswerOption = ref<number | null>(null);
+const selectedAnswerOption = ref<number | string | null>(null);
 
 /**
  * Answer selection happens in two cases in this component:
  * 1. When the test taker selects an answer option during test taking (mode = 'take'),
- * 2. When the tester selects/changes the correct answer option during test editing (mode = 'edit').
+ * 2. When the tester selects the correct answer option during test creation (mode = 'create').
  */
-const handleAnswerSelection = async (answerOptionId: number) => {
+const handleAnswerSelection = async (answerOptionId: number | string) => {
 
     // For test taking (UserAnswer) - the user has selected this answer for the given question
-    if (props.mode === 'take') {
+    if (props.mode === 'take' && typeof props.question.id === 'number') {
         testAttemptStore.updateUserAnswers(
             props.question.id,
             answerOptionId
         );
     }
 
-    // For test editing (AnswerOption) - this is the correct answer option for the given question
-    if (props.mode === 'edit') {
-        await testEditorStore.updateAnswerOptionIsCorrect(
-            props.question.id,
-            answerOptionId
-        );
-        ElMessage.success('Correct answer option updated successfully.');
-    }
-
-    if (props.mode === 'create') {
+    // Setting the correct AO can happen in 'create' mode
+    if (props.mode === 'create' && typeof props.question.id === 'string') {
         testEditorStore.setAnswerOptionIsCorrectInStore(
             props.question.id,
             answerOptionId
@@ -97,31 +86,7 @@ const handleAnswerSelection = async (answerOptionId: number) => {
     }
 };
 
-/**
- * Get the ID of the correct answer option for the question. Needed at the very beginning of the
- * test editing, when we set the correct AnswerOption in the el-radio to be displayed as selected.
- */
-const getCorrectAnswerOptionId = (): number | null => {
 
-    const correctAnswerOption = props.question.answer_options?.find(
-        (answerOption) => answerOption.is_correct
-    );
-
-    return correctAnswerOption ? correctAnswerOption.id : null;
-}
-
-onMounted(() => {
-
-    /**
-     * When in 'edit' mode, at the beginning we need to display in the el-radio, which answer option
-     * is the correct one.
-     */
-    if (props.mode === 'edit') {
-
-        // Set the selected answer option for the question, from the test attempt store, when the component is mounted.
-        selectedAnswerOption.value = getCorrectAnswerOptionId();
-    }
-});
 
 </script>
 

@@ -68,7 +68,7 @@ export const useTestAttemptStore = defineStore('testAttempt', {
          * @param questionId        This will not change, it will be always the same.
          * @param answerOptionId    This can be null, or it can change, if the user changes his answer to a question.
          */
-        updateUserAnswers(questionId: number, answerOptionId: number): void {
+        updateUserAnswers(questionId: number, answerOptionId: number | string): void {
 
             /**
              * Check if there is already an existing answer for this question. findIndex will return

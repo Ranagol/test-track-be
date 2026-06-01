@@ -9,6 +9,8 @@
         :mode="props.mode"
     />
 
+    <hr class="mt-4">
+
     <AddNewQuestionButton
         class="mt-4"
         v-if="props.mode === 'create'"
@@ -25,7 +27,6 @@
 import Question from '@/views/questions/Question.vue';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import AddNewQuestionButton from '@/views/questions/AddNewQuestion.vue';
-import { ElMessage } from 'element-plus';
 
 const testEditorStore = useTestEditorStore();
 
@@ -33,12 +34,6 @@ const props = defineProps<{
     mode: 'create' | 'edit' | 'take';
 }>();
 
-function deleteQuestion(id: string) {
-
-    testEditorStore.deleteQuestion(id);
-
-    ElMessage.success({ message: `Test question deleted!` });
-}
 
 </script>
 

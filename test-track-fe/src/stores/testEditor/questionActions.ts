@@ -6,6 +6,9 @@ import { requireQuestion, createFrontendId } from './helpers';
 
 export const questionActions = {
 
+    /**
+     * Only in 'create' mode, and only on FE. Adds new question to the test in the store.
+     */
     addNewQuestion(this: TestEditorState): void {
         if (!this.test) {
             throw new Error('No test loaded to add a question to');
@@ -19,7 +22,7 @@ export const questionActions = {
     },
 
     /**
-     * Sets question text in frontend, here in the store.
+     * Sets question text in frontend, here in the store, both in 'create' and 'edit' mode.
      * Updates the text of a question in the current test. This is used in the Question.vue component
      * to update the question text in the store, when the tester edits the question text.
      * So, this action does not work with BE, works with FE. Hence, we do not have here
@@ -36,7 +39,8 @@ export const questionActions = {
     },
 
     /**
-     * Update the question text in the backend
+     * Update the question text in the backend.
+     * Only for 'edit' mode.
      */
     async updateQuestionInBackend(this: TestEditorState, questionId: number): Promise<void> {
         this.loading = true;
