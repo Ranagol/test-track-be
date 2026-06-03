@@ -5,6 +5,8 @@
     <!-- :label="`${index + 1}.`" display the order number of the question -->
     <el-form-item
         :label="`${index + 1}.`"
+        :prop="`questions.${index}.text`"
+        :rules="questionRules"
     >
         <div class="question-row">
 
@@ -36,6 +38,7 @@ import type { Question } from '@/types/types';
 import { computed } from 'vue';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import { Delete } from '@element-plus/icons-vue'
+import { questionRules } from '@/validationRules/testRules';
 
 const testEditorStore = useTestEditorStore();
 
