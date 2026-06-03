@@ -109,10 +109,10 @@
 import { ref, reactive } from 'vue';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useRouter, useRoute } from 'vue-router';
-import { nameRules } from '@/validationRules/validationRules';
-import { emailRules } from '@/validationRules/validationRules';
-import { passwordRules } from '@/validationRules/validationRules';
-import { createPasswordConfirmationRules } from '@/validationRules/validationRules';
+import { nameRules } from '@/validationRules/loginRegisterRules';
+import { emailRules } from '@/validationRules/loginRegisterRules';
+import { passwordRules } from '@/validationRules/loginRegisterRules';
+import { createPasswordConfirmationRules } from '@/validationRules/loginRegisterRules';
 import { useApiErrors } from '@/composables/useApiErrors';
 
 const router = useRouter()

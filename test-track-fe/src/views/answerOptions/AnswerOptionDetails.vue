@@ -1,27 +1,23 @@
 <template>
-    <div>
-        <el-form>
-            <el-form-item>
-                <div class="question-row">
+    <el-form-item>
+        <div class="question-row">
 
-                    <!-- ANSWER OPTION TEXT -->
-                    <el-input
-                        id="answer-option-text-input"
-                        v-model="answerOptionText"
-                        placeholder="Answer option text"
-                    />
+            <!-- ANSWER OPTION TEXT -->
+            <el-input
+                id="answer-option-text-input"
+                v-model="answerOptionText"
+                placeholder="Answer option text"
+            />
 
-                    <!-- DELETE BUTTON -->
-                    <el-button
-                        v-if="props.mode === 'create'"
-                        :icon="Delete"
-                        text
-                        @click="deleteAnswerOption"
-                    />
-                </div>
-            </el-form-item>
-        </el-form>
-    </div>
+            <!-- DELETE BUTTON -->
+            <el-button
+                v-if="props.mode === 'create'"
+                :icon="Delete"
+                text
+                @click="deleteAnswerOption"
+            />
+        </div>
+    </el-form-item>
 </template>
 
 <script setup lang="ts">

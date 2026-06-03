@@ -16,9 +16,8 @@ export const passwordRules = [
 ];
 
 /**
- * Create a password confirmation validator that compares against the password field
- * This is a factory function because it needs access to the form data.
- *
+ * Create a password confirmation validator that compares against the password field.
+ * Needed for registration.
  */
 export const createPasswordConfirmationRules = (formData: { password: string }) => [
     { required: true, message: 'Password confirmation is required', trigger: 'blur' },

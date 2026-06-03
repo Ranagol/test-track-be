@@ -1,6 +1,9 @@
 <template>
 
-    <div v-if="testEditorStore.test">
+    <div
+        v-if="testEditorStore.test"
+        class="mt-3"
+    >
 
         <!-- TAKE MODE -->
         <div v-if="mode === 'take'">
@@ -18,19 +21,31 @@
         <!-- EDIT AND CREATE MODE -->
         <div v-else>
 
-            <el-input
-                v-model="testEditorStore.test.title"
-                placeholder="Enter test title"
-                class="mb-4"
-            />
+            <el-form-item
+                label="Test title"
+                label-position="top"
+                prop="title"
+            >
+                <el-input
+                    v-model="testEditorStore.test.title"
+                    placeholder="Enter test title"
+                    class="mb-1"
+                />
+            </el-form-item>
 
-            <el-input
-                v-model="testEditorStore.test.description"
-                :rows="4"
-                placeholder="Enter test description"
-                type="textarea"
-                class="mb-4"
-            />
+            <el-form-item
+                label-position="top"
+                label="Test description"
+                prop="description"
+            >
+                <el-input
+                    v-model="testEditorStore.test.description"
+                    placeholder="Enter test description"
+                    type="textarea"
+                    class="mb-1"
+                />
+            </el-form-item>
+
         </div>
     </div>
 
@@ -41,6 +56,7 @@
     lang="ts"
 >
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
+import { el } from 'element-plus/es/locale/index.mjs';
 
 const props = defineProps<{
     mode: 'create' | 'edit' | 'take';

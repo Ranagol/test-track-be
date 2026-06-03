@@ -1,16 +1,16 @@
 <template>
 
-    <div class="flex flex-col items-end">
+    <el-form-item class="flex flex-col items-end">
 
         <el-button
             @click="handleClick"
-            class="mt-6"
+            class="mt-4"
             :type="props.buttonType"
         >
             {{ props.buttonText }}
         </el-button>
 
-    </div>
+    </el-form-item>
 
 </template>
 

@@ -1,32 +1,30 @@
 <template>
 
     <!-- QUESTION TEXT -->
-    <el-form>
 
-        <!-- :label="`${index + 1}.`" display the order number of the question -->
-        <el-form-item
-            :label="`${index + 1}.`"
-        >
-            <div class="question-row">
+    <!-- :label="`${index + 1}.`" display the order number of the question -->
+    <el-form-item
+        :label="`${index + 1}.`"
+    >
+        <div class="question-row">
 
-                <!-- QUESTION TEXT INPUT & DISPLAY -->
-                <el-input
-                    id="question-text-input"
-                    v-model="questionText"
-                    placeholder="Enter question text"
-                />
+            <!-- QUESTION TEXT INPUT & DISPLAY -->
+            <el-input
+                id="question-text-input"
+                v-model="questionText"
+                placeholder="Enter question text"
+            />
 
-                <!-- DELETE BUTTON -->
-                <el-button
-                    v-if="props.mode === 'create'"
-                    :icon="Delete"
-                    text
-                    @click="deleteQuestion"
-                />
-            </div>
+            <!-- DELETE BUTTON -->
+            <el-button
+                v-if="props.mode === 'create'"
+                :icon="Delete"
+                text
+                @click="deleteQuestion"
+            />
+        </div>
 
-        </el-form-item>
-    </el-form>
+    </el-form-item>
 
 </template>
 
