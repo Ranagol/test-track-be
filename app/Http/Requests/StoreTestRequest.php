@@ -34,6 +34,36 @@ class StoreTestRequest extends FormRequest
         ];
     }
 
+    public function after(): array
+    {
+        return [
+            function ($validator) {
+
+                foreach ($this->questions as $questionIndex => $question) {
+
+                    /** @var array<int, array{text: string, is_correct: bool}> $answerOptions */
+                    $answerOptions = $question['answer_options'] ?? [];
+
+                    $correctAnswers = collect($answerOptions)
+                        ->where('is_correct', true)
+                        ->count();
+
+                    if ($correctAnswers !== 1) {
+                        $validator->errors()->add(
+                            "questions.$questionIndex.answer_options",
+                            'Exactly one answer option must be marked as correct.'
+                        );
+                    }
+                }
+            },
+        ];
+    }
+
+    /**
+     * The default Laravel validation error messages are precise, and utterly useless. Because they
+     * are not user friendly. So we must create our own validation error messages. This is what we do
+     * here.
+     */
     public function messages(): array
     {
         return [

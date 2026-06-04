@@ -85,7 +85,6 @@ const deleteAnswerOption = async () => {
         props.answerOption.id
     );
 
-    ElMessage.success({ message: 'Answer option deleted.' })
 };
 
 

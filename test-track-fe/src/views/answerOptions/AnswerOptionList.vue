@@ -1,5 +1,14 @@
 <template>
 
+    <!-- VALIDATION ERROR MESSAGE FOR ALL ANSWER OPTION MISSING SELECTION -->
+    <AnswerOptionValidationError
+        :QuestionIndex="props.questionIndex"
+        :beValidationErrors="props.beValidationErrors"
+        :mode="props.mode"
+        :showError="showError"
+        :errorMessage="props.beValidationErrors?.[`questions.${props.questionIndex}.answer_options`]?.[0]"
+    />
+
     <!-- ANSWER OPTIONS -->
     <el-radio-group
         v-model="selectedAnswerOption"
@@ -41,10 +50,11 @@
 
 import type { Question } from '@/types/types';
 import AnswerOption from '@/views/answerOptions/AnswerOption.vue';
-import { ref } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import AddNewAnswerOption from '@/views/answerOptions/AddNewAnswerOption.vue';
+import AnswerOptionValidationError from '@/views/answerOptions/AnswerOptionValidationError.vue';
 
 const testAttemptStore = useTestAttemptStore();
 const testEditorStore = useTestEditorStore();
@@ -88,6 +98,57 @@ const handleAnswerSelection = async (answerOptionId: number | string) => {
         );
     }
 };
+
+const showError = ref(false);
+
+/**
+ * Decides whether to show the validation error message for missing correct answer option selection.
+ */
+const continousErrorChecker = (): void => {
+
+    if (props.mode === 'create' && !selectedAnswerOption.value) {
+
+        showError.value = true;
+        return;
+    }
+
+    showError.value = false;
+};
+
+const onMountErrorChecker = (): void => {
+
+    const validationError = props.beValidationErrors?.[`questions.${props.questionIndex}.answer_options`]?.[0];
+
+    if (props.mode === 'create' && validationError && !selectedAnswerOption.value) {
+
+        showError.value = true;
+        return;
+    }
+
+    showError.value = false;
+};
+
+watch(
+    () => selectedAnswerOption.value,
+    (newValue, oldValue) => {
+        console.log('selectedAnswerOption changed:');
+        console.log('oldValue:', oldValue)
+        console.log('newValue:', newValue)
+        continousErrorChecker();
+    },
+);
+
+watch(
+    () => props.beValidationErrors?.[`questions.${props.questionIndex}.answer_options`]?.[0],
+    (newValue, oldValue) => {
+        console.log('beValidationErrors changed:');
+        console.log('oldValue:', oldValue)
+        console.log('newValue:', newValue)
+        onMountErrorChecker();
+    },
+    { deep: true }
+);
+
 
 
 

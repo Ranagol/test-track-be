@@ -3,6 +3,7 @@
     <!-- QUESTION TEXT -->
 
     <!-- :label="`${index + 1}.`" display the order number of the question -->
+
     <el-form-item
         :label="`${index + 1}.`"
         :prop="`questions.${index}.text`"
@@ -28,6 +29,8 @@
         </div>
 
     </el-form-item>
+
+
 
 </template>
 
@@ -89,5 +92,7 @@ const deleteQuestion = () => {
 .question-row :deep(.el-input) {
     flex: 1;
 }
+
+
 
 </style>
