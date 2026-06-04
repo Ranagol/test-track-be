@@ -17,6 +17,7 @@
             <!-- THE TEST -->
             <TestBase
                 mode="create"
+                :beValidationErrors="validationErrors"
             />
 
             <DisplayBackendError
@@ -55,7 +56,8 @@ import type { FormInstance } from 'element-plus'
 
 const {
     generalError,
-    handleBackendErrors
+    handleBackendErrors,
+    validationErrors
 } = useApiErrors();
 
 const testEditorStore = useTestEditorStore();
@@ -69,6 +71,14 @@ const validationRef = ref<FormInstance>();
 
 const createTest = async () => {
     try {
+
+
+
+        // Reset all validation errors from BE.
+        validationErrors.value = {}
+
+        // Reset all validation errors on FE.
+        // validationRef.value?.clearValidate()
 
         // if (!validationRef.value) {
         //     return
@@ -84,9 +94,12 @@ const createTest = async () => {
         ElMessage.success('Test created');
         router.push(`/tests`);
     } catch (e) {
+        console.error(e);
+        console.dir(e);
         handleBackendErrors(e);
     }
 };
+
 
 
 

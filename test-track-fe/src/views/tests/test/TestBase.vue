@@ -2,11 +2,13 @@
 
     <TestTitleAndDescription
         :mode="props.mode"
+        :beValidationErrors="props.beValidationErrors"
     />
 
     <!-- QUESTIONS AND ANSWERS-->
     <QuestionList
         :mode="props.mode"
+        :beValidationErrors="props.beValidationErrors"
     />
 
 </template>
@@ -23,6 +25,7 @@ import type { Mode } from '@/types/types';
 // Modes are 'take' | 'edit' | 'create'
 const props = defineProps<{
     mode: Mode;
+    beValidationErrors: Record<string, any>;
 }>();
 
 </script>

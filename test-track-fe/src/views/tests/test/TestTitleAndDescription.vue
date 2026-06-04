@@ -25,6 +25,7 @@
                 label="Test title"
                 label-position="top"
                 prop="title"
+                :error="props.beValidationErrors.title?.[0]"
             >
                 <el-input
                     v-model="testEditorStore.test.title"
@@ -37,6 +38,7 @@
                 label-position="top"
                 label="Test description"
                 prop="description"
+                :error="props.beValidationErrors.description?.[0]"
             >
                 <el-input
                     v-model="testEditorStore.test.description"
@@ -56,10 +58,10 @@
     lang="ts"
 >
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
-import { el } from 'element-plus/es/locale/index.mjs';
 
 const props = defineProps<{
     mode: 'create' | 'edit' | 'take';
+    beValidationErrors: Record<string, any>;
 }>();
 
 const testEditorStore = useTestEditorStore();
