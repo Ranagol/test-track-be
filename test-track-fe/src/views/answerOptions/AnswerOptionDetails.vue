@@ -1,6 +1,6 @@
 <template>
     <el-form-item
-        prop="answerOptionText"
+        :prop="`questions.${props.questionIndex}.answer_options.${props.answerOptionIndex}.text`"
         :rules="[{ required: true, message: 'Answer option text is required.' }]"
     >
         <div class="question-row">
