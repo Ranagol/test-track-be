@@ -6,6 +6,8 @@
             ref="validationRef"
             :model="testEditorStore.test"
             :rules="testRules"
+            :hide-required-asterisk="true"
+            :scroll-to-error="true"
         >
 
             <Heading1

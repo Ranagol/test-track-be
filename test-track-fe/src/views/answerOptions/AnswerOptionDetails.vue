@@ -1,5 +1,8 @@
 <template>
-    <el-form-item>
+    <el-form-item
+        prop="answerOptionText"
+        :rules="[{ required: true, message: 'Answer option text is required.' }]"
+    >
         <div class="question-row">
 
             <!-- ANSWER OPTION TEXT -->
