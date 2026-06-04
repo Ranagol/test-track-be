@@ -3,7 +3,6 @@
     <!-- VALIDATION ERROR MESSAGE FOR ALL ANSWER OPTION MISSING SELECTION -->
     <AnswerOptionValidationError
         :QuestionIndex="props.questionIndex"
-        :beValidationErrors="props.beValidationErrors"
         :mode="props.mode"
         :showError="showError"
         :errorMessage="props.beValidationErrors?.[`questions.${props.questionIndex}.answer_options`]?.[0]"
@@ -52,7 +51,7 @@
 
 import type { Question } from '@/types/types';
 import AnswerOption from '@/views/answerOptions/AnswerOption.vue';
-import { ref, computed, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import AddNewAnswerOption from '@/views/answerOptions/AddNewAnswerOption.vue';
@@ -82,7 +81,7 @@ const selectedAnswerOption = ref<number | string | null>(null);
  * 1. When the test taker selects an answer option during test taking (mode = 'take'),
  * 2. When the tester selects the correct answer option during test creation (mode = 'create').
  */
-const handleAnswerSelection = async (answerOptionId: number | string) => {
+const handleAnswerSelection = (answerOptionId: number | string) => {
 
     // For test taking (UserAnswer) - the user has selected this answer for the given question
     if (props.mode === 'take' && typeof props.question.id === 'number') {
@@ -101,6 +100,9 @@ const handleAnswerSelection = async (answerOptionId: number | string) => {
     }
 };
 
+/**
+ * Whether the validation error message for missing correct answer option selection should be shown
+ */
 const showError = ref(false);
 
 /**
@@ -147,8 +149,7 @@ watch(
         console.log('oldValue:', oldValue)
         console.log('newValue:', newValue)
         onMountErrorChecker();
-    },
-    { deep: true }
+    }
 );
 
 const deleteAnswerOption = async (answerOptionId: string) => {

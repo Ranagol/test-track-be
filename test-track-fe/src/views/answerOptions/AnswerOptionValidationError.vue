@@ -17,17 +17,13 @@
 <script setup lang="ts">
 /**
  * Displays AnswerOption validation error message. Specifically, if there is no Answer Option selected.
- *
+ * This displays the validation error message from BE.
+ * Also works with the same validation error from FE logic. This FE logic is manually made, and it
+ * is in the AnswerOptionList.vue component.
  */
 
 const props = defineProps<{
-
-    mode: 'create' | 'edit' | 'take';
-
-    beValidationErrors: Record<string, any>;
-
     showError: boolean;
-
     errorMessage: string;
 }>();
 
