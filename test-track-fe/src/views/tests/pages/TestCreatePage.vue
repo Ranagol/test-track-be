@@ -70,15 +70,15 @@ const validationRef = ref<FormInstance>();
 const createTest = async () => {
     try {
 
-        if (!validationRef.value) {
-            return
-        }
+        // if (!validationRef.value) {
+        //     return
+        // }
 
-        const valid = await validationRef.value.validate()
+        // const valid = await validationRef.value.validate()
 
-        if (!valid) {
-            return
-        }
+        // if (!valid) {
+        //     return
+        // }
 
         await testEditorStore.create();
         ElMessage.success('Test created');

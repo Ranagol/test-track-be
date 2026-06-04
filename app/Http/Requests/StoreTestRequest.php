@@ -22,14 +22,31 @@ class StoreTestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['sometimes', 'required', 'string', 'max:255'],
-            'description' => ['sometimes', 'nullable', 'string'],
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
             'user_id' => ['required', 'exists:users,id'],
-            'questions' => ['sometimes', 'array'],
-            'questions.*.text' => ['required_with:questions', 'string'],
-            'questions.*.answer_options' => ['required_with:questions', 'array'],
-            'questions.*.answer_options.*.text' => ['required_with:questions.*.answer_options', 'string'],
-            'questions.*.answer_options.*.is_correct' => ['required_with:questions.*.answer_options', 'boolean'],
+
+            'questions' => ['required', 'array', 'min:1'],
+            'questions.*.text' => ['required', 'string'],
+            'questions.*.answer_options' => ['required', 'array', 'min:2'],
+            'questions.*.answer_options.*.text' => ['required', 'string'],
+            'questions.*.answer_options.*.is_correct' => ['required', 'boolean'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'Please enter a test title.',
+            'description.required' => 'Please add a description.',
+
+            'questions.required' => 'At least one question is required.',
+            'questions.*.text.required' => 'Each question must have text.',
+
+            'questions.*.answer_options.required' => 'Each question must have answers.',
+            'questions.*.answer_options.min' => 'Each question must have at least 2 answers.',
+
+            'questions.*.answer_options.*.text.required' => 'Each answer must have text.',
         ];
     }
 }
