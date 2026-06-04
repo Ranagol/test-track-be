@@ -12,6 +12,7 @@
             :mode="props.mode"
             :questionIndex="props.questionIndex"
             :answerOptionIndex="props.answerOptionIndex"
+            :beValidationErrors="props.beValidationErrors"
         />
 
     </div>
@@ -36,6 +37,8 @@ const props = defineProps<{
     questionIndex: number;
 
     answerOptionIndex: number;
+
+    beValidationErrors: Record<string, any>;
 }>();
 </script>
 

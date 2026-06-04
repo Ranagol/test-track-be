@@ -7,6 +7,7 @@
         style="display: flex; flex-direction: column; align-items: flex-start;"
         @change="handleAnswerSelection"
     >
+
         <!-- RADIO BUTTON -->
         <el-radio
             v-for="(answerOption, answerOptionIndex) in (question.answer_options || [])"
@@ -14,6 +15,7 @@
             :value="answerOption.id"
             :label="answerOption.id"
         >
+
             <!-- ANSWER OPTION -->
             <AnswerOption
                 :answerOption="answerOption"
@@ -21,9 +23,10 @@
                 :questionId="props.question.id"
                 :questionIndex="props.questionIndex"
                 :answerOptionIndex="answerOptionIndex"
+                :beValidationErrors="props.beValidationErrors"
             />
-
         </el-radio>
+
     </el-radio-group>
 
     <AddNewAnswerOption
@@ -50,6 +53,7 @@ const props = defineProps<{
     question: Question;
     mode: 'create' | 'edit' | 'take';
     questionIndex: number;
+    beValidationErrors: Record<string, any>;
 }>();
 
 /**

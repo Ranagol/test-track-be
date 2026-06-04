@@ -2,6 +2,7 @@
     <el-form-item
         :prop="`questions.${props.questionIndex}.answer_options.${props.answerOptionIndex}.text`"
         :rules="[{ required: true, message: 'Answer option text is required.' }]"
+        :error="props.beValidationErrors?.[`questions.${props.questionIndex}.answer_options.${props.answerOptionIndex}.text`]?.[0]"
     >
         <div class="question-row">
 
@@ -44,6 +45,8 @@ const props = defineProps<{
     questionIndex: number;
 
     answerOptionIndex: number;
+
+    beValidationErrors: Record<string, any>;
 
 }>();
 
