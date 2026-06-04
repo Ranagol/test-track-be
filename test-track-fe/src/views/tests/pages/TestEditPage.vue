@@ -1,25 +1,35 @@
 <template>
     <Container>
 
-        <Heading1
-            text="Edit test"
-        />
+        <el-form
+            ref="validationRef"
+            :model="testEditorStore.test"
+            :rules="testRules"
+            :hide-required-asterisk="true"
+            :scroll-to-error="true"
+        >
 
-        <!-- THE TEST -->
-        <TestBase
-            mode="edit"
-        />
+            <Heading1
+                text="Edit test"
+            />
 
-        <DisplayBackendError
-            :generalError="generalError"
-        />
+            <!-- THE TEST -->
+            <TestBase
+                mode="edit"
+            />
 
-        <FinalButton
-            class="mt-4"
-            buttonText="Update test"
-            buttonType="primary"
-            @click="updateTest"
-        />
+            <DisplayBackendError
+                :generalError="generalError"
+            />
+
+            <FinalButton
+                class="mt-4"
+                buttonText="Update test"
+                buttonType="primary"
+                @click="updateTest"
+            />
+
+        </el-form>
 
     </Container>
 </template>
@@ -38,6 +48,7 @@ import { useApiErrors } from '@/composables/useApiErrors';
 import { ElMessage } from 'element-plus';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import Container from '@/views/tests/test/Container.vue';
+import  { testRules } from '@/validationRules/testRules';
 
 const {
     generalError,

@@ -38,7 +38,7 @@
 
 import type { Question } from '@/types/types';
 import AnswerOption from '@/views/answerOptions/AnswerOption.vue';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import AddNewAnswerOption from '@/views/answerOptions/AddNewAnswerOption.vue';
@@ -83,7 +83,33 @@ const handleAnswerSelection = async (answerOptionId: number | string) => {
             answerOptionId
         );
     }
+
+    // Setting the correct AO can happen in 'edit' mode
+    if (props.mode === 'edit' && typeof props.question.id === 'number') {
+        testEditorStore.setAnswerOptionIsCorrectInStore(
+            props.question.id,
+            answerOptionId
+        );
+    }
 };
+
+/**
+ * In 'edit' mode we want to display the currently correct answer option as selected.
+ */
+onMounted(() => {
+
+    // If in edit mode
+    if (props.mode === 'edit' && typeof props.question.id === 'number') {
+
+        // Find the correct answer option for this question,
+        const correctAnswerOption = props.question.answer_options?.find(ao => ao.is_correct);
+        if (correctAnswerOption) {
+
+            // and set it as selected
+            selectedAnswerOption.value = correctAnswerOption.id;
+        }
+    }
+});
 
 
 
