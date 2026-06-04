@@ -7,6 +7,7 @@
         :label="`${index + 1}.`"
         :prop="`questions.${index}.text`"
         :rules="questionRules"
+        :error="props.beValidationErrors?.[`questions.${props.index}.text`]?.[0]"
     >
         <div class="question-row">
 
@@ -50,6 +51,8 @@ const props = defineProps<{
 
     //index is used to number the questions displayed to the test taker.
     index: number;
+
+    beValidationErrors: Record<string, any>;
 }>();
 
 const questionText = computed({

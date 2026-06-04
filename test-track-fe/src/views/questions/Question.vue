@@ -13,6 +13,7 @@
             :mode="props.mode"
             :index="props.index"
             @delete="deleteQuestion"
+            :beValidationErrors="props.beValidationErrors"
         />
 
     </div>
@@ -22,6 +23,7 @@
         :question="props.question"
         :mode="props.mode"
         :questionIndex="props.index"
+        :beValidationErrors="props.beValidationErrors"
     />
 
 </template>
@@ -47,6 +49,8 @@ const props = defineProps<{
 
     //index is used to number the questions displayed to the test taker.
     index: number;
+
+    beValidationErrors: Record<string, any>;
 }>();
 
 

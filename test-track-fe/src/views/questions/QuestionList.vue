@@ -7,6 +7,7 @@
         :question="question"
         :index="index"
         :mode="props.mode"
+        :beValidationErrors="props.beValidationErrors"
     />
 
     <hr class="mt-4">
@@ -32,6 +33,7 @@ const testEditorStore = useTestEditorStore();
 
 const props = defineProps<{
     mode: 'create' | 'edit' | 'take';
+    beValidationErrors: Record<string, any>;
 }>();
 
 
