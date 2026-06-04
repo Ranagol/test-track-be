@@ -1,5 +1,5 @@
 <template>
-    <div class="font-bold mt-8">
+    <div class="font-bold mt-8 mb-8">
 
         <!-- QUESTION DISPLAY FOR TESTING -->
         <div
