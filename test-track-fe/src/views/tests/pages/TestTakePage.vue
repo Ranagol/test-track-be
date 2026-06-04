@@ -49,10 +49,6 @@ const {
     handleBackendErrors
 } = useApiErrors();
 
-const logout = async () => {
-    await authStore.signOut();
-    router.push('/login');
-};
 
 /**
  * Used in test taking mode, for actually taking the test.

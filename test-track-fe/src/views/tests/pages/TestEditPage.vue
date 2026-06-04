@@ -49,6 +49,8 @@ import { ElMessage } from 'element-plus';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import Container from '@/views/tests/test/Container.vue';
 import  { testRules } from '@/validationRules/testRules';
+import { ref } from 'vue'
+import type { FormInstance } from 'element-plus'
 
 const {
     generalError,
@@ -58,8 +60,25 @@ const {
 const route = useRoute();
 const testEditorStore = useTestEditorStore();
 
+/**
+ * Contains a reactive reference to the form, used for validation before test creation. So, through
+ * this, we can access title, description and all the questions and answer options, to validate them.
+ */
+const validationRef = ref<FormInstance>();
+
 const updateTest = async () => {
     try {
+
+        if (!validationRef.value) {
+            return
+        }
+
+        const valid = await validationRef.value.validate()
+
+        if (!valid) {
+            return
+        }
+
         await testEditorStore.update();
         ElMessage.success('Test updated');
     } catch (e) {

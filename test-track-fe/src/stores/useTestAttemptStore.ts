@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import type { UserAnswer } from '@/types/types';
-import { useAuthStore } from '@/stores/useAuthStore';
-import type { Test, BackendError, PaginationMeta, PaginationLinks, TestAttempt } from '@/types/types';
+import type { PaginationMeta, PaginationLinks, TestAttempt } from '@/types/types';
 import type { TestQueryParams } from '@/types/types';
 import testAttemptService from '@/services/testAttemptService';
 
@@ -42,6 +41,9 @@ export const useTestAttemptStore = defineStore('testAttempt', {
 
     actions: {
 
+        /**
+         * Gets all test attempts from the backend, with pagination, sorting and searching
+         */
         async getAll(): Promise<void> {
             this.loading = true;
             try {
@@ -66,7 +68,8 @@ export const useTestAttemptStore = defineStore('testAttempt', {
          * Collects user answers.
          *
          * @param questionId        This will not change, it will be always the same.
-         * @param answerOptionId    This can be null, or it can change, if the user changes his answer to a question.
+         * @param answerOptionId    This can be null, or it can change, if the user changes his
+         * answer to a question.
          */
         updateUserAnswers(questionId: number, answerOptionId: number | string): void {
 
@@ -80,9 +83,12 @@ export const useTestAttemptStore = defineStore('testAttempt', {
 
             // If there is already an existing UserAnswer for this question, update the answer_option_id. Otherwise, add a new UserAnswer to the userAnswers array.
             if (existingAnswerIndex !== -1) {
+
                 // We use the '!' to tell TS, that UserAnswer exist.
                 this.userAnswers[existingAnswerIndex]!.answer_option_id = answerOptionId;
+
             } else {
+
                 // If there is no existing UserAnswer for this question, create it.
                 this.userAnswers.push({
                     question_id: questionId,
