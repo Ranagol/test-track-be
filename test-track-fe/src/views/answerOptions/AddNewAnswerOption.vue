@@ -11,17 +11,18 @@
 </template>
 
 <script setup lang="ts">
-import { useTestEditorStore } from '@/stores/useTestEditorStore';
-
-const testEditorStore = useTestEditorStore();
 
 const props = defineProps<{
     questionId: string;
 }>();
 
+
+const emit = defineEmits(['addNewAnswerOption']);
+
 const addNewAnswerOption = () => {
-    testEditorStore.addNewAnswerOption(props.questionId);
+    emit('addNewAnswerOption');
 };
+
 </script>
 
 <style scoped>

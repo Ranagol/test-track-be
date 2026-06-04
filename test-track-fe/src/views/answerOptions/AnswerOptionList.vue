@@ -43,6 +43,7 @@
         v-if="props.mode === 'create' && typeof props.question.id === 'string'"
         :questionId="props.question.id"
         class="mt-4"
+        @addNewAnswerOption="addNewAnswerOption"
     />
 
 </template>
@@ -107,7 +108,7 @@ const showError = ref(false);
  */
 const continousErrorChecker = (): void => {
 
-    if (props.mode === 'create' && !selectedAnswerOption.value) {
+    if (props.mode === 'create' && selectedAnswerOption.value === null) {
 
         showError.value = true;
         return;
@@ -165,8 +166,25 @@ const deleteAnswerOption = async (answerOptionId: string) => {
         answerOptionId
     );
 
+    /**
+     * If accidentally the deleted answer option was selected as correct answer option, deselect it
+     * by setting selectedAnswerOption to null.
+     */
+    if (selectedAnswerOption.value === answerOptionId) {
+        selectedAnswerOption.value = null;
+    }
+
     continousErrorChecker();
 
+};
+
+const addNewAnswerOption = () => {
+    if (props.mode !== 'create' && typeof props.question.id !== 'string') {
+        return;
+    }
+    testEditorStore.addNewAnswerOption(props.question.id as string);
+
+    continousErrorChecker();
 };
 
 
