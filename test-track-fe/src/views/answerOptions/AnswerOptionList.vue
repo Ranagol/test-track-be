@@ -33,6 +33,7 @@
                 :questionIndex="props.questionIndex"
                 :answerOptionIndex="answerOptionIndex"
                 :beValidationErrors="props.beValidationErrors"
+                @deleteAnswerOption="deleteAnswerOption"
             />
         </el-radio>
 
@@ -149,7 +150,24 @@ watch(
     { deep: true }
 );
 
+const deleteAnswerOption = async (answerOptionId: string) => {
+    if (props.mode !== 'create') {
+        return;
+    }
 
+    // In create mode question and answer option ids are not strings, return.
+    if (typeof props.question.id !== 'string') {
+        return;
+    }
+
+    testEditorStore.deleteAnswerOption(
+        props.question.id,
+        answerOptionId
+    );
+
+    continousErrorChecker();
+
+};
 
 
 </script>

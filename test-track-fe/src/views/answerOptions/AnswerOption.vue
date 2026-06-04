@@ -13,6 +13,7 @@
             :questionIndex="props.questionIndex"
             :answerOptionIndex="props.answerOptionIndex"
             :beValidationErrors="props.beValidationErrors"
+            @deleteAnswerOption="deleteAnswerOption"
         />
 
     </div>
@@ -40,6 +41,15 @@ const props = defineProps<{
 
     beValidationErrors: Record<string, any>;
 }>();
+
+const emit = defineEmits(['deleteAnswerOption']);
+
+const deleteAnswerOption = () => {
+    if (props.mode === 'create') {
+        emit('deleteAnswerOption', props.answerOption.id);
+    }
+}
+
 </script>
 
 <style scoped>

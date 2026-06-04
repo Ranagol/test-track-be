@@ -29,7 +29,6 @@
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import type { AnswerOption } from '@/types/types';
 import { computed } from 'vue';
-import { ElMessage } from 'element-plus';
 import { Delete } from '@element-plus/icons-vue'
 
 const testEditorStore = useTestEditorStore();
@@ -70,22 +69,13 @@ const answerOptionText = computed({
     }
 });
 
-const deleteAnswerOption = async () => {
-    if (props.mode !== 'create') {
-        return;
+const emit = defineEmits(['deleteAnswerOption']);
+
+const deleteAnswerOption = () => {
+    if (props.mode === 'create') {
+        emit('deleteAnswerOption', props.answerOption.id);
     }
-
-    // In create mode question and answer option ids are always strings.
-    if (typeof props.questionId !== 'string' || typeof props.answerOption.id !== 'string') {
-        return;
-    }
-
-    testEditorStore.deleteAnswerOption(
-        props.questionId,
-        props.answerOption.id
-    );
-
-};
+}
 
 
 </script>
