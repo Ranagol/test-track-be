@@ -10,6 +10,8 @@
             :answerOption="props.answerOption"
             :questionId="props.questionId"
             :mode="props.mode"
+            :questionIndex="props.questionIndex"
+            :answerOptionIndex="props.answerOptionIndex"
         />
 
     </div>
@@ -30,6 +32,10 @@ const props = defineProps<{
     questionId: number | string;
 
     mode: 'create' | 'edit' | 'take';
+
+    questionIndex: number;
+
+    answerOptionIndex: number;
 }>();
 </script>
 

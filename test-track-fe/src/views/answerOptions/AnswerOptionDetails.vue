@@ -38,6 +38,10 @@ const props = defineProps<{
 
     mode: 'create' | 'edit' | 'take';
 
+    questionIndex: number;
+
+    answerOptionIndex: number;
+
 }>();
 
 /**

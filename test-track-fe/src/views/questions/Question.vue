@@ -21,6 +21,7 @@
     <AnswerOptionList
         :question="props.question"
         :mode="props.mode"
+        :questionIndex="props.index"
     />
 
 </template>

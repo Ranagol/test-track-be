@@ -9,7 +9,7 @@
     >
         <!-- RADIO BUTTON -->
         <el-radio
-            v-for="answerOption in (question.answer_options || [])"
+            v-for="(answerOption, answerOptionIndex) in (question.answer_options || [])"
             :key="answerOption.id"
             :value="answerOption.id"
             :label="answerOption.id"
@@ -19,6 +19,8 @@
                 :answerOption="answerOption"
                 :mode="props.mode"
                 :questionId="props.question.id"
+                :questionIndex="props.questionIndex"
+                :answerOptionIndex="answerOptionIndex"
             />
 
         </el-radio>
@@ -47,6 +49,7 @@ const testEditorStore = useTestEditorStore();
 const props = defineProps<{
     question: Question;
     mode: 'create' | 'edit' | 'take';
+    questionIndex: number;
 }>();
 
 /**
