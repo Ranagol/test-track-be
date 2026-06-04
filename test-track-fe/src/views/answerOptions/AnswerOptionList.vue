@@ -69,7 +69,7 @@ const selectedAnswerOption = ref<number | string | null>(null);
 const handleAnswerSelection = async (answerOptionId: number | string) => {
 
     // For test taking (UserAnswer) - the user has selected this answer for the given question
-    if (props.mode === 'take' && typeof props.question.id === 'number') {
+    if (props.mode === 'take' && typeof props.question.id === 'number' && typeof answerOptionId === 'number') {
         testAttemptStore.updateUserAnswers(
             props.question.id,
             answerOptionId
@@ -77,7 +77,7 @@ const handleAnswerSelection = async (answerOptionId: number | string) => {
     }
 
     // Setting the correct AO can happen in 'create' mode
-    if (props.mode === 'create' && typeof props.question.id === 'string') {
+    if (props.mode === 'create' && typeof props.question.id === 'string' && typeof answerOptionId === 'string') {
         testEditorStore.setAnswerOptionIsCorrectInStore(
             props.question.id,
             answerOptionId
@@ -85,7 +85,7 @@ const handleAnswerSelection = async (answerOptionId: number | string) => {
     }
 
     // Setting the correct AO can happen in 'edit' mode
-    if (props.mode === 'edit' && typeof props.question.id === 'number') {
+    if (props.mode === 'edit' && typeof props.question.id === 'number' && typeof answerOptionId === 'number') {
         testEditorStore.setAnswerOptionIsCorrectInStore(
             props.question.id,
             answerOptionId
