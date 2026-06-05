@@ -27,3 +27,6 @@ RULES
 /* Global page styling */
 @import './03-global-page-styling.css';
 
+/* Element Plus overwriting */
+@import './04-element-plus-overwriting.css';
+

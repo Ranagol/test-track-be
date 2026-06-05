@@ -10,6 +10,7 @@
 
     <!-- ANSWER OPTIONS -->
     <el-radio-group
+        id="answer-options-radio-group"
         v-model="selectedAnswerOption"
         class="mt-3"
         style="display: flex; flex-direction: column; align-items: flex-start;"
@@ -236,9 +237,6 @@ watch(validationCycle!, () => {
     validate();
 });
 
-
-
-
 /**
  * In 'edit' mode we want to display the currently correct answer option as selected. This must not
  * happen in 'take' mode never!!!
@@ -258,10 +256,7 @@ onMounted(() => {
     }
 });
 
-
-
 </script>
 
 <style scoped>
-
 </style>

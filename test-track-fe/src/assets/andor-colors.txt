@@ -1,0 +1,18 @@
+/* The whole AOList, the whole radio group */
+.el-radio-group {
+    background-color: green;
+}
+
+/* Field of the radio button, the base for the AO */
+.el-radio-group .el-radio {
+    background-color: red;
+    border: 1px solid black !important;
+}
+
+.el-form-item__content .question-row {
+    background-color: yellow;
+}
+
+.question-row .el-input {
+    background-color: blue;
+}

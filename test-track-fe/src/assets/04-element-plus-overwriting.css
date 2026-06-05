@@ -1,0 +1,36 @@
+/* =========================================================
+   3. ELEMENT PLUS OVERWRITING
+   ========================================================= */
+
+
+
+
+
+
+/*Places the el-input vertically aligned with the radio button*/
+.el-radio .el-form-item {
+    margin-bottom: 0 !important;
+}
+
+/* The next three classes together set the el-input width equal to the
+radio group width. Make place underneath the el-input, so the validation message can be displayed
+properly.*/
+.el-radio {
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+.el-radio:last-child {
+    margin-bottom: 0;
+}
+
+.el-radio__label {
+    width: 100%;
+    display: block;
+}
+.el-input {
+    width: 100%;
+}
+
+
+
