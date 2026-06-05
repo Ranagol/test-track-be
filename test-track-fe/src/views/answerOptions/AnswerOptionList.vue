@@ -51,7 +51,7 @@
 
 import type { Question } from '@/types/types';
 import AnswerOption from '@/views/answerOptions/AnswerOption.vue';
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, inject, type Ref } from 'vue';
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import AddNewAnswerOption from '@/views/answerOptions/AddNewAnswerOption.vue';
@@ -196,6 +196,18 @@ const addNewAnswerOption = () => {
     continousErrorChecker();
 };
 
+
+/**
+ * Here we inject the validationTrigger provided in the TestTakePage component. The watch will notice
+ * the change, and will trigger the continousErrorChecker().
+ */
+const validationTrigger = inject<Ref<number>>('validationTrigger');
+watch(
+    validationTrigger!,
+    () => {
+        continousErrorChecker();
+    }
+);
 
 
 /**

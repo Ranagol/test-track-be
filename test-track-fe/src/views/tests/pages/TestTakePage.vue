@@ -39,6 +39,7 @@ import testAttemptService from '@/services/testAttemptService';
 import { ElMessageBox } from 'element-plus'
 import type { Action } from 'element-plus'
 import { useRouter } from 'vue-router';
+import { provide, ref } from 'vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -51,6 +52,12 @@ const {
     handleBackendErrors
 } = useApiErrors();
 
+/**
+ * Triggers the validation check, if every question has a selected answer option, when the test taker
+ * tries to submit the test. With the use of the provide/inject. In the AnswerOptionList component.
+ */
+const validationTrigger = ref(0);
+provide('validationTrigger', validationTrigger);
 
 /**
  * Used in test taking mode, for actually taking the test.
@@ -64,6 +71,9 @@ const createTestAttempt = async () => {
             test_id: test.id,
             user_id: authStore.userId,
         }
+
+        // Triggers the validation check in the AnswerOptionList component
+        validationTrigger.value++;
 
         const userAnswers = testAttemptStore.userAnswers;
 
