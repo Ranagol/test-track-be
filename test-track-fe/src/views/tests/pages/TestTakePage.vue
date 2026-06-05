@@ -91,7 +91,6 @@ const createTestAttempt = async () => {
 
         console.dir(error);
 
-        // TODO ANDOR why this was not triggered when the test_id was missing from the request?
         handleBackendErrors(error);
     }
 }

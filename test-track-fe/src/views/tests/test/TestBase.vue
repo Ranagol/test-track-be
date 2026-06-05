@@ -20,12 +20,16 @@
 
 import TestTitleAndDescription from '@/views/tests/test/TestTitleAndDescription.vue';
 import QuestionList from '@/views/questions/QuestionList.vue';
-import type { Mode } from '@/types/types';
 
-// Modes are 'take' | 'edit' | 'create'
-const props = defineProps<{
-    mode: Mode;
-    beValidationErrors: Record<string, any>;
-}>();
+const props = withDefaults(defineProps<{
+
+    // Modes are 'take' | 'edit' | 'create'
+    mode: 'create' | 'edit' | 'take';
+
+    beValidationErrors?: Record<string, any>;
+
+}>(), {
+    beValidationErrors: () => ({})
+});
 
 </script>

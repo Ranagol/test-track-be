@@ -108,9 +108,6 @@ const handleAnswerSelection = (answerOptionId: number | string) => {
     }
 };
 
-
-
-
 /**
  * Whether the validation error message for missing correct answer option selection should be shown
  */
@@ -121,7 +118,7 @@ const showError = ref(false);
  */
 const continousErrorChecker = (): void => {
 
-    if (props.mode === 'create' && selectedAnswerOption.value === null) {
+    if (selectedAnswerOption.value === null) {
 
         showError.value = true;
         return;
@@ -134,7 +131,7 @@ const onMountErrorChecker = (): void => {
 
     const validationError = props.beValidationErrors?.[`questions.${props.questionIndex}.answer_options`]?.[0];
 
-    if (props.mode === 'create' && validationError && !selectedAnswerOption.value) {
+    if (validationError && !selectedAnswerOption.value) {
 
         showError.value = true;
         return;
@@ -202,7 +199,8 @@ const addNewAnswerOption = () => {
 
 
 /**
- * In 'edit' mode we want to display the currently correct answer option as selected.
+ * In 'edit' mode we want to display the currently correct answer option as selected. This must not
+ * happen in 'take' mode never!!!
  */
 onMounted(() => {
 
