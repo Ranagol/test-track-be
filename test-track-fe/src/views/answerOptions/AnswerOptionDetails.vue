@@ -8,7 +8,6 @@
 
             <!-- ANSWER OPTION TEXT -->
             <el-input
-                id="answer-option-text-input"
                 v-model="answerOptionText"
                 placeholder="Answer option text"
             />

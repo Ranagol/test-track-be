@@ -10,7 +10,6 @@
 
     <!-- ANSWER OPTIONS -->
     <el-radio-group
-        id="answer-options-radio-group"
         v-model="selectedAnswerOption"
         class="mt-3"
         style="display: flex; flex-direction: column; align-items: flex-start;"
@@ -61,6 +60,8 @@ import AnswerOptionValidationError from '@/views/answerOptions/AnswerOptionValid
 const testAttemptStore = useTestAttemptStore();
 const testEditorStore = useTestEditorStore();
 
+//TODO ANDOR this componenet must be refactored, it is too big, too complex
+
 const props = defineProps<{
     question: Question;
     mode: 'create' | 'edit' | 'take';
@@ -69,18 +70,20 @@ const props = defineProps<{
 }>();
 
 /**
- * This variable is used for two different cases:
+ * This variable is used for three different cases:
  * 1. In take mode: the test taker selected this answer option, during testing.
  * 2. In create mode: this is the correct answer option, selected by the tester, during test creation.
+ * 3. In edit mode: this is the correct answer option, selected by the tester, during test editing.
  *
  * It contains the id of the selected answer option, or null if no answer option is selected.
  */
 const selectedAnswerOption = ref<number | string | null>(null);
 
 /**
- * Answer selection happens in two cases in this component:
+ * Answer selection happens in 3 cases in this component:
  * 1. When the test taker selects an answer option during test taking (mode = 'take'),
  * 2. When the tester selects the correct answer option during test creation (mode = 'create').
+ * 3. When the tester selects the correct answer option during test editing (mode = 'edit').
  */
 const handleAnswerSelection = (answerOptionId: number | string) => {
 
@@ -92,7 +95,7 @@ const handleAnswerSelection = (answerOptionId: number | string) => {
         );
     }
 
-    // Setting the correct AO can happen in 'create' mode
+    // Deciding what is the correct AO, 'create' mode, when a test is being created
     if (props.mode === 'create' && typeof props.question.id === 'string' && typeof answerOptionId === 'string') {
         testEditorStore.setAnswerOptionIsCorrectInStore(
             props.question.id,
@@ -116,6 +119,7 @@ const showError = ref(false);
 
 /**
  * Decides whether to show the validation error message for missing correct answer option selection.
+ * It only works for FE, and it used constantly.
  */
 const continousErrorChecker = (): void => {
 
@@ -128,11 +132,15 @@ const continousErrorChecker = (): void => {
     showError.value = false;
 };
 
+/**
+ * Decides whether to show the validation error message for missing correct answer option selection.
+ * It is triggered only on mount, by a watcher. For BACKEND VAL ERRORS..
+ */
 const onMountErrorChecker = (): void => {
 
     const validationError = props.beValidationErrors?.[`questions.${props.questionIndex}.answer_options`]?.[0];
 
-    if (validationError && !selectedAnswerOption.value) {
+    if (validationError && selectedAnswerOption.value === null) {
 
         showError.value = true;
         return;
@@ -143,23 +151,30 @@ const onMountErrorChecker = (): void => {
 
 watch(
     () => selectedAnswerOption.value,
-    (newValue, oldValue) => {
-        console.log('selectedAnswerOption changed:');
-        console.log('oldValue:', oldValue)
-        console.log('newValue:', newValue)
+    () => {
         continousErrorChecker();
     },
 );
 
 watch(
     () => props.beValidationErrors?.[`questions.${props.questionIndex}.answer_options`]?.[0],
-    (newValue, oldValue) => {
-        console.log('beValidationErrors changed:');
-        console.log('oldValue:', oldValue)
-        console.log('newValue:', newValue)
+    () => {
         onMountErrorChecker();
     }
 );
+
+
+/**
+ * Adds a new answer option in create mode.
+ */
+const addNewAnswerOption = () => {
+    if (props.mode !== 'create' && typeof props.question.id !== 'string') {
+        return;
+    }
+    testEditorStore.addNewAnswerOption(props.question.id as string);
+
+    continousErrorChecker();
+};
 
 /**
  * Deletes the answer option in create mode.
@@ -188,20 +203,9 @@ const deleteAnswerOption = async (answerOptionId: string) => {
     }
 
     continousErrorChecker();
-
 };
 
-/**
- * Adds a new answer option in create mode.
- */
-const addNewAnswerOption = () => {
-    if (props.mode !== 'create' && typeof props.question.id !== 'string') {
-        return;
-    }
-    testEditorStore.addNewAnswerOption(props.question.id as string);
 
-    continousErrorChecker();
-};
 
 /**
  * We inject the reportError() function, provided by TestTakePage.
@@ -238,8 +242,8 @@ watch(validationCycle!, () => {
 });
 
 /**
- * In 'edit' mode we want to display the currently correct answer option as selected. This must not
- * happen in 'take' mode never!!!
+ * In 'edit' mode, on mount, we want to display the currently correct answer option as selected.
+ * This must not happen in 'take' mode never!!!
  */
 onMounted(() => {
 
