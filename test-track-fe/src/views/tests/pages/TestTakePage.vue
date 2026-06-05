@@ -8,6 +8,7 @@
 
         <DisplayBackendError
             :generalError="generalError"
+            :validationError="validationErrors.user_answers?.[0]"
         />
 
         <FinalButton
@@ -46,6 +47,7 @@ const testAttemptStore = useTestAttemptStore();
 const authStore = useAuthStore();
 const {
     generalError,
+    validationErrors,
     handleBackendErrors
 } = useApiErrors();
 
@@ -72,7 +74,7 @@ const createTestAttempt = async () => {
 
         //Display feedback to the user about succesfully submitting the test
         ElMessageBox.alert(
-            'You have successfully submitted the test. You will be now signed out. Have a nice day! ',
+            'You have successfully submitted the test. Have a nice day! ',
             'Confirmation', {
             confirmButtonText: 'OK',
             callback: (action: Action) => {
@@ -83,15 +85,16 @@ const createTestAttempt = async () => {
             },
         })
 
-        //TODO ANDOR Make sure that the user can not submit this test again.
+        //TODO ANDOR Make sure that the user can not submit this test again, disable the submit button.
 
     } catch (error) {
+
+        console.dir(error);
+
         // TODO ANDOR why this was not triggered when the test_id was missing from the request?
         handleBackendErrors(error);
     }
 }
-
-
 
 onMounted( async() => {
 

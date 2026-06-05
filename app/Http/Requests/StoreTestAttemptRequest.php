@@ -77,7 +77,7 @@ class StoreTestAttemptRequest extends FormRequest
             if ($missing->isNotEmpty()) {
                 $validator->errors()->add(
                     'user_answers',
-                    'Some questions are missing.'
+                    'Answers are missing. Please answer all questions before submitting.'
                 );
             }
         });
