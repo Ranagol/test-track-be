@@ -108,6 +108,99 @@ const handleAnswerSelection = (answerOptionId: number | string) => {
     }
 };
 
+
+
+
+/**
+ * Whether the validation error message for missing correct answer option selection should be shown
+ */
+const showError = ref(false);
+
+/**
+ * Decides whether to show the validation error message for missing correct answer option selection.
+ */
+const continousErrorChecker = (): void => {
+
+    if (props.mode === 'create' && selectedAnswerOption.value === null) {
+
+        showError.value = true;
+        return;
+    }
+
+    showError.value = false;
+};
+
+const onMountErrorChecker = (): void => {
+
+    const validationError = props.beValidationErrors?.[`questions.${props.questionIndex}.answer_options`]?.[0];
+
+    if (props.mode === 'create' && validationError && !selectedAnswerOption.value) {
+
+        showError.value = true;
+        return;
+    }
+
+    showError.value = false;
+};
+
+watch(
+    () => selectedAnswerOption.value,
+    (newValue, oldValue) => {
+        console.log('selectedAnswerOption changed:');
+        console.log('oldValue:', oldValue)
+        console.log('newValue:', newValue)
+        continousErrorChecker();
+    },
+);
+
+watch(
+    () => props.beValidationErrors?.[`questions.${props.questionIndex}.answer_options`]?.[0],
+    (newValue, oldValue) => {
+        console.log('beValidationErrors changed:');
+        console.log('oldValue:', oldValue)
+        console.log('newValue:', newValue)
+        onMountErrorChecker();
+    }
+);
+
+const deleteAnswerOption = async (answerOptionId: string) => {
+    if (props.mode !== 'create') {
+        return;
+    }
+
+    // In create mode question and answer option ids are not strings, return.
+    if (typeof props.question.id !== 'string') {
+        return;
+    }
+
+    testEditorStore.deleteAnswerOption(
+        props.question.id,
+        answerOptionId
+    );
+
+    /**
+     * If accidentally the deleted answer option was selected as correct answer option, deselect it
+     * by setting selectedAnswerOption to null.
+     */
+    if (selectedAnswerOption.value === answerOptionId) {
+        selectedAnswerOption.value = null;
+    }
+
+    continousErrorChecker();
+
+};
+
+const addNewAnswerOption = () => {
+    if (props.mode !== 'create' && typeof props.question.id !== 'string') {
+        return;
+    }
+    testEditorStore.addNewAnswerOption(props.question.id as string);
+
+    continousErrorChecker();
+};
+
+
+
 /**
  * In 'edit' mode we want to display the currently correct answer option as selected.
  */
