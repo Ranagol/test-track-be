@@ -48,6 +48,9 @@ parameters:
         - identifier: useless.use
           message: '/^Imported class.*ValidationRule.*is not used/'
           path: app/Http/Requests/
+        # Unresolved template types in collect() function
+        - identifier: argument.templateType
+          path: app/Http/Requests/StoreTestAttemptRequest.php
         # Array type hints without value types in TestControllerServiceInterface
         - identifier: missingType.iterableValue
           path: app/Interfaces/TestControllerServiceInterface.php

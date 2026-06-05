@@ -38,7 +38,7 @@ export function useApiErrors() {
 
         // NO INTERNET OR NO SERVER RESPONSE (from now on, we know this is an Axios error)
         if (!error.response) {
-            console.error('Network/server error:', error)
+            console.log('Network/server error:', error)
             generalError.value = 'Unable to connect to the server.'
             return
         }
@@ -77,7 +77,6 @@ export function useApiErrors() {
         }
 
         // Other unexpected backend/server errors
-        console.error('Unexpected backend error:', error)
         generalError.value = fallbackMessage;
     }
 

@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import type { UserAnswer } from '@/types/types';
-import { useAuthStore } from '@/stores/useAuthStore';
-import type { Test, BackendError, PaginationMeta, PaginationLinks, TestAttempt } from '@/types/types';
+import type { PaginationMeta, PaginationLinks, TestAttempt } from '@/types/types';
 import type { TestQueryParams } from '@/types/types';
 import testAttemptService from '@/services/testAttemptService';
 
@@ -42,6 +41,9 @@ export const useTestAttemptStore = defineStore('testAttempt', {
 
     actions: {
 
+        /**
+         * Gets all test attempts from the backend, with pagination, sorting and searching
+         */
         async getAll(): Promise<void> {
             this.loading = true;
             try {
@@ -63,27 +65,40 @@ export const useTestAttemptStore = defineStore('testAttempt', {
         },
 
         /**
-         * Collects user answers.
+         * The test taker will select an answer option for a question. Once. Then he maybe changes
+         * his mind and selects another answer option for the same question. Every time he selects
+         * an answer option for a question, we call this method, to update the userAnswers array in the store.
          *
-         * @param questionId        This will not change, it will be always the same.
-         * @param answerOptionId    This can be null, or it can change, if the user changes his answer to a question.
+         * So, there are two situations here.
+         * 1. At the beginning of the test, the userAnswers array is empty. No user answers.
+         * 2. Test taker changes his already existing answer. So, there is already a UserAnswer for
+         * the question, but now we need to change it.
+         *
+         * @param questionId        This will not change, it will be always the same question.
+         * @param answerOptionId    This can be null, or it can change, if the user changes his
+         * answer.
          */
-        updateUserAnswers(questionId: number, answerOptionId: number | string): void {
+        updateUserAnswers(questionId: number, answerOptionId: number ): void {
 
             /**
-             * Check if there is already an existing answer for this question. findIndex will return
-             * -1 if there is no existing answer, or if an answer exists, it will return its index.
+             * Check if there is already an existing answer for this question.
              */
-            const existingAnswerIndex = this.userAnswers.findIndex(
+            const existingAnswer = this.userAnswers.find(
                 userAnswer => userAnswer.question_id === questionId
             );
 
-            // If there is already an existing UserAnswer for this question, update the answer_option_id. Otherwise, add a new UserAnswer to the userAnswers array.
-            if (existingAnswerIndex !== -1) {
+            /**
+             * If there is already an existing UserAnswer for this question, update the
+             * answer_option_id. Otherwise, add a new UserAnswer to the userAnswers array. (situation 2)
+             */
+            if (existingAnswer) {
+
                 // We use the '!' to tell TS, that UserAnswer exist.
-                this.userAnswers[existingAnswerIndex]!.answer_option_id = answerOptionId;
+                existingAnswer!.answer_option_id = answerOptionId;
+
             } else {
-                // If there is no existing UserAnswer for this question, create it.
+
+                // If there is no existing UserAnswer for this question, create it (situation 1)
                 this.userAnswers.push({
                     question_id: questionId,
                     answer_option_id: answerOptionId,
