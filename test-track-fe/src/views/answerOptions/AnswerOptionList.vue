@@ -160,6 +160,9 @@ watch(
     }
 );
 
+/**
+ * Deletes the answer option in create mode.
+ */
 const deleteAnswerOption = async (answerOptionId: string) => {
     if (props.mode !== 'create') {
         return;
@@ -187,6 +190,9 @@ const deleteAnswerOption = async (answerOptionId: string) => {
 
 };
 
+/**
+ * Adds a new answer option in create mode.
+ */
 const addNewAnswerOption = () => {
     if (props.mode !== 'create' && typeof props.question.id !== 'string') {
         return;
@@ -196,18 +202,41 @@ const addNewAnswerOption = () => {
     continousErrorChecker();
 };
 
+/**
+ * We inject the reportError() function, provided by TestTakePage.
+ */
+const reportError = inject<() => void>('reportError');
+const validationCycle = inject<Ref<number>>('validationCycle');
 
 /**
- * Here we inject the validationTrigger provided in the TestTakePage component. The watch will notice
- * the change, and will trigger the continousErrorChecker().
+ * This function will:
+ * 1. trigger the showing of the validation error message
+ * 2. stop the submitting a request to the BE.
  */
-const validationTrigger = inject<Ref<number>>('validationTrigger');
-watch(
-    validationTrigger!,
-    () => {
-        continousErrorChecker();
+const validate = () => {
+
+    // If there is no selected answer option for this question...
+    if (selectedAnswerOption.value === null) {
+
+        // ... then show the error message for this question...
+        showError.value = true;
+
+        // ... and report the error to the TestTakePage, so it can stop the test attempt submission.
+        reportError?.();
     }
-);
+
+};
+
+/**
+ * When the validationCycle changes, it means that the TestTakePage sent a signal: hey, please check
+ * if the test take has selected anser option for his questions.
+ * So, watcher then triggers the validate() function.
+ */
+watch(validationCycle!, () => {
+    validate();
+});
+
+
 
 
 /**
