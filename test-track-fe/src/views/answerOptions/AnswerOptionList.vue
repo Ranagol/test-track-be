@@ -26,8 +26,6 @@
         @addNewAnswerOption="addNewAnswerOption"
 
     />
-    <!-- @addNewAnswerOption="addNewAnswerOption" -->
-     <!-- //todo andor this component does not work temporarily -->
 
 </template>
 

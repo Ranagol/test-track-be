@@ -16,7 +16,7 @@ export function useSelectAnswer(
      * 2. When the tester selects the correct answer option during test creation (mode = 'create').
      * 3. When the tester selects the correct answer option during test editing (mode = 'edit').
      */
-    const handleAnswerSelection = (answerOptionId: number | string) => {
+    const handleAnswerSelection = (answerOptionId: number | string | null) => {
 
         // For test taking (UserAnswer) - the user has selected this answer for the given question
         if (mode === 'take' && typeof question.id === 'number' && typeof answerOptionId === 'number') {

@@ -1,10 +1,9 @@
 <template>
     <el-radio-group
-
         v-model="selectedAnswerOption"
         class="mt-3"
         style="display: flex; flex-direction: column; align-items: flex-start;"
-        @change="handleAnswerSelection"
+        @change="onChange"
     >
 
         <!-- RADIO BUTTON -->
@@ -65,6 +64,16 @@ const props = defineProps<{
     beValidationErrors: Record<string, any>;
 }>();
 
+const onChange =() => {
+    console.log('Selected answer option id:', selectedAnswerOption.value);
+
+    // Handle the answer option selection in 'take', 'create' and 'edit' mode
+    handleAnswerSelection(selectedAnswerOption.value);
+
+    // Inform the parent component (AnswerOptionList) about the selected answer option
+    emitSelectedAnswerOption(selectedAnswerOption.value);
+}
+
 /**
  * This variable is used for three different cases:
  * 1. In take mode: the test taker selected this answer option, during testing.
@@ -122,14 +131,6 @@ const deleteAnswerOption = async (answerOptionId: string) => {
 
     checkIfAnswerOptionSelected();
 };
-
-
-watch(
-    () => selectedAnswerOption.value,
-    () => {
-        emitSelectedAnswerOption(selectedAnswerOption.value);
-    },
-)
 
 /**
  * In 'edit' mode, on mount, we want to display the currently correct answer option as selected.
