@@ -73,7 +73,7 @@ const onChange =() => {
     emitSelectedAnswerOption(selectedAnswerOption.value);
 
     // Check if an answer option is selected, and show or hide the validation error message accordingly
-    checkIfAnswerOptionSelected();
+    isAnswerOptionSelected() ? emitShowError(false) : emitShowError(true);
 }
 
 /**
@@ -101,19 +101,16 @@ useValidateAnswerBackend(
 );
 
 /**
-     * Decides whether to show the validation error message for missing correct answer option selection.
-     * It only works for FE, and it used constantly.
-     */
-    const checkIfAnswerOptionSelected = (): void => {
+ * Decides whether to show the validation error message for missing correct answer option selection.
+ * It only works for FE, and it used constantly.
+ */
+const isAnswerOptionSelected = (): boolean => {
 
-        if (selectedAnswerOption.value === null) {
-
-            emitShowError(true);
-            return;
-        }
-
-        emitShowError(false);
-    };
+    if (selectedAnswerOption.value !== null) {
+        return true;
+    }
+    return false;
+};
 
 /**
  * Deletes the answer option in create mode.
@@ -141,7 +138,8 @@ const deleteAnswerOption = async (answerOptionId: string) => {
         selectedAnswerOption.value = null;
     }
 
-    checkIfAnswerOptionSelected();
+    isAnswerOptionSelected() ? emitShowError(false) : emitShowError(true);
+
 };
 
 /**
