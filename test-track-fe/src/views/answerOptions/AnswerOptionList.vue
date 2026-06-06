@@ -5,7 +5,7 @@
         :QuestionIndex="props.questionIndex"
         :mode="props.mode"
         :showError="showError"
-        :errorMessage="props.beValidationErrors?.[`questions.${props.questionIndex}.answer_options`]?.[0]"
+        :backendErrorMessage="props.beValidationErrors?.[`questions.${props.questionIndex}.answer_options`]?.[0]"
     />
 
     <!-- ANSWER OPTIONS IN RADIO GROUP -->

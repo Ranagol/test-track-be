@@ -73,8 +73,6 @@ const validationRef = ref<FormInstance>();
 const createTest = async () => {
     try {
 
-
-
         // Reset all validation errors from BE.
         validationErrors.value = {}
 
