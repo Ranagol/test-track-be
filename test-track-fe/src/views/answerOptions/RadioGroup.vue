@@ -52,6 +52,9 @@ const emitShowError = (show: boolean) => {
     emit('showError', show);
 }
 
+/**
+ * Inform the parent component (AnswerOptionList) about the selected answer option
+ */
 const emitSelectedAnswerOption = (answerOptionId: number | string | null) => {
     emit('selectedAnswerOption', answerOptionId);
 }
@@ -63,6 +66,9 @@ const props = defineProps<{
     beValidationErrors: Record<string, any>;
 }>();
 
+/**
+ * Whenever, in any (create, edit, take) mode an answer option is selected, this function is called.
+ */
 const onChange =() => {
     console.log('Selected answer option id:', selectedAnswerOption.value);
 
