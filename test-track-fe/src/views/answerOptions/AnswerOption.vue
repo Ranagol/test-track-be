@@ -42,12 +42,12 @@ const props = defineProps<{
     beValidationErrors: Record<string, any>;
 }>();
 
-const emit = defineEmits(['deleteAnswerOption']);
+const emit = defineEmits<{
+    deleteAnswerOption: [id: string]
+}>();
 
-const deleteAnswerOption = () => {
-    if (props.mode === 'create') {
-        emit('deleteAnswerOption', props.answerOption.id);
-    }
+const deleteAnswerOption = (id: string) => {
+    emit('deleteAnswerOption', id);
 }
 
 </script>

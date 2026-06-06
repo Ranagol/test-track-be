@@ -8,59 +8,40 @@
         :errorMessage="props.beValidationErrors?.[`questions.${props.questionIndex}.answer_options`]?.[0]"
     />
 
-    <!-- ANSWER OPTIONS -->
-    <el-radio-group
-        v-model="selectedAnswerOption"
-        class="mt-3"
-        style="display: flex; flex-direction: column; align-items: flex-start;"
-        @change="handleAnswerSelection"
-    >
-
-        <!-- RADIO BUTTON -->
-        <el-radio
-            v-for="(answerOption, answerOptionIndex) in (question.answer_options || [])"
-            :key="answerOption.id"
-            :value="answerOption.id"
-            :label="answerOption.id"
-        >
-
-            <!-- ANSWER OPTION -->
-            <AnswerOption
-                :answerOption="answerOption"
-                :mode="props.mode"
-                :questionId="props.question.id"
-                :questionIndex="props.questionIndex"
-                :answerOptionIndex="answerOptionIndex"
-                :beValidationErrors="props.beValidationErrors"
-                @deleteAnswerOption="deleteAnswerOption"
-            />
-        </el-radio>
-
-    </el-radio-group>
+    <!-- ANSWER OPTIONS IN RADIO GROUP -->
+    <RadioGroup
+        :mode="props.mode"
+        :question="props.question"
+        :questionId="props.question.id"
+        :questionIndex="props.questionIndex"
+        :beValidationErrors="props.beValidationErrors"
+        @showError="setShowError"
+        @selectedAnswerOption="setSelectedAnswerOption"
+    />
 
     <AddNewAnswerOption
         v-if="props.mode === 'create' && typeof props.question.id === 'string'"
         :questionId="props.question.id"
         class="mt-4"
         @addNewAnswerOption="addNewAnswerOption"
+
     />
+    <!-- @addNewAnswerOption="addNewAnswerOption" -->
+     <!-- //todo andor this component does not work temporarily -->
 
 </template>
 
 <script setup lang="ts">
 
 import type { Question } from '@/types/types';
-import AnswerOption from '@/views/answerOptions/AnswerOption.vue';
-import { ref, onMounted, watch, inject, type Ref } from 'vue';
-import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
-import { useTestEditorStore } from '@/stores/useTestEditorStore';
+
+import { ref } from 'vue';
 import AddNewAnswerOption from '@/views/answerOptions/AddNewAnswerOption.vue';
 import AnswerOptionValidationError from '@/views/answerOptions/AnswerOptionValidationError.vue';
+import RadioGroup from '@/views/answerOptions/RadioGroup.vue';
+import { useTestEditorStore } from '@/stores/useTestEditorStore';
 
-const testAttemptStore = useTestAttemptStore();
 const testEditorStore = useTestEditorStore();
-
-//TODO ANDOR this componenet must be refactored, it is too big, too complex
 
 const props = defineProps<{
     question: Question;
@@ -70,99 +51,18 @@ const props = defineProps<{
 }>();
 
 /**
- * This variable is used for three different cases:
- * 1. In take mode: the test taker selected this answer option, during testing.
- * 2. In create mode: this is the correct answer option, selected by the tester, during test creation.
- * 3. In edit mode: this is the correct answer option, selected by the tester, during test editing.
- *
- * It contains the id of the selected answer option, or null if no answer option is selected.
- */
-const selectedAnswerOption = ref<number | string | null>(null);
-
-/**
- * Answer selection happens in 3 cases in this component:
- * 1. When the test taker selects an answer option during test taking (mode = 'take'),
- * 2. When the tester selects the correct answer option during test creation (mode = 'create').
- * 3. When the tester selects the correct answer option during test editing (mode = 'edit').
- */
-const handleAnswerSelection = (answerOptionId: number | string) => {
-
-    // For test taking (UserAnswer) - the user has selected this answer for the given question
-    if (props.mode === 'take' && typeof props.question.id === 'number' && typeof answerOptionId === 'number') {
-        testAttemptStore.updateUserAnswers(
-            props.question.id,
-            answerOptionId
-        );
-    }
-
-    // Deciding what is the correct AO, 'create' mode, when a test is being created
-    if (props.mode === 'create' && typeof props.question.id === 'string' && typeof answerOptionId === 'string') {
-        testEditorStore.setAnswerOptionIsCorrectInStore(
-            props.question.id,
-            answerOptionId
-        );
-    }
-
-    // Setting the correct AO can happen in 'edit' mode
-    if (props.mode === 'edit' && typeof props.question.id === 'number' && typeof answerOptionId === 'number') {
-        testEditorStore.setAnswerOptionIsCorrectInStore(
-            props.question.id,
-            answerOptionId
-        );
-    }
-};
-
-/**
  * Whether the validation error message for missing correct answer option selection should be shown
  */
 const showError = ref(false);
 
-/**
- * Decides whether to show the validation error message for missing correct answer option selection.
- * It only works for FE, and it used constantly.
- */
-const continousErrorChecker = (): void => {
-
-    if (selectedAnswerOption.value === null) {
-
-        showError.value = true;
-        return;
-    }
-
-    showError.value = false;
+const setShowError = (value: boolean) => {
+    showError.value = value;
 };
 
-/**
- * Decides whether to show the validation error message for missing correct answer option selection.
- * It is triggered only on mount, by a watcher. For BACKEND VAL ERRORS..
- */
-const onMountErrorChecker = (): void => {
-
-    const validationError = props.beValidationErrors?.[`questions.${props.questionIndex}.answer_options`]?.[0];
-
-    if (validationError && selectedAnswerOption.value === null) {
-
-        showError.value = true;
-        return;
-    }
-
-    showError.value = false;
+const selectedAnswerOption = ref<number | string | null>(null);
+const setSelectedAnswerOption = (answerOptionId: number | string | null) => {
+    selectedAnswerOption.value = answerOptionId;
 };
-
-watch(
-    () => selectedAnswerOption.value,
-    () => {
-        continousErrorChecker();
-    },
-);
-
-watch(
-    () => props.beValidationErrors?.[`questions.${props.questionIndex}.answer_options`]?.[0],
-    () => {
-        onMountErrorChecker();
-    }
-);
-
 
 /**
  * Adds a new answer option in create mode.
@@ -173,92 +73,10 @@ const addNewAnswerOption = () => {
     }
     testEditorStore.addNewAnswerOption(props.question.id as string);
 
-    continousErrorChecker();
-};
-
-/**
- * Deletes the answer option in create mode.
- */
-const deleteAnswerOption = async (answerOptionId: string) => {
-    if (props.mode !== 'create') {
-        return;
-    }
-
-    // In create mode question and answer option ids are not strings, return.
-    if (typeof props.question.id !== 'string') {
-        return;
-    }
-
-    testEditorStore.deleteAnswerOption(
-        props.question.id,
-        answerOptionId
-    );
-
-    /**
-     * If accidentally the deleted answer option was selected as correct answer option, deselect it
-     * by setting selectedAnswerOption to null.
-     */
-    if (selectedAnswerOption.value === answerOptionId) {
-        selectedAnswerOption.value = null;
-    }
-
-    continousErrorChecker();
-};
-
-
-
-/**
- * We inject the reportError() function, provided by TestTakePage.
- */
-const reportError = inject<() => void>('reportError');
-const validationCycle = inject<Ref<number>>('validationCycle');
-
-/**
- * This function will:
- * 1. trigger the showing of the validation error message
- * 2. stop the submitting a request to the BE.
- */
-const validate = () => {
-
-    // If there is no selected answer option for this question...
     if (selectedAnswerOption.value === null) {
-
-        // ... then show the error message for this question...
         showError.value = true;
-
-        // ... and report the error to the TestTakePage, so it can stop the test attempt submission.
-        reportError?.();
     }
-
 };
-
-/**
- * When the validationCycle changes, it means that the TestTakePage sent a signal: hey, please check
- * if the test take has selected anser option for his questions.
- * So, watcher then triggers the validate() function.
- */
-watch(validationCycle!, () => {
-    validate();
-});
-
-/**
- * In 'edit' mode, on mount, we want to display the currently correct answer option as selected.
- * This must not happen in 'take' mode never!!!
- */
-onMounted(() => {
-
-    // If in edit mode
-    if (props.mode === 'edit' && typeof props.question.id === 'number') {
-
-        // Find the correct answer option for this question,
-        const correctAnswerOption = props.question.answer_options?.find(ao => ao.is_correct);
-        if (correctAnswerOption) {
-
-            // and set it as selected
-            selectedAnswerOption.value = correctAnswerOption.id;
-        }
-    }
-});
 
 </script>
 

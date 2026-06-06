@@ -68,10 +68,12 @@ const answerOptionText = computed({
     }
 });
 
-const emit = defineEmits(['deleteAnswerOption']);
+const emit = defineEmits<{
+    deleteAnswerOption: [id: string]
+}>();
 
 const deleteAnswerOption = () => {
-    if (props.mode === 'create') {
+    if (props.mode === 'create' && typeof props.answerOption.id === 'string') {
         emit('deleteAnswerOption', props.answerOption.id);
     }
 }
