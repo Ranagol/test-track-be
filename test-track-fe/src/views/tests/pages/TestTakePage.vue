@@ -106,9 +106,6 @@ const createTestAttempt = async () => {
             return; // STOP sending BE request if there is a validation error, the user needs to fix it first.
         }
 
-
-
-
         const test = testEditorStore.test;
         if (!test) return;
 

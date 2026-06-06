@@ -6,10 +6,7 @@
     >
 
         <!-- "Exactly one answer option must be marked as correct." -->
-        {{
-            props.errorMessage ||
-            'Exactly one answer option must be marked as correct FE source.'
-        }}
+        {{ props.errorMessage }}
     </div>
 
 </template>
@@ -22,12 +19,13 @@
  * is in the AnswerOptionList.vue component.
  */
 
-const props = defineProps<{
+const props =withDefaults(defineProps<{
     showError: boolean;
     errorMessage: string;
-}>();
-
-
+}>(), {
+    showError: false,
+    errorMessage: ''
+});
 
 </script>
 

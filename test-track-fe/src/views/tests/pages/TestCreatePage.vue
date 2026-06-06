@@ -79,17 +79,17 @@ const createTest = async () => {
         validationErrors.value = {}
 
         // Reset all validation errors on FE.
-        // validationRef.value?.clearValidate()
+        validationRef.value?.clearValidate()
 
-        // if (!validationRef.value) {
-        //     return
-        // }
+        if (!validationRef.value) {
+            return
+        }
 
-        // const valid = await validationRef.value.validate()
+        const valid = await validationRef.value.validate()
 
-        // if (!valid) {
-        //     return
-        // }
+        if (!valid) {
+            return
+        }
 
         await testEditorStore.create();
         ElMessage.success('Test created');
