@@ -36,7 +36,6 @@ import { ref, onMounted, watch } from 'vue';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import { useValidateAnswerOnTakeTest } from '@/composables/answerOptionListComposables/useValidateAnswerOnTakeTest';
 import { useSelectAnswer } from '@/composables/answerOptionListComposables/useSelectAnswer';
-import { useValidateAnswerFrontend } from '@/composables/answerOptionListComposables/useValidateAnswerFrontend';
 import { useValidateAnswerBackend } from '@/composables/answerOptionListComposables/useValidateAnswerBackend';
 
 const testEditorStore = useTestEditorStore();
@@ -72,6 +71,9 @@ const onChange =() => {
 
     // Inform the parent component (AnswerOptionList) about the selected answer option
     emitSelectedAnswerOption(selectedAnswerOption.value);
+
+    // Check if an answer option is selected, and show or hide the validation error message accordingly
+    checkIfAnswerOptionSelected();
 }
 
 /**
@@ -90,9 +92,6 @@ useValidateAnswerOnTakeTest(selectedAnswerOption, emitShowError);
 // Composable 2: AO selection handling in 'take', 'create' and 'edit' mode
 const { handleAnswerSelection } = useSelectAnswer(props.mode, props.question);
 
-// Composable 3: AO selection manual FRONTEND validation
-const { checkIfAnswerOptionSelected } = useValidateAnswerFrontend(emitShowError, selectedAnswerOption);
-
 // Composable 4: AO selection BACKEND validation
 useValidateAnswerBackend(
     emitShowError,
@@ -101,7 +100,20 @@ useValidateAnswerBackend(
     props.questionIndex
 );
 
+/**
+     * Decides whether to show the validation error message for missing correct answer option selection.
+     * It only works for FE, and it used constantly.
+     */
+    const checkIfAnswerOptionSelected = (): void => {
 
+        if (selectedAnswerOption.value === null) {
+
+            emitShowError(true);
+            return;
+        }
+
+        emitShowError(false);
+    };
 
 /**
  * Deletes the answer option in create mode.
