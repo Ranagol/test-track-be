@@ -43,54 +43,25 @@ import { ElMessageBox } from 'element-plus'
 import type { Action } from 'element-plus'
 import { useRouter } from 'vue-router';
 import { provide, ref, nextTick } from 'vue';
+import { useSubmitStopper } from '@/composables/useSubmitStopper';
 
 const route = useRoute();
 const router = useRouter();
 const testEditorStore = useTestEditorStore();
 const testAttemptStore = useTestAttemptStore();
 const authStore = useAuthStore();
+
 const {
     generalError,
     validationErrors,
     handleBackendErrors
 } = useApiErrors();
 
-
-
 /**
- * Whether the test taker has selected an answer option for each question.
+ * This composable gives the possibility to stop the submission of the test attempt, if there are
+ * validation errors in the answer options selection.
  */
-const hasValidationError = ref(false);
-
-/**
- * Used for triggering the validation in the AnswerOptionList component.
- */
-const validationCycle = ref(0);
-
-/**
- * This function will be provided/injected to the AnswerOptionList, so it can call it.
- */
-const reportError = () => {
-    hasValidationError.value = true;
-};
-
-
-
-/**
- * We provide the reportError() to the AnswerOptionList. This function can send back here a feedback
- * if our manual validation has found any validation errors.
- */
-provide('reportError', reportError);
-
-/**
- * We provide the validationCycle to the AnswerOptionList. It's purpose is to trigger the validation
- * in the AnswerOptionList, by changing its value. So, this is in the end a counter. We use a counter,
- * because we may need to trigger the validation multiple times. This can't be done with a boolean.
- */
-provide('validationCycle', validationCycle);
-
-
-
+const { validateAnswerOptions } = useSubmitStopper();
 
 
 /**
@@ -99,11 +70,9 @@ provide('validationCycle', validationCycle);
 const createTestAttempt = async () => {
     try {
 
-        hasValidationError.value = false;//reset the validation error before validating the answer options, so that if the user has fixed the error, it will not be shown again.
-        validationCycle.value++;//trigger the validation in the AnswerOptionList component, which will call the reportError() if there is a validation error (missing answer option selection for a question)
-        await nextTick();//wait for the DOM to update after changing the validationCycle, so that the validation in the AnswerOptionList can run and report any errors.
-        if (hasValidationError.value) {
-            return; // STOP sending BE request if there is a validation error, the user needs to fix it first.
+        // Validate answer option selection and stop if validation fails
+        if (!(await validateAnswerOptions())) {
+            return;
         }
 
         const test = testEditorStore.test;
@@ -115,7 +84,6 @@ const createTestAttempt = async () => {
         }
 
         const userAnswers = testAttemptStore.userAnswers;
-
 
         await testAttemptService.create(testAttempData, userAnswers);
 
