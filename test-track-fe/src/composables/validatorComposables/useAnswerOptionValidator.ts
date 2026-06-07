@@ -1,6 +1,13 @@
 import { nextTick, provide, ref } from 'vue';
 
-export function useSubmitStopper() {
+/**
+ * The answer option selection must be done with manualy logic, Element Plus can't done this in these
+ * nested el-form form. So here we check the answer option selection, and if an answer options is not
+ * selected, then
+ * 1. Display answer option selection error message
+ * 2. Stop the submit
+ */
+export function useAnswerOptionValidator() {
 
     /**
      * Whether the test taker has selected an answer option for each question.

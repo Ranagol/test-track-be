@@ -42,8 +42,7 @@ import testAttemptService from '@/services/testAttemptService';
 import { ElMessageBox } from 'element-plus'
 import type { Action } from 'element-plus'
 import { useRouter } from 'vue-router';
-import { provide, ref, nextTick } from 'vue';
-import { useSubmitStopper } from '@/composables/useSubmitStopper';
+import { useAnswerOptionValidator } from '@/composables/validatorComposables/useAnswerOptionValidator';
 
 const route = useRoute();
 const router = useRouter();
@@ -61,13 +60,13 @@ const {
  * This composable gives the possibility to stop the submission of the test attempt, if there are
  * validation errors in the answer options selection.
  */
-const { validateSelectAnswerOptions } = useSubmitStopper();
+const { validateSelectAnswerOptions } = useAnswerOptionValidator();
 
 
 /**
  * Used in test taking mode, for actually taking the test.
  * In take mode there is no standard el-form validation check. Because there are only
- * answer option selections. And that is checked with the useSubmitStopper/
+ * answer option selections. And that is checked with the useAnswerOptionValidator/
  */
 const createTestAttempt = async () => {
     try {
@@ -76,6 +75,8 @@ const createTestAttempt = async () => {
         if (!(await validateSelectAnswerOptions())) {
             return;
         }
+
+        // We do not validate the test form in take mode, there is no test form editing here.
 
         const test = testEditorStore.test;
         if (!test) return;

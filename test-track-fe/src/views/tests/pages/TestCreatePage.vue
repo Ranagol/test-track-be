@@ -52,7 +52,8 @@ import { ElMessage } from 'element-plus';
 import FinalButton from '@/views/tests/test/FinalButton.vue';
 import Heading1 from '@/resusableComponents/Heading1.vue';
 import  { testRules } from '@/validationRules/testRules';
-import { useTestValidator } from '@/composables/useTestValidator';
+import { useTestValidator } from '@/composables/validatorComposables/useTestValidator';
+import { useAnswerOptionValidator } from '@/composables/validatorComposables/useAnswerOptionValidator';
 
 const {
     generalError,
@@ -60,13 +61,29 @@ const {
     validationErrors
 } = useApiErrors();
 
+/**
+ * Composable that executes the regular FE validation for all forms in el-form (except the validation
+ * of answer option selection))
+ */
 const { validateTest } = useTestValidator(validationErrors.value);
+
+/**
+ * Composable the does the validation of the answer option selection.
+ */
+const { validateSelectAnswerOptions } = useAnswerOptionValidator();
+
+
 
 const testEditorStore = useTestEditorStore();
 const router = useRouter();
 
 const createTest = async () => {
     try {
+
+        // Validate answer option selection and stop if validation fails
+        if (!(await validateSelectAnswerOptions())) {
+            return;
+        }
 
         // Validate the test form
         if (!(await validateTest())) {
