@@ -1,5 +1,8 @@
 import { computed, type Ref, watch } from 'vue';
 
+/**
+ * Composable for handling backend validation errors for answer options in a Vue component.
+ */
 export function useValidateAnswerBackend(
     emitShowError: (value: boolean) => void,
     selectedAnswerOption: Ref<number | string | null>,

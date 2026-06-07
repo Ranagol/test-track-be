@@ -2,6 +2,10 @@ import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import type { Question } from '@/types/types';
 
+/**
+ * Used for handling (not validating, handling) the answer option selection in 'create', 'edit' and
+ * 'take' modes.
+ */
 export function useSelectAnswer(
     mode: 'take' | 'create' | 'edit',
     question: Question

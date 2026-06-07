@@ -1,5 +1,8 @@
 import { watch, inject, type Ref } from 'vue';
 
+/**
+ * Used in RadioGroup.vue, for displaying select answer option validation error message, in 'take' mode
+ */
 export const useValidateAnswerOnTakeTest = (
 
     selectedAnswerOption: Ref<number | string | null>,

@@ -3,7 +3,7 @@ import type { BackendError } from '@/types/types';
 import axios from 'axios';
 
 /**
- * Composable for handling login and register backend validation errors feedback in a Vue component.
+ * Composable for handling backend validation errors feedback in a Vue component.
  */
 export function useApiErrors() {
 
