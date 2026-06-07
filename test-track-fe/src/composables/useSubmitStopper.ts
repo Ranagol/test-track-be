@@ -36,7 +36,7 @@ export function useSubmitStopper() {
      * Validates answer option selections for all questions in the test.
      * Returns true if validation passes, false if there are validation errors.
      */
-    const validateAnswerOptions = async (): Promise<boolean> => {
+    const validateSelectAnswerOptions = async (): Promise<boolean> => {
 
         // Reset the validation error before validating the answer options, so that if the user has
         // fixed the error, it will not be shown again.
@@ -55,7 +55,7 @@ export function useSubmitStopper() {
     };
 
     return {
-        validateAnswerOptions
+        validateSelectAnswerOptions
     };
 
 }

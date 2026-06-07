@@ -61,17 +61,19 @@ const {
  * This composable gives the possibility to stop the submission of the test attempt, if there are
  * validation errors in the answer options selection.
  */
-const { validateAnswerOptions } = useSubmitStopper();
+const { validateSelectAnswerOptions } = useSubmitStopper();
 
 
 /**
  * Used in test taking mode, for actually taking the test.
+ * In take mode there is no standard el-form validation check. Because there are only
+ * answer option selections. And that is checked with the useSubmitStopper/
  */
 const createTestAttempt = async () => {
     try {
 
         // Validate answer option selection and stop if validation fails
-        if (!(await validateAnswerOptions())) {
+        if (!(await validateSelectAnswerOptions())) {
             return;
         }
 

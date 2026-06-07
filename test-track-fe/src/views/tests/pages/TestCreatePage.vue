@@ -52,8 +52,7 @@ import { ElMessage } from 'element-plus';
 import FinalButton from '@/views/tests/test/FinalButton.vue';
 import Heading1 from '@/resusableComponents/Heading1.vue';
 import  { testRules } from '@/validationRules/testRules';
-import { ref } from 'vue'
-import type { FormInstance } from 'element-plus'
+import { useTestValidator } from '@/composables/useTestValidator';
 
 const {
     generalError,
@@ -61,31 +60,16 @@ const {
     validationErrors
 } = useApiErrors();
 
+const { validateTest } = useTestValidator(validationErrors.value);
+
 const testEditorStore = useTestEditorStore();
 const router = useRouter();
-
-/**
- * Contains a reactive reference to the form, used for validation before test creation. So, thorugh
- * this, we can access title, description and all the questions and answer options, to validate them.
- */
-const validationRef = ref<FormInstance>();
 
 const createTest = async () => {
     try {
 
-        // Reset all validation errors from BE.
-        validationErrors.value = {}
-
-        // Reset all validation errors on FE.
-        validationRef.value?.clearValidate()
-
-        if (!validationRef.value) {
-            return
-        }
-
-        const valid = await validationRef.value.validate()
-
-        if (!valid) {
+        // Validate the test form
+        if (!(await validateTest())) {
             return
         }
 
@@ -93,8 +77,6 @@ const createTest = async () => {
         ElMessage.success('Test created');
         router.push(`/tests`);
     } catch (e) {
-        console.error(e);
-        console.dir(e);
         handleBackendErrors(e);
     }
 };
