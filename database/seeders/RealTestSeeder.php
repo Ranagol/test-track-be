@@ -23,7 +23,7 @@ class RealTestSeeder extends Seeder
          *
          * Small trick: in these tests, always the first answer option will be the correct one.
          */
-        $tester = User::role('tester')->where('email', 'tester@gmail.com')->first();
+        $tester = User::role('tester')->where('email', config('app.DEFAULT_TESTER_EMAIL'))->first();
 
         $this->createMathTest($tester);
         $this->createLiteratureTest($tester);

@@ -19,8 +19,8 @@ class RealTestAttemptSeeder extends Seeder
      */
     public function run(TestAttemptEvaluatorInterface $evaluator): void
     {
-        $tester = User::role('tester')->where('email', 'tester@gmail.com')->first();
-        $testTaker = User::role('test-taker')->where('email', 'test-taker@gmail.com')->first();
+        $tester = User::role('tester')->where('email', config('app.DEFAULT_TESTER_EMAIL'))->first();
+        $testTaker = User::role('test-taker')->where('email', config('app.DEFAULT_TEST_TAKER_EMAIL'))->first();
 
         // These two tests are meaningful, concrete tests.
         $tests = $tester->createdTests()
