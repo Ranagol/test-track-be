@@ -42,7 +42,7 @@
     lang="ts"
 >
 import TestBase from '@/views/tests/test/TestBase.vue';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import Container from '@/views/tests/test/Container.vue';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
@@ -54,6 +54,7 @@ import Heading1 from '@/resusableComponents/Heading1.vue';
 import  { testRules } from '@/validationRules/testRules';
 import { useTestValidator } from '@/composables/validatorComposables/useTestValidator';
 import { useAnswerOptionValidator } from '@/composables/validatorComposables/useAnswerOptionValidator';
+import type { FormInstance } from 'element-plus';
 
 const {
     generalError,
@@ -61,11 +62,24 @@ const {
     validationErrors
 } = useApiErrors();
 
+const testEditorStore = useTestEditorStore();
+const router = useRouter();
+
+/**
+ * Validates the test form on FE. All, except the answer option selection.
+ * Contains a reactive reference to the form, used for validation before test creation. So, thorugh
+ * this, we can access title, description and all the questions and answer options, to validate them.
+ */
+const validationRef = ref<FormInstance>();
+
 /**
  * Composable that executes the regular FE validation for all forms in el-form (except the validation
  * of answer option selection))
  */
-const { validateTest } = useTestValidator(validationErrors.value);
+const { validateTest } = useTestValidator(
+    validationRef,
+    validationErrors.value
+);
 
 /**
  * Composable the does the validation of the answer option selection.
@@ -73,9 +87,6 @@ const { validateTest } = useTestValidator(validationErrors.value);
 const { validateSelectAnswerOptions } = useAnswerOptionValidator();
 
 
-
-const testEditorStore = useTestEditorStore();
-const router = useRouter();
 
 const createTest = async () => {
     try {

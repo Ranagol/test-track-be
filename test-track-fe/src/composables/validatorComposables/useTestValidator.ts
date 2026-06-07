@@ -1,14 +1,12 @@
-import { ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import type { FormInstance } from 'element-plus';
 
-export function useTestValidator(backendValidationErrors: object) {
-
-    /**
-     * Validates the test form on FE. All, except the answer option selection.
-     * Contains a reactive reference to the form, used for validation before test creation. So, thorugh
-     * this, we can access title, description and all the questions and answer options, to validate them.
-     */
-    const validationRef = ref<FormInstance>();
+export function useTestValidator(
+    validationRef: Ref<FormInstance | undefined>,
+    backendValidationErrors: object
+): {
+    validateTest: () => Promise<boolean>;
+} {
 
     /**
      * Validates the test form on both frontend and backend levels.
