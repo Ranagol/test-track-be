@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class RegisterControllerTest extends TestCase
+class LoginTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -25,27 +25,24 @@ class RegisterControllerTest extends TestCase
         );
     }
 
-    public function test_register_with_valid_data(): void
+    public function test_login_with_valid_credentials(): void
     {
-        $response = $this->post('/api/register', [
-            'name' => 'Jane Doe',
-            'email' => 'jane.doe@example.com',
+        $response = $this->postJson('/api/login', [
+            'email' => $this->user->email,
             'password' => 'password123',
-            'password_confirmation' => 'password123',
         ]);
 
         $this->assertAuthenticatedAs($this->user);
+        $response->assertStatus(200);
     }
 
-    public function test_register_with_invalid_data(): void
+    public function test_login_with_invalid_credentials(): void
     {
-        $response = $this->post('/api/register', [
-            'name' => 'Jane Doe',
-            'email' => 'jane.doe@example.com',
-            'password' => 'password123',
-            'password_confirmation' => 'password123',
+        $response = $this->postJson('/api/login', [
+            'email' => $this->user->email,
+            'password' => 'wrongpassword',
         ]);
 
-        $this->assertAuthenticatedAs($this->user);
+        $response->assertStatus(422);
     }
 }

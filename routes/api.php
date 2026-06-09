@@ -16,12 +16,10 @@ use Illuminate\Support\Facades\Route;
  * requests. So, we needed to add the API routes for login, register and logout here.
  */
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
-    ->middleware('guest')
     ->name('login');
 
 // Register
 Route::post('/register', [RegisteredUserController::class, 'store'])
-    ->middleware('guest')
     ->name('register');
 
 // Logout
