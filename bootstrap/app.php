@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\HandleCors;
+use Illuminate\Session\Middleware\StartSession;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -24,10 +25,15 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleCors::class,
 
             /**
+             * Laravel Vue can communicate without this, but tests will not work.
+             */
+            StartSession::class,
+
+            /**
              * This is for SANCTUM.
              * Stateful means: Laravel 'remembers' the user by looking up the session cookie and
              * matching it to a session in the database.
-             * This line is only needed for Sanctumm cookies session auth, not needed for token auth.
+             * This line is only needed for Sanctum cookies session auth, not needed for token auth.
              */
             EnsureFrontendRequestsAreStateful::class,
         ]);
