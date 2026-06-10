@@ -31,7 +31,7 @@ class TakeTest extends TestCase
     /**
      * We 'solve' here the Math test, which was seeded in setUp().
      */
-    public function test_when_user_takes_test_it_will_be_scored_correctly(): void
+    public function test_user_can_take_test_and_it_will_be_scored_correctly(): void
     {
         $testTaker = User::where('email', config('app.DEFAULT_TEST_TAKER_EMAIL'))->first();
 
