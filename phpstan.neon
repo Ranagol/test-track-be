@@ -76,5 +76,9 @@ parameters:
         - identifier: argument.type
           message: '/Parameter #1 \$question of method App\\Http\\Controllers\\Api\\TestController::createAnswerOptions\(\) expects App\\Models\\Question, Illuminate\\Database\\Eloquent\\Model given\./'
           path: app/Http/Controllers/Api/TestController.php
+        # Ignore always true/false assertions in test files
+        - identifier: method.alreadyNarrowedType
+          path: tests/
+
     # Do not fail if ignored errors are not found
     reportUnmatchedIgnoredErrors: false

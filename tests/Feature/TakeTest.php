@@ -19,6 +19,8 @@ class TakeTest extends TestCase
         parent::setUp();
 
         $this->seed([
+
+            // TODO ANDOR we need to get rid of the Spatie Permissions
             RolesAndPermissionsSeeder::class,
             UserSeeder::class,
             RealTestSeeder::class,
