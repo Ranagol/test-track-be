@@ -58,6 +58,11 @@ class Question extends Model
         return $this->hasOne(AnswerOption::class)->where('is_correct', true)->select('id', 'question_id');
     }
 
+    public function correctAnswer(): HasOne
+    {
+        return $this->hasOne(AnswerOption::class)->where('is_correct', true);
+    }
+
     public function correctAnswerText(): HasOne
     {
         return $this->hasOne(AnswerOption::class)->where('is_correct', true)->select('id', 'text', 'question_id');
