@@ -45,4 +45,20 @@ class LoginTest extends TestCase
 
         $response->assertStatus(422);
     }
+
+    public function test_user_can_logout(): void
+    {
+        $response = $this->postJson('/api/login', [
+            'email' => $this->user->email,
+            'password' => 'password123',
+        ]);
+
+        $this->assertAuthenticatedAs($this->user);
+        $response->assertStatus(200);
+
+        $response = $this->postJson('/api/logout');
+
+        $this->assertGuest();
+        $response->assertStatus(200);
+    }
 }
