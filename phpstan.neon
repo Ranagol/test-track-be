@@ -48,6 +48,9 @@ parameters:
         - identifier: useless.use
           message: '/^Imported class.*ValidationRule.*is not used/'
           path: app/Http/Requests/
+        # PHPUnit assertTrue with literal true (placeholder tests)
+        - message: '/Call to method PHPUnit\\Framework\\Assert::assertTrue\(\) with true will always evaluate to true/'
+          path: tests/
         # Unresolved template types in collect() function
         - identifier: argument.templateType
           path: app/Http/Requests/StoreTestAttemptRequest.php

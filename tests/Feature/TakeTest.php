@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Test;
+use App\Models\TestAttempt;
 use App\Models\User;
 use Database\Seeders\RealTestSeeder;
 use Database\Seeders\RolesAndPermissionsSeeder;
@@ -30,7 +31,7 @@ class TakeTest extends TestCase
     /**
      * We 'solve' here the Math test, which was seeded in setUp().
      */
-    public function test_user_can_take_test(): void
+    public function test_when_user_takes_test_it_will_be_scored_correctly(): void
     {
         $testTaker = User::where('email', config('app.DEFAULT_TEST_TAKER_EMAIL'))->first();
 
@@ -72,5 +73,43 @@ class TakeTest extends TestCase
         $response = $this->actingAs($testTaker)->postJson('/api/test-attempts', $testAttempt);
 
         $response->assertStatus(201);
+
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'test_id',
+                'user_id',
+                'score_percentage',
+                'created_at',
+                'updated_at',
+                'userAnswers' => [
+                    '*' => [
+                        'id',
+                        'test_attempt_id',
+                        'question_id',
+                        'answer_option_id',
+                    ],
+                ],
+            ],
+        ]);
+
+        // Access the newly created test attempt from the database
+        $freshTestAttempt = TestAttempt::where('user_id', $testTaker->id)
+            ->where('test_id', $test->id)
+            ->latest()
+            ->first();
+
+        /**
+         * This test taking in this method is done so, that the final expected score is 33.33
+         * Because 1 question was correctly answered, two questions were incorrectly answered.
+         */
+        $expectedScore = 33.33;
+        $this->assertEquals($expectedScore, $freshTestAttempt->score_percentage); // 1 correct out of 3
+
+        /**
+         * In this test, the user answered 3 questions, so we expect to have 3 user answers.
+         */
+        $expectedNumberOfUserAnswers = 3;
+        $this->assertCount($expectedNumberOfUserAnswers, $freshTestAttempt->userAnswers);
     }
 }
