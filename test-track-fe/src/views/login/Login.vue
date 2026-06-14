@@ -23,6 +23,7 @@
             >
 
                 <el-input
+                    id="email-input"
                     v-model="data.email"
                     placeholder="Enter your email"
                 />
@@ -37,6 +38,7 @@
             >
 
                 <el-input
+                    id="password-input"
                     v-model="data.password"
                     placeholder="Enter your password"
                     type="password"
@@ -48,6 +50,7 @@
             <el-form-item>
 
                 <el-button
+                    id="login-button"
                     @click="handleLogin"
                     :disabled="authStore.loading"
                     class="ml-auto"
@@ -62,6 +65,7 @@
             <p class="text-sm text-gray-500">
                 Don't have an account?
                 <router-link
+                    id="register-link"
                     :to="{ name: 'register', query: { redirect: route.query.redirect } }"
                     class="text-blue-500 hover:underline"
                 >

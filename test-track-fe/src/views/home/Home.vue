@@ -20,8 +20,6 @@
 
     </el-form>
 
-
-
     <h1>Dummy login for quick testing</h1>
     <div>
         <p v-if="authStore.loading">Loading...</p>
