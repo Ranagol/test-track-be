@@ -22,7 +22,7 @@
 
             <DisplayBackendError
                 :generalError="generalError"
-            />
+            />;
 
             <FinalButton
                 class="mt-4"
