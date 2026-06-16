@@ -19,6 +19,7 @@
             >
 
                 <el-input
+                    id="name-input"
                     v-model="data.name"
                     placeholder="Enter your name"
                 />
@@ -33,6 +34,7 @@
             >
 
                 <el-input
+                    id="email-input"
                     v-model="data.email"
                     placeholder="Enter your email"
                 />
@@ -47,6 +49,7 @@
             >
 
                 <el-input
+                    id="password-input"
                     v-model="data.password"
                     placeholder="Enter your password"
                     type="password"
@@ -62,6 +65,7 @@
             >
 
                 <el-input
+                    id="password-confirmation-input"
                     v-model="data.password_confirmation"
                     placeholder="Confirm your password"
                     type="password"
@@ -73,6 +77,7 @@
             <el-form-item>
 
                 <el-button
+                    id="register-button"
                     @click="handleRegister"
                     :disabled="authStore.loading"
                     class="ml-auto"

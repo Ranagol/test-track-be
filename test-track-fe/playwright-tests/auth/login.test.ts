@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 // todo andor: you must make all urls dynamic, so that they can be used in different environments (dev, staging, prod)
-test('open login page', async ({ page }) => {
+test('log in with valid credentials', async ({ page }) => {
 
     await page.goto('http://localhost:5174/login');
 
@@ -14,5 +14,8 @@ test('open login page', async ({ page }) => {
     // We expect after a successful login to be redirected to the '/' page
     await expect(page).toHaveURL('http://localhost:5174/');
 
+    // When the user is logged in, we expect to see a logout button in the header
     await expect(page.locator('text=Logout')).toBeVisible();
 });
+
+
