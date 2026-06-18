@@ -8,6 +8,7 @@
 
         <!-- RADIO BUTTON -->
         <el-radio
+            :id="`answer-option-id-${answerOption.id}`"
             v-for="(answerOption, answerOptionIndex) in (question.answer_options || [])"
             :key="answerOption.id"
             :value="answerOption.id"

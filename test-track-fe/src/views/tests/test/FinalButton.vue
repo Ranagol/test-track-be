@@ -3,6 +3,7 @@
     <el-form-item class="flex flex-col items-end">
 
         <el-button
+            id="submit-button"
             @click="handleClick"
             class="mt-4"
             :type="props.buttonType"
