@@ -53,6 +53,13 @@
             "@phpunit"
         ],
         "scribe": "sail artisan scribe:generate",
+        "playwright": "bash scripts/playwright.sh",
+
+
+
+
+
+
         "setup": [
             "composer install",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
