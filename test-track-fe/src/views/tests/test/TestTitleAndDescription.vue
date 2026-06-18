@@ -28,6 +28,7 @@
                 :error="props.beValidationErrors.title?.[0]"
             >
                 <el-input
+                    id="test-title-input"
                     v-model="testEditorStore.test.title"
                     placeholder="Enter test title"
                     class="mb-1"
@@ -41,6 +42,7 @@
                 :error="props.beValidationErrors.description?.[0]"
             >
                 <el-input
+                    id="test-description-input"
                     v-model="testEditorStore.test.description"
                     placeholder="Enter test description"
                     type="textarea"

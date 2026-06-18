@@ -2,6 +2,7 @@
     <div class="flex justify-center">
 
         <el-button
+            id="add-new-question-button"
             type="success"
             @click="addNewQuestion"
             size="large"

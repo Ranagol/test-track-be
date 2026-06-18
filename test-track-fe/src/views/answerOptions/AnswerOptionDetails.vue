@@ -8,6 +8,7 @@
 
             <!-- ANSWER OPTION TEXT -->
             <el-input
+                :id="`answer-option-${props.questionIndex}-${props.answerOptionIndex}`"
                 v-model="answerOptionText"
                 placeholder="Answer option text"
             />

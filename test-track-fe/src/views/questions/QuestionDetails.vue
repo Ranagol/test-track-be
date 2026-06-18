@@ -14,7 +14,7 @@
 
             <!-- QUESTION TEXT INPUT & DISPLAY -->
             <el-input
-                id="question-text-input"
+                :id="`question-text-id-${props.index}`"
                 v-model="questionText"
                 placeholder="Enter question text"
             />

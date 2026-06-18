@@ -1,5 +1,6 @@
 <template>
     <el-radio-group
+        :id="`radio-group-for-question-index-${props.questionIndex}`"
         v-model="selectedAnswerOption"
         class="mt-3"
         style="display: flex; flex-direction: column; align-items: flex-start;"

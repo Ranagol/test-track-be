@@ -22,9 +22,9 @@
     <AddNewAnswerOption
         v-if="props.mode === 'create' && typeof props.question.id === 'string'"
         :questionId="props.question.id"
+        :questionIndex="props.questionIndex"
         class="mt-4"
         @addNewAnswerOption="addNewAnswerOption"
-
     />
 
 </template>
