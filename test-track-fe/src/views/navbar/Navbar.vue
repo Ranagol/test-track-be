@@ -27,6 +27,7 @@
             v-if="authStore.user"
         >
             <el-button
+                id="logout-button"
                 @click="logout"
                 text
             >Logout</el-button>
