@@ -111,16 +111,23 @@ async function createSecondQuestionWithTwoAnswerOptions(page: Page): Promise<voi
 
 async function selectCorrectAnswerOptions(page: Page): Promise<void>
 {
-    // Get all radio groups (every radio group contains question and answer options)
+    /**
+     * Get all radio groups (every radio group contains question and answer options)
+     * ^= means "starts with". It matches any element whose "id" starts with "radio-group-for-question-index-". This is useful because we have multiple questions and we want to select the correct answer options for each question.
+     */
     const radioGroups = page.locator('[id^="radio-group-for-question-index-"]');
 
     const groupCount = await radioGroups.count();
 
     for (let i = 0; i < groupCount; i++) {
+
+        // We loop thorugh every radio group...
         const group = radioGroups.nth(i);
 
+        // ... and we select the first radio button in each group as the correct answer option
         const input = group.locator('input[type="radio"]').first();
 
+        // We need to use force: true because the radio button is hidden and wrapped in a custom component.
         await input.click({ force: true });
     }
 }
