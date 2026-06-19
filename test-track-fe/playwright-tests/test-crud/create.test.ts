@@ -6,6 +6,7 @@ import { login } from './../auth/helpers';
  */
 const email = process.env.DEFAULT_TESTER_EMAIL!;
 const password = process.env.DEFAULT_TESTER_PASSWORD!;
+
 const testTitle: string = 'My first test';
 const testDescription: string = 'This is a description for my first test';
 
