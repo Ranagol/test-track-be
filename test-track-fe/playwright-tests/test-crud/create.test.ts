@@ -2,10 +2,12 @@ import { test, expect, Page } from '@playwright/test';
 import { login } from './../auth/helpers';
 
 /**
- * We export the default tester email and password from the .env file.
+ * We export the default tester email, password, baseUrl from the .env file.
  */
 const email = process.env.DEFAULT_TESTER_EMAIL!;
 const password = process.env.DEFAULT_TESTER_PASSWORD!;
+// This will be: http://localhost:5174 in local environment,
+const baseUrl = process.env.FRONTEND_URL!;
 
 const testTitle: string = 'My first test';
 const testDescription: string = 'This is a description for my first test';
@@ -27,7 +29,7 @@ test('create a new test', async ({ page }) => {
     await page.locator('#submit-button').click();
 
     // We expect after creating a test to be redirected to the '/tests' page
-    await expect(page).toHaveURL('http://localhost:5174/tests');
+    await expect(page).toHaveURL(`${baseUrl}/tests`);
 
 
 });
@@ -41,7 +43,7 @@ async function doLogin(
     await login(page, email, password);
 
     // We expect after a successful login to be redirected to the '/' page
-    await expect(page).toHaveURL('http://localhost:5174/');
+    await expect(page).toHaveURL(`${baseUrl}/`);
 
     // When the user is logged in, we expect to see a logout button in the header
     await expect(page.locator('text=Logout')).toBeVisible();
@@ -49,7 +51,7 @@ async function doLogin(
 
 async function goToCreateTestPage(page: Page): Promise<void>
 {
-    const createTestUrl = 'http://localhost:5174/tests/create';
+    const createTestUrl = `${baseUrl}/tests/create`;
 
     await page.goto(createTestUrl);
 
