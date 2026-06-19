@@ -1,8 +1,11 @@
 import { test, expect, Page } from '@playwright/test';
 import { login } from './../auth/helpers';
 
-const email: string = 'tester@gmail.com';
-const password: string = 'tester@gmail.com';
+/**
+ * We export the default tester email and password from the .env file.
+ */
+const email = process.env.DEFAULT_TESTER_EMAIL!;
+const password = process.env.DEFAULT_TESTER_PASSWORD!;
 const testTitle: string = 'My first test';
 const testDescription: string = 'This is a description for my first test';
 
