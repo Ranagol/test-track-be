@@ -6,6 +6,7 @@ import { login } from './../auth/helpers';
  */
 const email = process.env.DEFAULT_TESTER_EMAIL!;
 const password = process.env.DEFAULT_TESTER_PASSWORD!;
+
 // This will be: http://localhost:5174 in local environment,
 const baseUrl = process.env.FRONTEND_URL!;
 
@@ -31,6 +32,11 @@ test('create a new test', async ({ page }) => {
     // We expect after creating a test to be redirected to the '/tests' page
     await expect(page).toHaveURL(`${baseUrl}/tests`);
 
+    // The newly created test should be visible in the list of tests, in the link column.
+    await expect(page.getByRole('link', { name: testTitle }).first()).toBeVisible();
+
+    // The newly created test description should be visible in the description column.
+    await expect(page.getByText(testDescription).first()).toBeVisible();
 
 });
 
@@ -137,4 +143,5 @@ async function selectCorrectAnswerOptions(page: Page): Promise<void>
         await input.click({ force: true });
     }
 }
+
 
