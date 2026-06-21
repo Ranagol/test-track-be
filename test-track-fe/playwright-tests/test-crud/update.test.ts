@@ -6,6 +6,7 @@ import { login } from './../auth/helpers';
  */
 const email = process.env.DEFAULT_TESTER_EMAIL!;
 const password = process.env.DEFAULT_TESTER_PASSWORD!;
+
 // This will be: http://localhost:5174 in local environment,
 const baseUrl = process.env.FRONTEND_URL!;
 

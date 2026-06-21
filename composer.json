@@ -47,15 +47,26 @@
         "pint": "vendor/bin/sail pint",
         "phpunit": "vendor/bin/sail php vendor/bin/phpunit",
         "type-check": "cd test-track-fe && npm run type-check",
-        "playwright": "bash scripts/playwright.sh",
+        "pw": "bash scripts/playwright.sh",
+        "full-check-be": [
+            "@larastan",
+            "@phpmd",
+            "@pint",
+            "@phpunit"
+        ],
+        "full-check-fe": [
+            "@type-check",
+            "@pw"
+        ],
         "full-check": [
             "@larastan",
             "@phpmd",
             "@pint",
             "@phpunit",
             "@type-check",
-            "@playwright"
+            "@pw"
         ],
+
         "scribe": "sail artisan scribe:generate",
 
 
