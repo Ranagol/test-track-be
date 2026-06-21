@@ -46,14 +46,16 @@
         "phpmd": "XDEBUG_MODE=off vendor/bin/sail php vendor/bin/phpmd app ansi phpmd.xml",
         "pint": "vendor/bin/sail pint",
         "phpunit": "vendor/bin/sail php vendor/bin/phpunit",
+        "playwright": "bash scripts/playwright.sh",
         "full-check": [
             "@larastan",
             "@phpmd",
             "@pint",
-            "@phpunit"
+            "@phpunit",
+            "@playwright"
         ],
         "scribe": "sail artisan scribe:generate",
-        "playwright": "bash scripts/playwright.sh",
+
 
 
 
