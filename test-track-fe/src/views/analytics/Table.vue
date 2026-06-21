@@ -134,7 +134,7 @@ function transformTestData(test: Test) {
     const rows = questions.map((q: Question, index: number) => {
         const row: { rowNumber: number; questionId: number; questionText: string; correctAnswer: string | null; attempts: Record<string, string> } = {
             rowNumber: index + 1,
-            questionId: q.id, // important for row-key
+            questionId: Number(q.id), // important for row-key
             questionText: q.text,
             correctAnswer: (q as any).correct_answer_text ?? null,
 
@@ -153,7 +153,7 @@ function transformTestData(test: Test) {
             const attemptId = String(attempt.id);
 
             row.attempts[attemptId] =
-                attemptMap[attemptId]?.[q.id] ?? '-';
+                attemptMap[attemptId]?.[Number(q.id)] ?? '-';
         }
 
         return row;
