@@ -91,9 +91,9 @@ jobs:
       - run: php artisan test --compact
 
   # ─────────────────────────────
-  # FRONTEND
+  # ts-types (Frontend type checking)
   # ─────────────────────────────
-  frontend:
+  ts-types:
     runs-on: ubuntu-24.04
 
     steps:
@@ -104,11 +104,52 @@ jobs:
       - run: cd test-track-fe && npm run type-check
 
   # ─────────────────────────────
+  # PLAYWRIGHT (E2E tests with DB)
+  # ─────────────────────────────
+  playwright:
+    runs-on: ubuntu-24.04
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_DATABASE: test_track
+          MYSQL_USER: test_track_user
+          MYSQL_PASSWORD: secret
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    env:
+      APP_ENV: testing
+      APP_KEY: base64:0000000000000000000000000000000000000000000=
+      DB_CONNECTION: mysql
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_DATABASE: test_track
+      DB_USERNAME: test_track_user
+      DB_PASSWORD: secret
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/php-setup
+
+      - uses: ./.github/actions/node-setup
+
+      - run: bash ./scripts/playwright.sh
+
+  # ─────────────────────────────
   # DEPLOY
   # ─────────────────────────────
   deploy:
     runs-on: ubuntu-24.04
-    needs: [pint, larastan, phpmd, phpunit, frontend]
+    needs: [pint, larastan, phpmd, phpunit, ts-types, playwright]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
