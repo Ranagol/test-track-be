@@ -143,6 +143,7 @@ jobs:
       - uses: ./.github/actions/node-setup
 
       - run: php artisan migrate:fresh --seed --env=testing --ansi
+      - run: cd test-track-fe && npx playwright install
       - run: cd test-track-fe && npx playwright test
 
   # ─────────────────────────────
