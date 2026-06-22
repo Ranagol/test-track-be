@@ -42,11 +42,12 @@
         }
     },
     "scripts": {
+        "frontend-container": "docker compose exec frontend sh",
         "larastan": "vendor/bin/sail php vendor/bin/phpstan analyse --memory-limit=2G",
         "phpmd": "XDEBUG_MODE=off vendor/bin/sail php vendor/bin/phpmd app ansi phpmd.xml",
         "pint": "vendor/bin/sail pint",
         "phpunit": "vendor/bin/sail php vendor/bin/phpunit",
-        "type-check": "cd test-track-fe && npm run type-check",
+        "type-check": "docker compose exec frontend npm run type-check",
         "pw": "bash scripts/playwright.sh",
         "full-check-be": [
             "@larastan",
