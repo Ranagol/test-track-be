@@ -136,6 +136,10 @@ jobs:
       DB_DATABASE: test_track
       DB_USERNAME: test_track_user
       DB_PASSWORD: secret
+      FRONTEND_URL: http://127.0.0.1:5174
+      VITE_API_BASE_URL: http://127.0.0.1:8001
+      DEFAULT_TESTER_EMAIL: tester@gmail.com
+      DEFAULT_TESTER_PASSWORD: tester@gmail.com
 
     steps:
       - uses: actions/checkout@v4
