@@ -40,3 +40,4 @@ test-track-fe/pnpm-debug.log*
 .agents/
 .claude/
 .github/skills/
+playwright-report/index.html

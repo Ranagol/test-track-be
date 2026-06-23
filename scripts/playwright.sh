@@ -13,8 +13,4 @@ npx playwright test
 
 cd ..
 
-echo "Copying report..."
-rm -rf playwright-report
-cp -r test-track-fe/playwright-report . 2>/dev/null || true
-
-echo "Done."
+echo "Playwright tests done."
