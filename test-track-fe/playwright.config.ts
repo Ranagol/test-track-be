@@ -8,6 +8,9 @@ dotenv.config({
 
 import { defineConfig, devices } from '@playwright/test';
 
+const frontendUrl = process.env.FRONTEND_URL || 'http://127.0.0.1:5174';
+const apiUrl = process.env.VITE_API_BASE_URL || process.env.APP_TEST_SERVER_URL || 'http://127.0.0.1:8001';
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -21,7 +24,7 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
     testDir: './playwright-tests',
-    
+
     /* Run tests in files in parallel */
     fullyParallel: true,
     /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -36,8 +39,7 @@ export default defineConfig({
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
         /* Base URL to use in actions like `await page.goto('')`. */
-        // baseURL: 'http://localhost:3000',
-        baseURL: process.env.APP_TEST_SERVER_URL || 'http://localhost:8001',
+        baseURL: frontendUrl,
 
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: 'on-first-retry',
@@ -81,10 +83,30 @@ export default defineConfig({
         // },
     ],
 
-    /* Run your local dev server before starting the tests */
-    // webServer: {
-    //   command: 'npm run start',
-    //   url: 'http://localhost:3000',
-    //   reuseExistingServer: !process.env.CI,
-    // },
+    /**
+     * local @pw flow in scripts/playwright.sh already relies on Sail, not on Webserver.
+     * So, with 'composer run full-check', we do not use webServer.
+     * webServer run only when CI is set
+     */
+    webServer: process.env.CI ? [
+        {
+            command: 'php artisan serve --host=127.0.0.1 --port=8001',
+            url: 'http://127.0.0.1:8001',
+            cwd: path.resolve(process.cwd(), '..'),
+            reuseExistingServer: false,
+            timeout: 120 * 1000,
+        },
+        {
+            command: 'npm run dev -- --host 127.0.0.1 --port 5174',
+            url: frontendUrl,
+            cwd: process.cwd(),
+            reuseExistingServer: false,
+            timeout: 120 * 1000,
+            env: {
+                ...process.env,
+                FRONTEND_URL: frontendUrl,
+                VITE_API_BASE_URL: apiUrl,
+            },
+        },
+    ] : undefined,
 });
