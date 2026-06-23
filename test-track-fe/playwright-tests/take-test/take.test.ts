@@ -20,21 +20,24 @@ test('take the Math test', async ({ page }) => {
     // When the user is logged in, we expect to see a logout button in the header
     await expect(page.locator('text=Logout')).toBeVisible();
 
-    const testUrl = `${baseUrl}/tests/take-test/TEST-2851-yd`;
+    await page.goto(`${baseUrl}/tests`);
 
-    await page.goto(testUrl);
+    const mathTestRow = page.locator('.el-table__row').filter({ hasText: 'Math test' }).filter({ hasText: 'A very difficult math test' }).first();
+    await expect(mathTestRow).toBeVisible();
+
+    const takeTestLink = mathTestRow.locator(`a[href*="/tests/take-test/"]`).first();
+    await expect(takeTestLink).toBeVisible();
+    await takeTestLink.click();
 
     // Just check if we are on the right page, by checking if the test title is visible
-    await expect(page.locator('text=A very difficult math test')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Math test' })).toBeVisible();
+    await expect(page.getByText('A very difficult math test', { exact: true })).toBeVisible();
 
-    // 181 is the id of the first question's correct answer
-    await page.locator('#answer-option-id-181').click();
+    await page.locator('#radio-group-for-question-index-0').getByText('4').click();
 
-    // 184 is the id of the second question's correct answer
-    await page.locator('#answer-option-id-184').click();
+    await page.locator('#radio-group-for-question-index-1').getByText('15').click();
 
-    // 187 is the id of the third question's correct answer
-    await page.locator('#answer-option-id-187').click();
+    await page.locator('#radio-group-for-question-index-2').getByText('5').click();
 
     await page.locator('#submit-button').click();
 
