@@ -10,6 +10,13 @@ import { defineConfig, devices } from '@playwright/test';
 
 const frontendUrl = process.env.FRONTEND_URL || 'http://127.0.0.1:5174';
 const apiUrl = process.env.VITE_API_BASE_URL || process.env.APP_TEST_SERVER_URL || 'http://127.0.0.1:8001';
+const backendEnv = {
+    ...process.env,
+    APP_ENV: 'local',
+    APP_URL: process.env.APP_URL || apiUrl,
+    FRONTEND_URL: frontendUrl,
+    SANCTUM_STATEFUL_DOMAINS: process.env.SANCTUM_STATEFUL_DOMAINS || 'localhost:5174,127.0.0.1:5174,localhost:8001,127.0.0.1:8001',
+};
 
 /**
  * Read environment variables from file.
@@ -90,11 +97,12 @@ export default defineConfig({
      */
     webServer: process.env.CI ? [
         {
-            command: 'php artisan serve --host=127.0.0.1 --port=8001',
-            url: 'http://127.0.0.1:8001',
-            cwd: path.resolve(process.cwd(), '..'),
+            command: 'php -S 127.0.0.1:8001 ../vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php',
+            url: apiUrl,
+            cwd: path.resolve(process.cwd(), '../public'),
             reuseExistingServer: false,
             timeout: 120 * 1000,
+            env: backendEnv,
         },
         {
             command: 'npm run dev -- --host 127.0.0.1 --port 5174',

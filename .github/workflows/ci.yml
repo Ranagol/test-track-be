@@ -137,6 +137,8 @@ jobs:
       DB_DATABASE: test_track
       DB_USERNAME: test_track_user
       DB_PASSWORD: secret
+      SESSION_DRIVER: database
+      SESSION_DOMAIN: localhost
       FRONTEND_URL: http://localhost:5174
       VITE_API_BASE_URL: http://localhost:8001
       SANCTUM_STATEFUL_DOMAINS: localhost:5174,127.0.0.1:5174,localhost:8001,127.0.0.1:8001
