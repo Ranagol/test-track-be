@@ -102,6 +102,7 @@ const updateTest = async () => {
         await testEditorStore.update();
         ElMessage.success('Test updated');
     } catch (e) {
+        console.log('This was triggered, but it should not be');//This line is triggered, when there is a form frontend validation error. How?
         handleBackendErrors(e);
     }
 };

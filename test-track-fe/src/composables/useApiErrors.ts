@@ -31,7 +31,6 @@ export function useApiErrors() {
          * that makes TS very unhappy.
          */
         if (!axios.isAxiosError(error)) {
-            console.error('Unexpected non-Axios error:', error)
             generalError.value = fallbackMessage
             return
         }

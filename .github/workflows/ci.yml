@@ -144,6 +144,8 @@ jobs:
       SANCTUM_STATEFUL_DOMAINS: localhost:5174,127.0.0.1:5174,localhost:8001,127.0.0.1:8001
       DEFAULT_TESTER_EMAIL: tester@gmail.com
       DEFAULT_TESTER_PASSWORD: tester@gmail.com
+      DEFAULT_TEST_TAKER_EMAIL: test-taker@gmail.com
+      DEFAULT_TEST_TAKER_PASSWORD: test-taker@gmail.com
 
     steps:
       - uses: actions/checkout@v4
