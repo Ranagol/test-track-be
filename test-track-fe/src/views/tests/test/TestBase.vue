@@ -23,7 +23,6 @@ import QuestionList from '@/views/questions/QuestionList.vue';
 
 const props = withDefaults(defineProps<{
 
-    // Modes are 'take' | 'edit' | 'create'
     mode: 'create' | 'edit' | 'take';
 
     beValidationErrors?: Record<string, any>;

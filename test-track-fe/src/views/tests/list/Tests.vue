@@ -79,7 +79,7 @@
                 <!-- LINK FOR TEST TAKERS -->
                 <el-table-column
                     prop=""
-                    label="Link for test takers"
+                    label="Link for test-taker invitation"
                     v-slot="{ row }"
                     min-width="250%"
                 >

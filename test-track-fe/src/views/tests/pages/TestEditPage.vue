@@ -13,6 +13,8 @@
                 text="Edit test"
             />
 
+            <InvitationLink />
+
             <!-- THE TEST -->
             <TestBase
                 mode="edit"
@@ -52,6 +54,8 @@ import  { testRules } from '@/validationRules/testRules';
 import { useTestValidator } from '@/composables/validatorComposables/useTestValidator';
 import { useAnswerOptionValidator } from '@/composables/validatorComposables/useAnswerOptionValidator';
 import type { FormInstance } from 'element-plus';
+import InvitationLink from '@/views/tests/test/InvitationLink.vue';
+
 const {
     generalError,
     handleBackendErrors,
