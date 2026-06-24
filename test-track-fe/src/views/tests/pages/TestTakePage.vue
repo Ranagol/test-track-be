@@ -90,8 +90,7 @@ const createTestAttempt = async () => {
 
         await testAttemptService.create(testAttempData, userAnswers);
 
-        // Reset the test attempt data in the store
-        testAttemptStore.resetTestAttempt();
+
 
         //Display feedback to the user about succesfully submitting the test
         ElMessageBox.alert(
@@ -100,13 +99,14 @@ const createTestAttempt = async () => {
             confirmButtonText: 'OK',
             callback: (action: Action) => {
                 if (action === 'confirm') {
-                    // TODO ANDOR I temporarily disable this, uncomment later
-                    // logout();
+                    //redirect to the home page?
+                    router.push('/');
                 }
             },
-        })
+        });
 
-        //TODO ANDOR Make sure that the user can not submit this test again, disable the submit button.
+        // Reset the test attempt data in the store
+        testAttemptStore.resetTestAttempt();
 
     } catch (error) {
         handleBackendErrors(error);
@@ -118,7 +118,6 @@ onMounted( async() => {
     // Because the router path is named '/tests/take-test/:testCode'
     const testCode = route.params.testCode as string;
 
-    // TODO ANDOR very likely we do not need the getByCode, unless the user can acces his test by code.
     await testEditorStore.getByCode(testCode);
 });
 </script>

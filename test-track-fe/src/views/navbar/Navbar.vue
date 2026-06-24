@@ -1,5 +1,4 @@
 <template>
-    <!-- //TODO ANDOR how to make these colors dynamic, connect with main.css variables -->
     <el-menu
         class="el-menu-demo"
         mode="horizontal"

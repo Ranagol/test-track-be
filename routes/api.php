@@ -33,18 +33,6 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// TODO ANDOR This route is for testing purposes only, it should be removed in production
-Route::get('/xxx', function (Request $request) {
-    $t = 8;
-
-    return response()->json(
-        [
-            'message' => 'API is working',
-            'user' => $request->user(),
-        ]
-    );
-});
-
 Route::middleware(['auth:sanctum'])->group(function () {
 
     // Test routes

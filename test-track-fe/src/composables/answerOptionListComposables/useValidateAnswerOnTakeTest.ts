@@ -16,7 +16,6 @@ export const useValidateAnswerOnTakeTest = (
      */
     const reportError = inject<() => void>('reportError');
 
-    //todo andor why to use Ref and not ref()
     const validationCycle = inject<Ref<number>>('validationCycle');
 
     /**

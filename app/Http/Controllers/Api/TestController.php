@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
 
-// TODO ANDOR create a service for this controller, and move all fatty not controller logic there.
 class TestController extends Controller
 {
     private TestControllerServiceInterface $testControllerService;
@@ -53,7 +52,6 @@ class TestController extends Controller
         $perPage = $request->per_page ?? 2;
         $tests = $query->paginate($perPage);
 
-        // TODO ANDOR later check this, and only return those columns that you actually need on FE. Use nested eager loading.
         return TestResource::collection($tests);
     }
 
@@ -128,7 +126,6 @@ class TestController extends Controller
         return new TestResource($test);
     }
 
-    // TODO ANDOR why would this string $testCode work for extracting test code? How? What is sending the FE?
     public function getTestByCode(string $testCode): TestResource
     {
         $test = Test::where('test_code', $testCode)
