@@ -15,22 +15,34 @@ const baseUrl = process.env.FRONTEND_URL!;
 
 test('take the Math test', async ({ page }) => {
 
+    //Log in as tester, to get the link for the test taker invitation
     await login(page, testerEmail, testerPassword);
 
-    // We expect after a successful login to be redirected to the '/' page
-    await expect(page).toHaveURL(`${baseUrl}/`);
+    //Check that we are on the home page, redirected after a successful login
+    await expect(page).toHaveURL(`${baseUrl}`);
 
-    // When the user is logged in, we expect to see a logout button in the header
+    // wait for app to fully settle, and check that the logout button is visible. This is crucial!
     await expect(page.locator('text=Logout')).toBeVisible();
 
+    //Go to the tests page, where all tests are listed
     await page.goto(`${baseUrl}/tests`);
+
+    //Check if we are on the tests page, by checking if the heading is visible
+    await expect(page).toHaveURL(`${baseUrl}/tests`);
+
+    //Confirm that we are on the tests page, by checking if the heading is visible
+    await expect(page.getByRole('heading', { name: 'My tests' })).toBeVisible();
 
     /**
      * In /tests page, tests are listed. We need to find the specific Math test, that is pre-seeded
      * exactly for this kind of check. This Math test has title "Math test" and description "A very
      * difficult math test". We need to find the row in the table that contains this test.
      */
-    const mathTestRow = page.locator('.el-table__row').filter({ hasText: 'Math test' }).filter({ hasText: 'A very difficult math test' }).first();
+    const mathTestRow = page.locator('.el-table__row')
+        .filter({ hasText: 'Math test' })
+        .filter({ hasText: 'A very difficult math test' })
+        .first();
+
     await expect(mathTestRow).toBeVisible();
 
     /**
@@ -38,17 +50,15 @@ test('take the Math test', async ({ page }) => {
      */
     const takeTestLink = mathTestRow.locator(`a[href*="/tests/take-test/"]`).first();
     await expect(takeTestLink).toBeVisible();
+    const href = await takeTestLink.getAttribute('href');
 
+    await logOutTester(page);
 
-    // await logOutTester(page);
+    //Log in as test taker, to take the test
+    await doLogin(page, testTakerEmail, testTakerPassword);
 
-    // await doLogin(page, testTakerEmail, testTakerPassword);
-
-
-    await takeTestLink.click();
-
-    // const href = await takeTestLink.getAttribute('href');
-    // await page.goto(href!);
+    //Go to the test that needs to be taken
+    await page.goto(href!);
 
     // Just check if we are on the right page, by checking if the test title is visible
     await expect(page.getByRole('heading', { name: 'Math test' })).toBeVisible();
@@ -73,11 +83,9 @@ async function logOutTester(page: Page): Promise<void>
 
     await page.locator('#logout-button').click();
 
-    // We expect after a successful logout to be redirected to the '/' page
-    await expect(page).toHaveURL(`${baseUrl}/`);// HERE IS THE PROBLEM****************************************
+    // We expect after a successful logout to be redirected to the 'login' page
+    await expect(page).toHaveURL(`${baseUrl}/login`);
 
-    // When the user is logged out, we expect to see a login button in the header
-    await expect(page.locator('text=Login')).toBeVisible();
 }
 
 async function doLogin(

@@ -10,7 +10,7 @@ const password = process.env.DEFAULT_TESTER_PASSWORD!;
 // This will be: http://localhost:5174 in local environment,
 const baseUrl = process.env.FRONTEND_URL!;
 
-test('log in with valid credentials', async ({ page }) => {
+test('logout works', async ({ page }) => {
 
     await login(page, email, password);
 
@@ -18,7 +18,7 @@ test('log in with valid credentials', async ({ page }) => {
     await expect(page).toHaveURL(`${baseUrl}/`);
 
     // When the user is logged in, we expect to see a logout button in the header
-    await expect(page.locator('text=Logout')).toBeVisible();
+    await expect(page.getByRole('menuitem', { name: 'Logout' })).toBeVisible();
 
     await page.locator('#logout-button').click();
 
@@ -26,7 +26,7 @@ test('log in with valid credentials', async ({ page }) => {
     await expect(page).toHaveURL(`${baseUrl}/`);
 
     // When the user is logged out, we expect to see a login button in the header
-    await expect(page.locator('text=Login')).toBeVisible();
+    await expect(page.getByRole('menuitem', { name: 'Login' })).toBeVisible();
 });
 
 

@@ -56,7 +56,7 @@ export default defineConfig({
     /**
      * Whether PW should generate a report in HTML format, after running tests.
      */
-    reporter: [['html', { open: 'on-failure' }]],
+    reporter: [['html', { open: 'never' }]],
 
     use: {
 
