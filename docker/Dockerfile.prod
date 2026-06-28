@@ -16,9 +16,12 @@ COPY . .
 # Tell git to trust the directory
 RUN git config --global --add safe.directory /var/www/html
 
+# Composer stability config (IMPORTANT for Docker/CI environments)
+RUN composer config -g github-protocols https
+RUN composer config -g preferred-install source
+
 # Install PHP dependencies
-RUN composer config -g preferred-install dist
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-source
 
 # Permissions
 RUN chown -R www-data:www-data /var/www/html
