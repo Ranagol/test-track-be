@@ -106,7 +106,7 @@ jobs:
       - run: cd test-track-fe && npm run type-check
 
   # ─────────────────────────────
-  # PLAYWRIGHT (E2E tests with DB)
+  # PLAYWRIGHT (E2E tests with separate testing DB)
   # ─────────────────────────────
   playwright:
     runs-on: ubuntu-24.04
