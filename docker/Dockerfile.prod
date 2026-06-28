@@ -13,8 +13,12 @@ WORKDIR /var/www/html
 # Copy application
 COPY . .
 
+# Tell git to trust the directory
+RUN git config --global --add safe.directory /var/www/html
+
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer config -g preferred-install dist
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # Permissions
 RUN chown -R www-data:www-data /var/www/html
