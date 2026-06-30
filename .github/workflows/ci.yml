@@ -179,6 +179,6 @@ jobs:
           git pull origin main
           docker compose -f compose.prod.yaml up -d --build
 
-    - run: echo "Successfully deployed..."
+    - run: echo "Successfully deployed...3"
 
 
