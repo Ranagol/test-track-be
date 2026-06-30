@@ -169,22 +169,22 @@ jobs:
 
 
     steps:
-    - run: |
-        echo "${{ secrets.ORACLE_SSH_KEY }}" > key.txt
-        ssh-keygen -lf key.txt
 
     - name: Deploy to Oracle VM
       uses: appleboy/ssh-action@v1.2.0
       with:
+
         # ORACLE_HOST is simply the public IP of the Oracle VM instance.
         host: ${{ secrets.ORACLE_HOST }}
         username: ubuntu
+
+        # github-actions-deploy privat key is used here.
         key: ${{ secrets.ORACLE_SSH_KEY }}
         script: |
           cd /var/www/test-track
           git pull origin main
           docker compose -f compose.prod.yaml up -d --build
 
-    - run: echo "Successfully deployed...4"
+    - run: echo "Successfully deployed."
 
 

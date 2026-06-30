@@ -6,6 +6,8 @@ services:
         container_name: laravel_app
         restart: unless-stopped
         working_dir: /var/www/html
+        ports:
+            - "8002:80"
         networks:
             - laravel
         depends_on:
