@@ -166,7 +166,11 @@ jobs:
     # needs: [pint, larastan, phpmd, phpunit, ts-types, playwright]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
+
+
     steps:
+    - run: echo "${{ secrets.ORACLE_SSH_KEY }}" | head -c 20
+
     - name: Deploy to Oracle VM
       uses: appleboy/ssh-action@v1.0.3
       with:
