@@ -178,6 +178,7 @@ jobs:
         host: ${{ secrets.ORACLE_HOST }}
         username: ubuntu
         key: ${{ secrets.ORACLE_SSH_KEY }}
+        debug: true
         script: |
           cd /var/www/test-track
           git pull origin main
