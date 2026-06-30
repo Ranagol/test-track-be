@@ -172,7 +172,7 @@ jobs:
     - run: echo "${{ secrets.ORACLE_SSH_KEY }}" | head -c 20
 
     - name: Deploy to Oracle VM
-      uses: appleboy/ssh-action@v1.0.3
+      uses: appleboy/ssh-action@v1.2.0
       with:
         # ORACLE_HOST is simply the public IP of the Oracle VM instance.
         host: ${{ secrets.ORACLE_HOST }}
