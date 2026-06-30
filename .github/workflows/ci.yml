@@ -170,6 +170,7 @@ jobs:
     - name: Deploy to Oracle VM
       uses: appleboy/ssh-action@v1.0.3
       with:
+        # ORACLE_HOST is simply the public IP of the Oracle VM instance.
         host: ${{ secrets.ORACLE_HOST }}
         username: ubuntu
         key: ${{ secrets.ORACLE_SSH_KEY }}
@@ -178,4 +179,6 @@ jobs:
           git pull origin main
           docker compose -f compose.prod.yaml up -d --build
 
-    - run: echo "Successfully deployed"
+    - run: echo "Successfully deployed..."
+
+
