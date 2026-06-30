@@ -169,7 +169,9 @@ jobs:
 
 
     steps:
-    - run: echo "${{ secrets.ORACLE_SSH_KEY }}" | head -c 20
+    - run: |
+        echo "${{ secrets.ORACLE_SSH_KEY }}" > key.txt
+        ssh-keygen -lf key.txt
 
     - name: Deploy to Oracle VM
       uses: appleboy/ssh-action@v1.2.0
@@ -178,8 +180,6 @@ jobs:
         host: ${{ secrets.ORACLE_HOST }}
         username: ubuntu
         key: ${{ secrets.ORACLE_SSH_KEY }}
-        envs: ""
-        debug: true
         script: |
           cd /var/www/test-track
           git pull origin main
