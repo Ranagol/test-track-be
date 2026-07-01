@@ -44,8 +44,6 @@ services:
         networks:
             - laravel
 
-
-
     mysql:
         image: mysql:8.0
         container_name: laravel_mysql
