@@ -48,6 +48,9 @@ services:
         image: mysql:8.0
         container_name: laravel_mysql
         restart: unless-stopped
+        # This port is for connecting my DBeaver to the MySQL container, via SSH tunnel.
+        ports:
+            - "127.0.0.1:3306:3306"
         environment:
             MYSQL_DATABASE: ${DB_DATABASE}
             MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}

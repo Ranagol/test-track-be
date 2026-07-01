@@ -166,8 +166,6 @@ jobs:
     # needs: [pint, larastan, phpmd, phpunit, ts-types, playwright]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
-
-
     steps:
 
     - name: Deploy to Oracle VM
