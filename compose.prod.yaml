@@ -24,6 +24,19 @@ services:
       networks:
           - laravel
 
+    frontend:
+        build:
+            context: .
+            dockerfile: docker/Dockerfile.frontend
+            args:
+                VITE_API_BASE_URL: ${VITE_API_BASE_URL}
+        container_name: laravel_frontend
+        restart: unless-stopped
+        ports:
+            - "127.0.0.1:8003:80"
+        networks:
+            - laravel
+
 
 
     mysql:
@@ -46,3 +59,5 @@ networks:
 
 volumes:
     mysql_data:
+
+
