@@ -59,6 +59,7 @@
                     label="Title"
                     sortable="custom"
                     v-slot="{ row }"
+                    show-overflow-tooltip
                 >
                     <router-link
                         :to="`/tests/${row.id}/edit`"
@@ -114,6 +115,7 @@
                     label="Description"
                     min-width="250%"
                     sortable="custom"
+                    show-overflow-tooltip
                 ></el-table-column>
 
                 <!-- CREATED -->
