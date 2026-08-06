@@ -20,6 +20,11 @@
             v-if="!authStore.user"
         >Register</el-menu-item>
 
+        <!-- ABOUT -->
+        <el-menu-item
+            index="/about"
+        >About</el-menu-item>
+
         <!-- LOGOUT -->
         <el-menu-item
             index=""

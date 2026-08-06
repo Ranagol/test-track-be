@@ -69,12 +69,12 @@
                 </el-table-column>
 
                 <!-- TEST CODE -->
-                <el-table-column
+                <!-- <el-table-column
                     prop="test_code"
                     label="Test code"
                     width="150%"
                     sortable="custom"
-                ></el-table-column>
+                ></el-table-column> -->
 
                 <!-- LINK FOR TEST TAKERS -->
                 <el-table-column
