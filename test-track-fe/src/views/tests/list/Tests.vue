@@ -91,6 +91,23 @@
                     </router-link>
                 </el-table-column>
 
+                <!-- COPY BUTTON FOR THE TEST LINK -->
+                <el-table-column
+                    prop=""
+                    label="Copy link"
+                    v-slot="{ row }"
+                >
+
+                    <el-button
+                        size="small"
+                        type="warning"
+                        @click="copyUrl(row)"
+                    >
+                        Copy
+                    </el-button>
+
+                </el-table-column>
+
                 <!-- DESCRIPTION -->
                 <el-table-column
                     prop="description"
@@ -229,6 +246,16 @@ async function deleteTest(id: number) {
 
     } catch (error) {
         handleBackendErrors(error);
+    }
+}
+
+async function copyUrl(row: { test_code: string }) {
+    try {
+        await navigator.clipboard.writeText(`${baseUrl}/tests/take-test/${row.test_code}`)
+
+        ElMessage.success('Link copied to clipboard!')
+    } catch {
+        ElMessage.error('Failed to copy the link.')
     }
 }
 

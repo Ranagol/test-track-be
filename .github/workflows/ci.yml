@@ -13,150 +13,150 @@ concurrency:
 
 jobs:
 
-  # # ─────────────────────────────
-  # # PINT
-  # # ─────────────────────────────
-  # pint:
-  #   runs-on: ubuntu-24.04
-  #   steps:
-  #     - uses: actions/checkout@v4
+  # ─────────────────────────────
+  # PINT
+  # ─────────────────────────────
+  pint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - uses: ./.github/actions/php-setup
+      - uses: ./.github/actions/php-setup
 
-  #     - run: ./vendor/bin/pint --test
+      - run: ./vendor/bin/pint --test
 
-  # # ─────────────────────────────
-  # # LARASTAN
-  # # ─────────────────────────────
-  # larastan:
-  #   runs-on: ubuntu-24.04
-  #   steps:
-  #     - uses: actions/checkout@v4
+  # ─────────────────────────────
+  # LARASTAN
+  # ─────────────────────────────
+  larastan:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - uses: ./.github/actions/php-setup
+      - uses: ./.github/actions/php-setup
 
-  #     - run: ./vendor/bin/phpstan analyse --memory-limit=2G --no-progress
+      - run: ./vendor/bin/phpstan analyse --memory-limit=2G --no-progress
 
-  # # ─────────────────────────────
-  # # PHPMD
-  # # ─────────────────────────────
-  # phpmd:
-  #   runs-on: ubuntu-24.04
-  #   steps:
-  #     - uses: actions/checkout@v4
+  # ─────────────────────────────
+  # PHPMD
+  # ─────────────────────────────
+  phpmd:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - uses: ./.github/actions/php-setup
+      - uses: ./.github/actions/php-setup
 
-  #     - run: XDEBUG_MODE=off ./vendor/bin/phpmd app ansi phpmd.xml
+      - run: XDEBUG_MODE=off ./vendor/bin/phpmd app ansi phpmd.xml
 
-  # # ─────────────────────────────
-  # # PHPUNIT (with DB)
-  # # ─────────────────────────────
-  # phpunit:
-  #   runs-on: ubuntu-24.04
+  # ─────────────────────────────
+  # PHPUNIT (with DB)
+  # ─────────────────────────────
+  phpunit:
+    runs-on: ubuntu-24.04
 
-  #   services:
-  #     mysql:
-  #       image: mysql:8.0
-  #       env:
-  #         MYSQL_DATABASE: test_track
-  #         MYSQL_USER: test_track_user
-  #         MYSQL_PASSWORD: secret
-  #         MYSQL_ROOT_PASSWORD: root
-  #       ports:
-  #         - 3306:3306
-  #       options: >-
-  #         --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
-  #         --health-interval=10s
-  #         --health-timeout=5s
-  #         --health-retries=10
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_DATABASE: test_track
+          MYSQL_USER: test_track_user
+          MYSQL_PASSWORD: secret
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
 
-  #   env:
-  #     APP_ENV: testing
-  #     APP_KEY: base64:0000000000000000000000000000000000000000000=
-  #     DB_CONNECTION: mysql
-  #     DB_HOST: 127.0.0.1
-  #     DB_PORT: 3306
-  #     DB_DATABASE: test_track
-  #     DB_USERNAME: test_track_user
-  #     DB_PASSWORD: secret
-  #     FRONTEND_URL: http://127.0.0.1:5174
-  #     VITE_API_BASE_URL: http://127.0.0.1:8001
+    env:
+      APP_ENV: testing
+      APP_KEY: base64:0000000000000000000000000000000000000000000=
+      DB_CONNECTION: mysql
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_DATABASE: test_track
+      DB_USERNAME: test_track_user
+      DB_PASSWORD: secret
+      FRONTEND_URL: http://127.0.0.1:5174
+      VITE_API_BASE_URL: http://127.0.0.1:8001
 
-  #   steps:
-  #     - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - uses: ./.github/actions/php-setup
+      - uses: ./.github/actions/php-setup
 
-  #     - run: php artisan key:generate --ansi
-  #     - run: php artisan migrate --force --ansi
-  #     - run: php artisan test --compact
+      - run: php artisan key:generate --ansi
+      - run: php artisan migrate --force --ansi
+      - run: php artisan test --compact
 
-  # # ─────────────────────────────
-  # # ts-types (Frontend type checking)
-  # # ─────────────────────────────
-  # ts-types:
-  #   runs-on: ubuntu-24.04
+  # ─────────────────────────────
+  # ts-types (Frontend type checking)
+  # ─────────────────────────────
+  ts-types:
+    runs-on: ubuntu-24.04
 
-  #   steps:
-  #     - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - uses: ./.github/actions/node-setup
+      - uses: ./.github/actions/node-setup
 
-  #     - run: cd test-track-fe && npm run type-check
+      - run: cd test-track-fe && npm run type-check
 
-  # # ─────────────────────────────
-  # # PLAYWRIGHT (E2E tests with separate testing DB)
-  # # ─────────────────────────────
-  # playwright:
-  #   runs-on: ubuntu-24.04
+  # ─────────────────────────────
+  # PLAYWRIGHT (E2E tests with separate testing DB)
+  # ─────────────────────────────
+  playwright:
+    runs-on: ubuntu-24.04
 
-  #   services:
-  #     mysql:
-  #       image: mysql:8.0
-  #       env:
-  #         MYSQL_DATABASE: test_track
-  #         MYSQL_USER: test_track_user
-  #         MYSQL_PASSWORD: secret
-  #         MYSQL_ROOT_PASSWORD: root
-  #       ports:
-  #         - 3306:3306
-  #       options: >-
-  #         --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
-  #         --health-interval=10s
-  #         --health-timeout=5s
-  #         --health-retries=10
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_DATABASE: test_track
+          MYSQL_USER: test_track_user
+          MYSQL_PASSWORD: secret
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
 
-  #   env:
-  #     APP_ENV: testing
-  #     APP_KEY: base64:0000000000000000000000000000000000000000000=
-  #     APP_URL: http://localhost:8001
-  #     DB_CONNECTION: mysql
-  #     DB_HOST: 127.0.0.1
-  #     DB_PORT: 3306
-  #     DB_DATABASE: test_track
-  #     DB_USERNAME: test_track_user
-  #     DB_PASSWORD: secret
-  #     SESSION_DRIVER: database
-  #     SESSION_DOMAIN: localhost
-  #     FRONTEND_URL: http://localhost:5174
-  #     VITE_API_BASE_URL: http://localhost:8001
-  #     SANCTUM_STATEFUL_DOMAINS: localhost:5174,127.0.0.1:5174,localhost:8001,127.0.0.1:8001
-  #     DEFAULT_TESTER_EMAIL: tester@gmail.com
-  #     DEFAULT_TESTER_PASSWORD: tester@gmail.com
-  #     DEFAULT_TEST_TAKER_EMAIL: test-taker@gmail.com
-  #     DEFAULT_TEST_TAKER_PASSWORD: test-taker@gmail.com
+    env:
+      APP_ENV: testing
+      APP_KEY: base64:0000000000000000000000000000000000000000000=
+      APP_URL: http://localhost:8001
+      DB_CONNECTION: mysql
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_DATABASE: test_track
+      DB_USERNAME: test_track_user
+      DB_PASSWORD: secret
+      SESSION_DRIVER: database
+      SESSION_DOMAIN: localhost
+      FRONTEND_URL: http://localhost:5174
+      VITE_API_BASE_URL: http://localhost:8001
+      SANCTUM_STATEFUL_DOMAINS: localhost:5174,127.0.0.1:5174,localhost:8001,127.0.0.1:8001
+      DEFAULT_TESTER_EMAIL: tester@gmail.com
+      DEFAULT_TESTER_PASSWORD: tester@gmail.com
+      DEFAULT_TEST_TAKER_EMAIL: test-taker@gmail.com
+      DEFAULT_TEST_TAKER_PASSWORD: test-taker@gmail.com
 
-  #   steps:
-  #     - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - uses: ./.github/actions/php-setup
+      - uses: ./.github/actions/php-setup
 
-  #     - uses: ./.github/actions/node-setup
+      - uses: ./.github/actions/node-setup
 
-  #     - run: php artisan migrate:fresh --seed --env=testing --ansi
-  #     - run: cd test-track-fe && npx playwright install
-  #     - run: cd test-track-fe && npx playwright test
+      - run: php artisan migrate:fresh --seed --env=testing --ansi
+      - run: cd test-track-fe && npx playwright install
+      - run: cd test-track-fe && npx playwright test
 
   # ─────────────────────────────
   # DEPLOY
