@@ -1,53 +1,63 @@
 <template>
+<div class="navbar">
+    <!-- MAIN NAVIGATION -->
     <el-menu
-        class="el-menu-demo"
         mode="horizontal"
-        router
+        :router="true"
+        :ellipsis="false"
     >
         <el-menu-item index="/">Home</el-menu-item>
-        <el-menu-item index="/tests">My tests</el-menu-item>
-        <el-menu-item index="/analytics">Analytics</el-menu-item>
 
-        <!-- LOGIN -->
         <el-menu-item
-            index="/login"
-            v-if="!authStore.user"
-        >Login</el-menu-item>
-
-        <!-- REGISTER -->
-        <el-menu-item
-            index="/register"
-            v-if="!authStore.user"
-        >Register</el-menu-item>
-
-        <!-- ABOUT -->
-        <el-menu-item
-            index="/about"
-        >About</el-menu-item>
-
-        <!-- LOGOUT -->
-        <el-menu-item
-            index=""
+            index="/tests"
             v-if="authStore.user"
         >
-            <el-button
-                id="logout-button"
-                @click="logout"
-                text
-            >Logout</el-button>
+            My Tests
         </el-menu-item>
 
-        <!-- HI, USER -->
         <el-menu-item
-            index=""
+            index="/analytics"
             v-if="authStore.user"
-        >Hi, {{ authStore.user.name }}</el-menu-item>
-
+        >
+            Analytics
+        </el-menu-item>
     </el-menu>
+
+    <!-- ACCOUNT SECTION -->
+    <div class="navbar-account">
+
+        <span v-if="authStore.user">
+            Hi, {{ authStore.user.email }}
+        </span>
+
+        <el-button
+            v-if="authStore.user"
+            id="logout-button"
+            @click="logout"
+            text
+        >
+            Logout
+        </el-button>
+
+        <router-link
+            v-if="!authStore.user"
+            to="/login"
+        >
+            Login
+        </router-link>
+
+        <router-link
+            v-if="!authStore.user"
+            to="/register"
+        >
+            Register
+        </router-link>
+
+    </div>
+</div>
 </template>
 
 <script setup lang="ts">
-// import Logout from '@/views/navbar/Logout.vue';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useRouter } from 'vue-router';
 
@@ -63,13 +73,21 @@ const logout = async () => {
 
 <style scoped>
 
-/* Set the height of the horizontal navigation menu */
-.el-menu--horizontal {
-  --el-menu-horizontal-height: 1.9rem;
-  display: flex;
-  flex-wrap: nowrap;
-  overflow: visible;
+.navbar {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid var(--el-menu-border-color);
 }
 
-/* In the navbar, the first 5 elements should be on left. All others on right. */
+.navbar > .el-menu {
+    border-bottom: none;
+}
+
+.navbar-account {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 20px;
+}
 </style>

@@ -15,6 +15,12 @@
 
         <h1 class="text-3xl font-bold mb-6 mt-5">
             Track progress, not just test results.
+            <RouterLink
+                class="text-blue-500 hover:text-blue-700 underline"
+                to="/tests/create"
+            >
+                Start here!
+            </RouterLink>
         </h1>
 
     </div>
@@ -66,7 +72,12 @@
 
         <div class="border rounded-lg p-6">
             <h3 class="text-xl font-semibold mb-3">
-                Create online tests
+                <router-link
+                    class="text-blue-500 hover:text-blue-700 underline"
+                    to="/tests/create"
+                >
+                    Create online tests
+                </router-link>
             </h3>
 
             <p class="text-gray-600">
@@ -81,7 +92,7 @@
             </h3>
 
             <p class="text-gray-600">
-                Easily invite test takers via email or shareable links.
+                Easily invite test takers via shareable links.
             </p>
         </div>
 
@@ -141,6 +152,8 @@
 </template>
 
 <script setup lang="ts">
+import { RouterLink } from 'vue-router';
+
 
 </script>
 
