@@ -8,7 +8,7 @@
         </h1>
 
         <p class="text-xl text-gray-600 max-w-3xl mx-auto mt-6">
-            TestTracker is a longitudinal testing platform that helps teachers,
+            TestTrack is a longitudinal testing platform that helps teachers,
             psychotherapists, HR professionals, and other specialists create,
             evaluate, and track assessments over time.
         </p>
@@ -54,7 +54,7 @@
         </h2>
 
         <p class="text-gray-700 mb-4">
-            TestTracker brings testing online and automates the repetitive parts
+            TestTrack brings testing online and automates the repetitive parts
             of the evaluation process. Professionals can create digital tests,
             share them with test takers, automatically evaluate responses,
             calculate scores, and store results in one place.
@@ -62,7 +62,7 @@
 
         <p class="text-gray-700">
             Unlike many testing platforms that focus only on one-time assessments,
-            TestTracker is designed for continuous tracking and development.
+            TestTrack is designed for continuous tracking and development.
         </p>
     </div>
 
@@ -128,7 +128,7 @@
         </h2>
 
         <p class="text-gray-700 mb-4">
-            TestTracker transforms testing from a single evaluation into a
+            TestTrack transforms testing from a single evaluation into a
             continuous development process.
         </p>
 
@@ -142,7 +142,7 @@
     <!-- Closing -->
     <div class="text-center mt-16 mb-5">
         <p class="text-xl font-semibold">
-            TestTracker helps professionals understand not only where someone is
+            TestTrack helps professionals understand not only where someone is
             today, but how they are developing over time.
         </p>
     </div>

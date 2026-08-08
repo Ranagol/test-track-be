@@ -1,8 +1,8 @@
-# TestTracker docs
+# TestTrack docs
 
 ## Table of Contents
 
-1. [App idea - TestTracker description](#app-idea---testtracker-description)
+1. [App idea - TestTrack description](#app-idea---testtrack-description)
 2. [User flow - how the app works](#user-flow---how-the-app-works)
 3. [Goal](#goal)
 4. [Technical background](#technical-background)
@@ -22,9 +22,9 @@
 
 ---
 
-## App idea - TestTracker description
+## App idea - TestTrack description
 
-**App name:** TestTracker
+**App name:** TestTrack
 
 The basic idea of this app is to make life easier for teachers, psychotherapists, HRs — people who have to make tests for clients, students, job candidates, and then check and grade these tests individually, often on paper. We will call these teachers, psychotherapists, HRs, etc: **testers**, because they test people.
 
@@ -32,7 +32,7 @@ The basic idea is that the test should be online, it should check itself and gra
 
 Now, there are many tester apps online already. The difference is that they are for one-time testing. This app can be used for that too, but its core purpose is to remember test performance/grades for test takers so this data can be used for analytics. This way the teacher/therapist/HR can follow the development of the skill/knowledge/trait of the test taker.
 
-> **TestTracker is a longitudinal testing platform designed to track user development over time.**
+> **TestTrack is a longitudinal testing platform designed to track user development over time.**
 
 ---
 
