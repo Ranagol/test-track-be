@@ -1,332 +1,367 @@
-# TestTrack docs
+# TestTrack
+
+**TestTrack is a longitudinal testing platform designed to track test-taker development over time.**
+
+TestTrack is a portfolio project designed to make online testing easier for teachers, psychotherapists, HR professionals, and other people who regularly create and evaluate tests.
+
+Instead of creating tests on paper, manually checking answers, calculating grades, and keeping track of previous results, TestTrack provides an online workflow where tests can be created, completed, evaluated, and stored for future analysis.
+
+---
 
 ## Table of Contents
 
-1. [App idea - TestTrack description](#app-idea---testtrack-description)
-2. [User flow - how the app works](#user-flow---how-the-app-works)
-3. [Goal](#goal)
-4. [Technical background](#technical-background)
-5. [App keywords (models)](#app-keywords-models)
-   - 5.1 [User](#user)
-   - 5.2 [Class - NOT MVP](#class---not-mvp)
-   - 5.3 [Course - NOT MVP](#course---not-mvp)
-   - 5.4 [Test](#test)
-   - 5.5 [Question](#question)
-   - 5.6 [AnswerOption](#answeroption)
-   - 5.7 [TestAttempt](#testattempt)
-   - 5.8 [UserAnswer](#useranswer)
-6. [Relationships](#relationships)
-7. [Copilot instructions](#copilot-instructions)
-8. [Steps](#steps)
-9. [Ideas for after-MVP](#ideas-for-after-mvp)
+- [Overview](#overview)
+- [Features](#features)
+- [User Flow](#user-flow)
+- [Tech Stack](#tech-stack)
+- [Architecture](#architecture)
+- [Core Domain Model](#core-domain-model)
+- [Database Relationships](#database-relationships)
+- [Installation](#installation)
+- [Testing](#testing)
+- [Code Quality](#code-quality)
+- [CI/CD](#cicd)
+- [MVP Scope](#mvp-scope)
+- [Future Features](#future-features)
+- [Project Status](#project-status)
+- [License](#license)
 
 ---
 
-## App idea - TestTrack description
+## Overview
 
-**App name:** TestTrack
+TestTrack is designed for people who need to test and evaluate other people, referred to throughout the project as **testers**.
 
-The basic idea of this app is to make life easier for teachers, psychotherapists, HRs — people who have to make tests for clients, students, job candidates, and then check and grade these tests individually, often on paper. We will call these teachers, psychotherapists, HRs, etc: **testers**, because they test people.
+Examples include:
 
-The basic idea is that the test should be online, it should check itself and grade the test taker's performance, and (when needed) give immediate feedback. Grades and tests will be remembered by the app, so the tester can have an overview of their test takers, grades, answers, and even follow if there is improvement. The tester can view each test taker's previous attempts, including scores and dates, allowing simple tracking of progress over time.
+- Teachers testing students
+- Psychotherapists evaluating clients
+- HR professionals testing job candidates
+- Other professionals who need to create and evaluate tests
 
-Now, there are many tester apps online already. The difference is that they are for one-time testing. This app can be used for that too, but its core purpose is to remember test performance/grades for test takers so this data can be used for analytics. This way the teacher/therapist/HR can follow the development of the skill/knowledge/trait of the test taker.
+The main idea is not only to conduct a test, but to **store the results of multiple attempts over time**.
+
+This makes it possible to compare previous attempts, analyse answers, and track the development of a test taker's knowledge, skills, or other measurable characteristics.
 
 > **TestTrack is a longitudinal testing platform designed to track user development over time.**
 
----
 
-## User flow - how the app works
 
-- Tester logs in, registers.
-- Tester creates a test. Test will have questions, and questions will have AnswerOptions (one, or some of them are correct). Test has a test code.
-- Test taker logs in/registers. Test takers receive the test code from the tester, and this way they can enter into the testing process.
-- Test taker goes over the questions, clicks the answer.
-- Submit.
-- Depending on how the tester created the test (`giveFeedback`, `doGrades`, etc.) the app might give feedback about the success and grades — or it might just confirm: "test successfully completed and submitted."
-- Analytics: the tester can have an overview of all their belonging classes, test takers, grades, answers, and progression. Can make comments on how to proceed.
-- The test taker could retake the same tests over time, if needed, to follow improvements.
-- Each attempt is stored.
-- The system compares attempts and tracks progress.
+## The workflow:
 
----
-
-## Goal
-
-This is meant to be a portfolio app, done by one person, in a limited time — 20 days max with all the complications, together with deployment. The goal is to have a functional, deployed MVP with some basic-minimum-needed features to show to possible future employers. Later, once the app is running, new features can be added to make the app stand out. The app will be deployed on Oracle Cloud.
-
-> Accent is on fast delivery of a simple, not complicated, but still good-looking portfolio MVP.
-
----
-
-## Technical background
-
-We use separate backend and frontend.
-
-- **BE:** Laravel (Roles and permissions from Spatie will be used)
-- **FE:** Vue.js + TypeScript, with Element Plus and Tailwind
-
----
-
-## App keywords (models)
-
-### User
-
-We will use Spatie Roles and Permissions package. Users can have roles as Tester or TestTaker.
-
-- **Tester:** users who need to test other users
-- **TestTaker:** users who must be tested
-
-| Field | Type |
-|---|---|
-| `id` | bigint, PK |
-| `name` | string |
-| `email` | string, unique |
-| `password` | string |
-| `role` | enum: `tester`, `test_taker` |
-| `timestamps` | — |
-
----
-
-### Class - NOT MVP
-
-A group of users who need to take the same test. Useful for group results and group feedback, but not needed for MVP.
-
----
-
-### Course - NOT MVP
-
-History, Biology, Chemistry... Personality tests, pathology tests... A group of tests. This is a feature for after the MVP phase.
-
----
-
-### Test
-
-The most important model. A Test has Questions. Questions can be written or an image. Questions can have many offered answers, but only one (or some) can be correct.
-
-| Field | Type |
-|---|---|
-| `id` | bigint, PK |
-| `user_id` | FK → `users.id` (tester) |
-| `title` | string |
-| `description` | text, nullable |
-| `test_code` | string, unique |
-| `timestamps` | — |
-
----
-
-### Question
-
-Questions can be verbal, or an image can be uploaded to describe a situation. Image support is a post-MVP feature.
-
-| Field | Type |
-|---|---|
-| `id` | bigint, PK |
-| `test_id` | FK → `tests.id` |
-| `text` | text |
-| `image_path` | string, nullable |
-| `allows_multiple_correct` | boolean, default `false` — controls checkbox vs radio rendering |
-| `question_order` | integer, nullable — for future reordering |
-| `timestamps` | — |
-
----
-
-### AnswerOption
-
-Belongs to a given question. Can be a correct or incorrect answer.
-
-| Field | Type |
-|---|---|
-| `id` | bigint, PK |
-| `question_id` | FK → `questions.id` |
-| `text` | string |
-| `is_correct` | boolean |
-| `answer_order` | integer, nullable — for future reordering |
-| `timestamps` | — |
-
----
-
-### TestAttempt
-
-Belongs to a User with role `test_taker` and a Test. Records the result. Crucial for analytics.
-
-| Field | Type |
-|---|---|
-| `id` | bigint, PK |
-| `user_id` | FK → `users.id` |
-| `test_id` | FK → `tests.id` |
-| `score` | integer, nullable |
-| `max_score` | integer, nullable |
-| `comment` | text, nullable |
-| `started_at` | timestamp, nullable |
-| `completed_at` | timestamp, nullable |
-| `timestamps` | — |
-
----
-
-### UserAnswer
-
-Breaks a test attempt into individual question-level data.
-
-| Field | Type |
-|---|---|
-| `id` | bigint, PK |
-| `test_attempt_id` | FK → `test_attempts.id` |
-| `question_id` | FK → `questions.id` |
-| `answer_option_id` | FK → `answer_options.id` |
-| `comment` | text, nullable |
-| `timestamps` | — |
-
-**Relationships:**
-
-- `UserAnswer` belongsTo `TestAttempt`
-- `UserAnswer` belongsTo `Question`
-- `UserAnswer` belongsTo `AnswerOption`
-- `TestAttempt` hasMany `UserAnswer`
-- `Question` hasOne `UserAnswer`
-- `AnswerOption` hasOne `UserAnswer`
-
-**Conceptually:**
-
-```
-TestAttempt = "when did they take the test + score"
-UserAnswer  = "what exactly did they do in that attempt"
+```text
+Tester
+  │
+  ├── Login / Register
+  │
+  ├── Create Test
+  │     ├── Add Questions
+  │     └── Add Answer Options
+  │
+  └── Share Test via link
+          │
+          ▼
+     Test Taker
+          │
+          ├── Uses the link, Login / Register
+          │
+          ├── Answer Questions
+          │
+          └── Submit Test
+                  │
+                  ▼
+             Evaluation
+                  │
+                  ├── Score
+                  ├── Feedback
+                  └── Test Attempt
+                          │
+                          ▼
+                     Progress Tracking
 ```
 
-**Why UserAnswer matters:**
+---
 
-🔍 **1. Show full test review**
+## Tech Stack
 
-| Question | User Answer | Correct? |
-|---|---|---|
-| Q1 | A | ✔ |
-| Q2 | C | ❌ |
-| Q3 | B | ✔ |
+### Backend
 
-📊 **2. Enable real analytics later**
+- [PHP](https://www.php.net/)
+- [Laravel](https://laravel.com/)
+- Laravel REST API
 
-- Hardest questions
-- Weak topics
-- Per-question success rate
 
-🧠 **3. Support learning features (future-proofing)**
+### Frontend
 
-- Explanations per question
-- "Why wrong" feedback
-- Adaptive testing
+- [Vue.js](https://vuejs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Element Plus](https://element-plus.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
 
-🔁 **4. Recalculate scores anytime**
+### Testing & Code Quality
 
-- Without UserAnswer: ❌ impossible
-- With UserAnswer: ✔ recompute everything from raw data
-
-🧩 **Relationship structure:**
-
-```
-User
-  ↓
-TestAttempt  (one exam submission)
-  ↓
-UserAnswer   (each question response)
-```
-
-> 1 attempt = many answers
+- [PHPUnit](https://phpunit.de/)
+- [Larastan / PHPStan](https://phpstan.org/)
+- PHP-CS-Fixer
+- PHPMD
+- [Playwright](https://playwright.dev/)
 
 ---
 
-## Relationships
+## Architecture
+
+TestTrack uses a separated frontend/backend architecture.
+
+```text
+┌─────────────────────────┐
+│       Vue.js SPA        │
+│                         │
+│ TypeScript              │
+│ Element Plus            │
+│ Tailwind CSS            │
+└────────────┬────────────┘
+             │
+             │ REST API
+             ▼
+┌─────────────────────────┐
+│    Laravel Backend      │
+│                         │
+│ REST API                │
+│ Authentication          │
+│ Authorization           │
+│ Business Logic          │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│        Database         │
+└─────────────────────────┘
+```
+
+Users are assigned roles that determine whether they act as a **Tester** or **Test Taker**.
+
+---
+
+
+
+## Database Relationships
 
 | # | Model A | Relationship | Model B |
 |---|---|---|---|
-| 1 | User (tester) | hasMany | Test |
-| 2 | User (test-taker) | hasMany | TestAttempt |
+| 1 | User (Tester) | hasMany | Test |
+| 2 | User (Test Taker) | hasMany | TestAttempt |
 | 3 | Test | hasMany | Question |
 | 4 | Question | hasMany | AnswerOption |
 | 5 | Test | hasMany | TestAttempt |
-| 6 | UserAnswer | belongsTo | TestAttempt |
-| 7 | UserAnswer | belongsTo | Question |
-| 8 | UserAnswer | belongsTo | AnswerOption |
+| 6 | TestAttempt | hasMany | UserAnswer |
+| 7 | UserAnswer | belongsTo | TestAttempt |
+| 8 | UserAnswer | belongsTo | Question |
+| 9 | UserAnswer | belongsTo | AnswerOption |
 
 ---
 
-## Copilot instructions
+## Installation
 
-### Create model, controller, request, route, migration, seeder, factory, etc.
 
-Please generate a Laravel REST API implementation for a model named `UserAnswer`.
+### Prerequisites
 
-**Requirements:**
+The application runs in Docker. You do **not** need to install PHP, MySQL, Node.js, or other application dependencies directly on your host machine.
 
-**1. Model**
+You need:
 
-- Must include: `protected $guarded = ['id'];`
-- Define relationships:
-  - `UserAnswer` belongsTo `TestAttempt`
-  - `UserAnswer` belongsTo `Question`
-  - `UserAnswer` belongsTo `AnswerOption`
-  - `TestAttempt` hasMany `UserAnswer`
-  - `Question` hasOne `UserAnswer`
-  - `AnswerOption` hasOne `UserAnswer`
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
 
-**2. Database Migration**
+### Clone the repository
 
-Create table `user_answers` with:
+```bash
+git clone https://github.com/Ranagol/test-track-be.git
+cd test-track
+```
 
-| Field | Type |
-|---|---|
-| `id` | bigint, PK |
-| `test_attempt_id` | FK → `test_attempts.id` |
-| `question_id` | FK → `questions.id` |
-| `answer_option_id` | FK → `answer_options.id` |
-| `comment` | text, nullable |
-| `timestamps` | — |
+### Start the application
 
-**3. API Layer**
+Start the application using Docker Compose:
 
-- Create a REST API controller using `php artisan make:controller --api`
-- Use Laravel API resource routes in `routes/api.php` (`Route::apiResource`)
+```bash
+docker compose up -d --build
+```
 
-**4. Form Request**
+### Application setup
 
-- Create a `FormRequest` for store and update
-- Include validation rules for all fields
+After the containers are running, install the Laravel application dependencies and initialize the database if required by the development setup.
 
-**5. Resource**
+```bash
+docker compose exec app php artisan migrate
+```
 
-- Create a Laravel API Resource for consistent JSON output
+If the application uses seed data:
 
-**6. Factory**
+```bash
+docker compose exec app php artisan db:seed
+```
 
-- Generate a factory that respects schema constraints
+> The exact service name (`app`) depends on the service definition in `compose.yaml`. Use `docker compose ps` to see the available services.
 
-**7. Seeder**
+The application is then available at:
 
-- Create a seeder that inserts 3 records using the factory
+- Frontend: `http://localhost:5174`
+- Backend API: `http://localhost:8001`
 
-**Notes:**
 
-- This is a REST API-only project (no views)
-- Follow Laravel best practices and naming conventions
-- Ensure all foreign keys and relationships are properly defined
-- When these new files are created, at the end, check them with Larastan
-- Double-check that all requested files have been created
+### Running tests
+
+The project uses several levels of automated testing and code quality checks.
+
+#### PHP code quality
+
+Laravel Pint:
+
+```bash
+./vendor/bin/pint --test
+```
+
+Larastan / PHPStan:
+
+```bash
+./vendor/bin/phpstan analyse --memory-limit=2G --no-progress
+```
+
+PHPMD:
+
+```bash
+XDEBUG_MODE=off ./vendor/bin/phpmd app ansi phpmd.xml
+```
+
+#### PHPUnit
+
+PHPUnit tests use a MySQL database.
+
+```bash
+php artisan test --compact
+```
+
+#### Frontend type checking
+
+```bash
+cd test-track-fe
+npm run type-check
+```
+
+#### Playwright
+
+Install the Playwright browsers:
+
+```bash
+cd test-track-fe
+npx playwright install
+```
+
+Run the end-to-end tests:
+
+```bash
+npx playwright test
+```
+
+## CI/CD
+
+The project uses [GitHub Actions](https://github.com/features/actions) for continuous integration.
+
+The CI workflow runs on:
+
+- pushes to the `main` branch
+- pull requests targeting the `main` branch
+
+The workflow performs:
+
+1. Laravel Pint
+2. Larastan
+3. PHPMD
+4. PHPUnit tests with separate MySQL test database
+5. TypeScript type checking
+6. Playwright end-to-end tests
+
+The production deployment is performed on an Oracle Cloud VM.
+
+The deployment process:
+
+```text
+GitHub
+   │
+   ├── CI checks
+   │
+   └── main branch
+          │
+          ▼
+   Oracle Cloud VM
+          │
+          ├── git pull origin main
+          │
+          └── docker compose -f compose.prod.yaml up -d --build
+```
+
+The production application is therefore run using the production Docker Compose configuration:
+
+```bash
+docker compose -f compose.prod.yaml up -d --build
+```
+
 
 ---
 
-## Steps
+## MVP Scope
 
-- Create all models, controllers, CRUD logic, tables, requests, routes, etc.
-- Auth scaffolding
-- Install Spatie permissions, Laravel AI package
-- Create seeders with some specific test testers and test takers, and some specific pre-defined questions and answers
-- Start adding core features (create tests, answering questions...) with Postman. Can Postman be used as a kind of E2E tester to check if all backend functions work? If so, automate this early.
+TestTrack is primarily a **portfolio project**.
+
+The goal is to build and deploy a functional MVP within a limited development period while demonstrating a professional full-stack development workflow.
+
+The MVP focuses on:
+
+- Test creation
+- Question and answer management
+- Test submission
+- Automatic evaluation
+- Test attempt storage
+- User tesrs result tracking, comparing, visually displaying
+
+The project also demonstrates:
+
+- REST API development
+- Database design
+- Vue.js frontend development
+- Automated testing
+- CI/CD
+- Cloud deployment
+
+> The emphasis is on fast delivery of a simple, maintainable, and good-looking portfolio application. Because of this, there a lot of desired features, that will be done in the future.
 
 ---
 
-## Ideas for after-MVP
+## Future Features
 
-*(To be filled in)*
+
+- Question difficulty analysis
+- Weak-topic detection
+- Per-question success rates
+- Multidimensional personality tests
+- Solutions for answering (cheating) with AI
+- Questions defined by a picture, not a text
+- Inviting test takers by email
+
+
 
 ---
 
-*END*
+## Project Status
+
+**MVP in development.**
+
+The project is being developed incrementally, with the initial focus on completing the core testing workflow.
+
+Additional features will be added after the MVP is deployed.
+
+---
+
+## License
+
+This project is currently intended as a portfolio project.
