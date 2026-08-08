@@ -3,7 +3,6 @@ import Tests from '@/views/tests/list/Tests.vue';
 import Login from '@/views/login/Login.vue';
 import Register from '@/views/register/Register.vue';
 import Home from '@/views/home/Home.vue';
-import About from '@/views/about/About.vue';
 import NotFound from '@/views/errors/NotFound.vue';
 import { useAuthStore } from '@/stores/useAuthStore';
 import TestAttempts from '@/views/testAttempts/TestAttempts.vue';
@@ -37,11 +36,6 @@ const routes = [
         path: '/',
         name: 'home',
         component: Home
-    },
-    {
-        path: '/about',
-        name: 'about',
-        component: About
     },
     {
         path: '/analytics',
