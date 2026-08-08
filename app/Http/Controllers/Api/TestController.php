@@ -63,6 +63,7 @@ class TestController extends Controller
     public function indexAnalytics(Request $request): AnonymousResourceCollection
     {
         $testTakerId = $request->testTakerId;
+        $user = Auth::user();
 
         $tests = Test::whereHas('attempts', function ($q) use ($testTakerId) {
             $q->where('user_id', $testTakerId);
@@ -75,6 +76,8 @@ class TestController extends Controller
                     },
                 ]
             )
+            // Only return tests that belong to the authenticated tester, and not all tests
+            ->where('user_id', $user->id)
             ->get();
 
         return TestResource::collection($tests);

@@ -149,6 +149,12 @@
 
                     </template>
                 </el-table-column>
+
+                <!-- WHEN THERE IS NO TEST CREATED OR NO TEST AVAILABLE -->
+                <template #empty>
+                    You haven't created any tests yet.
+                </template>
+
             </el-table>
         </div>
 

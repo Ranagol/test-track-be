@@ -102,7 +102,10 @@ const createTest = async () => {
         }
 
         await testEditorStore.create();
-        ElMessage.success(successMessage);
+        ElMessage.success({
+            message: successMessage,
+            duration: 5000,
+        });
         router.push(`/tests`);
     } catch (e) {
         handleBackendErrors(e);
