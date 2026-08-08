@@ -86,7 +86,7 @@ const { validateTest } = useTestValidator(
  */
 const { validateSelectAnswerOptions } = useAnswerOptionValidator();
 
-
+const successMessage = 'Test created! You can now invite your test takers, by sharing the link of the test. Click on the Copy button to copy the link to your clipboard.';
 
 const createTest = async () => {
     try {
@@ -102,7 +102,7 @@ const createTest = async () => {
         }
 
         await testEditorStore.create();
-        ElMessage.success('Test created');
+        ElMessage.success(successMessage);
         router.push(`/tests`);
     } catch (e) {
         handleBackendErrors(e);
