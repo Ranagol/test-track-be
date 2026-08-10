@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "TestTrack API Documentation",
-        "_postman_id": "9ddb992b-1d9d-4e9a-b01f-f8d1c376e8ee",
+        "_postman_id": "5d8a6738-7efe-4c7a-9536-931a30384318",
         "description": "TestTrack API for managing tests, questions, and user submissions.",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -20,7 +20,88 @@
             "description": "",
             "item": [
                 {
-                    "name": "GET api\/user",
+                    "name": "Handle an incoming authentication request.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"gbailey@example.net\",\"password\":\"+-0pBNvYgxwmi\\\/#iw\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Handle an incoming registration request.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/register",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/register"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"email\":\"zbailey@example.net\",\"password\":\"architecto\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Destroy an authenticated session.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Login, register and logout work with Breeze. Breeze is for web requests by default, not api\nrequests. So, we needed to add the API routes for login, register and logout here.",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -60,6 +141,10 @@
                                 {
                                     "key": "access-control-allow-credentials",
                                     "value": "true"
+                                },
+                                {
+                                    "key": "set-cookie",
+                                    "value": "testtrack-session=rTBHaJnySMaSQmvszuYWqom9w52mjDK5YXChrFpp; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
                                 }
                             ],
                             "code": 401,
@@ -69,13 +154,21 @@
                     ]
                 },
                 {
-                    "name": "GET api\/xxx",
+                    "name": "GET api\/tests\/test-code\/{testCode}",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/xxx",
+                            "path": "api\/tests\/test-code\/:testCode",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/xxx"
+                            "raw": "{{baseUrl}}\/api\/tests\/test-code\/:testCode",
+                            "variable": [
+                                {
+                                    "id": "testCode",
+                                    "key": "testCode",
+                                    "value": "architecto",
+                                    "description": ""
+                                }
+                            ]
                         },
                         "method": "GET",
                         "header": [
@@ -109,22 +202,26 @@
                                 {
                                     "key": "access-control-allow-credentials",
                                     "value": "true"
+                                },
+                                {
+                                    "key": "set-cookie",
+                                    "value": "testtrack-session=3B0Et3WLtFTaW3YBa7eKpZAqhcRzC2eh4sUUv2sv; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"message\":\"API is working\",\"user\":null}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "Display a listing of the resource.",
+                    "name": "This function is called at FE url \/analytics\/:testTakerId\nIt sends all belonging tests, questions, answers, attempts for the give test taker, so its\ntest performances could be analyzed.",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/tests",
+                            "path": "api\/analytics",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/tests"
+                            "raw": "{{baseUrl}}\/api\/analytics"
                         },
                         "method": "GET",
                         "header": [
@@ -138,7 +235,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "TestResource is for single resources. TestResource::collection(), returns an\nAnonymousResourceCollection \u2014 which is the collection wrapper that handles pagination,\nmetadata, and multiple items."
+                        "description": ""
                     },
                     "response": [
                         {
@@ -161,7 +258,60 @@
                                 },
                                 {
                                     "key": "set-cookie",
-                                    "value": "testtrack-session=eyJpdiI6IjI1eE1JK3h6bjVsamV3V3c3MHdySEE9PSIsInZhbHVlIjoiZGVybDdweEF4ZFRUTmdVYXYrNlJ5ZDNPMGEwRWRWdHl2eWxlUjhRUUhIaU5GUENsaURHVkRVWWFXQWlzZk45Nno1OGVVN3Jod0JBamdNb2NsMzZYeXVKVlA4VzV2eWNSdUMrR0VGeW11UmVESmVYU1VubXFBOGNlbUVEdkNTZ1QiLCJtYWMiOiI5YjE5MmM0M2EzNmM3MmVmYjVmZTI4NGIwNTRiNzZiMzQ0OTM1Yzc0MmUxNDg3ODY0YjFhNTY0NjBjYjE1Nzg5IiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                    "value": "testtrack-session=MBplNcaLm1dhq0ONNpwB1agFaPZeCMYCGqg6ywW8; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Display all belonging test on the \/tests page.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/tests",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/tests"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "TestResource is for single resources. TestResource::collection(), returns an\nAnonymousResourceCollection \u2014 which is the collection wrapper that handles pagination,\nmetadata, and multiple items.\nThis is an example of the GET request:\n\/api\/tests?page=1&per_page=2&search=&sort_by=title&sort_order=asc"
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "http:\/\/localhost:5174"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                },
+                                {
+                                    "key": "set-cookie",
+                                    "value": "testtrack-session=37mUuQzEBdLU7o3Icwv6SmhzgwPLdY2MuFJ7iDcR; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
                                 }
                             ],
                             "code": 401,
@@ -192,7 +342,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"title\":\"b\",\"description\":\"Eius et animi quos velit et.\",\"test_code\":\"architecto\",\"user_id\":\"architecto\"}"
+                            "raw": "{\"title\":\"b\",\"description\":\"Eius et animi quos velit et.\",\"user_id\":\"architecto\",\"questions\":[{\"text\":\"architecto\",\"answer_options\":[{\"text\":\"architecto\",\"is_correct\":false}]}]}"
                         },
                         "description": ""
                     },
@@ -250,7 +400,7 @@
                                 },
                                 {
                                     "key": "set-cookie",
-                                    "value": "testtrack-session=eyJpdiI6IjlaVU9RNWtvaVFpSUZJNCt0SU1HUWc9PSIsInZhbHVlIjoidExsZ0srVERRWllhRjdIVnVvZEdmdE9BS21hOVltVUdmN3dtaS9NaGR5Z0VYRmVHWU9TQ2tCN2JySHZZQ1d1MHNUWmVBQ1FqbTlyaEhHWnhGdGp5MnlXVzBWNEdONDhYQ1Y3bEwxcDNQS2w0TkIwdFRYMnZZaXUzWUZlczhEUWIiLCJtYWMiOiJmZmJiM2ZiMWYyZDhiOTM1Y2Y2MmI1MWVkYWQ2ZWIxYzg5OTVmOGJmM2RjMzRhOTcyMzczYmNhYTE5ODE1OTk4IiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                    "value": "testtrack-session=scWvDS1KgUrYwAOVB9MJzwMUAoUmeWWRsg2dTUFc; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
                                 }
                             ],
                             "code": 401,
@@ -260,7 +410,7 @@
                     ]
                 },
                 {
-                    "name": "Update the specified resource in storage.",
+                    "name": "Update the specified resource in storage. We receive here a test2, together with its\nquestions and answer options. We have to loop through all this and handle.",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -289,7 +439,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"title\":\"b\",\"description\":\"Eius et animi quos velit et.\",\"test_code\":\"architecto\"}"
+                            "raw": "{\"title\":\"b\",\"description\":\"Eius et animi quos velit et.\",\"user_id\":\"architecto\",\"questions\":[{\"text\":\"architecto\",\"answer_options\":[{\"text\":\"architecto\",\"is_correct\":true}]}]}"
                         },
                         "description": ""
                     },
@@ -309,6 +459,217 @@
                                     "key": "id",
                                     "value": "1",
                                     "description": "The ID of the test."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display a listing of the resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/test-attempts",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/test-attempts"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "http:\/\/localhost:5174"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                },
+                                {
+                                    "key": "set-cookie",
+                                    "value": "testtrack-session=v4zj7bUedZVSs8GNvXuRn7cmZnAqWWiLjlDkZDDo; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a newly created resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/test-attempts",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/test-attempts"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"test_attempt\":{\"user_id\":16,\"test_id\":16,\"comment\":\"architecto\",\"started_at\":\"2026-08-08 15:35:45\",\"finished_at\":\"2026-08-08 15:35:45\",\"completed_at\":\"2026-08-08 15:35:45\"},\"user_answers\":[{\"question_id\":16,\"answer_option_id\":16,\"comment\":\"architecto\"}]}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display the specified resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/test-attempts\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/test-attempts\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the test attempt."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "http:\/\/localhost:5174"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                },
+                                {
+                                    "key": "set-cookie",
+                                    "value": "testtrack-session=nNutsIkY0dIQR0hy99zFTY8B2Sa2VvN3LRL1myjf; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update the specified resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/test-attempts\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/test-attempts\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the test attempt."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"score\":27,\"max_score\":39,\"comment\":\"architecto\",\"started_at\":\"2026-08-08 15:35:45\",\"finished_at\":\"2026-08-08 15:35:45\",\"completed_at\":\"2026-08-08 15:35:45\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Remove the specified resource from storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/test-attempts\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/test-attempts\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the test attempt."
                                 }
                             ]
                         },
@@ -372,7 +733,7 @@
                                 },
                                 {
                                     "key": "set-cookie",
-                                    "value": "testtrack-session=eyJpdiI6Ild6eFEvME5ZUmNMUlhWSEdWSzY4SlE9PSIsInZhbHVlIjoiTjBjQjRIckE2VGRlK3c2RFZaK3ZSSXVreVRLT1Z4NVZ5Rm9HYURqdi9tRWJ2aHJCZ1RPSUtUWTRCcTZNMENJZlpXckxybWJ4TnNQeno1WjFZZy9uVmlYSnFtYmk1WDg1T2Z4N3NwazRCZjNWZVM2UDlMNzR2Q1g4M1BncVdrMVEiLCJtYWMiOiIwMzdkMjk4NThhMGRiYzBlM2JiNmQ5NDc5YTA2MjU2NDE4MjY0ZTczNzQ3ZTZlMmY4MGQ2MTdmZjY0ODc4YzM0IiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                    "value": "testtrack-session=YDSzDPLGp3HPldm6OPeg2U39s5ym91yfXIogCkLx; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
                                 }
                             ],
                             "code": 401,
@@ -461,7 +822,7 @@
                                 },
                                 {
                                     "key": "set-cookie",
-                                    "value": "testtrack-session=eyJpdiI6InlUTzlWb0VtWW4vSm0ydFlRaktYYVE9PSIsInZhbHVlIjoiK2h1UW1VWTMrVjR0K1FEQnhIS2VaRUtVT1lqZXJ5Z1NXTDl3b2ZtazY4WEU2K29oTHlLcFFDWlU2dXJRcEVQbCtPZXNLYVlYZk9ZQzBabGZBdW5xb3luZHZtalNTVzBqc2xXUktLMmxPZ081Lzg2djh3emYyZ0JsRnAvWGtzbXUiLCJtYWMiOiI5YjA1NmUxOTQyYTE3MWYxZmZkZjRiZmNmNDJjNzFjOTE4MzM3NTk1Y2JmNzc3YjQ0NTVlNjEwZDdmMjA0YWE4IiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                    "value": "testtrack-session=jKK6pZewFzL1sqZ8tmsBIXkKNtcWQ00ug5wlniUJ; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
                                 }
                             ],
                             "code": 401,
@@ -500,7 +861,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"text\":\"architecto\",\"image_path\":\"n\",\"allows_multiple_correct\":false,\"question_order\":84}"
+                            "raw": "{\"text\":\"architecto\",\"image_path\":\"n\",\"allows_multiple_correct\":true,\"question_order\":84}"
                         },
                         "description": ""
                     },
@@ -535,6 +896,42 @@
                             }
                         ],
                         "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST api\/questions\/{question_id}\/correct-answer",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/questions\/:question_id\/correct-answer",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/questions\/:question_id\/correct-answer",
+                            "variable": [
+                                {
+                                    "id": "question_id",
+                                    "key": "question_id",
+                                    "value": "1",
+                                    "description": "The ID of the question."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"correct_answer_option_id\":\"architecto\"}"
+                        },
                         "description": ""
                     },
                     "response": []
@@ -583,7 +980,7 @@
                                 },
                                 {
                                     "key": "set-cookie",
-                                    "value": "testtrack-session=eyJpdiI6IkNVbUprZE44Rk1XeGlDLzZrTkVsL2c9PSIsInZhbHVlIjoiY1JLWmtqZHlXVU9la3ZialpOVTVITm1TZFhzMVNpQlIyeEJqZlA4WjZ1RFZFUjUrYzI0U3FvTlVuKzEyQnhiWHUwZ2daODFrUmRBQ0M0ZmdKNlhndFRpclRaZmdNTlNRaWNpamFrQmVKdVJ2bzJKT2FGRjB5UGU3SU96eFg3YXIiLCJtYWMiOiJmOThkNjMzMjhmNDhmNDg0YmQ0MDkxMWI5NWQyNjE2YzViZjBhZWU4YzQwYmFiMjY5ZWFlZDA3ZWNkODUwMjE0IiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                    "value": "testtrack-session=1X6fgQYbekeK2E7hLEL9skHnXLSTV5bReDBCNoYe; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
                                 }
                             ],
                             "code": 401,
@@ -672,7 +1069,7 @@
                                 },
                                 {
                                     "key": "set-cookie",
-                                    "value": "testtrack-session=eyJpdiI6ImhNVVpmbzJ6SWwwdjRBODNaUW4yNkE9PSIsInZhbHVlIjoiNzJXOXVvcGhuS3lSSnN5MG8yMzhuSVBKbXZhWGQzbU1kb2ljQUExWFlnUVJCL1RacUNSSE5WTzBtL0xPK1ZrbHBOM3JFZGxHOVpTcFEwbGlML3ZGclhKaEpLbjloV255UmFPY2luVFhwWWlFeThoRldOVVplMzlBWUpxZmREQ3YiLCJtYWMiOiI4YzQzZjA3YjE4NzkyMTU4MWIxNzMyMjk3YzdjNGZjMGM3ZjQ5Yjk1N2QzZTVjZTNhNmUwNTU4NmQxYjI5NGJiIiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                    "value": "testtrack-session=yIkFvh04aOgi6R84oaINnuf9g4M2vKP1w1mfoLtX; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
                                 }
                             ],
                             "code": 401,
@@ -711,7 +1108,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"text\":\"b\",\"is_correct\":false,\"answer_order\":39}"
+                            "raw": "{\"text\":\"b\",\"is_correct\":false}"
                         },
                         "description": ""
                     },
@@ -731,217 +1128,6 @@
                                     "key": "id",
                                     "value": "1",
                                     "description": "The ID of the answer option."
-                                }
-                            ]
-                        },
-                        "method": "DELETE",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": ""
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Display a listing of the resource.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/test-attempts",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/test-attempts"
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": ""
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "http:\/\/localhost:5174"
-                                },
-                                {
-                                    "key": "access-control-allow-credentials",
-                                    "value": "true"
-                                },
-                                {
-                                    "key": "set-cookie",
-                                    "value": "testtrack-session=eyJpdiI6Im43ZkRtckFKQTUyVFVUSE1FV0g1Z3c9PSIsInZhbHVlIjoiQ2ljUDlTdVFkK1dIYzRRRzVua01DcFY5cnExWkF3M3I4ejhiRHREY1BheWlFc3k4Nnp3SlFFaGpRd2RQVmRRdHdXZGo1ejQ1MTBEM1ZMS0VwNko3cVBMUGtXU1BGbDFzZU43WDI0ME9jbWJ5UVZKaUp6QlFtQVF5eHFLWFZYWEgiLCJtYWMiOiJjZDdkMWUyYWI0MTBiNzg4NjIxNThjZWJmMjgzOWRlZjg5ZmEyM2Q1ZmQzM2Y0ODU1NWIwZGYxMmNkM2FlMGM1IiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
-                                }
-                            ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\"}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "Store a newly created resource in storage.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/test-attempts",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/test-attempts"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"user_id\":\"architecto\",\"test_id\":\"architecto\",\"score\":39,\"max_score\":84,\"comment\":\"architecto\",\"started_at\":\"2026-05-09 11:16:44\",\"finished_at\":\"2026-05-09 11:16:44\",\"completed_at\":\"2026-05-09 11:16:44\"}"
-                        },
-                        "description": ""
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Display the specified resource.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/test-attempts\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/test-attempts\/:id",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "1",
-                                    "description": "The ID of the test attempt."
-                                }
-                            ]
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": ""
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "http:\/\/localhost:5174"
-                                },
-                                {
-                                    "key": "access-control-allow-credentials",
-                                    "value": "true"
-                                },
-                                {
-                                    "key": "set-cookie",
-                                    "value": "testtrack-session=eyJpdiI6InB0NFlIWHRtVDJXVlVrdGd3Q1hhRUE9PSIsInZhbHVlIjoiVmRZV053TUxqL1V1bTJLMEVBNEFBUkNpamwvMElpUFJ2VXFxaU5pN1JpNmFVc3JKSEpyQ2ZJNTNZbk1iaHRYeHJDcjNYcVBrU1pCZkIydnB6VGQ0aWVGd1pWdnVrYTE1YTcrWUczb04yVDZZSk9QZTNqLzJKUUJxMlQyMkRuUUEiLCJtYWMiOiIzM2Y4Mjk3ODQxMTgyNDA3OTNlYWZkYWM3NzY3NzM0YWMzZGM2OWNhZjdkMDIzYWRjN2UwNmQ3YmQ5YTlmNDYwIiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
-                                }
-                            ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\"}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "Update the specified resource in storage.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/test-attempts\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/test-attempts\/:id",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "1",
-                                    "description": "The ID of the test attempt."
-                                }
-                            ]
-                        },
-                        "method": "PUT",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"score\":27,\"max_score\":39,\"comment\":\"architecto\",\"started_at\":\"2026-05-09 11:16:44\",\"finished_at\":\"2026-05-09 11:16:44\",\"completed_at\":\"2026-05-09 11:16:44\"}"
-                        },
-                        "description": ""
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Remove the specified resource from storage.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/test-attempts\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/test-attempts\/:id",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "1",
-                                    "description": "The ID of the test attempt."
                                 }
                             ]
                         },
@@ -1005,7 +1191,7 @@
                                 },
                                 {
                                     "key": "set-cookie",
-                                    "value": "testtrack-session=eyJpdiI6IjlXSE1WWDFzRmU5QWYvdlloeEFrYnc9PSIsInZhbHVlIjoiQ01sRmhIRXZhSjMyemRSMGJHTUd5Y05TWTBFbHBCUkw0cGVrUU1hcGRRZUxhODRUQW1FWFRwVzV0T2p5Q0RoY3ZVZlFtSlFTUWtNaUZDaGVGQXMrY25OL0MzelhKWGhkWlljcHZUOURteXNPS3F4VFQvZUZ0VlFPcmpRY0RaN04iLCJtYWMiOiI1YzdhNGZlYmNiNzk3OTBmZTgzY2QzNDM0NTEyMjRhOGNkNTRhOGVhMzA2ODNhMmRmZTc1N2RjMTgwMGJmZjUwIiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                    "value": "testtrack-session=Nd4dZewrpKIwCIBWwoM6VmayXnaXpOTd14kVH3Wb; expires=Sat, 08 Aug 2026 17:35:46 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
                                 }
                             ],
                             "code": 401,
@@ -1094,7 +1280,7 @@
                                 },
                                 {
                                     "key": "set-cookie",
-                                    "value": "testtrack-session=eyJpdiI6ImxxSEZMbytReFcxMVVBYlpFb3FZemc9PSIsInZhbHVlIjoiTGVtbUNEWXNCT05KYmhSbEppY0JGV3A1bHR1bEVyUFZBWjJYQUFETlpZQWFOOEVHV1dIV2lFOGJOdXpjR2ZYbDVvUU5iVnB0ak9rUXBaMzVkVVRWcE1jSlhEQm1BSTExVHBhbUlyd2ZKUkJucVNZUEFNQXN6TnpEWndxa0JDR0kiLCJtYWMiOiJmZTA4MzJlZjY0NTAyNGM2NzUxZTA0YTRiNGYxZDk4YWFmMThiNGFiMzhjNTg0YjU2YzQ5MDI2OWJhYzRlMzhmIiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                    "value": "testtrack-session=2sAyIEVadYyRu5dz9bggwWj9s5vpsXuuPvel0sWD; expires=Sat, 08 Aug 2026 17:35:46 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
                                 }
                             ],
                             "code": 401,
@@ -1171,6 +1357,59 @@
                         "description": ""
                     },
                     "response": []
+                },
+                {
+                    "name": "GET api\/test-taker",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/test-taker",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/test-taker"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "http:\/\/localhost:5174"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                },
+                                {
+                                    "key": "set-cookie",
+                                    "value": "testtrack-session=R1BIr2LbPbOd40ky5atJsfVBCUSkZ37375SMrM5z; expires=Sat, 08 Aug 2026 17:35:46 GMT; Max-Age=7200; path=\/; domain=localhost; httponly; samesite=lax"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
                 }
             ]
         }

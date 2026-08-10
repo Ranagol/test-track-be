@@ -6,6 +6,204 @@ endpoints:
   -
     custom: []
     httpMethods:
+      - POST
+    uri: api/login
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Handle an incoming authentication request.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      session:
+        custom: []
+        name: session
+        description: 'Authentication key.'
+        required: true
+        example: 6g43cv8PD1aE5beadkZfhV6
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      session: 6g43cv8PD1aE5beadkZfhV6
+    bodyParameters:
+      email:
+        custom: []
+        name: email
+        description: 'Must be a valid email address. Must be at least 3 characters. Must not be greater than 254 characters.'
+        required: true
+        example: gbailey@example.net
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'Must be at least 8 characters. Must not be greater than 255 characters.'
+        required: true
+        example: '+-0pBNvYgxwmi/#iw'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      email: gbailey@example.net
+      password: '+-0pBNvYgxwmi/#iw'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - queryParameters
+      - session
+      - 6g43cv8PD1aE5beadkZfhV6
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/register
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Handle an incoming registration request.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      session:
+        custom: []
+        name: session
+        description: 'Authentication key.'
+        required: true
+        example: 6g43cv8PD1aE5beadkZfhV6
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      session: 6g43cv8PD1aE5beadkZfhV6
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'Must be a valid email address. Must not be greater than 255 characters.'
+        required: true
+        example: zbailey@example.net
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: b
+      email: zbailey@example.net
+      password: architecto
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - queryParameters
+      - session
+      - 6g43cv8PD1aE5beadkZfhV6
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/logout
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Destroy an authenticated session.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      session:
+        custom: []
+        name: session
+        description: 'Authentication key.'
+        required: true
+        example: 6g43cv8PD1aE5beadkZfhV6
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      session: 6g43cv8PD1aE5beadkZfhV6
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - queryParameters
+      - session
+      - 6g43cv8PD1aE5beadkZfhV6
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
       - GET
     uri: api/user
     metadata:
@@ -14,7 +212,9 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: |-
+        Login, register and logout work with Breeze. Breeze is for web requests by default, not api
+        requests. So, we needed to add the API routes for login, register and logout here.
       description: ''
       authenticated: true
       deprecated: false
@@ -50,6 +250,7 @@ endpoints:
           content-type: application/json
           access-control-allow-origin: 'http://localhost:5174'
           access-control-allow-credentials: 'true'
+          set-cookie: 'testtrack-session=rTBHaJnySMaSQmvszuYWqom9w52mjDK5YXChrFpp; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
         description: null
     responseFields: []
     auth:
@@ -63,7 +264,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/xxx
+    uri: 'api/tests/test-code/{testCode}'
     metadata:
       custom: []
       groupName: Endpoints
@@ -71,6 +272,78 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: ''
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      testCode:
+        custom: []
+        name: testCode
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      testCode: architecto
+    queryParameters:
+      session:
+        custom: []
+        name: session
+        description: 'Authentication key.'
+        required: true
+        example: 6g43cv8PD1aE5beadkZfhV6
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      session: 6g43cv8PD1aE5beadkZfhV6
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: 'http://localhost:5174'
+          access-control-allow-credentials: 'true'
+          set-cookie: 'testtrack-session=3B0Et3WLtFTaW3YBa7eKpZAqhcRzC2eh4sUUv2sv; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
+        description: null
+    responseFields: []
+    auth:
+      - queryParameters
+      - session
+      - 6g43cv8PD1aE5beadkZfhV6
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/analytics
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        This function is called at FE url /analytics/:testTakerId
+        It sends all belonging tests, questions, answers, attempts for the give test taker, so its
+        test performances could be analyzed.
       description: ''
       authenticated: true
       deprecated: false
@@ -99,13 +372,14 @@ endpoints:
     responses:
       -
         custom: []
-        status: 200
-        content: '{"message":"API is working","user":null}'
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
           access-control-allow-origin: 'http://localhost:5174'
           access-control-allow-credentials: 'true'
+          set-cookie: 'testtrack-session=MBplNcaLm1dhq0ONNpwB1agFaPZeCMYCGqg6ywW8; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
         description: null
     responseFields: []
     auth:
@@ -126,11 +400,13 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Display a listing of the resource.'
+      title: 'Display all belonging test on the /tests page.'
       description: |-
         TestResource is for single resources. TestResource::collection(), returns an
         AnonymousResourceCollection — which is the collection wrapper that handles pagination,
         metadata, and multiple items.
+        This is an example of the GET request:
+        /api/tests?page=1&per_page=2&search=&sort_by=title&sort_order=asc
       authenticated: true
       deprecated: false
     headers:
@@ -165,7 +441,7 @@ endpoints:
           content-type: application/json
           access-control-allow-origin: 'http://localhost:5174'
           access-control-allow-credentials: 'true'
-          set-cookie: 'testtrack-session=eyJpdiI6IjI1eE1JK3h6bjVsamV3V3c3MHdySEE9PSIsInZhbHVlIjoiZGVybDdweEF4ZFRUTmdVYXYrNlJ5ZDNPMGEwRWRWdHl2eWxlUjhRUUhIaU5GUENsaURHVkRVWWFXQWlzZk45Nno1OGVVN3Jod0JBamdNb2NsMzZYeXVKVlA4VzV2eWNSdUMrR0VGeW11UmVESmVYU1VubXFBOGNlbUVEdkNTZ1QiLCJtYWMiOiI5YjE5MmM0M2EzNmM3MmVmYjVmZTI4NGIwNTRiNzZiMzQ0OTM1Yzc0MmUxNDg3ODY0YjFhNTY0NjBjYjE1Nzg5IiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
+          set-cookie: 'testtrack-session=37mUuQzEBdLU7o3Icwv6SmhzgwPLdY2MuFJ7iDcR; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
         description: null
     responseFields: []
     auth:
@@ -225,19 +501,8 @@ endpoints:
         custom: []
         name: description
         description: ''
-        required: false
-        example: 'Eius et animi quos velit et.'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      test_code:
-        custom: []
-        name: test_code
-        description: ''
         required: true
-        example: architecto
+        example: 'Eius et animi quos velit et.'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -254,11 +519,74 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      questions:
+        custom: []
+        name: questions
+        description: 'Must have at least 1 items.'
+        required: true
+        example:
+          - []
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'questions[].text':
+        custom: []
+        name: 'questions[].text'
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'questions[].answer_options':
+        custom: []
+        name: 'questions[].answer_options'
+        description: 'Must have at least 2 items.'
+        required: true
+        example:
+          - []
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'questions[].answer_options[].text':
+        custom: []
+        name: 'questions[].answer_options[].text'
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'questions[].answer_options[].is_correct':
+        custom: []
+        name: 'questions[].answer_options[].is_correct'
+        description: ''
+        required: true
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
       title: b
       description: 'Eius et animi quos velit et.'
-      test_code: architecto
       user_id: architecto
+      questions:
+        -
+          text: architecto
+          answer_options:
+            -
+              text: architecto
+              is_correct: false
     fileParameters: []
     responses: []
     responseFields: []
@@ -328,7 +656,7 @@ endpoints:
           content-type: application/json
           access-control-allow-origin: 'http://localhost:5174'
           access-control-allow-credentials: 'true'
-          set-cookie: 'testtrack-session=eyJpdiI6IjlaVU9RNWtvaVFpSUZJNCt0SU1HUWc9PSIsInZhbHVlIjoidExsZ0srVERRWllhRjdIVnVvZEdmdE9BS21hOVltVUdmN3dtaS9NaGR5Z0VYRmVHWU9TQ2tCN2JySHZZQ1d1MHNUWmVBQ1FqbTlyaEhHWnhGdGp5MnlXVzBWNEdONDhYQ1Y3bEwxcDNQS2w0TkIwdFRYMnZZaXUzWUZlczhEUWIiLCJtYWMiOiJmZmJiM2ZiMWYyZDhiOTM1Y2Y2MmI1MWVkYWQ2ZWIxYzg5OTVmOGJmM2RjMzRhOTcyMzczYmNhYTE5ODE1OTk4IiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
+          set-cookie: 'testtrack-session=scWvDS1KgUrYwAOVB9MJzwMUAoUmeWWRsg2dTUFc; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
         description: null
     responseFields: []
     auth:
@@ -350,7 +678,9 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update the specified resource in storage.'
+      title: |-
+        Update the specified resource in storage. We receive here a test2, together with its
+        questions and answer options. We have to loop through all this and handle.
       description: ''
       authenticated: true
       deprecated: false
@@ -390,7 +720,7 @@ endpoints:
         custom: []
         name: title
         description: 'Must not be greater than 255 characters.'
-        required: true
+        required: false
         example: b
         type: string
         enumValues: []
@@ -408,10 +738,10 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
-      test_code:
+      user_id:
         custom: []
-        name: test_code
-        description: ''
+        name: user_id
+        description: 'The <code>id</code> of an existing record in the users table.'
         required: true
         example: architecto
         type: string
@@ -419,10 +749,94 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      questions:
+        custom: []
+        name: questions
+        description: ''
+        required: false
+        example: null
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'questions[].id':
+        custom: []
+        name: 'questions[].id'
+        description: 'This field is required when <code>questions</code> is present. The <code>id</code> of an existing record in the questions table.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'questions[].text':
+        custom: []
+        name: 'questions[].text'
+        description: 'This field is required when <code>questions</code> is present.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'questions[].answer_options':
+        custom: []
+        name: 'questions[].answer_options'
+        description: 'This field is required when <code>questions</code> is present.'
+        required: false
+        example: null
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'questions[].answer_options[].id':
+        custom: []
+        name: 'questions[].answer_options[].id'
+        description: 'This field is required when <code>questions.*.answer_options</code> is present. The <code>id</code> of an existing record in the answer_options table.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'questions[].answer_options[].text':
+        custom: []
+        name: 'questions[].answer_options[].text'
+        description: 'This field is required when <code>questions.*.answer_options</code> is present.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'questions[].answer_options[].is_correct':
+        custom: []
+        name: 'questions[].answer_options[].is_correct'
+        description: 'This field is required when <code>questions.*.answer_options</code> is present.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
       title: b
       description: 'Eius et animi quos velit et.'
-      test_code: architecto
+      user_id: architecto
+      questions:
+        -
+          text: architecto
+          answer_options:
+            -
+              text: architecto
+              is_correct: true
     fileParameters: []
     responses: []
     responseFields: []
@@ -456,6 +870,523 @@ endpoints:
         custom: []
         name: id
         description: 'The ID of the test.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters:
+      session:
+        custom: []
+        name: session
+        description: 'Authentication key.'
+        required: true
+        example: 6g43cv8PD1aE5beadkZfhV6
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      session: 6g43cv8PD1aE5beadkZfhV6
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - queryParameters
+      - session
+      - 6g43cv8PD1aE5beadkZfhV6
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/test-attempts
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display a listing of the resource.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      session:
+        custom: []
+        name: session
+        description: 'Authentication key.'
+        required: true
+        example: 6g43cv8PD1aE5beadkZfhV6
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      session: 6g43cv8PD1aE5beadkZfhV6
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: 'http://localhost:5174'
+          access-control-allow-credentials: 'true'
+          set-cookie: 'testtrack-session=v4zj7bUedZVSs8GNvXuRn7cmZnAqWWiLjlDkZDDo; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
+        description: null
+    responseFields: []
+    auth:
+      - queryParameters
+      - session
+      - 6g43cv8PD1aE5beadkZfhV6
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/test-attempts
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Store a newly created resource in storage.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      session:
+        custom: []
+        name: session
+        description: 'Authentication key.'
+        required: true
+        example: 6g43cv8PD1aE5beadkZfhV6
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      session: 6g43cv8PD1aE5beadkZfhV6
+    bodyParameters:
+      test_attempt:
+        custom: []
+        name: test_attempt
+        description: ''
+        required: false
+        example: []
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      test_attempt.user_id:
+        custom: []
+        name: test_attempt.user_id
+        description: 'The <code>id</code> of an existing record in the users table.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      test_attempt.test_id:
+        custom: []
+        name: test_attempt.test_id
+        description: 'The <code>id</code> of an existing record in the tests table.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      test_attempt.comment:
+        custom: []
+        name: test_attempt.comment
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      test_attempt.started_at:
+        custom: []
+        name: test_attempt.started_at
+        description: 'Must be a valid date in the format <code>Y-m-d H:i:s</code>.'
+        required: false
+        example: '2026-08-08 15:35:45'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      test_attempt.finished_at:
+        custom: []
+        name: test_attempt.finished_at
+        description: 'Must be a valid date in the format <code>Y-m-d H:i:s</code>.'
+        required: false
+        example: '2026-08-08 15:35:45'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      test_attempt.completed_at:
+        custom: []
+        name: test_attempt.completed_at
+        description: 'Must be a valid date in the format <code>Y-m-d H:i:s</code>.'
+        required: false
+        example: '2026-08-08 15:35:45'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      user_answers:
+        custom: []
+        name: user_answers
+        description: ''
+        required: true
+        example:
+          - []
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'user_answers[].question_id':
+        custom: []
+        name: 'user_answers[].question_id'
+        description: 'The <code>id</code> of an existing record in the questions table.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'user_answers[].answer_option_id':
+        custom: []
+        name: 'user_answers[].answer_option_id'
+        description: 'The <code>id</code> of an existing record in the answer_options table.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'user_answers[].comment':
+        custom: []
+        name: 'user_answers[].comment'
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      test_attempt:
+        user_id: 16
+        test_id: 16
+        comment: architecto
+        started_at: '2026-08-08 15:35:45'
+        finished_at: '2026-08-08 15:35:45'
+        completed_at: '2026-08-08 15:35:45'
+      user_answers:
+        -
+          question_id: 16
+          answer_option_id: 16
+          comment: architecto
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - queryParameters
+      - session
+      - 6g43cv8PD1aE5beadkZfhV6
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/test-attempts/{id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display the specified resource.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the test attempt.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters:
+      session:
+        custom: []
+        name: session
+        description: 'Authentication key.'
+        required: true
+        example: 6g43cv8PD1aE5beadkZfhV6
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      session: 6g43cv8PD1aE5beadkZfhV6
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: 'http://localhost:5174'
+          access-control-allow-credentials: 'true'
+          set-cookie: 'testtrack-session=nNutsIkY0dIQR0hy99zFTY8B2Sa2VvN3LRL1myjf; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
+        description: null
+    responseFields: []
+    auth:
+      - queryParameters
+      - session
+      - 6g43cv8PD1aE5beadkZfhV6
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/test-attempts/{id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update the specified resource in storage.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the test attempt.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters:
+      session:
+        custom: []
+        name: session
+        description: 'Authentication key.'
+        required: true
+        example: 6g43cv8PD1aE5beadkZfhV6
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      session: 6g43cv8PD1aE5beadkZfhV6
+    bodyParameters:
+      user_id:
+        custom: []
+        name: user_id
+        description: 'The <code>id</code> of an existing record in the users table.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      test_id:
+        custom: []
+        name: test_id
+        description: 'The <code>id</code> of an existing record in the tests table.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      score:
+        custom: []
+        name: score
+        description: 'Must be at least 0.'
+        required: false
+        example: 27
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      max_score:
+        custom: []
+        name: max_score
+        description: 'Must be at least 0.'
+        required: false
+        example: 39
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      comment:
+        custom: []
+        name: comment
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      started_at:
+        custom: []
+        name: started_at
+        description: 'Must be a valid date in the format <code>Y-m-d H:i:s</code>.'
+        required: false
+        example: '2026-08-08 15:35:45'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      finished_at:
+        custom: []
+        name: finished_at
+        description: 'Must be a valid date in the format <code>Y-m-d H:i:s</code>.'
+        required: false
+        example: '2026-08-08 15:35:45'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      completed_at:
+        custom: []
+        name: completed_at
+        description: 'Must be a valid date in the format <code>Y-m-d H:i:s</code>.'
+        required: false
+        example: '2026-08-08 15:35:45'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      score: 27
+      max_score: 39
+      comment: architecto
+      started_at: '2026-08-08 15:35:45'
+      finished_at: '2026-08-08 15:35:45'
+      completed_at: '2026-08-08 15:35:45'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - queryParameters
+      - session
+      - 6g43cv8PD1aE5beadkZfhV6
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/test-attempts/{id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Remove the specified resource from storage.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the test attempt.'
         required: true
         example: 1
         type: integer
@@ -538,7 +1469,7 @@ endpoints:
           content-type: application/json
           access-control-allow-origin: 'http://localhost:5174'
           access-control-allow-credentials: 'true'
-          set-cookie: 'testtrack-session=eyJpdiI6Ild6eFEvME5ZUmNMUlhWSEdWSzY4SlE9PSIsInZhbHVlIjoiTjBjQjRIckE2VGRlK3c2RFZaK3ZSSXVreVRLT1Z4NVZ5Rm9HYURqdi9tRWJ2aHJCZ1RPSUtUWTRCcTZNMENJZlpXckxybWJ4TnNQeno1WjFZZy9uVmlYSnFtYmk1WDg1T2Z4N3NwazRCZjNWZVM2UDlMNzR2Q1g4M1BncVdrMVEiLCJtYWMiOiIwMzdkMjk4NThhMGRiYzBlM2JiNmQ5NDc5YTA2MjU2NDE4MjY0ZTczNzQ3ZTZlMmY4MGQ2MTdmZjY0ODc4YzM0IiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
+          set-cookie: 'testtrack-session=YDSzDPLGp3HPldm6OPeg2U39s5ym91yfXIogCkLx; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
         description: null
     responseFields: []
     auth:
@@ -713,7 +1644,7 @@ endpoints:
           content-type: application/json
           access-control-allow-origin: 'http://localhost:5174'
           access-control-allow-credentials: 'true'
-          set-cookie: 'testtrack-session=eyJpdiI6InlUTzlWb0VtWW4vSm0ydFlRaktYYVE9PSIsInZhbHVlIjoiK2h1UW1VWTMrVjR0K1FEQnhIS2VaRUtVT1lqZXJ5Z1NXTDl3b2ZtazY4WEU2K29oTHlLcFFDWlU2dXJRcEVQbCtPZXNLYVlYZk9ZQzBabGZBdW5xb3luZHZtalNTVzBqc2xXUktLMmxPZ081Lzg2djh3emYyZ0JsRnAvWGtzbXUiLCJtYWMiOiI5YjA1NmUxOTQyYTE3MWYxZmZkZjRiZmNmNDJjNzFjOTE4MzM3NTk1Y2JmNzc3YjQ0NTVlNjEwZDdmMjA0YWE4IiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
+          set-cookie: 'testtrack-session=jKK6pZewFzL1sqZ8tmsBIXkKNtcWQ00ug5wlniUJ; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
         description: null
     responseFields: []
     auth:
@@ -809,7 +1740,7 @@ endpoints:
         name: allows_multiple_correct
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -829,7 +1760,7 @@ endpoints:
     cleanBodyParameters:
       text: architecto
       image_path: 'n'
-      allows_multiple_correct: false
+      allows_multiple_correct: true
       question_order: 84
     fileParameters: []
     responses: []
@@ -902,6 +1833,76 @@ endpoints:
   -
     custom: []
     httpMethods:
+      - POST
+    uri: 'api/questions/{question_id}/correct-answer'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      question_id:
+        custom: []
+        name: question_id
+        description: 'The ID of the question.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      question_id: 1
+    queryParameters:
+      session:
+        custom: []
+        name: session
+        description: 'Authentication key.'
+        required: true
+        example: 6g43cv8PD1aE5beadkZfhV6
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      session: 6g43cv8PD1aE5beadkZfhV6
+    bodyParameters:
+      correct_answer_option_id:
+        custom: []
+        name: correct_answer_option_id
+        description: 'The <code>id</code> of an existing record in the answer_options table.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      correct_answer_option_id: architecto
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - queryParameters
+      - session
+      - 6g43cv8PD1aE5beadkZfhV6
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
       - GET
     uri: api/answer-options
     metadata:
@@ -946,7 +1947,7 @@ endpoints:
           content-type: application/json
           access-control-allow-origin: 'http://localhost:5174'
           access-control-allow-credentials: 'true'
-          set-cookie: 'testtrack-session=eyJpdiI6IkNVbUprZE44Rk1XeGlDLzZrTkVsL2c9PSIsInZhbHVlIjoiY1JLWmtqZHlXVU9la3ZialpOVTVITm1TZFhzMVNpQlIyeEJqZlA4WjZ1RFZFUjUrYzI0U3FvTlVuKzEyQnhiWHUwZ2daODFrUmRBQ0M0ZmdKNlhndFRpclRaZmdNTlNRaWNpamFrQmVKdVJ2bzJKT2FGRjB5UGU3SU96eFg3YXIiLCJtYWMiOiJmOThkNjMzMjhmNDhmNDg0YmQ0MDkxMWI5NWQyNjE2YzViZjBhZWU4YzQwYmFiMjY5ZWFlZDA3ZWNkODUwMjE0IiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
+          set-cookie: 'testtrack-session=1X6fgQYbekeK2E7hLEL9skHnXLSTV5bReDBCNoYe; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
         description: null
     responseFields: []
     auth:
@@ -1109,7 +2110,7 @@ endpoints:
           content-type: application/json
           access-control-allow-origin: 'http://localhost:5174'
           access-control-allow-credentials: 'true'
-          set-cookie: 'testtrack-session=eyJpdiI6ImhNVVpmbzJ6SWwwdjRBODNaUW4yNkE9PSIsInZhbHVlIjoiNzJXOXVvcGhuS3lSSnN5MG8yMzhuSVBKbXZhWGQzbU1kb2ljQUExWFlnUVJCL1RacUNSSE5WTzBtL0xPK1ZrbHBOM3JFZGxHOVpTcFEwbGlML3ZGclhKaEpLbjloV255UmFPY2luVFhwWWlFeThoRldOVVplMzlBWUpxZmREQ3YiLCJtYWMiOiI4YzQzZjA3YjE4NzkyMTU4MWIxNzMyMjk3YzdjNGZjMGM3ZjQ5Yjk1N2QzZTVjZTNhNmUwNTU4NmQxYjI5NGJiIiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
+          set-cookie: 'testtrack-session=yIkFvh04aOgi6R84oaINnuf9g4M2vKP1w1mfoLtX; expires=Sat, 08 Aug 2026 17:35:45 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
         description: null
     responseFields: []
     auth:
@@ -1167,17 +2168,6 @@ endpoints:
     cleanQueryParameters:
       session: 6g43cv8PD1aE5beadkZfhV6
     bodyParameters:
-      question_id:
-        custom: []
-        name: question_id
-        description: 'The <code>id</code> of an existing record in the questions table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       text:
         custom: []
         name: text
@@ -1200,21 +2190,9 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      answer_order:
-        custom: []
-        name: answer_order
-        description: 'Must be at least 0.'
-        required: false
-        example: 39
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       text: b
       is_correct: false
-      answer_order: 39
     fileParameters: []
     responses: []
     responseFields: []
@@ -1287,485 +2265,6 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/test-attempts
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Display a listing of the resource.'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters:
-      session:
-        custom: []
-        name: session
-        description: 'Authentication key.'
-        required: true
-        example: 6g43cv8PD1aE5beadkZfhV6
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanQueryParameters:
-      session: 6g43cv8PD1aE5beadkZfhV6
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: 'http://localhost:5174'
-          access-control-allow-credentials: 'true'
-          set-cookie: 'testtrack-session=eyJpdiI6Im43ZkRtckFKQTUyVFVUSE1FV0g1Z3c9PSIsInZhbHVlIjoiQ2ljUDlTdVFkK1dIYzRRRzVua01DcFY5cnExWkF3M3I4ejhiRHREY1BheWlFc3k4Nnp3SlFFaGpRd2RQVmRRdHdXZGo1ejQ1MTBEM1ZMS0VwNko3cVBMUGtXU1BGbDFzZU43WDI0ME9jbWJ5UVZKaUp6QlFtQVF5eHFLWFZYWEgiLCJtYWMiOiJjZDdkMWUyYWI0MTBiNzg4NjIxNThjZWJmMjgzOWRlZjg5ZmEyM2Q1ZmQzM2Y0ODU1NWIwZGYxMmNkM2FlMGM1IiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
-        description: null
-    responseFields: []
-    auth:
-      - queryParameters
-      - session
-      - 6g43cv8PD1aE5beadkZfhV6
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: api/test-attempts
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Store a newly created resource in storage.'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters:
-      session:
-        custom: []
-        name: session
-        description: 'Authentication key.'
-        required: true
-        example: 6g43cv8PD1aE5beadkZfhV6
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanQueryParameters:
-      session: 6g43cv8PD1aE5beadkZfhV6
-    bodyParameters:
-      user_id:
-        custom: []
-        name: user_id
-        description: 'The <code>id</code> of an existing record in the users table.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      test_id:
-        custom: []
-        name: test_id
-        description: 'The <code>id</code> of an existing record in the tests table.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      score:
-        custom: []
-        name: score
-        description: 'Must be at least 0.'
-        required: false
-        example: 39
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      max_score:
-        custom: []
-        name: max_score
-        description: 'Must be at least 0.'
-        required: false
-        example: 84
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      comment:
-        custom: []
-        name: comment
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      started_at:
-        custom: []
-        name: started_at
-        description: 'Must be a valid date in the format <code>Y-m-d H:i:s</code>.'
-        required: false
-        example: '2026-05-09 11:16:44'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      finished_at:
-        custom: []
-        name: finished_at
-        description: 'Must be a valid date in the format <code>Y-m-d H:i:s</code>.'
-        required: false
-        example: '2026-05-09 11:16:44'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      completed_at:
-        custom: []
-        name: completed_at
-        description: 'Must be a valid date in the format <code>Y-m-d H:i:s</code>.'
-        required: false
-        example: '2026-05-09 11:16:44'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-    cleanBodyParameters:
-      user_id: architecto
-      test_id: architecto
-      score: 39
-      max_score: 84
-      comment: architecto
-      started_at: '2026-05-09 11:16:44'
-      finished_at: '2026-05-09 11:16:44'
-      completed_at: '2026-05-09 11:16:44'
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth:
-      - queryParameters
-      - session
-      - 6g43cv8PD1aE5beadkZfhV6
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/test-attempts/{id}'
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Display the specified resource.'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'The ID of the test attempt.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id: 1
-    queryParameters:
-      session:
-        custom: []
-        name: session
-        description: 'Authentication key.'
-        required: true
-        example: 6g43cv8PD1aE5beadkZfhV6
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanQueryParameters:
-      session: 6g43cv8PD1aE5beadkZfhV6
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: 'http://localhost:5174'
-          access-control-allow-credentials: 'true'
-          set-cookie: 'testtrack-session=eyJpdiI6InB0NFlIWHRtVDJXVlVrdGd3Q1hhRUE9PSIsInZhbHVlIjoiVmRZV053TUxqL1V1bTJLMEVBNEFBUkNpamwvMElpUFJ2VXFxaU5pN1JpNmFVc3JKSEpyQ2ZJNTNZbk1iaHRYeHJDcjNYcVBrU1pCZkIydnB6VGQ0aWVGd1pWdnVrYTE1YTcrWUczb04yVDZZSk9QZTNqLzJKUUJxMlQyMkRuUUEiLCJtYWMiOiIzM2Y4Mjk3ODQxMTgyNDA3OTNlYWZkYWM3NzY3NzM0YWMzZGM2OWNhZjdkMDIzYWRjN2UwNmQ3YmQ5YTlmNDYwIiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
-        description: null
-    responseFields: []
-    auth:
-      - queryParameters
-      - session
-      - 6g43cv8PD1aE5beadkZfhV6
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - PUT
-      - PATCH
-    uri: 'api/test-attempts/{id}'
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Update the specified resource in storage.'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'The ID of the test attempt.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id: 1
-    queryParameters:
-      session:
-        custom: []
-        name: session
-        description: 'Authentication key.'
-        required: true
-        example: 6g43cv8PD1aE5beadkZfhV6
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanQueryParameters:
-      session: 6g43cv8PD1aE5beadkZfhV6
-    bodyParameters:
-      user_id:
-        custom: []
-        name: user_id
-        description: 'The <code>id</code> of an existing record in the users table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      test_id:
-        custom: []
-        name: test_id
-        description: 'The <code>id</code> of an existing record in the tests table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      score:
-        custom: []
-        name: score
-        description: 'Must be at least 0.'
-        required: false
-        example: 27
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      max_score:
-        custom: []
-        name: max_score
-        description: 'Must be at least 0.'
-        required: false
-        example: 39
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      comment:
-        custom: []
-        name: comment
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      started_at:
-        custom: []
-        name: started_at
-        description: 'Must be a valid date in the format <code>Y-m-d H:i:s</code>.'
-        required: false
-        example: '2026-05-09 11:16:44'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      finished_at:
-        custom: []
-        name: finished_at
-        description: 'Must be a valid date in the format <code>Y-m-d H:i:s</code>.'
-        required: false
-        example: '2026-05-09 11:16:44'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      completed_at:
-        custom: []
-        name: completed_at
-        description: 'Must be a valid date in the format <code>Y-m-d H:i:s</code>.'
-        required: false
-        example: '2026-05-09 11:16:44'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-    cleanBodyParameters:
-      score: 27
-      max_score: 39
-      comment: architecto
-      started_at: '2026-05-09 11:16:44'
-      finished_at: '2026-05-09 11:16:44'
-      completed_at: '2026-05-09 11:16:44'
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth:
-      - queryParameters
-      - session
-      - 6g43cv8PD1aE5beadkZfhV6
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - DELETE
-    uri: 'api/test-attempts/{id}'
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Remove the specified resource from storage.'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'The ID of the test attempt.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id: 1
-    queryParameters:
-      session:
-        custom: []
-        name: session
-        description: 'Authentication key.'
-        required: true
-        example: 6g43cv8PD1aE5beadkZfhV6
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanQueryParameters:
-      session: 6g43cv8PD1aE5beadkZfhV6
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth:
-      - queryParameters
-      - session
-      - 6g43cv8PD1aE5beadkZfhV6
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
     uri: api/user-answers
     metadata:
       custom: []
@@ -1809,7 +2308,7 @@ endpoints:
           content-type: application/json
           access-control-allow-origin: 'http://localhost:5174'
           access-control-allow-credentials: 'true'
-          set-cookie: 'testtrack-session=eyJpdiI6IjlXSE1WWDFzRmU5QWYvdlloeEFrYnc9PSIsInZhbHVlIjoiQ01sRmhIRXZhSjMyemRSMGJHTUd5Y05TWTBFbHBCUkw0cGVrUU1hcGRRZUxhODRUQW1FWFRwVzV0T2p5Q0RoY3ZVZlFtSlFTUWtNaUZDaGVGQXMrY25OL0MzelhKWGhkWlljcHZUOURteXNPS3F4VFQvZUZ0VlFPcmpRY0RaN04iLCJtYWMiOiI1YzdhNGZlYmNiNzk3OTBmZTgzY2QzNDM0NTEyMjRhOGNkNTRhOGVhMzA2ODNhMmRmZTc1N2RjMTgwMGJmZjUwIiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
+          set-cookie: 'testtrack-session=Nd4dZewrpKIwCIBWwoM6VmayXnaXpOTd14kVH3Wb; expires=Sat, 08 Aug 2026 17:35:46 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
         description: null
     responseFields: []
     auth:
@@ -1972,7 +2471,7 @@ endpoints:
           content-type: application/json
           access-control-allow-origin: 'http://localhost:5174'
           access-control-allow-credentials: 'true'
-          set-cookie: 'testtrack-session=eyJpdiI6ImxxSEZMbytReFcxMVVBYlpFb3FZemc9PSIsInZhbHVlIjoiTGVtbUNEWXNCT05KYmhSbEppY0JGV3A1bHR1bEVyUFZBWjJYQUFETlpZQWFOOEVHV1dIV2lFOGJOdXpjR2ZYbDVvUU5iVnB0ak9rUXBaMzVkVVRWcE1jSlhEQm1BSTExVHBhbUlyd2ZKUkJucVNZUEFNQXN6TnpEWndxa0JDR0kiLCJtYWMiOiJmZTA4MzJlZjY0NTAyNGM2NzUxZTA0YTRiNGYxZDk4YWFmMThiNGFiMzhjNTg0YjU2YzQ5MDI2OWJhYzRlMzhmIiwidGFnIjoiIn0%3D; expires=Sat, 09 May 2026 13:16:44 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
+          set-cookie: 'testtrack-session=2sAyIEVadYyRu5dz9bggwWj9s5vpsXuuPvel0sWD; expires=Sat, 08 Aug 2026 17:35:46 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
         description: null
     responseFields: []
     auth:
@@ -2139,6 +2638,63 @@ endpoints:
     cleanBodyParameters: []
     fileParameters: []
     responses: []
+    responseFields: []
+    auth:
+      - queryParameters
+      - session
+      - 6g43cv8PD1aE5beadkZfhV6
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/test-taker
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      session:
+        custom: []
+        name: session
+        description: 'Authentication key.'
+        required: true
+        example: 6g43cv8PD1aE5beadkZfhV6
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      session: 6g43cv8PD1aE5beadkZfhV6
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: 'http://localhost:5174'
+          access-control-allow-credentials: 'true'
+          set-cookie: 'testtrack-session=R1BIr2LbPbOd40ky5atJsfVBCUSkZ37375SMrM5z; expires=Sat, 08 Aug 2026 17:35:46 GMT; Max-Age=7200; path=/; domain=localhost; httponly; samesite=lax'
+        description: null
     responseFields: []
     auth:
       - queryParameters

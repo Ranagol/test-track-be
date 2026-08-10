@@ -98,11 +98,32 @@ Tester
 - [Element Plus](https://element-plus.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 
+### API Documentation
+
+The Laravel API is documented using [Scribe](https://scribe.knuckles.wtf/laravel/).
+
+Scribe automatically generates API documentation from the application's routes,
+controllers, Form Requests, and validation rules.
+
+When running the application locally, the generated documentation is available at:
+
+- `/docs`
+- `/docs.postman`
+- `/docs.openapi`
+
+
+For updating the documentatio when there are changes in the API endpoint, just run:
+
+```bash
+php artisan scribe:generate
+```
+
+
 ### Testing & Code Quality
 
 - [PHPUnit](https://phpunit.de/)
 - [Larastan / PHPStan](https://phpstan.org/)
-- PHP-CS-Fixer
+- PHP-CS-Fixer (Laravel Pint)
 - PHPMD
 - [Playwright](https://playwright.dev/)
 
@@ -263,7 +284,9 @@ Run the end-to-end tests:
 npx playwright test
 ```
 
-## CI/CD
+## CI/CD & Deployment
+
+The TestTrack app is deployed on Oracle, here: https://test-track.andorcode.com/
 
 The project uses [GitHub Actions](https://github.com/features/actions) for continuous integration.
 

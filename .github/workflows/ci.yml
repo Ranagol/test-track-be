@@ -182,6 +182,7 @@ jobs:
           cd /var/www/test-track
           git pull origin main
           docker compose -f compose.prod.yaml up -d --build
+          docker compose -f compose.prod.yaml exec app php artisan scribe:generate
 
     - run: echo "Successfully deployed."
 
