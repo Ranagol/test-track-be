@@ -10,6 +10,7 @@ import Analytics from '@/views/analytics/Analytics.vue';
 import TestCreatePage from '@/views/tests/pages/TestCreatePage.vue';
 import TestEditPage from '@/views/tests/pages/TestEditPage.vue';
 import TestTakePage from '@/views/tests/pages/TestTakePage.vue';
+import QuickStart from '@/views/quickStart/QuickStart.vue';
 
 const routes = [
     {
@@ -85,6 +86,11 @@ const routes = [
         meta: {
             requiresAuth: true
         }
+    },
+    {
+        path: '/quick-start',
+        name: 'quick-start',
+        component: QuickStart
     },
     {
         /**

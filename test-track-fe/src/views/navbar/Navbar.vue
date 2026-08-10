@@ -6,7 +6,9 @@
         :router="true"
         :ellipsis="false"
     >
-        <el-menu-item index="/">Home</el-menu-item>
+        <el-menu-item
+            index="/"
+        >Home</el-menu-item>
 
         <el-menu-item
             index="/tests"
@@ -21,6 +23,11 @@
         >
             Analytics
         </el-menu-item>
+
+        <el-menu-item
+            index="/quick-start"
+        >Quick start</el-menu-item>
+
     </el-menu>
 
     <!-- ACCOUNT SECTION -->
