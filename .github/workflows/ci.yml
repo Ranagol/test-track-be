@@ -163,7 +163,7 @@ jobs:
   # ─────────────────────────────
   deploy:
     runs-on: ubuntu-24.04
-    # needs: [pint, larastan, phpmd, phpunit, ts-types, playwright]
+    needs: [pint, larastan, phpmd, phpunit, ts-types, playwright]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
