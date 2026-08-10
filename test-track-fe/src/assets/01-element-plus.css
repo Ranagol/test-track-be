@@ -1,15 +1,13 @@
 
 /* =========================================================
    2. ELEMENT PLUS VARIABLE MAPPING
+   Element Plus variable overriden with CSS variables
    ========================================================= */
 
 :root {
 
     /* =====================================================
        PRIMARY BRAND
-       IMPORTANT:
-       Element Plus uses MANY generated shades internally.
-       If these are missing, hover/focus states look broken.
        ===================================================== */
 
     --el-color-primary: var(--color-primary);

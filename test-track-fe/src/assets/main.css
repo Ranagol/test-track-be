@@ -18,10 +18,10 @@ RULES
 /* The main CSS variables defined. The base of all. */
 @import './00-tokens.css';
 
-/* Element Plus variable overrides with CSS variables */
+/* Element Plus variable overriden with CSS variables */
 @import './01-element-plus.css';
 
-/* Tailwind CSS variable overrides with CSS variables */
+/* Tailwind CSS variable overriden with CSS variables */
 @import './02-tailwind.css';
 
 /* Global page styling */
