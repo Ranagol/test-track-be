@@ -10,6 +10,7 @@ Instead of creating tests on paper, manually checking answers, calculating grade
 
 ## Table of Contents
 
+- [Quick start](#quick-start)
 - [Overview](#overview)
 - [The workflow](#the-workflow)
 - [Tech Stack](#tech-stack)
@@ -23,7 +24,25 @@ Instead of creating tests on paper, manually checking answers, calculating grade
 
 
 ---
+## Quick Start
 
+Want to try TestTracker?
+
+See the quick start guide on https://test-track.andorcode.com/quick-start
+for a step-by-step walkthrough of the complete workflow.
+
+The guide covers:
+
+1. Creating a test
+2. Inviting a test taker
+3. Taking the test
+4. Reviewing the results
+5. Tracking previous attempts
+
+
+
+
+---
 ## Overview
 
 TestTrack is designed for people who need to test and evaluate other people, referred to throughout the project as **testers**.
