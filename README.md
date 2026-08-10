@@ -278,10 +278,10 @@ cd test-track-fe
 npx playwright install
 ```
 
-Run the end-to-end tests:
+Run the end-to-end tests (in root dir, through composer, because we have to run a setup script for all this):
 
 ```bash
-npx playwright test
+composer pw
 ```
 
 ## CI/CD & Deployment

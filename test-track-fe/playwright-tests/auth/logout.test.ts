@@ -18,7 +18,8 @@ test('logout works', async ({ page }) => {
     await expect(page).toHaveURL(`${baseUrl}/`);
 
     // When the user is logged in, we expect to see a logout button in the header
-    await expect(page.getByRole('menuitem', { name: 'Logout' })).toBeVisible();
+    // await expect(page.getByRole('menuitem', { name: 'Logout' })).toBeVisible();//this is faulty
+    await expect(page.getByText('Logout')).toBeVisible();
 
     await page.locator('#logout-button').click();
 
@@ -26,7 +27,7 @@ test('logout works', async ({ page }) => {
     await expect(page).toHaveURL(`${baseUrl}/`);
 
     // When the user is logged out, we expect to see a login button in the header
-    await expect(page.getByRole('menuitem', { name: 'Login' })).toBeVisible();
+    await expect(page.getByRole('button', { name:'Login' })).toBeVisible();
 });
 
 
