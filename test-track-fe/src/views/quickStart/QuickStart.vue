@@ -17,17 +17,19 @@
 
         <!-- STEP 1 -->
         <section class="mb-12">
+
             <h2 class="text-2xl font-bold mb-4">
                 1. 🧑‍💼 Create or log in as a Tester
             </h2>
 
             <p class="text-gray-700 mb-4">
                 First, log in to TestTrack as a Tester. Testers are the people
-                who create tests, invite test takers, and review their results.
+                who create tests, invite test takers, and review their results. Test takers are
+                the people who take (your) tests.
             </p>
 
             <p class="text-gray-700 mb-6">
-                If you do not already have a Tester account, create one using the
+                If you do not already have a TestTrack account, create one using the
                 registration page.
             </p>
 
@@ -52,7 +54,7 @@
 
             <p class="text-gray-700 mb-4">
                 Add a title, description, questions, and answer options.
-                For each question, mark the correct answer.
+                For each question, mark the correct answer. There can be only one correct answer per question.
             </p>
 
             <p class="text-gray-700 mb-6">
@@ -219,13 +221,4 @@
 
 <style scoped>
 </style>
-```
 
-
-<script
-    setup
-    lang="ts"
->
-
-
-</script>

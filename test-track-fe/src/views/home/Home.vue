@@ -4,7 +4,15 @@
     <div class="text-center mb-16">
 
         <h1 class="text-3xl font-bold mt-8">
+
             Welcome to Test Track! Buuut... what is it?
+
+            <RouterLink
+                class="text-blue-500 hover:text-blue-700 underline"
+                to="/quick-start"
+            >
+                How to use it?
+            </RouterLink>
         </h1>
 
         <p class="text-xl text-gray-600 max-w-3xl mx-auto mt-6">
@@ -14,7 +22,9 @@
         </p>
 
         <h1 class="text-3xl font-bold mb-6 mt-5">
+
             Track progress, not just test results.
+
             <RouterLink
                 class="text-blue-500 hover:text-blue-700 underline"
                 to="/tests/create"
