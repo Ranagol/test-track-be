@@ -11,20 +11,16 @@ Instead of creating tests on paper, manually checking answers, calculating grade
 ## Table of Contents
 
 - [Overview](#overview)
-- [Features](#features)
-- [User Flow](#user-flow)
+- [The workflow](#the-workflow)
 - [Tech Stack](#tech-stack)
 - [Architecture](#architecture)
-- [Core Domain Model](#core-domain-model)
 - [Database Relationships](#database-relationships)
 - [Installation](#installation)
 - [Testing](#testing)
-- [Code Quality](#code-quality)
 - [CI/CD](#cicd)
 - [MVP Scope](#mvp-scope)
 - [Future Features](#future-features)
-- [Project Status](#project-status)
-- [License](#license)
+
 
 ---
 
@@ -98,7 +94,7 @@ Tester
 - [Element Plus](https://element-plus.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 
-### API Documentation
+### API Documentation (Scribe)
 
 The Laravel API is documented using [Scribe](https://scribe.knuckles.wtf/laravel/).
 
@@ -111,8 +107,11 @@ When running the application locally, the generated documentation is available a
 - `/docs.postman`
 - `/docs.openapi`
 
+In the deployed app, the Scribe docs can be found here: 
 
-For updating the documentatio when there are changes in the API endpoint, just run:
+https://test-track.andorcode.com/docs/
+
+For updating the documentation when there are changes in the API endpoint, just run:
 
 ```bash
 php artisan scribe:generate
@@ -230,61 +229,66 @@ The application is then available at:
 - Backend API: `http://localhost:8001`
 
 
-### Running tests
+## Testing
 
 The project uses several levels of automated testing and code quality checks.
 
-#### PHP code quality
+### 'Test them all!'
+
+Runs all backend and frontend tests:
+
+```bash
+composer full-check
+```
+
+
+
+
+### Backend individual tests
 
 Laravel Pint:
 
 ```bash
-./vendor/bin/pint --test
+composer pint
 ```
 
 Larastan / PHPStan:
 
 ```bash
-./vendor/bin/phpstan analyse --memory-limit=2G --no-progress
+composer larastan
 ```
 
 PHPMD:
 
 ```bash
-XDEBUG_MODE=off ./vendor/bin/phpmd app ansi phpmd.xml
+composer phpmd
 ```
 
-#### PHPUnit
 
 PHPUnit tests use a MySQL database.
 
 ```bash
-php artisan test --compact
+composer phpunit
 ```
 
-#### Frontend type checking
+
+### Playwright
+
+
+```bash
+composer pw
+```
+
+### Frontend tests
 
 ```bash
 cd test-track-fe
 npm run type-check
 ```
 
-#### Playwright
 
-Install the Playwright browsers:
 
-```bash
-cd test-track-fe
-npx playwright install
-```
-
-Run the end-to-end tests (in root dir, through composer, because we have to run a setup script for all this):
-
-```bash
-composer pw
-```
-
-## CI/CD & Deployment
+## CI/CD
 
 The TestTrack app is deployed on Oracle, here: https://test-track.andorcode.com/
 
@@ -356,7 +360,7 @@ The project also demonstrates:
 - CI/CD
 - Cloud deployment
 
-> The emphasis is on fast delivery of a simple, maintainable, and good-looking portfolio application. Because of this, there a lot of desired features, that will be done in the future.
+> The emphasis is on fast delivery of a simple, maintainable, and good-looking portfolio application. Because of this, there a lot of desired features, that will be done only in the future.
 
 ---
 
@@ -373,18 +377,10 @@ The project also demonstrates:
 
 
 
----
 
-## Project Status
-
-**MVP in development.**
 
 The project is being developed incrementally, with the initial focus on completing the core testing workflow.
 
 Additional features will be added after the MVP is deployed.
 
 ---
-
-## License
-
-This project is currently intended as a portfolio project.
