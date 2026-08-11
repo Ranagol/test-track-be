@@ -1,4 +1,3 @@
-```vue
 <template>
     <div class="max-w-5xl mx-auto px-6 py-10">
 
@@ -19,42 +18,51 @@
         <section class="mb-12">
 
             <h2 class="text-2xl font-bold mb-4">
-                1. 🧑‍💼 Create or log in as a Tester
+                1. 🧑‍💼
+
+                <router-link
+                    class="text-blue-500 hover:text-blue-700 underline"
+                    to="/login"
+                >
+                    Log in
+                </router-link>
+
+                or
+
+                <router-link
+                    class="text-blue-500 hover:text-blue-700 underline"
+                    to="/register"
+                >
+                    register as a tester.
+                </router-link>
+
             </h2>
 
-            <p class="text-gray-700 mb-4">
-                First, log in to TestTrack as a Tester. Testers are the people
-                who create tests, invite test takers, and review their results. Test takers are
-                the people who take (your) tests.
-            </p>
 
-            <p class="text-gray-700 mb-6">
-                If you do not already have a TestTrack account, create one using the
-                registration page.
-            </p>
-
-            <!-- Screenshot -->
-            <img
-                src=""
-                alt="TestTrack login or registration page"
-                class="w-full rounded-lg border"
-            />
         </section>
 
 
         <!-- STEP 2 -->
         <section class="mb-12">
+
             <h2 class="text-2xl font-bold mb-4">
-                2. 📝 Create a test
+                2. 📝 Create your test
             </h2>
 
             <p class="text-gray-700 mb-4">
-                After logging in as a Tester, create a new test.
+                After logging in as a tester,
+
+                <router-link
+                    class="text-blue-500 hover:text-blue-700 underline"
+                    to="/tests/create"
+                >
+                    create a new test.
+                </router-link>
             </p>
 
             <p class="text-gray-700 mb-4">
-                Add a title, description, questions, and answer options.
-                For each question, mark the correct answer. There can be only one correct answer per question.
+               Add a title, description, questions, and answer options to your test. For each question,
+               mark the correct answer. Each question can have only one correct answer.
             </p>
 
             <p class="text-gray-700 mb-6">
@@ -63,7 +71,7 @@
 
             <!-- Screenshot -->
             <img
-                src=""
+                src="@/assets/images/quick-start/02-create-new-test.png"
                 alt="Creating a new test in TestTrack"
                 class="w-full rounded-lg border"
             />
@@ -77,22 +85,27 @@
             </h2>
 
             <p class="text-gray-700 mb-4">
-                Every test has its own invitation link.
-            </p>
-
-            <p class="text-gray-700 mb-4">
-                Copy the invitation link and use it to give the test to a
-                test taker.
+                You can find all your tests in the
+                <router-link
+                    class="text-blue-500 hover:text-blue-700 underline"
+                    to="/tests"
+                >
+                    "My Tests"
+                </router-link>
+                area. After creating a test, you will also be automatically redirected there.
+                Every test has its own invitation link. Copy this link and share it with the people
+                who need to take the test.
             </p>
 
             <p class="text-gray-700 mb-6">
-                For this demonstration, you can simply copy the link and open it
-                in another browser window or an incognito/private window.
+                For this quick-start demonstration, copy the link and open it in an incognito/private
+                browser window. This allows you to use the test as a separate test taker while staying
+                logged in to your tester account.
             </p>
 
             <!-- Screenshot -->
             <img
-                src=""
+                src="@/assets/images/quick-start/03-invite.png"
                 alt="Test invitation link"
                 class="w-full rounded-lg border"
             />
@@ -102,25 +115,18 @@
         <!-- STEP 4 -->
         <section class="mb-12">
             <h2 class="text-2xl font-bold mb-4">
-                4. 🧑‍🎓 Log in as a Test Taker
+                4. 🧑‍🎓 Log in/register as a test taker
             </h2>
 
             <p class="text-gray-700 mb-4">
-                Open the invitation link in another browser window or incognito
-                window and log in as a Test Taker.
+                Open the invitation link in the incognito/private window and register as a test taker.
+                For this demonstration, you can use a fictional test taker account.
+
+                A tester is someone who creates and manages tests, such as a teacher, psychologist,
+                or HR professional. A Test taker is someone who takes a test, such as a student,
+                employee, or client.
             </p>
 
-            <p class="text-gray-700 mb-6">
-                After logging in, TestTrack will return you to the test from
-                the invitation link.
-            </p>
-
-            <!-- Screenshot -->
-            <img
-                src=""
-                alt="Test taker login page"
-                class="w-full rounded-lg border"
-            />
         </section>
 
 
@@ -134,14 +140,9 @@
                 Select an answer for each question and submit the test.
             </p>
 
-            <p class="text-gray-700 mb-6">
-                TestTrack automatically evaluates the answers and records the
-                test attempt.
-            </p>
-
             <!-- Screenshot -->
             <img
-                src=""
+                src="@/assets/images/quick-start/05-solve-test3.png"
                 alt="Test taker completing a test"
                 class="w-full rounded-lg border"
             />
@@ -151,22 +152,32 @@
         <!-- STEP 6 -->
         <section class="mb-12">
             <h2 class="text-2xl font-bold mb-4">
-                6. 📊 Return to the Tester
+                6. 📊 Find the completed test
             </h2>
 
             <p class="text-gray-700 mb-4">
-                Return to your Tester account after the test has been submitted.
+
+                After the test taker (you) has "submitted" the test, return to your tester account. Go to
+
+                <router-link
+                    class="text-blue-500 hover:text-blue-700 underline"
+                    to="/analytics"
+                >
+                    Analytics
+                </router-link>
+
+                to view the result of the test attempt.
             </p>
 
             <p class="text-gray-700 mb-6">
-                Open the area where your test takers and their test attempts
-                are displayed.
+                Here you can see all your test takers and their test attempts. In this example, there
+                is one test taker with one test attempt. Click the test taker's name to view the attempt.
             </p>
 
             <!-- Screenshot -->
             <img
-                src=""
-                alt="Tester view of test takers and test attempts"
+                src="@/assets/images/quick-start/06-find.png"
+                alt="tester view of test takers and test attempts"
                 class="w-full rounded-lg border"
             />
         </section>
@@ -174,26 +185,28 @@
 
         <!-- STEP 7 -->
         <section class="mb-12">
+
             <h2 class="text-2xl font-bold mb-4">
-                7. 📈 Review the result
+                7. 📈 Review and compare results
             </h2>
 
             <p class="text-gray-700 mb-4">
-                Open the test taker's test attempt to review the result.
+                You can see the test score, the answers given, the date of the attempt, and which
+                answers were correct (green background) or incorrect (red background).
             </p>
 
             <p class="text-gray-700 mb-4">
-                You can see the score, answers, and date of the attempt.
-            </p>
+                You can also compare multiple test attempts from the same test taker over time. For
+                example, you could give the same test again a month later to see whether the test
+                taker has improved.
 
-            <p class="text-gray-700 mb-6">
-                Because TestTrack stores previous attempts, the same test
-                taker's performance can be reviewed over time.
+                This is called longitudinal tracking. Because TestTrack stores previous attempts,
+                you can review and compare a test taker's performance over time.
             </p>
 
             <!-- Screenshot -->
             <img
-                src=""
+                src="@/assets/images/quick-start/07-longitudinal.png"
                 alt="Test result and test attempt history"
                 class="w-full rounded-lg border"
             />
