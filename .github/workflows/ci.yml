@@ -105,6 +105,7 @@ jobs:
 
       - run: cd test-track-fe && npm run type-check
 
+
   # ─────────────────────────────
   # PLAYWRIGHT (E2E tests with separate testing DB)
   # ─────────────────────────────
@@ -158,12 +159,27 @@ jobs:
       - run: cd test-track-fe && npx playwright install
       - run: cd test-track-fe && npx playwright test
 
+
+  # ─────────────────────────────
+  # Frontend build
+  # ─────────────────────────────
+  frontend-build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/node-setup
+
+      - run: cd test-track-fe && npm run build
+
+
   # ─────────────────────────────
   # DEPLOY
   # ─────────────────────────────
   deploy:
     runs-on: ubuntu-24.04
-    needs: [pint, larastan, phpmd, phpunit, ts-types, playwright]
+    needs: [pint, larastan, phpmd, phpunit, ts-types, playwright, frontend-build]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
@@ -179,10 +195,12 @@ jobs:
         # github-actions-deploy privat key is used here.
         key: ${{ secrets.ORACLE_SSH_KEY }}
         script: |
+          set -e
           cd /var/www/test-track
           git pull origin main
           docker compose -f compose.prod.yaml up -d --build
           docker compose -f compose.prod.yaml exec app php artisan scribe:generate
+          docker system prune -af
 
     - run: echo "Successfully deployed."
 
