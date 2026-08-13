@@ -17,6 +17,7 @@ services:
             retries: 5
             start_period: 10s
 
+    # This is the secondary Nginx in the reverse proxy setup. This will be used in the production.
     nginx:
       image: nginx:latest
       restart: unless-stopped
@@ -31,6 +32,7 @@ services:
       networks:
           - laravel
 
+    # The FE container with Vue.
     frontend:
         build:
             context: .
