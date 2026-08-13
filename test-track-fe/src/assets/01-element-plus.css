@@ -216,20 +216,18 @@
 
     /* Navbar/Navitation menu colors */
 
-    :root {
-        /* Menu background */
-        --el-menu-bg-color: var(--color-surface);
+    /* Menu background (matches page background, not card/surface white) */
+    --el-menu-bg-color: var(--color-bg);
 
-        /* Text colors */
-        --el-menu-text-color: var(--color-text);
-        --el-menu-hover-text-color: var(--color-primary);
+    /* Text colors */
+    --el-menu-text-color: var(--color-text);
+    --el-menu-hover-text-color: var(--color-primary);
 
-        /* Active item */
-        --el-menu-active-color: var(--color-primary);
+    /* Active item */
+    --el-menu-active-color: var(--color-primary);
 
-        /* Border (optional but often used) */
-        --el-menu-border-color: var(--color-border);
-    }
+    /* Border (optional but often used) */
+    --el-menu-border-color: var(--color-border);
 
     /*
     This combo on the navbar looked good:

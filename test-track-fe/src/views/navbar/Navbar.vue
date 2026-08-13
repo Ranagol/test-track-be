@@ -94,6 +94,7 @@ const logout = async () => {
     display: flex;
     align-items: center;
     width: 100%;
+    background: var(--color-bg);
     border-bottom: 1px solid var(--el-menu-border-color);
 }
 
