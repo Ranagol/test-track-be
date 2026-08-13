@@ -7,6 +7,7 @@
         :cell-style="cellStyle"
         style="max-width: 80%"
         class="mb-6"
+        stripe
     >
         <!-- Row index column -->
         <el-table-column

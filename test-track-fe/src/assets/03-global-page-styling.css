@@ -15,6 +15,34 @@ body {
         sans-serif;
 }
 
+/* Smooth, consistent hover/focus feedback on interactive elements */
+a,
+button,
+.el-button,
+.el-menu-item,
+.el-table__row {
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+/* Themed scrollbar (WebKit) so it matches the app palette instead of the OS default */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-surface-soft);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: var(--radius-round);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-muted);
+}
+
 /* =========================================================
    AUTH CARD (Login / Register)
    ========================================================= */

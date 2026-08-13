@@ -42,6 +42,7 @@
                 :data="testAttemptStore.testAttempts"
                 v-loading="testAttemptStore.loading"
                 :cell-style="{ verticalAlign: 'top' }"
+                stripe
                 @sort-change="handleSort"
             >
                 <!-- TEST TAKER NAME -->
@@ -82,7 +83,16 @@
                     prop="score_percentage"
                     label="Score (%)"
                     sortable="custom"
-                ></el-table-column>
+                    v-slot="{ row }"
+                >
+                    <el-tag
+                        v-if="row.score_percentage != null"
+                        :type="scoreTagType(row.score_percentage)"
+                        effect="light"
+                    >
+                        {{ row.score_percentage }}%
+                    </el-tag>
+                </el-table-column>
 
 
             </el-table>
@@ -123,6 +133,15 @@ const {
 
 function handleSearch() {
     fetchTestAttempts();
+}
+
+/**
+ * Maps a score percentage to an el-tag type so pass/fail is visible at a glance.
+ */
+function scoreTagType(score: number): 'success' | 'warning' | 'danger' {
+    if (score >= 70) return 'success';
+    if (score >= 50) return 'warning';
+    return 'danger';
 }
 
 function handleSort(sortData: TableSortData) {

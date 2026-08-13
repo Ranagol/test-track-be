@@ -51,6 +51,7 @@
                 v-loading="testsStore.loading"
                 style="width: 80%"
                 :cell-style="{ verticalAlign: 'top' }"
+                stripe
                 @sort-change="handleSort"
             >
                 <!-- TITLE -->
