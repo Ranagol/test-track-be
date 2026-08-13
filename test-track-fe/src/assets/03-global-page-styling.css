@@ -14,3 +14,26 @@ body {
         system-ui,
         sans-serif;
 }
+
+/* =========================================================
+   AUTH CARD (Login / Register)
+   ========================================================= */
+
+.auth-card {
+    position: relative;
+    width: 100%;
+    max-width: 26rem;
+    padding: 2rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.auth-card-accent {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: var(--gradient-brand);
+}

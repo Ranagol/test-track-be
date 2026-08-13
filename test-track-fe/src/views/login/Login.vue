@@ -1,7 +1,13 @@
 <template>
     <div class="grid place-items-center">
 
-        <h1 class="text-2xl mt-24">Login</h1>
+        <div class="auth-card mt-24">
+            <div class="auth-card-accent"></div>
+
+            <h1 class="text-2xl flex items-center gap-2">
+                <el-icon><Lock /></el-icon>
+                Login
+            </h1>
 
         <el-form
             ref="formRef"
@@ -79,6 +85,7 @@
             :closable="true"
             @close="generalError = ''"
         />
+        </div>
     </div>
 </template>
 
@@ -89,6 +96,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { emailRules } from '@/validationRules/loginRegisterRules';
 import { passwordRules } from '@/validationRules/loginRegisterRules';
 import { useApiErrors } from '@/composables/useApiErrors';
+import { Lock } from '@element-plus/icons-vue';
 
 const router = useRouter()
 const route = useRoute();

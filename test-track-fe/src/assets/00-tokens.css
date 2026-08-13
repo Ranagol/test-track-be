@@ -15,6 +15,11 @@
     --color-secondary: #7c3aed;
     --color-secondary-hover: #6d28d9;
 
+    /*
+      Reused for accent bars/headers (auth pages, navbar brand)
+    */
+    --gradient-brand: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+
 
     /* =====================================================
        STATUS COLORS
@@ -30,7 +35,10 @@
        BACKGROUNDS
        ===================================================== */
 
-    --color-bg: #ffffff;
+    /*
+      Slightly off-white so surfaces (cards/panels) stand out via shadow + contrast
+    */
+    --color-bg: #f8fafc;
 
     /*
       Main card/panel/dialog surfaces

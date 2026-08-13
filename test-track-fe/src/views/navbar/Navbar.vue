@@ -1,5 +1,14 @@
 <template>
 <div class="navbar">
+    <!-- BRAND -->
+    <router-link
+        to="/"
+        class="navbar-brand"
+    >
+        <el-icon class="navbar-brand-icon"><Ticket /></el-icon>
+        <span class="navbar-brand-text">TestTrack</span>
+    </router-link>
+
     <!-- MAIN NAVIGATION -->
     <el-menu
         mode="horizontal"
@@ -67,6 +76,7 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useRouter } from 'vue-router';
+import { Ticket } from '@element-plus/icons-vue';
 
 const router = useRouter();
 
@@ -82,8 +92,30 @@ const logout = async () => {
 
 .navbar {
     display: flex;
+    align-items: center;
     width: 100%;
     border-bottom: 1px solid var(--el-menu-border-color);
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 20px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.navbar-brand-icon {
+    color: var(--color-primary);
+}
+
+.navbar-brand-text {
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .navbar > .el-menu {
