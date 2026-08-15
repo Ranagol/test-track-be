@@ -1,4 +1,6 @@
 <template>
+
+    <!-- THIS IS ACTUALLY THE ANALYTICS PAGE MAIN COMPONENT -->
     <div class="grid">
 
         <div class="h-16 flex">
@@ -53,7 +55,7 @@
                 >
                     <router-link
                         :to="`/analytics/${row.user.id}`"
-                        class="text-primary hover:underline"
+                        class="text-primary underline"
                     >
                         {{ row.user.name === 'test-taker@gmail.com' ? 'My default test taker' : row.user.name }}
                     </router-link>

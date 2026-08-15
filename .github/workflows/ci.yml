@@ -193,6 +193,8 @@ jobs:
         username: ubuntu
 
         # github-actions-deploy privat key is used here.
+        # set -e means: if any command fails, immediately abort deployment.
+        # docker system prune -af: remove unused Docker resources. Very important.
         key: ${{ secrets.ORACLE_SSH_KEY }}
         script: |
           set -e

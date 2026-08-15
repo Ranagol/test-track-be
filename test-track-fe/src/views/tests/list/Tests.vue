@@ -64,7 +64,7 @@
                 >
                     <router-link
                         :to="`/tests/${row.id}/edit`"
-                        class="text-primary hover:underline"
+                        class="text-primary underline"
                     >
                         {{ row.title }}
                     </router-link>
@@ -87,7 +87,7 @@
                 >
                     <router-link
                         :to="`/tests/take-test/${row.test_code}`"
-                        class="text-primary hover:underline"
+                        class="text-primary underline"
                     >
                         {{ `${baseUrl}/tests/take-test/${row.test_code}` }}
                     </router-link>
