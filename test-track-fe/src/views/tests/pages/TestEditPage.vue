@@ -1,12 +1,8 @@
 <template>
     <Container>
 
-        <div v-if="testEditorStore.loading">
-            Loading...
-        </div>
-
         <el-form
-            v-else
+            v-loading="testEditorStore.loading"
             ref="validationRef"
             :model="testEditorStore.test"
             :rules="testRules"

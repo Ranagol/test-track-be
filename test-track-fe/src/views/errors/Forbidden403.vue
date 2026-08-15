@@ -26,9 +26,6 @@ const goHome = () => {
     router.push('/');
 };
 
-const goBack = () => {
-    router.back();
-};
 </script>
 
 <style scoped>

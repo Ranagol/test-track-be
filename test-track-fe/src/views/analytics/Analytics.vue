@@ -5,19 +5,23 @@
             class="mt-6"
         />
 
-        <!-- USER DATA -->
-        <div class="mt-6">
-            <h5>Test taker details</h5>
-            <p>Name: {{ testTaker?.name }}</p>
-            <p>Email: {{ testTaker?.email }}</p>
+        <div v-loading="testsStore.loading" class="mt-6">
+
+            <!-- USER DATA -->
+            <div class="mt-6">
+                <h5>Test taker details</h5>
+                <p>Name: {{ testTaker?.name }}</p>
+                <p>Email: {{ testTaker?.email }}</p>
+            </div>
+
+            <!-- TESTS -->
+            <Test
+                v-for="test in testsStore.tests"
+                :key="test.id"
+                :test="test"
+            />
         </div>
 
-        <!-- TESTS -->
-        <Test
-            v-for="test in testsStore.tests"
-            :key="test.id"
-            :test="test"
-        />
     </div>
 </template>
 
@@ -36,7 +40,6 @@ const testTakerId = route.params.userId as string;
 const testTaker = ref<User | null>(null);
 const testsStore = useTestsStore();
 
-
 onMounted(async () => {
     try {
         if (!testTakerId) {
@@ -49,13 +52,10 @@ onMounted(async () => {
         // Fetch all relevant tests for analytics
         await testsStore.getAnalytics(Number(testTakerId));
     } catch (error) {
-        console.error(error);
-        return;
+        await router.push({ name: 'not-found' });
     }
 });
 </script>
-
-
 
 <style scoped>
 

@@ -11,9 +11,6 @@
                 <el-button type="primary" @click="goHome">
                     Go to Home
                 </el-button>
-                <el-button @click="goBack">
-                    Go Back
-                </el-button>
             </div>
         </div>
     </div>
@@ -29,9 +26,6 @@ const goHome = () => {
     router.push('/');
 };
 
-const goBack = () => {
-    router.back();
-};
 </script>
 
 <style scoped>
