@@ -79,10 +79,19 @@ export function useApiErrors() {
         generalError.value = fallbackMessage;
     }
 
+    const getStatusCode = (error: unknown): number | null => {
+        if (!axios.isAxiosError(error) || !error.response) {
+            return null;
+        }
+
+        return error.response.status;
+    }
+
     return {
         validationErrors,
         generalError,
-        handleBackendErrors
+        handleBackendErrors,
+        getStatusCode
     }
 }
 

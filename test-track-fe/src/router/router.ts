@@ -3,7 +3,7 @@ import Tests from '@/views/tests/list/Tests.vue';
 import Login from '@/views/login/Login.vue';
 import Register from '@/views/register/Register.vue';
 import Home from '@/views/home/Home.vue';
-import NotFound from '@/views/errors/NotFound.vue';
+import NotFound404 from '@/views/errors/NotFound404.vue';
 import { useAuthStore } from '@/stores/useAuthStore';
 import TestAttempts from '@/views/testAttempts/TestAttempts.vue';
 import Analytics from '@/views/analytics/Analytics.vue';
@@ -11,6 +11,7 @@ import TestCreatePage from '@/views/tests/pages/TestCreatePage.vue';
 import TestEditPage from '@/views/tests/pages/TestEditPage.vue';
 import TestTakePage from '@/views/tests/pages/TestTakePage.vue';
 import QuickStart from '@/views/quickStart/QuickStart.vue';
+import Forbidden403 from '@/views/errors/Forbidden403.vue';
 
 const routes = [
     {
@@ -93,14 +94,21 @@ const routes = [
         component: QuickStart
     },
     {
+        //403
+        path: '/403',
+        name: 'forbidden',
+        component: Forbidden403
+    },
+    {
         /**
-         * Match anything that doesn't match the above routes and redirect to NotFound
+         * 404
+         * Match anything that doesn't match the above routes and redirect to NotFound404
          * This must be the last route in the array.
          * '/:pathMatch(.*)*' is the new syntax for Vue Router 4 to catch all unmatched routes.
          */
         path: '/:pathMatch(.*)*',
         name: 'not-found',
-        component: NotFound
+        component: NotFound404
     }
 ];
 

@@ -3,16 +3,13 @@
         <div class="error-content mx-auto mt-18 text-center">
             <el-icon class="error-icon"><WarningFilled /></el-icon>
             <div class="error-code text-6xl">403</div>
-            <h1 class="error-title text-2xl">Page forrbidden</h1>
+            <h1 class="error-title text-2xl">Page forbidden</h1>
             <p class="error-description">
-                Sorry, the page you're looking for doesn't exist or has been moved.
+                Sorry, the page you're looking for is forbidden.
             </p>
             <div class="error-actions mt-5">
                 <el-button type="primary" @click="goHome">
                     Go to Home
-                </el-button>
-                <el-button @click="goBack">
-                    Go Back
                 </el-button>
             </div>
         </div>

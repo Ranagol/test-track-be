@@ -1,7 +1,12 @@
 <template>
     <Container>
 
+        <div v-if="testEditorStore.loading">
+            Loading...
+        </div>
+
         <el-form
+            v-else
             ref="validationRef"
             :model="testEditorStore.test"
             :rules="testRules"
@@ -42,7 +47,7 @@
 >
 import TestBase from '@/views/tests/test/TestBase.vue';
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import FinalButton from '@/views/tests/test/FinalButton.vue';
 import Heading1 from '@/resusableComponents/Heading1.vue';
@@ -59,10 +64,12 @@ import InvitationLink from '@/views/tests/test/InvitationLink.vue';
 const {
     generalError,
     handleBackendErrors,
-    validationErrors
+    validationErrors,
+    getStatusCode
 } = useApiErrors();
 
 const route = useRoute();
+const router = useRouter();
 const testEditorStore = useTestEditorStore();
 
 /**
@@ -109,7 +116,18 @@ const updateTest = async () => {
 
 onMounted(async () => {
     const id = Number(route.params.id);
-    await testEditorStore.get(id);
+
+    try {
+        await testEditorStore.get(id);
+    } catch (error) {
+        handleBackendErrors(error);
+
+        // If the user is not authorized to view the test, navigate to the 403 page
+        if (getStatusCode(error) === 403) {
+            // navigate to /403
+            router.push({ name: 'forbidden' })
+        }
+    }
 });
 
 </script>
