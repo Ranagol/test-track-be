@@ -5,19 +5,19 @@
 
         <div class="h-16 flex">
             <Heading1
-                text="My analytics"
+                text="My test takers (analytics)"
             />
         </div>
 
-        <div
-            class="flex"
-        >
+        <p class="mt-3 mb-1">We display here all test attempts for all your test takers.</p>
+
+        <div class="flex">
 
             <!-- SEARCH INPUT -->
             <el-input
                 v-model="testAttemptStore.searchTerm"
-                style="width: 30%"
-                placeholder="Search tests"
+                style="width: 40%"
+                placeholder="Search for test taker name or test name"
                 clearable
                 @keyup.enter="handleSearch"
                 @clear="handleSearch"
@@ -57,7 +57,7 @@
                         :to="`/analytics/${row.user.id}`"
                         class="text-primary underline"
                     >
-                        {{ row.user.name === 'test-taker@gmail.com' ? 'My default test taker' : row.user.name }}
+                        {{ row.user.name === 'test-taker@gmail.com' ? 'Test taker 1' : row.user.name }}
                     </router-link>
                 </el-table-column>
 
