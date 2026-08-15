@@ -49,4 +49,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('user-answers', UserAnswerController::class);
 
     Route::get('/test-taker', [UserController::class, 'getTestTaker']);
+    Route::get('/analytics/test-taker', [UserController::class, 'getAnalyticsTestTaker']);
 });
