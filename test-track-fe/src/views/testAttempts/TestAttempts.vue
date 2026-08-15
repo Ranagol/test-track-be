@@ -57,7 +57,7 @@
                         :to="`/analytics/${row.user.id}`"
                         class="text-primary underline"
                     >
-                        {{ row.user.name === 'test-taker@gmail.com' ? 'Test taker 1' : row.user.name }}
+                        {{ row.user.name }}
                     </router-link>
                 </el-table-column>
 
