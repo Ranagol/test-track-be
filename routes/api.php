@@ -42,10 +42,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::apiResource('test-attempts', TestAttemptController::class);
 
-    Route::apiResource('questions', QuestionController::class);
+    Route::apiResource('questions', QuestionController::class)->except(['update']);
     Route::post('/questions/{question}/correct-answer', [QuestionController::class, 'setCorrectAnswer']);
 
-    Route::apiResource('answer-options', AnswerOptionController::class);
+    Route::apiResource('answer-options', AnswerOptionController::class)->except(['update']);
     Route::apiResource('user-answers', UserAnswerController::class);
 
     Route::get('/test-taker', [UserController::class, 'getTestTaker']);

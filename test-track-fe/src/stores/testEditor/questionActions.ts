@@ -1,6 +1,5 @@
 // stores/test-editor/question.actions.ts
 import type { Question, AnswerOption } from '@/types/types';
-import questionService from '@/services/questionService';
 import type { TestEditorState } from './types';
 import { requireQuestion, createFrontendId } from './helpers';
 
@@ -38,27 +37,6 @@ export const questionActions = {
         question.text = text;
     },
 
-    /**
-     * Update the question text in the backend.
-     * Only for 'edit' mode.
-     */
-    async updateQuestionInBackend(this: TestEditorState, questionId: number): Promise<void> {
-        this.loading = true;
-
-        try {
-
-            const question = requireQuestion(this.test?.questions, questionId);
-
-            await questionService.update(questionId, {
-                text: question.text,
-            });
-
-        } catch (error) {
-            throw error;
-        } finally {
-            this.loading = false;
-        }
-    },
 
     /**
      * Used only in 'create' mode, works only on FE. That is the only place, when question can be deleted, because

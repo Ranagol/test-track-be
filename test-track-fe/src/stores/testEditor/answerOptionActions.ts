@@ -1,6 +1,5 @@
 // stores/test-editor/answerOption.actions.ts
 import type { AnswerOption } from '@/types/types';
-import answerOptionService from '@/services/answerOptionService';
 import type { TestEditorState } from './types';
 import { requireQuestion, requireAnswerOption, createFrontendId } from './helpers';
 
@@ -65,38 +64,6 @@ export const answerOptionActions = {
         const answerOption = requireAnswerOption(question.answer_options, answerOptionId);
 
         answerOption.text = answerOptionText;
-    },
-
-    /**
-     * For 'edit' mode only. Sends a request to the backend to update the answer option text.
-     */
-    async updateAnswerOptionText(
-        this: TestEditorState,
-        questionId: number,
-        answerOptionId: number,
-        answerOptionText: string,
-    ): Promise<void> {
-        this.loading = true;
-
-        try {
-            const question = requireQuestion(this.test?.questions, questionId);
-
-            if (!question.answer_options) {
-                throw new Error('Answer options array not found');
-            }
-
-            const answerOption = requireAnswerOption(question.answer_options, answerOptionId);
-
-            answerOption.text = answerOptionText;
-
-            await answerOptionService.updateText(answerOptionId, {
-                text: answerOption.text,
-            });
-        } catch (error) {
-            throw error;
-        } finally {
-            this.loading = false;
-        }
     },
 
     /**

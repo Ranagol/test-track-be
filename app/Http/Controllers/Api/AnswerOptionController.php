@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAnswerOptionRequest;
-use App\Http\Requests\UpdateAnswerOptionRequest;
 use App\Http\Resources\AnswerOptionResource;
 use App\Models\AnswerOption;
 use Illuminate\Http\JsonResponse;
@@ -35,16 +34,6 @@ class AnswerOptionController extends Controller
      */
     public function show(AnswerOption $answerOption): AnswerOptionResource
     {
-        return new AnswerOptionResource($answerOption);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateAnswerOptionRequest $request, AnswerOption $answerOption): AnswerOptionResource
-    {
-        $answerOption->update($request->validated());
-
         return new AnswerOptionResource($answerOption);
     }
 
