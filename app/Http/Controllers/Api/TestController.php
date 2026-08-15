@@ -106,6 +106,9 @@ class TestController extends Controller
      */
     public function update(UpdateTestRequest $request, Test $test): TestResource
     {
+        // Use the relevant TestPolicy to check authorization
+        $this->authorize('update', $test);
+
         // Validate the request data
         $validatedData = $request->validated();
 
@@ -123,6 +126,9 @@ class TestController extends Controller
      */
     public function show(Test $test): TestResource
     {
+        // Use the relevant TestPolicy to check authorization
+        $this->authorize('view', $test);
+
         // Eager load questions and their answer options for this test
         $test->load('questions.answerOptions');
 
@@ -143,6 +149,9 @@ class TestController extends Controller
      */
     public function destroy(Test $test): JsonResponse
     {
+        // Use the relevant TestPolicy to check authorization
+        $this->authorize('delete', $test);
+
         $test->delete();
 
         return response()->json(['message' => 'Delete successful'], 200);
