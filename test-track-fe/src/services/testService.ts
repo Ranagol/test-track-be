@@ -3,7 +3,7 @@ import type { Test, PaginatedResponse } from '@/types/types'
 import type { TestQueryParams } from '@/types/types'
 
 type CreateTestPayload = {
-    user_id: number;
+    user_id?: number;
     title?: string;
     description?: string;
     questions?: Array<{

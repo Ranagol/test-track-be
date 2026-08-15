@@ -78,8 +78,15 @@ class TestAttemptController extends Controller
         // Validate
         $validated = $request->validated();
 
-        // Create the test attempt
-        $testAttempt = TestAttempt::create($validated['test_attempt']);
+        // Create the test attempt...
+        $testAttempt = TestAttempt::create([
+
+            // ... from data from the FE
+            ...$validated['test_attempt'],
+
+            // ... and add the authenticated user id
+            'user_id' => Auth::id(),
+        ]);
 
         foreach ($validated['user_answers'] as $userAnswer) {
             UserAnswer::create([

@@ -36,7 +36,7 @@ export type BackendError = {
  */
 export interface Test {
     id?: number;
-    user_id: number;
+    user_id?: number;
     title?: string;
     description?: string;
     test_code?: string;

@@ -24,7 +24,6 @@ class StoreTestAttemptRequest extends FormRequest
         return [
 
             // TestAttempt fields
-            'test_attempt.user_id' => 'required|integer|exists:users,id',
             'test_attempt.test_id' => 'required|integer|exists:tests,id',
             'test_attempt.comment' => 'nullable|string',
             'test_attempt.started_at' => 'nullable|date_format:Y-m-d H:i:s',

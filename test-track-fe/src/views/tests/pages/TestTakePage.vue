@@ -19,9 +19,6 @@
 
     </Container>
 
-
-
-
 </template>
 
 <script
@@ -36,7 +33,6 @@ import Container from '@/views/tests/test/Container.vue';
 import FinalButton from '@/views/tests/test/FinalButton.vue';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
-import { useAuthStore } from '@/stores/useAuthStore';
 import { useApiErrors } from '@/composables/useApiErrors';
 import testAttemptService from '@/services/testAttemptService';
 import { ElMessageBox } from 'element-plus'
@@ -48,7 +44,6 @@ const route = useRoute();
 const router = useRouter();
 const testEditorStore = useTestEditorStore();
 const testAttemptStore = useTestAttemptStore();
-const authStore = useAuthStore();
 
 const {
     generalError,
@@ -81,14 +76,13 @@ const createTestAttempt = async () => {
         const test = testEditorStore.test;
         if (!test) return;
 
-        const testAttempData = {
+        const testAttemptData = {
             test_id: test.id,
-            user_id: authStore.userId,
         }
 
         const userAnswers = testAttemptStore.userAnswers;
 
-        await testAttemptService.create(testAttempData, userAnswers);
+        await testAttemptService.create(testAttemptData, userAnswers);
 
 
 

@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Interfaces\TestControllerServiceInterface;
 use App\Models\Question;
 use App\Models\Test;
+use Illuminate\Support\Facades\Auth;
 
 class TestControllerService implements TestControllerServiceInterface
 {
@@ -17,6 +18,9 @@ class TestControllerService implements TestControllerServiceInterface
 
         // Add the generated test code to the validated data
         $validatedData['test_code'] = $testCode;
+
+        // Add the authenticated user's ID to the validated data
+        $validatedData['user_id'] = Auth::id();
 
         return Test::create($validatedData);
     }

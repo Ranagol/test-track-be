@@ -79,7 +79,6 @@ export const testActions = {
         }
 
         this.test = {
-            user_id: authStore.userId,
             title: '',
             description: '',
             questions: [],

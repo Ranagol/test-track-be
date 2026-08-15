@@ -24,7 +24,6 @@ class StoreTestRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
-            'user_id' => ['required', 'exists:users,id'],
 
             'questions' => ['required', 'array', 'min:1'],
             'questions.*.text' => ['required', 'string'],
