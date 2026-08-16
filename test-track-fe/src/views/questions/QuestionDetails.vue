@@ -30,15 +30,13 @@
 
     </el-form-item>
 
-
-
 </template>
 
 <script setup lang="ts">
 /**
  * QuestionDetails is for question editing/creating by the tester.
  */
-import type { Question } from '@/types/types';
+import type { Question, BackendError } from '@/types/types';
 import { computed } from 'vue';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import { Delete } from '@element-plus/icons-vue'
@@ -55,7 +53,7 @@ const props = defineProps<{
     //index is used to number the questions displayed to the test taker.
     index: number;
 
-    beValidationErrors: Record<string, any>;
+    beValidationErrors: BackendError;
 }>();
 
 const questionText = computed({

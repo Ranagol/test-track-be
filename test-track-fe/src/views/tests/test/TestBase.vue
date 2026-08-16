@@ -20,12 +20,13 @@
 
 import TestTitleAndDescription from '@/views/tests/test/TestTitleAndDescription.vue';
 import QuestionList from '@/views/questions/QuestionList.vue';
+import type { BackendError } from '@/types/types';
 
 const props = withDefaults(defineProps<{
 
     mode: 'create' | 'edit' | 'take';
 
-    beValidationErrors?: Record<string, any>;
+    beValidationErrors?: BackendError;
 
 }>(), {
     beValidationErrors: () => ({})

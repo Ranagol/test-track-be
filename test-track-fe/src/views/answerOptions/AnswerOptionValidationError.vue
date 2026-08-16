@@ -26,14 +26,14 @@
  * component is shown, with the 'Please select one answer.' message.
  */
 
-const props =withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
 
     /**
      * Controlled by a bunch of watchers and @change events. When the answer option selection is null,
      * and that is a validation error, then this component will show the error message.
      */
     showError: boolean;
-    backendErrorMessage: string;
+    backendErrorMessage?: string;
 }>(), {
     showError: false,
 

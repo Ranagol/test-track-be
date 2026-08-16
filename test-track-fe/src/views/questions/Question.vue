@@ -33,7 +33,7 @@
  * QuestionDetails is used for editing the question by the tester.
  * In 'take' mode, it simply display the question text and the answer options.
  */
-import type { Question } from '@/types/types';
+import type { Question, BackendError } from '@/types/types';
 import QuestionDetails from '@/views/questions/QuestionDetails.vue';
 import AnswerOptionList from '@/views/answerOptions/AnswerOptionList.vue';
 import { ElMessage } from 'element-plus';
@@ -50,10 +50,8 @@ const props = defineProps<{
     //index is used to number the questions displayed to the test taker.
     index: number;
 
-    beValidationErrors: Record<string, any>;
+    beValidationErrors: BackendError;
 }>();
-
-
 
 const deleteQuestion = async (questionId: string) => {
 

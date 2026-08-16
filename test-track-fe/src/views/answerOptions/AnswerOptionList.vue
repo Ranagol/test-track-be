@@ -31,8 +31,7 @@
 
 <script setup lang="ts">
 
-import type { Question } from '@/types/types';
-
+import type { Question, BackendError } from '@/types/types';
 import { ref } from 'vue';
 import AddNewAnswerOption from '@/views/answerOptions/AddNewAnswerOption.vue';
 import AnswerOptionValidationError from '@/views/answerOptions/AnswerOptionValidationError.vue';
@@ -45,7 +44,7 @@ const props = defineProps<{
     question: Question;
     mode: 'create' | 'edit' | 'take';
     questionIndex: number;
-    beValidationErrors: Record<string, any>;
+    beValidationErrors: BackendError;
 }>();
 
 /**

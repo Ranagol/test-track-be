@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import AnswerOption from '@/views/answerOptions/AnswerOption.vue';
-import type { Question } from '@/types/types';
+import type { Question, BackendError } from '@/types/types';
 import { ref, onMounted, watch } from 'vue';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import { useValidateAnswerOnTakeTest } from '@/composables/answerOptionListComposables/useValidateAnswerOnTakeTest';
@@ -65,7 +65,7 @@ const props = defineProps<{
     question: Question;
     mode: 'create' | 'edit' | 'take';
     questionIndex: number;
-    beValidationErrors: Record<string, any>;
+    beValidationErrors: BackendError;
 }>();
 
 /**

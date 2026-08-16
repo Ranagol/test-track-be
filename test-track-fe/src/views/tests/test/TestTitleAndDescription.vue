@@ -60,10 +60,11 @@
     lang="ts"
 >
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
+import type { BackendError } from '@/types/types';
 
 const props = defineProps<{
     mode: 'create' | 'edit' | 'take';
-    beValidationErrors: Record<string, any>;
+    beValidationErrors: BackendError;
 }>();
 
 const testEditorStore = useTestEditorStore();

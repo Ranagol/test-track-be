@@ -28,12 +28,13 @@
 import Question from '@/views/questions/Question.vue';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import AddNewQuestionButton from '@/views/questions/AddNewQuestion.vue';
+import type { BackendError } from '@/types/types';
 
 const testEditorStore = useTestEditorStore();
 
 const props = defineProps<{
     mode: 'create' | 'edit' | 'take';
-    beValidationErrors: Record<string, any>;
+    beValidationErrors: BackendError;
 }>();
 
 

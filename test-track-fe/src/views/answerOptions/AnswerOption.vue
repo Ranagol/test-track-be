@@ -24,7 +24,7 @@
  * AnswerOption display one possible answer for a question, in 'take' mode, for the test taker.
  * Displays all relevant info in 'create' and 'edit' mode, for the tester.
  */
-import type { AnswerOption } from '@/types/types';
+import type { AnswerOption, BackendError } from '@/types/types';
 import AnswerOptionDetails from '@/views/answerOptions/AnswerOptionDetails.vue';
 
 const props = defineProps<{
@@ -39,7 +39,7 @@ const props = defineProps<{
 
     answerOptionIndex: number;
 
-    beValidationErrors: Record<string, any>;
+    beValidationErrors: BackendError;
 }>();
 
 const emit = defineEmits<{

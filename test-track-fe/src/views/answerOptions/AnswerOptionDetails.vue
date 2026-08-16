@@ -27,7 +27,7 @@
 <script setup lang="ts">
 
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
-import type { AnswerOption } from '@/types/types';
+import type { AnswerOption, BackendError } from '@/types/types';
 import { computed } from 'vue';
 import { Delete } from '@element-plus/icons-vue'
 
@@ -45,7 +45,7 @@ const props = defineProps<{
 
     answerOptionIndex: number;
 
-    beValidationErrors: Record<string, any>;
+    beValidationErrors: BackendError;
 
 }>();
 
