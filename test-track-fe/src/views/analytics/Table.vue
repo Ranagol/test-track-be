@@ -120,7 +120,7 @@ function transformTestData(test: Test) {
 
         const userAnswers = attempt.userAnswers ?? [];
         for (const answer of userAnswers) {
-            const answerText = (answer as any).selected_answer_option?.text ?? '';
+            const answerText = answer.selected_answer_option?.text ?? '';
             attemptMap[attemptId][answer.question_id] = answerText;
         }
     }
@@ -137,7 +137,7 @@ function transformTestData(test: Test) {
             rowNumber: index + 1,
             questionId: Number(q.id), // important for row-key
             questionText: q.text,
-            correctAnswer: (q as any).correct_answer_text ?? null,
+            correctAnswer: q.correct_answer_text ?? null,
 
             /**
              * attempts object structure:

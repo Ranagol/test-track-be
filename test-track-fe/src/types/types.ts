@@ -56,8 +56,8 @@ export interface Question {
     question_order?: number;
     created_at: string;
     updated_at: string;
-
     answer_options?: AnswerOption[];
+    correct_answer_text?: string | null;
 }
 
 export interface AnswerOption {
@@ -92,6 +92,7 @@ export interface UserAnswer {
     comment?: string;
     created_at: string;
     updated_at: string;
+    selected_answer_option?: AnswerOption;
 }
 
 export interface PaginationLinks {
