@@ -131,6 +131,14 @@ export interface TestQueryParams {
     per_page?: number;
 }
 
+export interface TestAttemptQueryParams {
+    searchTerm?: string;
+    sort_by?: string;
+    sort_order?: 'asc' | 'desc';
+    page?: number;
+    per_page?: number;
+}
+
 export interface TableSortData {
     // This is the sortBy field name, e.g. 'title', 'created_at', etc.
     prop: string | null;

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import type { UserAnswer } from '@/types/types';
 import type { PaginationMeta, PaginationLinks, TestAttempt } from '@/types/types';
-import type { TestQueryParams } from '@/types/types';
+import type { TestAttemptQueryParams } from '@/types/types';
 import testAttemptService from '@/services/testAttemptService';
 
 /**
@@ -60,15 +60,14 @@ export const useTestAttemptStore = defineStore('testAttempt', {
             const requestId = ++this.requestId;
             this.loading = true;
             try {
-                const response = await testAttemptService.getAll(
-                    {
-                        searchTerm: this.searchTerm,
-                        sort_by: this.sortBy,
-                        sort_order: this.sortOrder,
-                        page: this.currentPage,
-                        per_page: this.pageSize
-                    } as TestQueryParams
-                );
+
+                const response = await testAttemptService.getAll({
+                    searchTerm: this.searchTerm,
+                    sort_by: this.sortBy,
+                    sort_order: this.sortOrder,
+                    page: this.currentPage,
+                    per_page: this.pageSize
+                });
 
                 /**
                  * Only update the store if this is still the latest request. Meaning... If request

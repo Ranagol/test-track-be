@@ -1,5 +1,5 @@
 import appAxios from './axiosService'
-import type { TestAttempt, UserAnswer, TestQueryParams, PaginatedResponse } from '@/types/types'
+import type { TestAttempt, UserAnswer, TestAttemptQueryParams, PaginatedResponse } from '@/types/types'
 
 const testAttemptService = {
 
@@ -8,7 +8,7 @@ const testAttemptService = {
      *
      * @param params
      */
-    async getAll(params?: TestQueryParams): Promise<PaginatedResponse<TestAttempt>> {
+    async getAll(params?: TestAttemptQueryParams): Promise<PaginatedResponse<TestAttempt>> {
         const response = await appAxios.get<PaginatedResponse<TestAttempt>>('/api/test-attempts', { params });
         return response.data;
     },
