@@ -29,7 +29,6 @@ services:
       depends_on:
           app:
               condition: service_healthy
-              restart: true
       networks:
           - laravel
 
