@@ -86,6 +86,14 @@ export const useAuthStore = defineStore('auth', {
             } finally {
                 this.loading = false;
             }
+        },
+
+        /**
+         * We use this for example in the case of status 419 (Session Expired). We need our app to
+         * forget the user.
+         */
+        clearAuth(): void {
+            this.user = null;
         }
     }
 })

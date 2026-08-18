@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import type { BackendError } from '@/types/types';
 import axios from 'axios';
+import router from '@/router/router';
 
 /**
  * Composable for handling backend validation errors feedback in a Vue component.
@@ -48,6 +49,7 @@ export function useApiErrors() {
         // STATUS 401 or 419: Unauthorized or CSRF token mismatch (session expired)
         if (status === 401 || status === 419) {
             generalError.value = 'Your session has expired. Please log in again.'
+            router.push({ name: 'session-expired' })
             return
         }
 

@@ -8,8 +8,8 @@
                 Your session has expired. Please log in again to continue.
             </p>
             <div class="error-actions mt-5">
-                <el-button type="primary" @click="goLogin">
-                    Go to Login
+                <el-button type="primary" @click="login">
+                    Log in again
                 </el-button>
             </div>
         </div>
@@ -17,15 +17,24 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { Lock } from '@element-plus/icons-vue';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 const router = useRouter();
+const authStore = useAuthStore();
 
-const goLogin = () => {
+const login = () => {
     router.push('/login');
 };
+
+onMounted(() => {
+    authStore.clearAuth();
+});
 </script>
+
+
 
 <style scoped>
 

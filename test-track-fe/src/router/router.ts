@@ -12,6 +12,7 @@ import TestEditPage from '@/views/tests/pages/TestEditPage.vue';
 import TestTakePage from '@/views/tests/pages/TestTakePage.vue';
 import QuickStart from '@/views/quickStart/QuickStart.vue';
 import Forbidden403 from '@/views/errors/Forbidden403.vue';
+import SessionExpired419 from '@/views/errors/SessionExpired419.vue';
 
 const routes = [
     {
@@ -94,14 +95,20 @@ const routes = [
         component: QuickStart
     },
     {
-        //403
+        //SessionExprired419
+        path: '/419',
+        name: 'session-expired',
+        component: SessionExpired419
+    },
+    {
+        //Forbidden403
         path: '/403',
         name: 'forbidden',
         component: Forbidden403
     },
     {
         /**
-         * 404
+         * NotFound404
          * Match anything that doesn't match the above routes and redirect to NotFound404
          * This must be the last route in the array.
          * '/:pathMatch(.*)*' is the new syntax for Vue Router 4 to catch all unmatched routes.
