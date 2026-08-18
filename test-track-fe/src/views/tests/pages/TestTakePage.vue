@@ -35,7 +35,7 @@ import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
 import { useApiErrors } from '@/composables/useApiErrors';
 import testAttemptService from '@/services/testAttemptService';
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox, ElMessage } from 'element-plus'
 import type { Action } from 'element-plus'
 import { useRouter } from 'vue-router';
 import { useAnswerOptionValidator } from '@/composables/validatorComposables/useAnswerOptionValidator';
@@ -68,6 +68,10 @@ const createTestAttempt = async () => {
 
         // Validate answer option selection and stop if validation fails
         if (!(await validateSelectAnswerOptions())) {
+            ElMessage.error({
+                message: 'Please select one answer option for each question.',
+                duration: 5000,
+            });
             return;
         }
 

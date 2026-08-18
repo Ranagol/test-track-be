@@ -94,11 +94,19 @@ const updateTest = async () => {
 
         // // Validate answer option selection and stop if validation fails
         if (!(await validateSelectAnswerOptions())) {
+            ElMessage.error({
+                message: 'Please select the correct answer option for each question.',
+                duration: 5000,
+            });
             return;
         }
 
         // Validate the test form
         if (!(await validateTest())) {
+            ElMessage.error({
+                message: 'Please fill in all required fields.',
+                duration: 5000,
+            });
             return
         }
 
