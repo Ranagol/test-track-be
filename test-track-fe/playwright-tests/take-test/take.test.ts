@@ -33,6 +33,10 @@ test('take the Math test', async ({ page }) => {
     //Confirm that we are on the tests page, by checking if the heading is visible
     await expect(page.getByRole('heading', { name: 'My tests' })).toBeVisible();
 
+    // Click on the search box, and fill it with the search term "math", simply to decrease the number of rows in the table.
+    await page.getByRole('textbox', { name: 'Search tests' }).click();
+    await page.getByRole('textbox', { name: 'Search tests' }).fill('math');
+
     /**
      * In /tests page, tests are listed. We need to find the specific Math test, that is pre-seeded
      * exactly for this kind of check. This Math test has title "Math test" and description "A very
