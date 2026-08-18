@@ -71,3 +71,11 @@ const testEditorStore = useTestEditorStore();
 
 
 </script>
+
+<style scoped>
+:deep(.el-form-item__error) {
+    font-size: 14px;
+    font-weight: 600;
+    color: #dc2626;
+}
+</style>

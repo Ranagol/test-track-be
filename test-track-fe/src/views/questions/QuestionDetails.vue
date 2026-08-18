@@ -80,6 +80,7 @@ const deleteQuestion = () => {
 </script>
 
 <style scoped>
+
 .question-row {
     display: flex;
     align-items: center;
@@ -89,6 +90,12 @@ const deleteQuestion = () => {
 
 .question-row :deep(.el-input) {
     flex: 1;
+}
+
+:deep(.el-form-item__error) {
+    font-size: 14px;
+    font-weight: 600;
+    color: #dc2626;
 }
 
 
