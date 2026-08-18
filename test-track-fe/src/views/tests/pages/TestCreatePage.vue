@@ -14,6 +14,24 @@
                 text="Create test"
             />
 
+            <ul class="mt-4 list-disc list-inside text-gray-700">
+                <li>
+                    Create a new test by filling in the title, description, questions and answer options.
+                </li>
+                <li>
+                    For every question, you must create at least two answer options.
+                </li>
+                <li>
+                    You must also select the correct answer option for each question.
+                </li>
+                <li>
+                    You can create as many questions and answer options as you want.
+                </li>
+                <li>
+                    Once you are done, click on the "Create test" button to create the test.
+                </li>
+            </ul>
+
             <!-- THE TEST -->
             <TestBase
                 mode="create"
