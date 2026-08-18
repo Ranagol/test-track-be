@@ -41,7 +41,7 @@ const props = withDefaults(defineProps<{
      * Fallback error message. when there is no BE validation error message, but there is still a
      * FE validation error (showError will be then true), then this message will be shown.
      */
-    backendErrorMessage: 'Please select the correct answer.'
+    backendErrorMessage: 'Please select the one correct answer option.'
 });
 
 </script>
@@ -49,9 +49,14 @@ const props = withDefaults(defineProps<{
 <style scoped>
 
 .error-message {
-    color: #f56c6c;
-    font-size: 12px;
-    margin-top: 4px;
+    color: #b91c1c;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 6px;
+    padding: 6px 10px;
+    background-color: #fef2f2;
+    border: 1px solid #dc2626;
+    border-radius: 6px;
 }
 
 </style>
