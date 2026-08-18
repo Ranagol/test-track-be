@@ -37,7 +37,6 @@ export function useApiErrors() {
 
         // NO INTERNET OR NO SERVER RESPONSE (from now on, we know this is an Axios error)
         if (!error.response) {
-            console.log('Network/server error:', error)
             generalError.value = 'Unable to connect to the server.'
             return
         }

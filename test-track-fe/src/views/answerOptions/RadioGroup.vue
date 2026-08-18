@@ -72,7 +72,6 @@ const props = defineProps<{
  * Whenever, in any (create, edit, take) mode an answer option is selected, this function is called.
  */
 const onChange =() => {
-    console.log('Selected answer option id:', selectedAnswerOption.value);
 
     // Handle the answer option selection in 'take', 'create' and 'edit' mode
     handleAnswerSelection(selectedAnswerOption.value);

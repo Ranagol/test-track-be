@@ -29,13 +29,6 @@ appAxios.interceptors.response.use(
 
     (error: AxiosError) => {
 
-        /**
-         * Network error - no response from server
-         */
-        if (!error.response) {
-            console.error('Network error or server unreachable')
-        }
-
         return Promise.reject(error)
     }
 );

@@ -10,8 +10,8 @@ const password = process.env.DEFAULT_TESTER_PASSWORD!;
 // This will be: http://localhost:5174 in local environment,
 const baseUrl = process.env.FRONTEND_URL!;
 
-const testTitle: string = 'My first test';
-const testDescription: string = 'This is a description for my first test';
+const testTitle: string = 'My first PW test';
+const testDescription: string = 'This is a description for my PW test';
 
 test('create a new test', async ({ page }) => {
 
