@@ -17,7 +17,10 @@ use Illuminate\Support\Facades\Auth;
 class TestAttemptController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Used here:
+     * FE url: http://localhost:5174/analytics
+     * BE url: /api/test-attempts?page=1&per_page=10&searchTerm=&sort_by=created_at&sort_order=desc
+     * Triggers: TestAttemptController@index
      */
     public function index(Request $request): AnonymousResourceCollection
     {

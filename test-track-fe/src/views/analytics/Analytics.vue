@@ -1,4 +1,7 @@
 <template>
+
+    <!--This is the parent component for this http://localhost:5174/analytics/5 -->
+
     <div>
         <Heading1
             text="Analytics"
@@ -30,7 +33,6 @@ import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useTestsStore } from '@/stores/useTestsStore';
 import Heading1 from '@/resusableComponents/Heading1.vue';
-import userService from '@/services/userService';
 import type { User } from '@/types/types';
 import Test from '@/views/analytics/Test.vue';
 
@@ -46,10 +48,7 @@ onMounted(async () => {
             throw new Error('No test taker ID provided in route params');
         }
 
-        // Fetch test taker
-        testTaker.value = await userService.getTestTaker(Number(testTakerId));
-
-        // Fetch all relevant tests for analytics
+        // Fetch all relevant tests for analytics, from the given test taker ID
         await testsStore.getAnalytics(Number(testTakerId));
     } catch (error) {
         await router.push({ name: 'not-found' });

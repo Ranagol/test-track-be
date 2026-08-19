@@ -56,9 +56,13 @@ class TestController extends Controller
     }
 
     /**
-     * This function is called at FE url /analytics/:testTakerId
+     * This function is called at FE url /analytics/:testTakerId (Analytics details)
      * It sends all belonging tests, questions, answers, attempts for the give test taker, so its
      * test performances could be analyzed.
+     *
+     * FE url: http://localhost:5174/analytics/5
+     * BE url: /api/analytics?testTakerId=5
+     * Triggers: TestController@indexAnalytics
      */
     public function indexAnalytics(Request $request): AnonymousResourceCollection
     {

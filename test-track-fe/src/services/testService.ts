@@ -23,7 +23,10 @@ const testService = {
         return response.data
     },
 
-    // Laravel Resource tends to wrap everything with a {data: ...} object,
+    /**
+     * Used for http://localhost:5174/analytics/5 type requests.
+     * Laravel Resource tends to wrap everything with a {data: ...} object,
+     */
     async getAnalytics(testTakerId: number): Promise<Test[]> {
         const response = await appAxios.get<{ data: Test[] }>(`/api/analytics?testTakerId=${testTakerId}`)
         return response.data.data
