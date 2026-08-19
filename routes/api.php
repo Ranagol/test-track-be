@@ -47,14 +47,24 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::apiResource('user-answers', UserAnswerController::class);
 
+    /**
+     * Display a list of all test takers that belong to the currently authenticated tester
+     * FE url: http://localhost:5174/test-takers
+     */
     Route::get('/test-takers', [TestTakerController::class, 'index']);
+
+    /**
+     * Display a single test taker by ID, with all its analytics data (tests, questions, answers, attempts)
+     * FE url: http://localhost:5174/analytics/5
+     */
+    Route::get('/test-takers/{testTaker}', [TestTakerController::class, 'show']);
 
     /**
      * This function is called at FE url /analytics/:testTakerId (Analytics details)
      * It sends all belonging tests, questions, answers, attempts for the give test taker, so its
      * test performances could be analyzed.
      *
-     * FE url: http://localhost:5174/analytics/5
+     *
      * BE url: /api/analytics?testTakerId=5
      * Triggers: TestController@indexAnalytics
      */

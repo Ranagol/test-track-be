@@ -14,6 +14,7 @@ import QuickStart from '@/views/quickStart/QuickStart.vue';
 import Forbidden403 from '@/views/errors/Forbidden403.vue';
 import SessionExpired419 from '@/views/errors/SessionExpired419.vue';
 import TestTakers from '@/views/testTakers/TestTakers.vue';
+import TestTakerDetails from '@/views/testTakers/TestTakerDetails.vue';
 
 const routes = [
     {
@@ -60,6 +61,15 @@ const routes = [
         }
     },
     {
+        path: '/test-takers/:testTakerId',
+        name: 'testTakerDetails',
+        component: TestTakerDetails,
+        meta: {
+            // This page is only for logged-in users (protected page)
+            requiresAuth: true
+        }
+    },
+    {
         path: '/analytics/:userId',
         name: 'analyticsDetails',
         component: Analytics,
@@ -94,7 +104,7 @@ const routes = [
     {
         path: '/tests/take-test/:testCode',
         name: 'test-take',
-        component: TestTakePage,
+        component: TestTakerDetails,
         meta: {
             requiresAuth: true
         }
@@ -181,8 +191,6 @@ router.beforeEach(async (to) => {
 
     // Otherwise allow navigation
     return true;
-
-
 });
 
 export default router;

@@ -49,12 +49,13 @@
                     label="Test taker"
                     v-slot="{ row }"
                 >
-                    <!-- <router-link
-                        :to="`/analytics/${row.id}`"
+                    <router-link
+                        :to="`/test-takers/${row.id}`"
                         class="text-primary underline"
+                        @click.stop
                     >
-                        {{ row.user.name }}
-                    </router-link> -->
+                        {{ row.name }}
+                    </router-link>
                 </el-table-column>
 
                 <!-- EMAIL -->
