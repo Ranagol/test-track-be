@@ -29,7 +29,7 @@ class TestTakerResource extends JsonResource
             'tests' => $model->testAttempts()->distinct('test_id')->count('test_id'),
             // count all test attempts for this test taker
             'test_attempts' => $model->testAttempts()->count(),
-            'last_test_attempt' => $model->testAttempts()->latest()->first()?->created_at,
+            'last_test_attempt' => $model->testAttempts()->latest()->first()?->created_at ? $model->testAttempts()->latest()->first()->created_at->format('d.m.Y') : null,
         ];
     }
 }

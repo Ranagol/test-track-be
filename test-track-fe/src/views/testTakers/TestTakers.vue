@@ -4,7 +4,7 @@
 
         <div class="h-16 flex">
             <Heading1
-                text="My test takers (analytics)"
+                text="My test takers"
             />
         </div>
 
@@ -42,7 +42,6 @@
                 v-loading="testTakerStore.loading"
                 :cell-style="{ verticalAlign: 'top' }"
                 stripe
-                @sort-change="handleSort"
             >
                 <!-- TEST TAKER NAME -->
                 <el-table-column
@@ -74,14 +73,12 @@
                 <el-table-column
                     prop="test_attempts"
                     label="Number of test attempts"
-                    sortable="custom"
                 ></el-table-column>
 
                 <!-- DATE OF LAST TEST ATTEMPT -->
                 <el-table-column
                     prop="last_test_attempt"
                     label="Date of last test attempt"
-                    sortable="custom"
                 ></el-table-column>
 
             </el-table>
@@ -110,10 +107,8 @@
 import { onMounted } from 'vue'
 import { useTestTakerStore } from '@/stores/useTestTakerStore'
 import { useApiErrors } from '@/composables/useApiErrors';
-import type { TableSortData } from '@/types/types';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import Heading1 from '@/resusableComponents/Heading1.vue';
-import type { TestTaker, PaginationMeta, PaginationLinks } from '@/types/types';
 
 const testTakerStore = useTestTakerStore();
 
@@ -124,21 +119,6 @@ const {
 
 
 const handleSearch = () => {
-    fetchTestTakers();
-};
-
-const handleSort = (sortData: TableSortData) => {
-    if (!sortData.prop) return;
-
-    // el-table here tells us which column to use for sorting
-    testTakerStore.sortBy = sortData.prop;
-
-    /**
-     * el-table here tells us the order of sorting
-     * sortData.order can be 'ascending', 'descending'. We need to convert it to 'asc' or 'desc'
-     * for the Laravel backend.
-     */
-    testTakerStore.sortOrder = sortData.order === 'ascending' ? 'asc' : 'desc';
     fetchTestTakers();
 };
 

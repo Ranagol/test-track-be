@@ -34,15 +34,13 @@ class TestTakerController extends Controller
         }
 
         // Sort
-        $sortBy = $request->sort_by ?? 'created_at';
-        $sortOrder = $request->sort_order ?? 'desc';
-        // If $sortOrder is either 'asc' or 'desc', keep it. Otherwise, default to 'desc'.
-        $sortOrder = in_array($sortOrder, ['asc', 'desc']) ? $sortOrder : 'desc';
-        $testTakersQuery->orderBy($sortBy, $sortOrder);
+        $testTakersQuery->orderBy('name', 'asc');
 
         // Paginate
         $perPage = $request->per_page ?? 10;
         $testTakers = $testTakersQuery->paginate($perPage);
+
+        // dd($testTakersQuery->toSql(), $testTakersQuery->getBindings());
 
         return TestTakerResource::collection($testTakers);
     }

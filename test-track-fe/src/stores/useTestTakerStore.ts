@@ -10,8 +10,8 @@ export const useTestTakerStore = defineStore('test-takers', {
         loading: false as boolean,
 
         searchTerm: '' as string,
-        sortBy: 'created_at' as string,
-        sortOrder: 'desc' as 'asc' | 'desc',
+        sortBy: 'name' as string,
+        sortOrder: 'asc' as 'asc' | 'desc',
 
         // Pagination data from the backend
         pagination: null as null | PaginationMeta,
