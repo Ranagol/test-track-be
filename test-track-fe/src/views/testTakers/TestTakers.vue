@@ -1,6 +1,5 @@
 <template>
 
-    <!-- THIS IS ACTUALLY THE ANALYTICS PAGE MAIN COMPONENT -->
     <div class="grid">
 
         <div class="h-16 flex">
@@ -9,13 +8,11 @@
             />
         </div>
 
-        <p class="mt-3 mb-1">We display here all test attempts for all your test takers.</p>
-
         <div class="flex">
 
             <!-- SEARCH INPUT -->
             <el-input
-                v-model="testAttemptStore.searchTerm"
+                v-model="testTakerStore.searchTerm"
                 style="width: 40%"
                 placeholder="Search for test taker name or test name"
                 clearable
@@ -37,77 +34,67 @@
 
         <!-- TABLE -->
         <div
-            v-loading="testAttemptStore.loading"
+            v-loading="testTakerStore.loading"
             class="mt-3"
         >
             <el-table
-                :data="testAttemptStore.testAttempts"
-                v-loading="testAttemptStore.loading"
+                :data="testTakerStore.testTakers"
+                v-loading="testTakerStore.loading"
                 :cell-style="{ verticalAlign: 'top' }"
                 stripe
                 @sort-change="handleSort"
             >
                 <!-- TEST TAKER NAME -->
                 <el-table-column
-                    prop="user.name"
+                    prop="name"
                     label="Test taker"
                     v-slot="{ row }"
                 >
-                    <router-link
-                        :to="`/analytics/${row.user.id}`"
+                    <!-- <router-link
+                        :to="`/analytics/${row.id}`"
                         class="text-primary underline"
                     >
                         {{ row.user.name }}
-                    </router-link>
+                    </router-link> -->
                 </el-table-column>
 
-                <!-- TEST NAME -->
+                <!-- EMAIL -->
                 <el-table-column
-                    prop="test.title"
-                    label="Test name"
+                    prop="email"
+                    label="Email"
                 ></el-table-column>
 
-                <!-- TEST DESCRIPTION -->
+                <!-- NUMBER OF TESTS -->
                 <el-table-column
-                    prop="test.description"
-                    label="Test description"
+                    prop="tests"
+                    label="Number of tests"
                 ></el-table-column>
 
-                <!-- TAKEN AT -->
+                <!-- NUMBER OF TEST ATTEMPTS -->
                 <el-table-column
-                    prop="created_at"
-                    label="Test attempt date"
+                    prop="test_attempts"
+                    label="Number of test attempts"
                     sortable="custom"
                 ></el-table-column>
 
-                <!-- SCORE -->
+                <!-- DATE OF LAST TEST ATTEMPT -->
                 <el-table-column
-                    prop="score_percentage"
-                    label="Score (%)"
+                    prop="last_test_attempt"
+                    label="Date of last test attempt"
                     sortable="custom"
-                    v-slot="{ row }"
-                >
-                    <el-tag
-                        v-if="row.score_percentage != null"
-                        :type="scoreTagType(row.score_percentage)"
-                        effect="light"
-                    >
-                        {{ row.score_percentage }}%
-                    </el-tag>
-                </el-table-column>
-
+                ></el-table-column>
 
             </el-table>
         </div>
 
         <!-- PAGINATION -->
         <el-pagination
-            v-model:current-page="testAttemptStore.currentPage"
-            v-model:page-size="testAttemptStore.pageSize"
+            v-model:current-page="testTakerStore.currentPage"
+            v-model:page-size="testTakerStore.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="testAttemptStore.pagination?.total || 0"
-            @current-change="fetchTestAttempts"
-            @size-change="fetchTestAttempts"
+            :total="testTakerStore.pagination?.total || 0"
+            @current-change="fetchTestTakers"
+            @size-change="fetchTestTakers"
             class="mt-3"
         />
 
@@ -116,65 +103,55 @@
         />
 
     </div>
+
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { useTestAttemptStore } from '@/stores/useTestAttemptStore';
+import { onMounted } from 'vue'
+import { useTestTakerStore } from '@/stores/useTestTakerStore'
 import { useApiErrors } from '@/composables/useApiErrors';
 import type { TableSortData } from '@/types/types';
 import DisplayBackendError from '@/resusableComponents/DisplayBackendError.vue';
 import Heading1 from '@/resusableComponents/Heading1.vue';
+import type { TestTaker, PaginationMeta, PaginationLinks } from '@/types/types';
 
-const testAttemptStore = useTestAttemptStore();
+const testTakerStore = useTestTakerStore();
 
 const {
     generalError,
     handleBackendErrors
 } = useApiErrors();
 
-const handleSearch = () => {
-    fetchTestAttempts();
-};
 
-/**
- * Maps a score percentage to an el-tag type so pass/fail is visible at a glance.
- */
-function scoreTagType(score: number): 'success' | 'warning' | 'danger' {
-    if (score >= 70) return 'success';
-    if (score >= 50) return 'warning';
-    return 'danger';
-}
+const handleSearch = () => {
+    fetchTestTakers();
+};
 
 const handleSort = (sortData: TableSortData) => {
     if (!sortData.prop) return;
 
     // el-table here tells us which column to use for sorting
-    testAttemptStore.sortBy = sortData.prop;
+    testTakerStore.sortBy = sortData.prop;
 
     /**
      * el-table here tells us the order of sorting
      * sortData.order can be 'ascending', 'descending'. We need to convert it to 'asc' or 'desc'
      * for the Laravel backend.
      */
-    testAttemptStore.sortOrder = sortData.order === 'ascending' ? 'asc' : 'desc';
-    fetchTestAttempts();
+    testTakerStore.sortOrder = sortData.order === 'ascending' ? 'asc' : 'desc';
+    fetchTestTakers();
 };
 
-async function fetchTestAttempts() {
+async function fetchTestTakers() {
     try {
-        await testAttemptStore.getAll();
+        await testTakerStore.getAll();
     } catch (error) {
         handleBackendErrors(error);
     }
 }
 
 onMounted(async () => {
-    await fetchTestAttempts();
+    await fetchTestTakers();
 });
 
 </script>
-
-<style scoped>
-
-</style>

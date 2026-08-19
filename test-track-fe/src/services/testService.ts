@@ -1,24 +1,10 @@
 import appAxios from './axiosService'
-import type { Test, PaginatedResponse } from '@/types/types'
-import type { TestQueryParams } from '@/types/types'
-
-type CreateTestPayload = {
-    user_id?: number;
-    title?: string;
-    description?: string;
-    questions?: Array<{
-        text: string;
-        answer_options?: Array<{
-            text: string;
-            is_correct?: boolean;
-        }>;
-    }>;
-}
-
+import type { Test, PaginatedResponse, CreateTestPayload } from '@/types/types'
+import type { QueryParams } from '@/types/types'
 
 const testService = {
 
-    async getAll(params?: TestQueryParams): Promise<PaginatedResponse<Test>> {
+    async getAll(params?: QueryParams): Promise<PaginatedResponse<Test>> {
         const response = await appAxios.get<PaginatedResponse<Test>>('/api/tests', { params })
         return response.data
     },

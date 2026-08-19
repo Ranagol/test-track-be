@@ -34,6 +34,13 @@
         </el-menu-item>
 
         <el-menu-item
+            index="/test-takers"
+            v-if="authStore.user"
+        >
+            Test Takers
+        </el-menu-item>
+
+        <el-menu-item
             index="/quick-start"
         >Quick start</el-menu-item>
 

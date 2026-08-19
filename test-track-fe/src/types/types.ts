@@ -10,6 +10,15 @@ export interface User {
     role?: string;
 }
 
+export interface TestTaker {
+    id: number;
+    name: string;
+    email: string;
+    tests: number;
+    test_attempts: number;
+    last_test_attempt?: string | null;
+}
+
 export interface LoginPayload {
     email: string;
     password: string;
@@ -120,10 +129,11 @@ export interface PaginatedResponse<T> {
 
 /**
  * These are the query parameters that can be sent to the backend when fetching tests, for the
- * Tests.vue.
+ * any listings. So when we want to get /tests or /test-takers, and we want to trigger
+ * a controller's index method, we use this do define the query parameters.
  * They are needed for the search, sort, paginate features.
  */
-export interface TestQueryParams {
+export interface QueryParams {
     search?: string;
     sort_by?: string;
     sort_order?: 'asc' | 'desc';
@@ -151,4 +161,21 @@ export type Mode = 'create' | 'edit' | 'take';
 export interface TestEditorState {
     test: Test | null;
     loading: boolean;
+}
+
+/**
+ * During creating a new test, this is how the data/payload should look like.
+ * Used in testService.
+ */
+export interface CreateTestPayload {
+    user_id?: number;
+    title?: string;
+    description?: string;
+    questions?: Array<{
+        text: string;
+        answer_options?: Array<{
+            text: string;
+            is_correct?: boolean;
+        }>;
+    }>;
 }

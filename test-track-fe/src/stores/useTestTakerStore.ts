@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia';
-import type { Test, PaginationMeta, PaginationLinks } from '@/types/types';
-import testService from '@/services/testService';
+import type { TestTaker, PaginationMeta, PaginationLinks } from '@/types/types';
+import testTakerService from '@/services/testTakerService';
 import type { QueryParams } from '@/types/types';
 
-export const useTestsStore = defineStore('tests', {
+export const useTestTakerStore = defineStore('test-takers', {
 
     state: () => ({
-        tests: [] as Test[],
+        testTakers: [] as TestTaker[],
         loading: false as boolean,
 
         searchTerm: '' as string,
@@ -31,7 +31,7 @@ export const useTestsStore = defineStore('tests', {
     actions: {
 
         /**
-         * This is the main search function, that delivers all the tests to the /tests page.
+         * This is the main search function, that delivers all the test takers to the /test-takers page.
          */
         async getAll(): Promise<void> {
 
@@ -44,7 +44,7 @@ export const useTestsStore = defineStore('tests', {
             this.loading = true;
             try {
 
-                const response = await testService.getAll(
+                const response = await testTakerService.getAll(
                     {
                         search: this.searchTerm,
                         sort_by: this.sortBy,
@@ -60,40 +60,10 @@ export const useTestsStore = defineStore('tests', {
                  * store. Aka, we will not have the final search term to be 'a'. It will be still 'abc'.
                  */
                 if (requestId === this.requestId) {
-                    this.tests = response.data;
+                    this.testTakers = response.data;
                     this.pagination = response.meta;
                     this.paginationLinks = response.links;
                 }
-            } catch (error) {
-                throw error;
-            } finally {
-                this.loading = false;
-            }
-        },
-
-        /**
-         * Used for http://localhost:5174/analytics/5 type requests.
-         */
-        async getAnalytics(testTakerId: number): Promise<void> {
-            this.loading = true;
-            try {
-                this.tests = await testService.getAnalytics(testTakerId);
-            } catch (error) {
-                throw error;
-            } finally {
-                this.loading = false;
-            }
-        },
-
-        async delete(id: number): Promise<void> {
-            this.loading = true;
-            try {
-                // Send delete request to the backend
-                await testService.delete(id);
-
-                // Remove the deleted test from the store, filter here means: return all, except the deleted test
-                this.tests = this.tests.filter(test => test.id !== id);
-
             } catch (error) {
                 throw error;
             } finally {

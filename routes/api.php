@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AnswerOptionController;
 use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\TestAttemptController;
 use App\Http\Controllers\Api\TestController;
+use App\Http\Controllers\Api\TestTakerController;
 use App\Http\Controllers\Api\UserAnswerController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -45,6 +46,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('answer-options', AnswerOptionController::class)->except(['update']);
 
     Route::apiResource('user-answers', UserAnswerController::class);
+
+    Route::get('/test-takers', [TestTakerController::class, 'index']);
 
     /**
      * This function is called at FE url /analytics/:testTakerId (Analytics details)

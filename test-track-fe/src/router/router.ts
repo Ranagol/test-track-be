@@ -13,6 +13,7 @@ import TestTakePage from '@/views/tests/pages/TestTakePage.vue';
 import QuickStart from '@/views/quickStart/QuickStart.vue';
 import Forbidden403 from '@/views/errors/Forbidden403.vue';
 import SessionExpired419 from '@/views/errors/SessionExpired419.vue';
+import TestTakers from '@/views/testTakers/TestTakers.vue';
 
 const routes = [
     {
@@ -44,6 +45,15 @@ const routes = [
         path: '/analytics',
         name: 'analyticsList',
         component: TestAttempts,
+        meta: {
+            // This page is only for logged-in users (protected page)
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/test-takers',
+        name: 'testTakersList',
+        component: TestTakers,
         meta: {
             // This page is only for logged-in users (protected page)
             requiresAuth: true
