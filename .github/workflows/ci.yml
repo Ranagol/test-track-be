@@ -206,8 +206,8 @@ jobs:
           done
 
           docker compose -f compose.prod.yaml exec -T app php artisan migrate --force
-          docker compose -f compose.prod.yaml exec -T app php artisan optimize
           docker compose -f compose.prod.yaml exec -T app php artisan scribe:generate
+          docker compose -f compose.prod.yaml exec -T app php artisan optimize
           docker system prune -af --filter "until=168h"
 
     - run: echo "Successfully deployed."
