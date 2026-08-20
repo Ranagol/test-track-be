@@ -1,6 +1,6 @@
 <template>
 
-    <!--This is the component/view for this http://localhost:5174/analytics/5 -->
+    <!--This is the component/view for this http://localhost:5174/test-takers/5/performance -->
 
     <div>
         <Heading1

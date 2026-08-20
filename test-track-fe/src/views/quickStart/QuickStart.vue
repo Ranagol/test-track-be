@@ -161,9 +161,9 @@
 
                 <router-link
                     class="text-blue-500 hover:text-blue-700 underline"
-                    to="/analytics"
+                    to="/test-takers"
                 >
-                    Analytics
+                    Test Takers
                 </router-link>
 
                 to view the result of the test attempt.

@@ -47,8 +47,7 @@ export const useTestAttemptStore = defineStore('testAttempt', {
     actions: {
 
         /**
-         * Gets all test attempts from the backend, with pagination, sorting and searching. For the
-         * /analytics page.
+         * Gets all test attempts from the backend, with pagination, sorting and searching.
          */
         async getAll(): Promise<void> {
 

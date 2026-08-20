@@ -12,7 +12,7 @@ const testTakerService = {
     },
 
     /**
-     * Used for http://localhost:5174/analytics/5 type requests.
+     * Used for http://localhost:5174/test-takers/5/performance type requests.
      * Returns all tests, questions, answers, attempts for the given test taker
      * Laravel Resource tends to wrap everything with a {data: ...} object,
      */

@@ -71,20 +71,6 @@ export const useTestsStore = defineStore('tests', {
             }
         },
 
-        /**
-         * Used for http://localhost:5174/analytics/5 type requests.
-         */
-        async getAnalytics(testTakerId: number): Promise<void> {
-            this.loading = true;
-            try {
-                this.tests = await testService.getAnalytics(testTakerId);
-            } catch (error) {
-                throw error;
-            } finally {
-                this.loading = false;
-            }
-        },
-
         async delete(id: number): Promise<void> {
             this.loading = true;
             try {

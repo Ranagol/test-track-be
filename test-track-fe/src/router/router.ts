@@ -5,8 +5,6 @@ import Register from '@/views/register/Register.vue';
 import Home from '@/views/home/Home.vue';
 import NotFound404 from '@/views/errors/NotFound404.vue';
 import { useAuthStore } from '@/stores/useAuthStore';
-import TestAttempts from '@/views/testAttempts/TestAttempts.vue';
-import Analytics from '@/views/analytics/Analytics.vue';
 import TestCreatePage from '@/views/tests/pages/TestCreatePage.vue';
 import TestEditPage from '@/views/tests/pages/TestEditPage.vue';
 import TestTakePage from '@/views/tests/pages/TestTakePage.vue';
@@ -43,15 +41,6 @@ const routes = [
         component: Home
     },
     {
-        path: '/analytics',
-        name: 'analyticsList',
-        component: TestAttempts,
-        meta: {
-            // This page is only for logged-in users (protected page)
-            requiresAuth: true
-        }
-    },
-    {
         path: '/test-takers',
         name: 'testTakersList',
         component: TestTakers,
@@ -66,14 +55,6 @@ const routes = [
         component: TestTakerDetails,
         meta: {
             // This page is only for logged-in users (protected page)
-            requiresAuth: true
-        }
-    },
-    {
-        path: '/analytics/:userId',
-        name: 'analyticsDetails',
-        component: Analytics,
-        meta: {
             requiresAuth: true
         }
     },

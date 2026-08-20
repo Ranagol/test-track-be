@@ -18,7 +18,6 @@ class TestAttemptController extends Controller
 {
     /**
      * Used here:
-     * FE url: http://localhost:5174/analytics
      * BE url: /api/test-attempts?page=1&per_page=10&searchTerm=&sort_by=created_at&sort_order=desc
      * Triggers: TestAttemptController@index
      */

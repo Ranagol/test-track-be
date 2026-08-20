@@ -57,7 +57,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     /**
      * Display a single test taker by ID, with all its analytics data (tests, questions, answers, attempts)
-     * FE url: http://localhost:5174/analytics/5
+     * FE url: http://localhost:5174/test-takers/5/performance
      */
     Route::get('/test-takers/{testTaker}/performance', [TestTakerController::class, 'showPerformance']);
 

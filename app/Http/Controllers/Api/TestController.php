@@ -56,38 +56,6 @@ class TestController extends Controller
     }
 
     /**
-     * This function is called at FE url /analytics/:testTakerId (Analytics details)
-     * It sends all belonging tests, questions, answers, attempts for the give test taker, so its
-     * test performances could be analyzed.
-     *
-     * FE url: http://localhost:5174/analytics/5
-     * BE url: /api/analytics?testTakerId=5
-     * Triggers: TestController@indexAnalytics
-     */
-    public function indexAnalytics(Request $request): AnonymousResourceCollection
-    {
-        $testTakerId = $request->testTakerId;
-        $user = Auth::user();
-
-        $tests = Test::whereHas('attempts', function ($q) use ($testTakerId) {
-            $q->where('user_id', $testTakerId);
-        })
-            ->with(
-                [
-                    'questions.correctAnswerText',
-                    'attempts' => function ($q) use ($testTakerId) {
-                        $q->where('user_id', $testTakerId)->with('userAnswers.answerOption');
-                    },
-                ]
-            )
-            // Only return tests that belong to the authenticated tester, and not all tests
-            ->where('user_id', $user->id)
-            ->get();
-
-        return TestResource::collection($tests);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreTestRequest $request): TestResource

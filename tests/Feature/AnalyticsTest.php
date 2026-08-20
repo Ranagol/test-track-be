@@ -29,7 +29,7 @@ class AnalyticsTest extends TestCase
         $tester = User::where('email', config('app.DEFAULT_TESTER_EMAIL'))->first();
 
         // When we do analytics, we actually see then test attempts. Test attempts have the results.
-        $response = $this->actingAs($tester)->getJson('/api/analytics');
+        $response = $this->actingAs($tester)->getJson('/api/test-takers');
 
         $response->assertStatus(200);
 

@@ -27,13 +27,6 @@
         </el-menu-item>
 
         <el-menu-item
-            index="/analytics"
-            v-if="authStore.user"
-        >
-            Analytics
-        </el-menu-item>
-
-        <el-menu-item
             index="/test-takers"
             v-if="authStore.user"
         >
