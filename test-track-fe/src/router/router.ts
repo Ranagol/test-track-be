@@ -104,7 +104,7 @@ const routes = [
     {
         path: '/tests/take-test/:testCode',
         name: 'test-take',
-        component: TestTakerDetails,
+        component: TestTakePage,
         meta: {
             requiresAuth: true
         }

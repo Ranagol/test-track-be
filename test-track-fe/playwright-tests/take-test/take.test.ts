@@ -24,6 +24,8 @@ test('take the Math test', async ({ page }) => {
     // wait for app to fully settle, and check that the logout button is visible. This is crucial!
     await expect(page.locator('text=Logout')).toBeVisible();
 
+
+
     //Go to the tests page, where all tests are listed
     await page.goto(`${baseUrl}/tests`);
 
@@ -32,6 +34,7 @@ test('take the Math test', async ({ page }) => {
 
     //Confirm that we are on the tests page, by checking if the heading is visible
     await expect(page.getByRole('heading', { name: 'My tests' })).toBeVisible();
+
 
     // Click on the search box, and fill it with the search term "math", simply to decrease the number of rows in the table.
     await page.getByRole('textbox', { name: 'Search tests' }).click();
@@ -48,6 +51,7 @@ test('take the Math test', async ({ page }) => {
         .first();
 
     await expect(mathTestRow).toBeVisible();
+
 
     /**
      * Now, in the given table row, we need to find the "Take test" link for this math test.
@@ -66,6 +70,7 @@ test('take the Math test', async ({ page }) => {
 
     // Just check if we are on the right page, by checking if the test title is visible
     await expect(page.getByRole('heading', { name: 'Math test' })).toBeVisible();
+
     await expect(page.getByText('A very difficult math test', { exact: true })).toBeVisible();
 
     await page.locator('#radio-group-for-question-index-0').getByText('4').click();
