@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import type { TestTaker, PaginationMeta, PaginationLinks } from '@/types/types';
+import type { TestTaker, PaginationMeta, PaginationLinks, Test } from '@/types/types';
 import testTakerService from '@/services/testTakerService';
 import type { QueryParams } from '@/types/types';
 
@@ -7,6 +7,8 @@ export const useTestTakerStore = defineStore('test-takers', {
 
     state: () => ({
         testTakers: [] as TestTaker[],
+        testTaker: null as null | TestTaker,
+        testTakerPerformance: [] as Test[],
         loading: false as boolean,
 
         searchTerm: '' as string,
@@ -64,6 +66,34 @@ export const useTestTakerStore = defineStore('test-takers', {
                     this.pagination = response.meta;
                     this.paginationLinks = response.links;
                 }
+            } catch (error) {
+                throw error;
+            } finally {
+                this.loading = false;
+            }
+        },
+
+        /**
+         * Gets one test taker.
+         */
+        async get(id: number): Promise<void> {
+            this.loading = true;
+            try {
+                this.testTaker = await testTakerService.get(id);
+            } catch (error) {
+                throw error;
+            } finally {
+                this.loading = false;
+            }
+        },
+
+        /**
+         * Used for http://localhost:5174/test-takers/5 type requests.
+         */
+        async getPerformance(testTakerId: number): Promise<void> {
+            this.loading = true;
+            try {
+                this.testTakerPerformance = await testTakerService.getPerformance(testTakerId);
             } catch (error) {
                 throw error;
             } finally {

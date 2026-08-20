@@ -47,6 +47,11 @@ class TestTakerController extends Controller
         return TestTakerResource::collection($testTakers);
     }
 
+    public function show(User $testTaker): TestTakerResource
+    {
+        return new TestTakerResource($testTaker);
+    }
+
     /**
      * This function is called at FE url /test-takers/:testTakerId (Analytics details)
      * It sends all belonging tests, questions, answers, attempts for the give test taker, so its
@@ -55,7 +60,7 @@ class TestTakerController extends Controller
      * FE url: http://localhost:5174/test-takers/5
      * BE url: /api/test-takers/5
      */
-    public function show(Request $request, int $testTakerId): AnonymousResourceCollection
+    public function showPerformance(Request $request, int $testTakerId): AnonymousResourceCollection
     {
         $user = Auth::user();
 

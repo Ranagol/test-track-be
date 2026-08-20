@@ -1,6 +1,6 @@
 <template>
 
-    <!--This is the parent component for this http://localhost:5174/analytics/5 -->
+    <!--This is the parent/base component for this http://localhost:5174/analytics/5 -->
 
     <div>
         <Heading1

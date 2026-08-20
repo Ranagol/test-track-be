@@ -53,15 +53,18 @@ Route::middleware(['auth:sanctum'])->group(function () {
      */
     Route::get('/test-takers', [TestTakerController::class, 'index']);
 
+    Route::get('/test-takers/{testTaker}', [TestTakerController::class, 'show']);
+
     /**
      * Display a single test taker by ID, with all its analytics data (tests, questions, answers, attempts)
      * FE url: http://localhost:5174/analytics/5
      */
-    Route::get('/test-takers/{testTaker}', [TestTakerController::class, 'show']);
+    Route::get('/test-takers/{testTaker}/performance', [TestTakerController::class, 'showPerformance']);
 
     /**
+     * WILL BE DELETED. PART OF THE OLD ANALYTIC
      * This function is called at FE url /analytics/:testTakerId (Analytics details)
-     * It sends all belonging tests, questions, answers, attempts for the give test taker, so its
+     * It sends all belonging tests, questions, answers, attempts for the giveN test taker, so its
      * test performances could be analyzed.
      *
      *
