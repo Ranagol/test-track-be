@@ -6,10 +6,13 @@ services:
         container_name: laravel_app
         restart: unless-stopped
         working_dir: /var/www/html
+        env_file:
+            - .env
         networks:
             - laravel
         depends_on:
-            - mysql
+            mysql:
+                condition: service_healthy
         healthcheck:
             test: ["CMD-SHELL", "bash -c 'echo > /dev/tcp/127.0.0.1/9000' || exit 1"]
             interval: 5s
@@ -58,6 +61,12 @@ services:
             MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
             MYSQL_USER: ${DB_USERNAME}
             MYSQL_PASSWORD: ${DB_PASSWORD}
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
+            interval: 5s
+            timeout: 5s
+            retries: 10
+            start_period: 10s
         volumes:
             - mysql_data:/var/lib/mysql
         networks:

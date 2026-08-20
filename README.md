@@ -179,6 +179,27 @@ TestTrack uses a separated frontend/backend architecture.
 
 Users are assigned roles that determine whether they act as a **Tester** or **Test Taker**.
 
+
+On production, reverse proxy is used.
+
+Production ports:
+- Backend Nginx: 127.0.0.1:8002
+- Frontend Nginx: 127.0.0.1:8003
+- Host Nginx proxies public traffic to these ports.
+
+
+
+Internet
+   │
+   ▼
+Host Nginx
+   │
+   ├── 127.0.0.1:8002 → Backend Nginx → Laravel/PHP-FPM
+   │
+   └── 127.0.0.1:8003 → Frontend Nginx → Vue.js SPA
+
+
+   
 ---
 
 

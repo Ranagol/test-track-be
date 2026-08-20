@@ -1,5 +1,5 @@
 # This is a production Dockerfile, for using in Oracle. Not for local development.
-FROM php:8.4-fpm
+FROM php:8.5-fpm
 
 # System dependencies
 RUN apt-get update && apt-get install -y \

@@ -88,7 +88,6 @@ jobs:
 
       - uses: ./.github/actions/php-setup
 
-      - run: php artisan key:generate --ansi
       - run: php artisan migrate --force --ansi
       - run: php artisan test --compact
 
@@ -194,15 +193,22 @@ jobs:
 
         # github-actions-deploy privat key is used here.
         # set -e means: if any command fails, immediately abort deployment.
-        # docker system prune -af: remove unused Docker resources. Very important.
+        # docker system prune -af --filter "until=168h"--Remove unused Docker resources older than 7 days.
         key: ${{ secrets.ORACLE_SSH_KEY }}
         script: |
           set -e
           cd /var/www/test-track
           git pull origin main
           docker compose -f compose.prod.yaml up -d --build --force-recreate
-          docker compose -f compose.prod.yaml exec app php artisan scribe:generate
-          docker system prune -af
+
+          until [ "$(docker inspect -f '{{.State.Health.Status}}' laravel_app)" = "healthy" ]; do
+              sleep 2
+          done
+
+          docker compose -f compose.prod.yaml exec -T app php artisan migrate --force
+          docker compose -f compose.prod.yaml exec -T app php artisan optimize
+          docker compose -f compose.prod.yaml exec -T app php artisan scribe:generate
+          docker system prune -af --filter "until=168h"
 
     - run: echo "Successfully deployed."
 
