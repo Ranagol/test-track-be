@@ -12,7 +12,7 @@ import QuickStart from '@/views/quickStart/QuickStart.vue';
 import Forbidden403 from '@/views/errors/Forbidden403.vue';
 import SessionExpired419 from '@/views/errors/SessionExpired419.vue';
 import TestTakers from '@/views/testTakers/TestTakers.vue';
-import TestTakerDetails from '@/views/testTakers/TestTakerDetails.vue';
+import TestTakerDetails from '@/views/testTakers/testTakerDetails/TestTakerDetails.vue';
 
 const routes = [
     {

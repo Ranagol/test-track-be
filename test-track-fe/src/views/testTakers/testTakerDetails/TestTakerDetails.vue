@@ -17,7 +17,7 @@
                 <p>Email: {{ testTakerStore.testTaker?.email }}</p>
             </div>
 
-            <!-- TESTS -->
+            <!-- TEST TAKER PERFORMANCE/DETAILS -->
             <TestTakerPerformance
                 v-for="test in testTakerStore.testTakerPerformance"
                 :key="test.id"
@@ -33,7 +33,7 @@ import { onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useTestTakerStore } from '@/stores/useTestTakerStore';
 import Heading1 from '@/resusableComponents/Heading1.vue';
-import TestTakerPerformance from '@/views/analytics/TestTakerPerformance.vue';
+import TestTakerPerformance from '@/views/testTakers/testTakerDetails/TestTakerPerformance.vue';
 import { useApiErrors } from '@/composables/useApiErrors';
 
 const {
