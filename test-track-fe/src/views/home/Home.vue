@@ -30,7 +30,7 @@
         </div>
 
         <h1 class="text-4xl font-bold">
-            Track progress, not just <span class="text-brand">test results</span>.
+            Track progress, not just test results.
         </h1>
 
         <p class="text-xl text-text-soft max-w-3xl mx-auto mt-6">

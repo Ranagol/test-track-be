@@ -82,6 +82,23 @@
                     label="Date of last test attempt"
                 ></el-table-column>
 
+                <!-- ACTIONS -->
+                <el-table-column
+                    prop=""
+                    label="Actions"
+                    min-width="120px"
+                    v-slot="{ row }"
+                >
+
+                    <!-- SHOW BUTTON -->
+                    <el-button
+                        size="small"
+                        type="warning"
+                        @click="$router.push(`/test-takers/${row.id}`)"
+                    >Show</el-button>
+
+                </el-table-column>
+
             </el-table>
         </div>
 
