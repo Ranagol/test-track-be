@@ -17,7 +17,7 @@ class SendNewUserRegisteredMail extends Command
      * Execute the console command.
      * sail artisan app:send-new-user-registered-mail
      */
-    public function handle()
+    public function handle(): void
     {
         // We need a user for our mail (this user "just registered" in our system)
         $user = User::first();
