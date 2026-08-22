@@ -38,6 +38,10 @@
 
             </h2>
 
+            <p class="text-gray-700 mb-4">
+                Email verification is intentionally not required in the current version to keep the
+                demo/registration experience frictionless.
+            </p>
 
         </section>
 

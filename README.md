@@ -95,6 +95,9 @@ Tester
                      Progress Tracking
 ```
 
+Email verification: intentionally not required in the current version to keep the demo/registration experience frictionless.
+
+
 ---
 
 ## Tech Stack
