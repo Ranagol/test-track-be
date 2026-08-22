@@ -44,6 +44,7 @@
                     v-model="data.password"
                     placeholder="Enter your password"
                     type="password"
+                    show-password
                 />
 
             </el-form-item>

@@ -59,6 +59,7 @@
                     v-model="data.password"
                     placeholder="Enter your password"
                     type="password"
+                    show-password
                 />
 
             </el-form-item>
@@ -75,6 +76,7 @@
                     v-model="data.password_confirmation"
                     placeholder="Confirm your password"
                     type="password"
+                    show-password
                 />
 
             </el-form-item>
