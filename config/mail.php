@@ -117,4 +117,8 @@ return [
 
     'admin_email' => env('SUPERADMIN_EMAIL', 'andorefly2@gmail.com'),
 
+    'resend' => [
+        'key' => env('RESEND_KEY'),
+    ],
+
 ];
