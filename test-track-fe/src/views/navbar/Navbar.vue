@@ -46,6 +46,7 @@
             Hi, {{ authStore.user.email }}
         </span>
 
+        <!-- LOGOUT -->
         <el-button
             v-if="authStore.user"
             id="logout-button"
@@ -55,6 +56,7 @@
             Logout
         </el-button>
 
+        <!-- LOGIN -->
         <router-link
             v-if="!authStore.user"
             to="/login"
@@ -62,9 +64,16 @@
             Login
         </router-link>
 
+        <!-- REGISTER -->
+        <!-- If the user has a test link, and no profile, and if he clicks on this Register item
+         then the app will 'remember' the test link in the url, and redirect it there after a
+         successful registration.
+        query: Add query parameters to the URL. It will add this: '?redirect=/tests/take-test/TEST-0095-tk'
+
+         -->
         <router-link
             v-if="!authStore.user"
-            to="/register"
+            :to="{ name: 'register', query: { redirect: route.query.redirect } }"
         >
             Register
         </router-link>
@@ -75,12 +84,16 @@
 
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/useAuthStore';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { Ticket } from '@element-plus/icons-vue';
 
+// Used for redirecting
 const router = useRouter();
 
+const route = useRoute();
+
 const authStore = useAuthStore();
+
 const logout = async () => {
     await authStore.signOut();
     router.push('/login');
