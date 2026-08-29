@@ -26,6 +26,7 @@
                 <circle cx="100" cy="80" r="4" class="hero-motif-dot-soft" />
                 <circle cx="113" cy="90" r="4" class="hero-motif-dot" />
                 <circle cx="145" cy="55" r="5" class="hero-motif-dot-strong" />
+                <circle cx="145" cy="55" r="5" class="hero-ping" />
             </svg>
         </div>
 
@@ -169,6 +170,7 @@
                 <circle cx="65" cy="45" r="4" class="hero-motif-dot-soft" />
                 <circle cx="130" cy="30" r="4" class="hero-motif-dot" />
                 <circle cx="190" cy="10" r="5" class="hero-motif-dot-strong" />
+                <circle cx="190" cy="10" r="5" class="tracking-ping" />
             </svg>
             <p class="tracking-preview-score">
                 <span class="score-num" data-target="62">0</span>%
@@ -323,6 +325,34 @@ function animateScoreNumbers(container: HTMLElement, skipAnimation: boolean) {
     opacity: 0.9;
 }
 
+/* Hovering the illustration gives the little figure a quick, deliberate nod. */
+.hero-motif:hover circle:nth-of-type(1),
+.hero-motif:hover rect:nth-of-type(1) {
+    animation: figure-nod 0.6s ease-in-out;
+}
+
+@keyframes figure-nod {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-6px) rotate(-3deg); }
+}
+
+/* A faint radar-style ping keeps the "current" point on the line feeling
+   live well after the initial reveal has finished. */
+.hero-ping {
+    fill: none;
+    stroke: var(--color-primary);
+    stroke-width: 2;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ping-ring 2.2s ease-out 2.1s infinite;
+}
+
+@keyframes ping-ring {
+    0% { opacity: 0.6; transform: scale(1); }
+    100% { opacity: 0; transform: scale(2.2); }
+}
+
 .hero-motif-dot-soft {
     fill: color-mix(in srgb, var(--color-primary) 45%, white);
 }
@@ -353,6 +383,14 @@ function animateScoreNumbers(container: HTMLElement, skipAnimation: boolean) {
 
 .el-button:hover .hero-cta-arrow {
     transform: translateX(4px);
+}
+
+.hero-actions a:nth-child(2) .el-icon {
+    transition: transform 0.3s ease;
+}
+
+.hero-actions a:nth-child(2) .el-button:hover .el-icon {
+    transform: rotate(12deg) scale(1.15);
 }
 
 /* Draws the hero progress line in, then pops each dot along it in sequence,
@@ -441,6 +479,32 @@ function animateScoreNumbers(container: HTMLElement, skipAnimation: boolean) {
     background: var(--color-surface-soft);
     border-radius: var(--radius-lg);
     padding: 1.5rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.info-panel:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-sm);
+}
+
+.info-panel:hover .text-warning {
+    animation: icon-shake 0.5s ease-in-out;
+}
+
+.info-panel:hover .text-success {
+    animation: icon-pop 0.4s ease-out;
+}
+
+@keyframes icon-shake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-14deg); }
+    75% { transform: rotate(14deg); }
+}
+
+@keyframes icon-pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
 }
 
 .feature-card {
@@ -459,6 +523,14 @@ a.feature-card:hover {
     transform: translateY(-2px);
 }
 
+.feature-card h3 {
+    transition: color 0.2s ease;
+}
+
+a.feature-card:hover h3 {
+    color: var(--color-primary);
+}
+
 .feature-icon-chip {
     width: 40px;
     height: 40px;
@@ -467,7 +539,7 @@ a.feature-card:hover {
     align-items: center;
     justify-content: center;
     margin-bottom: 0.75rem;
-    transition: transform 0.25s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .feature-card-reveal .feature-icon-chip {
@@ -484,6 +556,7 @@ a.feature-card:hover {
 
 a.feature-card:hover .feature-icon-chip {
     transform: scale(1.12) rotate(-6deg);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-primary) 12%, transparent);
 }
 
 .feature-icon {
@@ -556,6 +629,35 @@ a.feature-card:hover .feature-icon-chip {
     background: var(--color-surface-soft);
     border-radius: var(--radius-lg);
     padding: 1.25rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.tracking-preview:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Hovering the card pulses the latest data point, echoing the hero's ping. */
+.tracking-preview:hover circle:nth-of-type(4) {
+    animation: dot-pulse 1s ease-in-out infinite;
+}
+
+@keyframes dot-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.35); }
+}
+
+.tracking-ping {
+    fill: none;
+    stroke: var(--color-primary);
+    stroke-width: 2;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.tracking-preview.is-visible .tracking-ping {
+    animation: ping-ring 2s ease-out 1.3s infinite;
 }
 
 /* Draws the graph line and pops its dots in step, only once the preview
@@ -662,6 +764,22 @@ a.feature-card:hover .feature-icon-chip {
     transform: translateY(0);
 }
 
+/* A gentle staggered bob on hover, reusing the hero figure's float keyframe. */
+.closing-panel:hover .closing-illustration circle,
+.closing-panel:hover .closing-illustration rect {
+    animation: figure-float 2.4s ease-in-out infinite;
+}
+
+.closing-panel:hover .closing-illustration circle:nth-of-type(2),
+.closing-panel:hover .closing-illustration rect:nth-of-type(2) {
+    animation-delay: 0.2s;
+}
+
+.closing-panel:hover .closing-illustration circle:nth-of-type(3),
+.closing-panel:hover .closing-illustration rect:nth-of-type(3) {
+    animation-delay: 0.4s;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .hero-title,
     .hero-subtitle,
@@ -693,6 +811,22 @@ a.feature-card:hover .feature-icon-chip {
         transition: none !important;
         opacity: 1 !important;
         transform: none !important;
+    }
+
+    .hero-ping,
+    .tracking-ping {
+        animation: none !important;
+        opacity: 0 !important;
+    }
+
+    .hero-motif:hover circle:nth-of-type(1),
+    .hero-motif:hover rect:nth-of-type(1),
+    .tracking-preview:hover circle:nth-of-type(4),
+    .info-panel:hover .text-warning,
+    .info-panel:hover .text-success,
+    .closing-panel:hover .closing-illustration circle,
+    .closing-panel:hover .closing-illustration rect {
+        animation: none !important;
     }
 }
 
