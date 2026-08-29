@@ -29,24 +29,24 @@
             </svg>
         </div>
 
-        <h1 class="text-4xl font-bold">
+        <h1 class="text-4xl font-bold hero-title">
             Track progress, not just test results.
         </h1>
 
-        <p class="text-xl text-text-soft max-w-3xl mx-auto mt-6">
+        <p class="text-xl text-text-soft max-w-3xl mx-auto mt-6 hero-subtitle">
             TestTrack is a longitudinal testing platform that helps teachers,
             psychotherapists, HR professionals, and other specialists create,
             evaluate, and track assessments over time.
         </p>
 
-        <div class="flex justify-center gap-4 mt-8">
+        <div class="flex justify-center gap-4 mt-8 hero-actions">
             <router-link to="/tests/create">
                 <el-button
                     type="primary"
                     size="large"
                 >
                     Start here
-                    <el-icon class="ml-1"><Right /></el-icon>
+                    <el-icon class="ml-1 hero-cta-arrow"><Right /></el-icon>
                 </el-button>
             </router-link>
 
@@ -170,7 +170,11 @@
                 <circle cx="130" cy="30" r="4" class="hero-motif-dot" />
                 <circle cx="190" cy="10" r="5" class="hero-motif-dot-strong" />
             </svg>
-            <p class="tracking-preview-score">62% &rarr; 89%</p>
+            <p class="tracking-preview-score">
+                <span class="score-num" data-target="62">0</span>%
+                <span class="score-arrow">&rarr;</span>
+                <span class="score-num" data-target="89">0</span>%
+            </p>
         </div>
     </div>
 
@@ -188,7 +192,7 @@
             <rect x="106" y="28" width="28" height="26" rx="10" class="figure-fill-softer" />
         </svg>
 
-        <p class="text-xl font-semibold">
+        <p class="text-xl font-semibold closing-quote">
             TestTrack helps professionals understand not only where someone is
             today, but how they are developing over time.
         </p>
@@ -242,29 +246,67 @@ const features = [
     },
 ];
 
-// Adds .is-visible to each .feature-card-reveal element as it scrolls into
-// view. Disconnects once all cards have revealed, so it doesn't keep
-// running on scroll after the home page has settled.
+// Adds .is-visible to each reveal target (feature cards, the tracking
+// preview graph, the closing illustration) as it scrolls into view, then
+// stops observing it so it doesn't keep running once the page has settled.
 let observer: IntersectionObserver | undefined;
 
 onMounted(() => {
-    const cards = document.querySelectorAll('.feature-card-reveal');
+    const revealTargets = document.querySelectorAll(
+        '.feature-card-reveal, .tracking-preview, .closing-panel'
+    );
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     observer = new IntersectionObserver((entries, obs) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('is-visible');
+
+                if (entry.target.classList.contains('tracking-preview')) {
+                    animateScoreNumbers(entry.target as HTMLElement, prefersReducedMotion);
+                }
+
                 obs.unobserve(entry.target);
             }
         });
     }, { threshold: 0.15 });
 
-    cards.forEach((card) => observer?.observe(card));
+    revealTargets.forEach((target) => observer?.observe(target));
 });
 
 onBeforeUnmount(() => {
     observer?.disconnect();
 });
+
+// Counts each .score-num up from 0 to its data-target so the "62% -> 89%"
+// callout reads as live progress instead of static text.
+function animateScoreNumbers(container: HTMLElement, skipAnimation: boolean) {
+    const numbers = container.querySelectorAll<HTMLElement>('.score-num');
+
+    numbers.forEach((el) => {
+        const target = Number(el.dataset.target ?? 0);
+
+        if (skipAnimation) {
+            el.textContent = String(target);
+            return;
+        }
+
+        const duration = 1000;
+        const start = performance.now();
+
+        const step = (now: number) => {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - (1 - progress) ** 3;
+            el.textContent = String(Math.round(target * eased));
+
+            if (progress < 1) {
+                requestAnimationFrame(step);
+            }
+        };
+
+        requestAnimationFrame(step);
+    });
+}
 </script>
 
 <style scoped>
@@ -291,6 +333,81 @@ onBeforeUnmount(() => {
 
 .hero-motif-dot-strong {
     fill: color-mix(in srgb, var(--color-primary) 70%, black);
+}
+
+.hero-title,
+.hero-subtitle,
+.hero-actions {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: hero-fade-up 0.6s ease-out forwards;
+}
+
+.hero-title { animation-delay: 0.05s; }
+.hero-subtitle { animation-delay: 0.2s; }
+.hero-actions { animation-delay: 0.35s; }
+
+.hero-cta-arrow {
+    transition: transform 0.2s ease;
+}
+
+.el-button:hover .hero-cta-arrow {
+    transform: translateX(4px);
+}
+
+/* Draws the hero progress line in, then pops each dot along it in sequence,
+   and finally sets the little figure gently bobbing to feel alive. */
+.hero-motif polyline {
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
+    animation: draw-line 1.3s ease-out 0.4s forwards;
+}
+
+.hero-motif circle {
+    opacity: 0;
+    transform: scale(0);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: pop-in 0.4s ease-out forwards;
+}
+
+.hero-motif circle:nth-of-type(1) {
+    opacity: 1;
+    transform: scale(1);
+    animation: figure-float 3.5s ease-in-out 1.9s infinite;
+}
+.hero-motif circle:nth-of-type(2) { animation-delay: 0.7s; }
+.hero-motif circle:nth-of-type(3) { animation-delay: 1s; }
+.hero-motif circle:nth-of-type(4) { animation-delay: 1.3s; }
+.hero-motif circle:nth-of-type(5) { animation-delay: 1.6s; }
+
+.hero-motif rect:nth-of-type(1) {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: figure-float 3.5s ease-in-out 1.9s infinite;
+}
+
+@keyframes hero-fade-up {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes draw-line {
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes pop-in {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes figure-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
 }
 
 /* Shared fills for the illustrated figures in the hero and closing panel,
@@ -350,6 +467,23 @@ a.feature-card:hover {
     align-items: center;
     justify-content: center;
     margin-bottom: 0.75rem;
+    transition: transform 0.25s ease;
+}
+
+.feature-card-reveal .feature-icon-chip {
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+}
+
+.feature-card-reveal.is-visible .feature-icon-chip {
+    opacity: 1;
+    transform: scale(1);
+    transition-delay: 0.15s;
+}
+
+a.feature-card:hover .feature-icon-chip {
+    transform: scale(1.12) rotate(-6deg);
 }
 
 .feature-icon {
@@ -392,13 +526,13 @@ a.feature-card:hover {
    IntersectionObserver directive/composable — see note below the file. */
 .feature-card-reveal {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(12px) scale(0.96);
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .feature-card-reveal.is-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 
 .delay-0.is-visible { transition-delay: 0ms; }
@@ -424,6 +558,36 @@ a.feature-card:hover {
     padding: 1.25rem;
 }
 
+/* Draws the graph line and pops its dots in step, only once the preview
+   scrolls into view, so the trend reads as something happening live. */
+.tracking-preview polyline {
+    stroke-dasharray: 260;
+    stroke-dashoffset: 260;
+    transition: stroke-dashoffset 1.1s ease-out;
+}
+
+.tracking-preview.is-visible polyline {
+    stroke-dashoffset: 0;
+}
+
+.tracking-preview circle {
+    opacity: 0;
+    transform: scale(0);
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+}
+
+.tracking-preview.is-visible circle {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.tracking-preview.is-visible circle:nth-of-type(1) { transition-delay: 0.1s; }
+.tracking-preview.is-visible circle:nth-of-type(2) { transition-delay: 0.4s; }
+.tracking-preview.is-visible circle:nth-of-type(3) { transition-delay: 0.7s; }
+.tracking-preview.is-visible circle:nth-of-type(4) { transition-delay: 1s; }
+
 .tracking-preview-labels {
     display: flex;
     justify-content: space-between;
@@ -437,12 +601,99 @@ a.feature-card:hover {
     color: var(--color-text-soft);
     margin-top: 0.5rem;
     text-align: right;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.4s ease-out 0.2s, transform 0.4s ease-out 0.2s;
+}
+
+.tracking-preview.is-visible .tracking-preview-score {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.score-arrow {
+    display: inline-block;
+    color: var(--color-primary);
+}
+
+.tracking-preview.is-visible .score-arrow {
+    animation: arrow-nudge 1.4s ease-in-out 0.6s infinite;
+}
+
+@keyframes arrow-nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(3px); }
 }
 
 .closing-panel {
     border-top: 3px solid transparent;
     border-image: var(--gradient-brand) 1;
     padding-top: 1.5rem;
+}
+
+.closing-illustration circle,
+.closing-illustration rect {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.closing-panel.is-visible .closing-illustration circle,
+.closing-panel.is-visible .closing-illustration rect {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.closing-panel.is-visible .closing-illustration circle:nth-of-type(1),
+.closing-panel.is-visible .closing-illustration rect:nth-of-type(1) { transition-delay: 0.05s; }
+.closing-panel.is-visible .closing-illustration circle:nth-of-type(2),
+.closing-panel.is-visible .closing-illustration rect:nth-of-type(2) { transition-delay: 0.2s; }
+.closing-panel.is-visible .closing-illustration circle:nth-of-type(3),
+.closing-panel.is-visible .closing-illustration rect:nth-of-type(3) { transition-delay: 0.35s; }
+
+.closing-quote {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.5s ease-out 0.5s, transform 0.5s ease-out 0.5s;
+}
+
+.closing-panel.is-visible .closing-quote {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-title,
+    .hero-subtitle,
+    .hero-actions,
+    .feature-card-reveal,
+    .feature-icon-chip,
+    .tracking-preview-score,
+    .score-arrow,
+    .closing-illustration circle,
+    .closing-illustration rect,
+    .closing-quote {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .hero-motif polyline,
+    .tracking-preview polyline {
+        animation: none !important;
+        transition: none !important;
+        stroke-dashoffset: 0 !important;
+    }
+
+    .hero-motif circle,
+    .hero-motif rect,
+    .tracking-preview circle {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
 }
 
 </style>
