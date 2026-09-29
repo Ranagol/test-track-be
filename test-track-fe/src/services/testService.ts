@@ -2,6 +2,11 @@ import appAxios from './axiosService'
 import type { Test, PaginatedResponse, CreateTestPayload } from '@/types/types'
 import type { QueryParams } from '@/types/types'
 
+/**
+ * CRUD operations for tests
+ * The belonging test questions and answer option are also managed here. There is no separate
+ * questionService and answerOptionService.
+ */
 const testService = {
 
     async getAll(params?: QueryParams): Promise<PaginatedResponse<Test>> {

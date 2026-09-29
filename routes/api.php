@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Api\AnswerOptionController;
-use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\TestAttemptController;
 use App\Http\Controllers\Api\TestController;
 use App\Http\Controllers\Api\TestTakerController;
@@ -39,9 +38,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('tests', TestController::class);
 
     Route::apiResource('test-attempts', TestAttemptController::class);
-
-    Route::apiResource('questions', QuestionController::class)->except(['update']);
-    Route::post('/questions/{question}/correct-answer', [QuestionController::class, 'setCorrectAnswer']);
 
     Route::apiResource('answer-options', AnswerOptionController::class)->except(['update']);
 

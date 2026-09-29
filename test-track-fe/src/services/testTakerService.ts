@@ -4,7 +4,7 @@ import type { PaginatedResponse, QueryParams, TestTaker, Test } from '@/types/ty
 const testTakerService = {
 
     /**
-     * Gets all test takers from BE.
+     * Gets all test takers from BE. Or their performance (how did they solve tests).
      */
     async getAll(params?: QueryParams): Promise<PaginatedResponse<TestTaker>> {
         const response = await appAxios.get<PaginatedResponse<TestTaker>>('/api/test-takers', { params });

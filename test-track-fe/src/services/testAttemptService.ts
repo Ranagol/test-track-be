@@ -1,6 +1,9 @@
 import appAxios from './axiosService'
 import type { TestAttempt, UserAnswer, TestAttemptQueryParams, PaginatedResponse } from '@/types/types'
 
+/**
+ * CRUD operations for test attempts. When a test taker solves a test, that is a test attempt.
+ */
 const testAttemptService = {
 
     /**
