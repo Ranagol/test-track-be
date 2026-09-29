@@ -35,9 +35,10 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/tests/test-code/{testCode}', [TestController::class, 'getTestByCode']);
+
     Route::apiResource('tests', TestController::class);
 
-    Route::apiResource('test-attempts', TestAttemptController::class);
+    Route::apiResource('test-attempts', TestAttemptController::class)->only(['index', 'store']);
 
     Route::apiResource('answer-options', AnswerOptionController::class)->except(['update']);
 
