@@ -81,18 +81,18 @@ class TestControllerService implements TestControllerServiceInterface
     public function updateQuestions(array $questionsData, Test $test): void
     {
         foreach ($questionsData as $questionData) {
-            $question = Question::find($questionData['id']);
 
-            if ($question) {
+            /** @var Question $question */
+            $question = $test->questions()->findOrFail($questionData['id']);
 
-                // Update existing question
-                $question->update([
-                    'text' => $questionData['text'],
-                ]);
+            $question->update([
+                'text' => $questionData['text'],
+            ]);
 
-                // Update answer options for this question
-                $this->updateAnswerOptions($question, $questionData['answer_options']);
-            }
+            $this->updateAnswerOptions(
+                $question,
+                $questionData['answer_options']
+            );
         }
     }
 
