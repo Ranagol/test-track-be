@@ -47,8 +47,21 @@ class TestTakerController extends Controller
         return TestTakerResource::collection($testTakers);
     }
 
+    /**
+     * We only want to show test taker, if he belongs to the authenticated user (tester), meaning
+     * that he actually solved one of the tester's test. This returns only some basic data
+     * about the test taker: name, email, tests attempted count, last test attempt date. This is not
+     * the full test taker performance, that is the the method showPerformance().
+     */
     public function show(User $testTaker): TestTakerResource
     {
+        $tester = Auth::user();
+
+        // Ensure the test taker belongs to the authenticated tester
+        if (! $testTaker->testAttempts()->forTester($tester->id)->exists()) {
+            abort(403, 'Unauthorized action.');
+        }
+
         return new TestTakerResource($testTaker);
     }
 
