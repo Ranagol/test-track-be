@@ -57,16 +57,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
      */
     Route::get('/test-takers/{testTaker}/performance', [TestTakerController::class, 'showPerformance']);
 
-    /**
-     * WILL BE DELETED. PART OF THE OLD ANALYTIC
-     * This function is called at FE url /analytics/:testTakerId (Analytics details)
-     * It sends all belonging tests, questions, answers, attempts for the giveN test taker, so its
-     * test performances could be analyzed.
-     *
-     *
-     * BE url: /api/analytics?testTakerId=5
-     * Triggers: TestController@indexAnalytics
-     */
-    Route::get('/analytics', [TestController::class, 'indexAnalytics']);
-
 });
