@@ -14,7 +14,7 @@
             <el-input
                 v-model="testTakerStore.searchTerm"
                 style="width: 40%"
-                placeholder="Search for test taker name or test name"
+                placeholder="Search for test taker name"
                 clearable
                 @keyup.enter="handleSearch"
                 @clear="handleSearch"
