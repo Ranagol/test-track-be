@@ -33,7 +33,7 @@ class StoreTestAttemptRequest extends FormRequest
             // All UserAnswers from FE are collected into this array
             'user_answers' => 'required|array',
 
-            'user_answers.*.question_id' => 'required|integer|exists:questions,id',
+            'user_answers.*.question_id' => 'required|integer|distinct|exists:questions,id',
             'user_answers.*.answer_option_id' => 'required|integer|exists:answer_options,id',
             'user_answers.*.comment' => 'nullable|string',
         ];

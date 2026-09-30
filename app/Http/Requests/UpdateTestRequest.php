@@ -22,10 +22,10 @@ class UpdateTestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['sometimes', 'required', 'string', 'max:255'],
-            'description' => ['sometimes', 'nullable', 'string'],
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
             'user_id' => ['required', 'exists:users,id'],
-            'questions' => ['sometimes', 'array'],
+            'questions' => ['required', 'array', 'min:1'],
             'questions.*.id' => ['required_with:questions', 'exists:questions,id'],
             'questions.*.text' => ['required_with:questions', 'string'],
             'questions.*.answer_options' => ['required_with:questions', 'array'],
