@@ -113,13 +113,19 @@ const createTestAttempt = async () => {
 
 onMounted( async() => {
 
-    // Reset any previous test attempt before starting a new one.
-    testAttemptStore.resetTestAttempt();
+    try {
 
-    // Because the router path is named '/tests/take-test/:testCode'
-    const testCode = route.params.testCode as string;
+        // Reset any previous test attempt before starting a new one.
+        testAttemptStore.resetTestAttempt();
 
-    await testEditorStore.getByCode(testCode);
+        // Because the router path is named '/tests/take-test/:testCode'
+        const testCode = route.params.testCode as string;
+
+        await testEditorStore.getByCode(testCode);
+    } catch (error) {
+        handleBackendErrors(error);
+    }
+
 });
 
 </script>
