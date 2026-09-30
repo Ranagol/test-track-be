@@ -74,7 +74,7 @@ class TestController extends Controller
     }
 
     /**
-     * Update the specified resource in storage. We receive here a test2, together with its
+     * Update the specified resource in storage. We receive here a test, together with its
      * questions and answer options. We have to loop through all this and handle.
      */
     public function update(UpdateTestRequest $request, Test $test): TestResource
