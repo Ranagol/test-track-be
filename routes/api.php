@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\AnswerOptionController;
 use App\Http\Controllers\Api\TestAttemptController;
 use App\Http\Controllers\Api\TestController;
 use App\Http\Controllers\Api\TestTakerController;
@@ -39,8 +38,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('tests', TestController::class);
 
     Route::apiResource('test-attempts', TestAttemptController::class)->only(['index', 'store']);
-
-    Route::apiResource('answer-options', AnswerOptionController::class)->except(['update']);
 
     Route::apiResource('user-answers', UserAnswerController::class);
 
