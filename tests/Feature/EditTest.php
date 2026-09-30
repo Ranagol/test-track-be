@@ -25,7 +25,7 @@ class EditTest extends TestCase
         ]);
     }
 
-    public function tester_can_edit_test(): void
+    public function test_tester_can_edit_test(): void
     {
         $tester = User::where('email', config('app.DEFAULT_TESTER_EMAIL'))->first();
 
