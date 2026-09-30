@@ -104,12 +104,26 @@ jobs:
 
       - run: cd test-track-fe && npm run type-check
 
+  # ─────────────────────────────
+  # VITEST (Frontend unit tests)
+  # ─────────────────────────────
+  vitest:
+    runs-on: ubuntu-24.04
+    needs: [ts-types]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/node-setup
+
+      - run: cd test-track-fe && npm run test:unit:run
 
   # ─────────────────────────────
   # PLAYWRIGHT (E2E tests with separate testing DB)
   # ─────────────────────────────
   playwright:
     runs-on: ubuntu-24.04
+    needs: [vitest]
 
     services:
       mysql:
