@@ -3,7 +3,6 @@
 use App\Http\Controllers\Api\TestAttemptController;
 use App\Http\Controllers\Api\TestController;
 use App\Http\Controllers\Api\TestTakerController;
-use App\Http\Controllers\Api\UserAnswerController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Http\Request;
@@ -38,8 +37,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('tests', TestController::class);
 
     Route::apiResource('test-attempts', TestAttemptController::class)->only(['index', 'store']);
-
-    Route::apiResource('user-answers', UserAnswerController::class);
 
     /**
      * Display a list of all test takers that belong to the currently authenticated tester
