@@ -79,7 +79,9 @@ export const useTestAttemptStore = defineStore('testAttempt', {
                     this.paginationLinks = response.links;
                 }
             } finally {
-                this.loading = false;
+                if (requestId === this.requestId) {
+                    this.loading = false;
+                }
             }
         },
 

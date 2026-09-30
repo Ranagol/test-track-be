@@ -34,7 +34,7 @@
 <script setup lang="ts">
 import AnswerOption from '@/views/answerOptions/AnswerOption.vue';
 import type { Question, BackendError } from '@/types/types';
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, toRef, watch } from 'vue';
 import { useTestEditorStore } from '@/stores/useTestEditorStore';
 import { useValidateAnswerOnTakeTest } from '@/composables/answerOptionListComposables/useValidateAnswerOnTakeTest';
 import { useSelectAnswer } from '@/composables/answerOptionListComposables/useSelectAnswer';
@@ -103,7 +103,7 @@ const { handleAnswerSelection } = useSelectAnswer(props.mode, props.question);
 useValidateAnswerBackend(
     emitShowError,
     selectedAnswerOption,
-    props.beValidationErrors,
+    toRef(props, 'beValidationErrors'),
     props.questionIndex
 );
 

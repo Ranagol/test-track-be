@@ -67,7 +67,9 @@ export const useTestsStore = defineStore('tests', {
             } catch (error) {
                 throw error;
             } finally {
-                this.loading = false;
+                if (requestId === this.requestId) {
+                    this.loading = false;
+                }
             }
         },
 

@@ -51,22 +51,28 @@
         "phpunit": "vendor/bin/sail php vendor/bin/phpunit",
         "type-check": "docker compose exec frontend npm run type-check",
         "pw": "bash scripts/playwright.sh",
+        "vitest": "docker compose exec frontend npm run test:unit:run",
+
         "full-check-be": [
             "@larastan",
             "@phpmd",
             "@pint",
             "@phpunit"
         ],
+
         "full-check-fe": [
             "@type-check",
+            "@vitest",
             "@pw"
         ],
+
         "full-check": [
             "@larastan",
             "@phpmd",
             "@pint",
             "@phpunit",
             "@type-check",
+            "@vitest",
             "@pw"
         ],
 
