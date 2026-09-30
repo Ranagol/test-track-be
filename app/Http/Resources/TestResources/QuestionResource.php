@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\TestResources;
 
 use App\Models\Question;
 use Illuminate\Http\Request;
@@ -29,7 +29,6 @@ class QuestionResource extends JsonResource
             'correct_answer_text' => $this->whenLoaded('correctAnswerText', function () {
                 return $this->correctAnswerText ? $this->correctAnswerText->text : null;
             }),
-
         ];
     }
 }

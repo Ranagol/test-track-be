@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTestRequest;
 use App\Http\Requests\UpdateTestRequest;
-use App\Http\Resources\TestResource;
+use App\Http\Resources\TestResources\TestResource;
+use App\Http\Resources\TestTakingResources\TestTakingResource;
 use App\Interfaces\TestControllerServiceInterface;
 use App\Models\Test;
 use Illuminate\Http\JsonResponse;
@@ -107,13 +108,18 @@ class TestController extends Controller
         return new TestResource($test);
     }
 
-    public function getTestByCode(string $testCode): TestResource
+    /**
+     * Returns one test, for testing. This is needed when the test taker takes the test.
+     * In this case, we do not use TestResource, but rather TestTakingResource to avoid exposing
+     * correct answers to the test taker. But, everywhere else, we use TestResource.
+     */
+    public function getTestByCode(string $testCode): TestTakingResource
     {
         $test = Test::where('test_code', $testCode)
             ->with('questions.answerOptions')
             ->firstOrFail();
 
-        return new TestResource($test);
+        return new TestTakingResource($test);
     }
 
     /**

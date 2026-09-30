@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\TestResources;
 
 use App\Models\AnswerOption;
 use Illuminate\Http\Request;

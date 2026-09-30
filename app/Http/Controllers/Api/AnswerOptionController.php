@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAnswerOptionRequest;
-use App\Http\Resources\AnswerOptionResource;
 use App\Models\AnswerOption;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -16,25 +15,25 @@ class AnswerOptionController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return AnswerOptionResource::collection(AnswerOption::paginate());
+        return TestTakingAnswerOptionResource::collection(AnswerOption::paginate());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAnswerOptionRequest $request): AnswerOptionResource
+    public function store(StoreAnswerOptionRequest $request): TestTakingAnswerOptionResource
     {
         $answerOption = AnswerOption::create($request->validated());
 
-        return new AnswerOptionResource($answerOption);
+        return new TestTakingAnswerOptionResource($answerOption);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(AnswerOption $answerOption): AnswerOptionResource
+    public function show(AnswerOption $answerOption): TestTakingAnswerOptionResource
     {
-        return new AnswerOptionResource($answerOption);
+        return new TestTakingAnswerOptionResource($answerOption);
     }
 
     /**

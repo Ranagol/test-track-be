@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TestResource;
+use App\Http\Resources\TestResources\TestResource;
 use App\Http\Resources\TestTakerResource;
 use App\Models\Test;
 use App\Models\User;

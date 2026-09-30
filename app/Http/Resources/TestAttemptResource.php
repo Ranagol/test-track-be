@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\TestTakingResources\TestTakingResource;
 use App\Models\TestAttempt;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -33,7 +34,7 @@ class TestAttemptResource extends JsonResource
             'updated_at' => $model->updated_at ? $model->updated_at->format('d.m.Y') : null,
 
             // Only include test if it was already eager loaded in the controller.
-            'test' => new TestResource($this->whenLoaded('test')),
+            'test' => new TestTakingResource($this->whenLoaded('test')),
             'user' => new UserResource($this->whenLoaded('user')),
             'userAnswers' => UserAnswerResource::collection($this->whenLoaded('userAnswers')),
 
