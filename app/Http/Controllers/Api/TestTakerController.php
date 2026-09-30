@@ -42,8 +42,6 @@ class TestTakerController extends Controller
         $perPage = $request->per_page ?? 10;
         $testTakers = $testTakersQuery->paginate($perPage);
 
-        // dd($testTakersQuery->toSql(), $testTakersQuery->getBindings());
-
         return TestTakerResource::collection($testTakers);
     }
 
