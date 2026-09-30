@@ -33,8 +33,8 @@ test('Observe test taker details', async ({ page }) => {
     await expect(page.getByRole('heading', { name: 'My test takers' })).toBeVisible();
 
     // Click on the search box, and fill with a search term "test", simply to decrease the number of rows in the table.
-    await page.getByRole('textbox', { name: 'Search for test taker name or' }).click();
-    await page.getByRole('textbox', { name: 'Search for test taker name or' }).fill('test');
+    await page.getByRole('textbox', { name: 'Search for test taker name' }).click();
+    await page.getByRole('textbox', { name: 'Search for test taker name' }).fill('test');
 
     const desiredTableRow = page.locator('.el-table__row')
         .filter({ hasText: testTakerEmail })
