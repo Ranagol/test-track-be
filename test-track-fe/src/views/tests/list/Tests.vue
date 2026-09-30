@@ -203,6 +203,7 @@ const {
 } = useApiErrors();
 
 function handleSearch() {
+    testsStore.currentPage = 1;
     fetchTests();
 }
 
@@ -216,6 +217,7 @@ function handleSort(sortData: TableSortData) {
      * for the Laravel backend.
      */
     testsStore.sortOrder = sortData.order === 'ascending' ? 'asc' : 'desc';
+    testsStore.currentPage = 1;
     fetchTests();
 }
 

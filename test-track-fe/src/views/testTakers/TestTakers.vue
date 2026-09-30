@@ -137,6 +137,7 @@ const {
 
 
 const handleSearch = () => {
+    testTakerStore.currentPage = 1;
     fetchTestTakers();
 };
 
